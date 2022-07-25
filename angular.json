@@ -8,7 +8,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "less",
-          "skipTests": true
+          "skipTests": true,
+          "skipImport": true
         },
         "@schematics/angular:class": {
           "skipTests": true
@@ -29,7 +30,8 @@
           "skipTests": true
         },
         "@schematics/angular:service": {
-          "skipTests": true
+          "skipTests": true,
+          "flat": true
         },
         "@schematics/angular:application": {
           "strict": true
@@ -53,6 +55,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.less"
             ],
             "scripts": []
@@ -97,7 +100,9 @@
               "browserTarget": "asq_frontend:build:production"
             },
             "development": {
-              "browserTarget": "asq_frontend:build:development"
+              "browserTarget": "asq_frontend:build:development",
+              "port": 9527,
+              "host": "127.0.0.1"
             }
           },
           "defaultConfiguration": "development"
@@ -121,6 +126,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.less"
             ],
             "scripts": []
