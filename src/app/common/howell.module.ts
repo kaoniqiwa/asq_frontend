@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
+import { MaterialModule } from "../material.module";
 import { CUSTOM_COMPONENTS } from "./components";
 import { CUSTOM_DIRECTIVES } from "./directive";
 
@@ -10,7 +11,9 @@ import { CUSTOM_DIRECTIVES } from "./directive";
     ...CUSTOM_DIRECTIVES
   ],
   imports: [
-    ReactiveFormsModule
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule
   ],
   exports: [...CUSTOM_COMPONENTS, ...CUSTOM_DIRECTIVES]
 })

@@ -6,6 +6,7 @@ import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { NeoballoonManageComponent } from "./components/neoballoon-manage/neoballoon-manage.component";
+import { SelectAccountComponent } from "./components/select-account/select-account.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,15 @@ const routes: Routes = [
     path: "neoballoon-manage",
     component: NeoballoonManageComponent,
     children: [
+      {
+        path: "",
+        redirectTo: 'select-account',
+        pathMatch: 'full'
+      },
+      {
+        path: 'select-account',
+        component: SelectAccountComponent
+      },
       {
         path: 'baby-add',
         component: BabyAddComponent

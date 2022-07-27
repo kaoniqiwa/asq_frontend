@@ -6,6 +6,7 @@ import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { HeaderNavComponent } from "./components/header-nav/header-nav.component";
 import { NeoballoonManageComponent } from "./components/neoballoon-manage/neoballoon-manage.component";
+import { SelectAccountComponent } from "./components/select-account/select-account.component";
 import { SideNavComponent } from "./components/side-nav/side-nav.component";
 import { NeoballoonRoutingModule } from "./neoballoon-routing.module";
 import { NeoballoonComponent } from "./neoballoon.component";
@@ -18,7 +19,8 @@ import { NeoballoonComponent } from "./neoballoon.component";
     HeaderNavComponent,
     BabySettingComponent,
     BabyGameComponent,
-    BabyAgeComponent
+    BabyAgeComponent,
+    SelectAccountComponent
   ],
   imports: [
     CommonModule,
