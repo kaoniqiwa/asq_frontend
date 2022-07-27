@@ -1,41 +1,59 @@
 {
-  "$schema": "./nav.schema.json",
+  "$schema": "./header-nav.schema.json",
   "data": [
     {
       "title": "首页",
-      "path": "/aiop/aiop-manage/super-vision"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "关于我们",
-      "path": "/aiop/aiop-manage/garbage-events"
+      "outerPath": "http://www.neoballoon.com/about.html"
     },
     {
       "title": "ASQ简介",
-      "path": "/aiop/aiop-manage/system-setting"
+      "children": [
+        {
+          "title": "ASQ-3基础介绍",
+          "outerPath": "http://www.neoballoon.com/intro.html"
+        },
+        {
+          "title": "ASQ:SE-2基础介绍",
+          "outerPath": "http://www.neoballoon.com/intro2.html"
+        }
+      ]
     },
     {
       "title": "法律声明",
-      "path": "/asiop/system-mode"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "知识课堂",
-      "path": "/asiop/system-mode"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "知识课堂",
-      "path": "/asiop/system-mode"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "最新通知",
-      "path": "/asiop/system-mode"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "资料下载",
-      "path": "/asiop/system-mode"
+      "outerPath": "http://www.neoballoon.com"
     },
     {
       "title": "联系我们",
-      "path": "/asiop/system-mode"
+      "children": [
+        {
+          "title": "培训咨询",
+          "outerPath": "http://www.neoballoon.com/unopended.html"
+        },
+        {
+          "title": "联系方式",
+          "outerPath": "http://www.neoballoon.com/unopended.html"
+        }
+      ]
     }
   ]
 }

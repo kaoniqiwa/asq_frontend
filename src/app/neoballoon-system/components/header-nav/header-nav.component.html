@@ -1,0 +1,10 @@
+<div class="header-nav">
+  <div class="nav-item" *ngFor="let model of models">
+    <div class="title">{{ model.title }}</div>
+    <div class="wrapper" *ngIf="model.children && model.children.length">
+      <div class="wrapper-item" *ngFor="let m of model.children">
+        <div class="title">{{ m.title }}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,9 @@ console.log(Conf)
 })
 export class HeaderNavComponent implements OnInit {
 
+  models = Conf.data;
+
+
   constructor() { }
 
   ngOnInit(): void {
