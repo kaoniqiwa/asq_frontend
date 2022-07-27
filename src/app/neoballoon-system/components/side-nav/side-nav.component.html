@@ -1,51 +1,19 @@
 <div class="side-nav">
-  <div class="nav-item">
-    <a routerLink="baby-info">首页</a>
+  <div>
+    <div class="nav-item" *ngFor="let model of models">
+      <a [routerLink]="model.path">
+        {{ model.title }}
+      </a>
+    </div>
   </div>
-  <div class="nav-item">
-    <a href="">关于我们</a>
+  <div class="nav-code">
+    <div class="code-title">扫码关注公众号</div>
+    <div class="code-img"><img src="assets/img/qrcode.jpg" alt="" /></div>
   </div>
-  <div class="nav-item">
-    <a href="">ASQ简介</a>
-  </div>
-  <div class="nav-item">
-    <a href="">法律声明</a>
-  </div>
-  <div class="nav-item">
-    <a href="">知识课堂</a>
-  </div>
-  <div class="nav-item">
-    <a href="">最新通知</a>
-  </div>
-  <div class="nav-item">
-    <a href="">资料下载</a>
-  </div>
-  <div class="nav-item">
-    <a href="">联系我们</a>
-  </div>
-
-  <div class="nav-item">
-    <a routerLink="baby-info">首页</a>
-  </div>
-  <div class="nav-item">
-    <a href="">关于我们</a>
-  </div>
-  <div class="nav-item">
-    <a href="">ASQ简介</a>
-  </div>
-  <div class="nav-item">
-    <a href="">法律声明</a>
-  </div>
-  <div class="nav-item">
-    <a href="">知识课堂</a>
-  </div>
-  <div class="nav-item">
-    <a href="">最新通知</a>
-  </div>
-  <div class="nav-item">
-    <a href="">资料下载</a>
-  </div>
-  <div class="nav-item">
-    <a href="">联系我们</a>
+  <div class="nav-info">
+    <div class="info-item">联系电话:</div>
+    <div class="info-item">021-54300379</div>
+    <div class="info-item">咨询邮箱:</div>
+    <div class="info-item">sales@neoballoon.com</div>
   </div>
 </div>

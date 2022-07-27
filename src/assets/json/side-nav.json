@@ -1,25 +1,25 @@
 {
-  "$schema": "./nav.schema.json",
+  "$schema": "./side-nav.schema.json",
   "data": [
     {
       "title": "添加宝宝",
-      "path": "/aiop/aiop-manage/super-vision"
+      "path": "/neoballoon/neoballoon-manage/baby-add"
     },
     {
       "title": "宝宝库",
-      "path": "/aiop/aiop-manage/garbage-events"
+      "path": "/neoballoon/neoballoon-manage/baby-info"
     },
     {
       "title": "游戏活动",
-      "path": "/aiop/aiop-manage/system-setting"
+      "path": "/neoballoon/neoballoon-manage/baby-game"
     },
     {
       "title": "系统操作",
-      "path": "/asiop/system-mode"
+      "path": "/neoballoon/neoballoon-manage/baby-setting"
     },
     {
       "title": "矫正龄计算",
-      "path": "/asiop/system-mode"
+      "path": "/neoballoon/neoballoon-manage/baby-age"
     }
   ]
 }

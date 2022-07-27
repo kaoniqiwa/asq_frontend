@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import Conf from 'src/assets/json/side-nav.json'
+
 
 @Component({
   selector: 'app-side-nav',
@@ -6,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-nav.component.less']
 })
 export class SideNavComponent implements OnInit {
+
+  models = Conf.data;
+
 
   constructor() { }
 
