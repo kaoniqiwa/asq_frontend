@@ -1,10 +1,8 @@
 <div class="side-nav">
   <div class="nav-wrapper">
-    <div class="nav-item" *ngFor="let model of models">
-      <a [routerLink]="model.path">
-        {{ model.title }}
-      </a>
-    </div>
+    <a class="nav-item" *ngFor="let model of models" [routerLink]="model.path">
+      {{ model.title }}
+    </a>
   </div>
   <div class="nav-code">
     <div class="code-title">扫码关注公众号</div>
