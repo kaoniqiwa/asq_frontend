@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Navigation Configuration",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "outerPath": {
+            "type": "string"
+          },
+          "children": {
+            "$ref": "#/properties/data"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

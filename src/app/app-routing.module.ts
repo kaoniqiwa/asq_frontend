@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
+import { LoginManageComponent } from './login/login-manage/login-manage.component';
+import { RoutePath } from './enum/route-path.enum';
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: 'login',
+    redirectTo: RoutePath.login,
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: RoutePath.login,
+    component: LoginManageComponent
+  },
+  {
+    path: RoutePath.neoballoon,
+    loadChildren: () =>
+      import('./neoballoon-system/neoballoon.module').then((mod) => mod.NeoballoonModule),
   }
 ]
 

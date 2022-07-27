@@ -1,0 +1,41 @@
+{
+  "$schema": "./nav.schema.json",
+  "data": [
+    {
+      "title": "首页",
+      "path": "/aiop/aiop-manage/super-vision"
+    },
+    {
+      "title": "关于我们",
+      "path": "/aiop/aiop-manage/garbage-events"
+    },
+    {
+      "title": "ASQ简介",
+      "path": "/aiop/aiop-manage/system-setting"
+    },
+    {
+      "title": "法律声明",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "知识课堂",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "知识课堂",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "最新通知",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "资料下载",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "联系我们",
+      "path": "/asiop/system-mode"
+    }
+  ]
+}

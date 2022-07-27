@@ -1,0 +1,43 @@
+<div class="family-login login">
+  <div class="simple-title">家庭用户登录</div>
+  <div class="form-wrapper">
+    <form [formGroup]="myForm">
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="手机号"
+          autocomplete="off"
+          formControlName="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="密码"
+          autocomplete="off"
+          formControlName="password"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="login-footer">
+    <div class="login-footer-item">
+      <button
+        class="normal-green-button"
+        type="button"
+        (click)="showHint = true"
+      >
+        登录
+      </button>
+    </div>
+    <div class="login-footer-item">
+      <!-- <div class="forget-password"></div>
+      |
+      <div class="register"></div> -->
+
+      <a href="">忘记密码</a>|
+      <a href="">注册账号</a>
+    </div>
+  </div>
+</div>

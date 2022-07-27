@@ -101,7 +101,7 @@
             },
             "development": {
               "browserTarget": "asq_frontend:build:development",
-              "port": 9527,
+              "port": 4299,
               "host": "127.0.0.1"
             }
           },

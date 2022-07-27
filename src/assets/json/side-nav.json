@@ -1,0 +1,25 @@
+{
+  "$schema": "./nav.schema.json",
+  "data": [
+    {
+      "title": "添加宝宝",
+      "path": "/aiop/aiop-manage/super-vision"
+    },
+    {
+      "title": "宝宝库",
+      "path": "/aiop/aiop-manage/garbage-events"
+    },
+    {
+      "title": "游戏活动",
+      "path": "/aiop/aiop-manage/system-setting"
+    },
+    {
+      "title": "系统操作",
+      "path": "/asiop/system-mode"
+    },
+    {
+      "title": "矫正龄计算",
+      "path": "/asiop/system-mode"
+    }
+  ]
+}

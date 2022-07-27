@@ -1,0 +1,26 @@
+.neoballoon-manage {
+  width: 100%;
+  height: 100%;
+  @header-height: 50px;
+  &-header {
+    width: 100%;
+    height: @header-height;
+    background-color: red;
+  }
+  &-body {
+    width: 100%;
+    height: calc(100% - @header-height);
+    background-color: cyan;
+    display: flex;
+
+    .side-nav {
+      width: 200px;
+      background-color: blue;
+    }
+
+    .side-nav-main {
+      flex-grow: 1;
+      background-color: violet;
+    }
+  }
+}
