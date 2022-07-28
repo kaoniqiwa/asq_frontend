@@ -24,6 +24,7 @@ import { LoginManageComponent } from './login/login-manage/login-manage.componen
     ReactiveFormsModule,
     AppRoutingModule,
     HowellModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

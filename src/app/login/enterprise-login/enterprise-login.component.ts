@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RoutePath } from 'src/app/enum/route-path.enum';
-
+import axios from 'axios'
 @Component({
   selector: 'app-enterprise-login',
   templateUrl: './enterprise-login.component.html',
@@ -18,12 +16,13 @@ export class EnterpriseLoginComponent implements OnInit {
   @Output()
   validate = new EventEmitter();
 
-  constructor(private _fb: FormBuilder,) { }
+  constructor(private _fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    this.validate.emit(true)
+    console.log('pppp', axios)
+    axios.get('login.php').then((data) => console.log(data))
   }
 }

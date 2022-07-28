@@ -13,7 +13,7 @@ export class LoginManageComponent implements OnInit {
 
 
   constructor(private _title: Title) {
-    this._title.setTitle('登录')
+    this._title.setTitle('用户登录')
   }
 
   ngOnInit(): void {
