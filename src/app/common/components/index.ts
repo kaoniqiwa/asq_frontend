@@ -1,4 +1,3 @@
-import { AccountInfoComponent } from "./account-info/account-info.component";
 import { AccountOperationComponent } from "./account-operation/account-operation.component";
 import { EnterpriseLicenseComponent } from "./enterprise-license/enterprise-license.component";
 import { FamilyLicenseComponent } from "./family-license/family-license.component";
@@ -9,5 +8,4 @@ export const CUSTOM_COMPONENTS = [
   EnterpriseLicenseComponent,
   FamilyLicenseComponent,
   AccountOperationComponent,
-  AccountInfoComponent
 ]

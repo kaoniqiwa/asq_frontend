@@ -1,0 +1,73 @@
+<div class="table-container">
+  <!--表头 -->
+  <mat-table
+    style="position: sticky; top: 0"
+    [dataSource]="dataSource"
+    matSort
+    (matSortChange)="sortData($event)"
+  >
+    <ng-container
+      *ngFor="let model of columnModel"
+      [matColumnDef]="model.columnDef"
+    >
+      <mat-header-cell *matHeaderCellDef [style.flexBasis]="model.flexBasis">
+        <!-- 显示 ellipsis必须包一层div-->
+        <div [class]="model.className">{{ model.header }}</div>
+      </mat-header-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Operation">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="Operation">操作</div></mat-header-cell
+      >
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  </mat-table>
+
+  <!--表内容-->
+  <mat-table
+    [dataSource]="dataSource"
+    style="overflow: auto"
+    class="bold-scrollbar"
+    [class.zoomIn]="zoomIn"
+    [trackBy]="trackBy"
+  >
+    <!--普通内容 -->
+    <ng-container
+      *ngFor="let model of columnModel"
+      [matColumnDef]="model.columnDef"
+    >
+      <mat-cell
+        *matCellDef="let row"
+        [style.flexBasis]="model.flexBasis"
+        (click)="clickCell(model, row, $event)"
+        [title]="model.title ?? model.cell(row)"
+      >
+        <div [innerHTML]="model.cell(row)" [class]="model.className"></div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- 操作列内容 -->
+    <ng-container matColumnDef="Operation">
+      <mat-cell *matCellDef="let row">
+        <div>
+          <i
+            *ngFor="let operate of tableOperates"
+            [class]="operate.classNames"
+            class="operate-icon"
+            [id]="operate.id"
+            [title]="operate.title"
+            (click)="$event.stopPropagation(); operate.callBack(row, $event)"
+          ></i>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="clickRow(row)"
+      [class.high-light]="highLight(row)"
+    ></mat-row>
+  </mat-table>
+</div>

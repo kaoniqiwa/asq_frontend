@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AccountComponent } from "./components/account/account.component";
 import { BabyAddComponent } from "./components/baby-add/baby-add.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
@@ -20,12 +21,12 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: 'select-account',
+        redirectTo: 'account',
         pathMatch: 'full'
       },
       {
-        path: 'select-account',
-        component: SelectAccountComponent
+        path: 'account',
+        component: AccountComponent
       },
       {
         path: 'baby-add',

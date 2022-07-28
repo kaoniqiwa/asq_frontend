@@ -1,6 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { HowellModule } from "../common/howell.module";
+import { AccountInfoComponent } from "./components/account-info/account-info.component";
+import { AccountComponent } from "./components/account/account.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
@@ -20,7 +22,9 @@ import { NeoballoonComponent } from "./neoballoon.component";
     BabySettingComponent,
     BabyGameComponent,
     BabyAgeComponent,
-    SelectAccountComponent
+    SelectAccountComponent,
+    AccountComponent,
+    AccountInfoComponent
   ],
   imports: [
     CommonModule,

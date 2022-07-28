@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { RoutePath } from 'src/app/enum/route-path.enum';
 
 @Component({
   selector: 'app-enterprise-license',
@@ -8,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class EnterpriseLicenseComponent implements OnInit {
 
 
-
-  constructor() { }
+  @Output() closeLicense = new EventEmitter();
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
+  }
+  login() {
+    this._router.navigateByUrl(RoutePath.neoballoon)
+  }
+  close() {
+    this.closeLicense.emit()
   }
 
 }

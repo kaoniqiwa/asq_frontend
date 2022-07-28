@@ -19,5 +19,11 @@ export class LoginManageComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  validate(flag: boolean) {
+    this.showLicense = true;
+  }
+  closeLicense() {
+    this.showLicense = false;
+  }
 
 }

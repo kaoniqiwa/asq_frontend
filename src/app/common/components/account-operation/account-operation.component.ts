@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RoutePath } from 'src/app/enum/route-path.enum';
 import { AccountOperationDisplay } from './account-operation.model';
 
 @Component({
@@ -11,7 +13,7 @@ export class AccountOperationComponent implements OnInit {
   userName = '示教账号';
   display = new AccountOperationDisplay();
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,6 +25,6 @@ export class AccountOperationComponent implements OnInit {
 
   }
   logoutHandler() {
-
+    this._router.navigateByUrl(RoutePath.login)
   }
 }
