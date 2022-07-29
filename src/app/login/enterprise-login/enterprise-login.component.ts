@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import axios from 'axios'
+import axios from 'axios';
+
+import { ToastrService } from 'ngx-toastr'
+import { EnterPriseLoginModel } from 'src/app/view-model/login.model';
 @Component({
   selector: 'app-enterprise-login',
   templateUrl: './enterprise-login.component.html',
@@ -16,13 +19,16 @@ export class EnterpriseLoginComponent implements OnInit {
   @Output()
   validate = new EventEmitter();
 
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder,) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    console.log('pppp', axios)
-    axios.get('login.php').then((data) => console.log(data))
+    this.validate.emit(
+      new EnterPriseLoginModel(this.myForm.value.username ?? "", this.myForm.value.password ?? "")
+    )
+    // axios.get('/api/login.php').then((data) => console.log(data))
+    // this._toastrService.success('sdfdsf')
   }
 }

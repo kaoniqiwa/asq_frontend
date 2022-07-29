@@ -244,6 +244,7 @@
           name="auto-login"
           id="autoLogin"
           style="margin-right: 5px"
+          [(ngModel)]="agree"
         />
         <label for="autoLogin"
           >我已经阅读并理解前述内容，并且同意接受条款的约束</label
@@ -253,11 +254,12 @@
     <div class="license-footer-item">
       <button
         class="normal-green-button"
+        [class.disabled]="!agree"
         type="button"
         style="width: 170px"
         (click)="login()"
       >
-        登录
+        下一步
       </button>
     </div>
   </div>
