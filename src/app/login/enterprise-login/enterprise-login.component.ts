@@ -11,6 +11,7 @@ import { EnterPriseLoginModel } from 'src/app/view-model/login.model';
 })
 export class EnterpriseLoginComponent implements OnInit {
 
+  autoLogin = true;
   myForm = this._fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required]

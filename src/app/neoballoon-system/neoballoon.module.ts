@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HowellModule } from "../common/howell.module";
 import { AccountInfoComponent } from "./components/account-info/account-info.component";
 import { AccountComponent } from "./components/account/account.component";
@@ -28,6 +29,8 @@ import { NeoballoonComponent } from "./neoballoon.component";
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     NeoballoonRoutingModule,
     HowellModule
   ]

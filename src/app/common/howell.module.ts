@@ -1,4 +1,5 @@
 import { CommonModule } from "@angular/common";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -16,7 +17,8 @@ import { CUSTOM_DIRECTIVES } from "./directive";
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   exports: [...CUSTOM_COMPONENTS, ...CUSTOM_DIRECTIVES]
 })
