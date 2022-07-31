@@ -1,12 +1,10 @@
 .mat-table {
-  background-color: #1b2242;
   .mat-header-row {
-    background-color: #414b83;
-    height: 70px;
-    border-bottom-color: rgba(0, 0, 0, 0.3);
+    height: 50px;
+    border-bottom-color: #ddd;
     .mat-header-cell {
-      color: white;
-      font-size: 24px;
+      color: black;
+      font-size: 14px;
       > div {
         width: 100%;
         white-space: nowrap;
@@ -17,26 +15,26 @@
     }
   }
   .mat-row {
-    height: 60px;
+    height: 50px;
 
     cursor: pointer;
     &:hover {
-      background-color: #3d5492;
-      border-bottom-color: rgba(0, 0, 0, 0.3);
+      // background-color: #3d5492;
+      // border-bottom-color: rgba(0, 0, 0, 0.3);
     }
 
     &.high-light {
-      background: linear-gradient(
-        to right,
-        rgb(117, 134, 224),
-        rgb(50, 134, 229)
-      );
-      border-bottom-color: rgba(0, 0, 0, 0.3);
+      // background: linear-gradient(
+      //   to right,
+      //   rgb(117, 134, 224),
+      //   rgb(50, 134, 229)
+      // );
+      // border-bottom-color: rgba(0, 0, 0, 0.3);
     }
 
     .mat-cell {
-      color: #cfd7ff;
-      font-size: 18px;
+      color: black;
+      font-size: 14px;
 
       > div {
         width: 100%;
@@ -46,10 +44,7 @@
         // text-align: center;
       }
     }
-    img {
-      width: 69px;
-      height: 40px;
-    }
+
     i {
       margin-right: 5px;
       color: #7586e0;
@@ -104,23 +99,3 @@ mat-header-cell,
 mat-footer-cell {
   width: 0;
 }
-
-// ::ng-deep .mat-table .mat-row .mat-cell div.operation {
-//   color: #7586e0;
-// }
-
-// ::ng-deep .mat-table .mat-row .mat-cell div.operation i {
-//   padding-right: 5px;
-// }
-
-// ::ng-deep .mat-table .mat-row .mat-cell div.operation i:hover {
-//   color: #fff;
-// }
-
-// ::ng-deep .mat-table .mat-row.high-light .mat-cell div.operation i {
-//   color: #cfd7ff;
-// }
-
-// ::ng-deep .mat-table .mat-row.high-light .mat-cell div.operation i:hover {
-//   color: #fff;
-// }

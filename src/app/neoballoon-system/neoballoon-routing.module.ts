@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { HowellModule } from "../common/howell.module";
 import { AccountComponent } from "./components/account/account.component";
 import { BabyAddComponent } from "./components/baby-add/baby-add.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
-import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
+import { BabyInfoManageComponent } from "./components/baby-info/baby-info-manage.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { NeoballoonManageComponent } from "./components/neoballoon-manage/neoballoon-manage.component";
 import { SelectAccountComponent } from "./components/select-account/select-account.component";
@@ -34,7 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'baby-info',
-        component: BabyInfoComponent
+        component: BabyInfoManageComponent
       },
       {
         path: 'baby-game',

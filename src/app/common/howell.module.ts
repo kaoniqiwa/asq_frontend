@@ -18,7 +18,8 @@ import { CUSTOM_DIRECTIVES } from "./directive";
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   exports: [...CUSTOM_COMPONENTS, ...CUSTOM_DIRECTIVES]
 })

@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+.hw-search {
+  flex-shrink: 0;
+  // width: 100%;
+  height: 34px;
+  font-size: 18px;
+  position: relative;
+  flex-grow: 1;
+
+  &-icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translate(0, -52%);
+    color: #ccc;
+    font-size: 20px;
+    cursor: pointer;
+
+    &:hover {
+      color: #36bd46;
+    }
+  }
+}

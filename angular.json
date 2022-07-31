@@ -9,7 +9,8 @@
         "@schematics/angular:component": {
           "style": "less",
           "skipTests": true,
-          "skipImport": true
+          "skipImport": true,
+          "prefix": ""
         },
         "@schematics/angular:class": {
           "skipTests": true

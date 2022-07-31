@@ -1,0 +1,163 @@
+<div class="baby-info vertical-layout">
+  <div class="vertical-header">
+    <div class="simple-title">宝宝库</div>
+    <div class="operate-bar">
+      <div class="left-wrapper">
+        <div class="select-wrapper">
+          <select [(ngModel)]="fileType">
+            <option value="">请选择</option>
+            <option value="1">个人档案</option>
+            <option value="2">全部档案</option>
+          </select>
+        </div>
+        <div class="select-wrapper" [class.expand]="questionType == '3'">
+          <select [(ngModel)]="questionType">
+            <option value="" disabled>请选择</option>
+            <option value="1">ASQ-3</option>
+            <option value="2">ASQ:SE</option>
+            <option value="3">ASQ:SE-2及其联结</option>
+          </select>
+        </div>
+      </div>
+      <div class="right-wrapper">
+        <div class="search-wrapper">
+          <app-simple-search></app-simple-search>
+        </div>
+        <button>
+          添加宝宝
+          <i class="howell-icon-plus2" style="font-size: 17px"></i>
+        </button>
+        <button>筛选<i class="mdi mdi-filter-outline"></i></button>
+      </div>
+    </div>
+    <!-- <div class="filter-wrapper">
+      <div class="filter-group">
+        <div class="title"><span class="hw-form-label">问卷年龄:</span></div>
+        <div class="content">
+          <select>
+            <option value="">请选择</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title"><span class="hw-form-label">医生姓名:</span></div>
+        <div class="content">
+          <select>
+            <option value="">请选择</option>
+            <option value="1">示教1</option>
+            <option value="2">示教2</option>
+            <option value="3">示教3</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title"><span class="hw-form-label">状态:</span></div>
+        <div class="content">
+          <select>
+            <option value="">请选择</option>
+            <option value="1">已归档</option>
+            <option value="2">未归档</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="vertical-main">
+    <!-- <table>
+      <thead>
+        <tr>
+          <th>宝宝姓名</th>
+          <th>出生年龄</th>
+          <th>家长</th>
+          <th>筛查时间</th>
+          <th>状态</th>
+          <th>档案号</th>
+          <th>操作</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>刘庭宇</td>
+          <td>2019-3-9</td>
+          <td>刘</td>
+          <td>2022-07-27 11:40:32-2</td>
+          <td>
+            <a class="_gd" href="" style="color: #34bb45">未归档</a>
+          </td>
+          <td>E20220727114032562475</td>
+          <td>
+            <input type="hidden" value="1" class="print1" />
+            <input type="hidden" value="42" class="print2" />
+            <input type="hidden" value="889248768" class="print3" />
+            <select class="choPrint" style="color: #34bb45; font-weight: bold">
+              <option value="" disabled selected hidden>选择打印</option>
+              <option value="1-1-42-889248768-14">家长报告</option>
+              <option value="2-1-42-889248768-14">打印全部</option>
+            </select>
+          </td>
+          <td>
+            <a href="8">
+              了解更多<img src="assets/img/arrow_w.png" alt="" id="leftmore" />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>刘庭宇</td>
+          <td>2019-3-9</td>
+          <td>刘</td>
+          <td>2022-07-27 11:40:32-2</td>
+          <td>
+            <a class="_gd" href="" style="color: #34bb45">未归档</a>
+          </td>
+          <td>E20220727114032562475</td>
+          <td>
+            <input type="hidden" value="1" class="print1" />
+            <input type="hidden" value="42" class="print2" />
+            <input type="hidden" value="889248768" class="print3" />
+            <select class="choPrint" style="color: #34bb45; font-weight: bold">
+              <option value="" disabled selected hidden>选择打印</option>
+              <option value="1-1-42-889248768-14">家长报告</option>
+              <option value="2-1-42-889248768-14">打印全部</option>
+            </select>
+          </td>
+          <td>
+            <a href="8">
+              了解更多<img src="assets/img/arrow_w.png" alt="" id="leftmore" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+    <common-table
+      [dataSubject]="dataSubject"
+      [columnModel]="columnModel"
+      [displayedColumns]="displayedColumns"
+      [tableOperates]="tableOperates"
+    ></common-table>
+  </div>
+  <div class="vertical-footer">
+    <div class="footer-item">
+      <!-- <app-table-select (tableSelect)="tableSelect($event)"> </app-table-select> -->
+    </div>
+    <div class="footer-item">
+      <!-- <div class="footer-info">
+        <div class="info-item">已选择: {{ selectedRows.length }}</div>
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+      </div> -->
+      <app-paginator
+        *ngIf="page"
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="pagerCount"
+        [pageIndex]="pageIndex - 1"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+</div>

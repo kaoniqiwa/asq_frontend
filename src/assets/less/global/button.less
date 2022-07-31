@@ -23,3 +23,27 @@
   border: 1px solid #34bb45;
   color: #34bb45;
 }
+
+button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 30px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
+  i {
+    font-size: 15px;
+    color: #34bb45;
+  }
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}

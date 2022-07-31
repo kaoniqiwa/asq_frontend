@@ -12,21 +12,27 @@ import { LoginManageComponent } from './login/login-manage/login-manage.componen
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
+import { EnterpriseLicenseComponent } from './login/enterprise-license/enterprise-license.component';
+import { FamilyLicenseComponent } from './login/family-license/family-license.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginManageComponent,
     FamilyLoginComponent,
-    EnterpriseLoginComponent
+    EnterpriseLoginComponent,
+    EnterpriseLicenseComponent,
+    FamilyLicenseComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    HowellModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    HowellModule,
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
