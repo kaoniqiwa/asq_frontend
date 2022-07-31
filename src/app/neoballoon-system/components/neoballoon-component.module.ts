@@ -5,7 +5,7 @@ import { AccountComponent } from './account/account.component';
 import { BabyAddComponent } from './baby-add/baby-add.component';
 import { BabyAgeComponent } from './baby-age/baby-age.component';
 import { BabyGameComponent } from './baby-game/baby-game.component';
-import { BabyInfoManageComponent } from './baby-info/baby-info-manage.component';
+import { BabyInfoComponent } from './baby-info/baby-info.component';
 import { BabySettingComponent } from './baby-setting/baby-setting.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { NeoballoonManageComponent } from './neoballoon-manage/neoballoon-manage.component';
@@ -30,7 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AccountComponent,
     AccountInfoComponent,
     BabyAddComponent,
-    BabyInfoManageComponent
+    BabyInfoComponent
   ],
   imports: [
     CommonModule,

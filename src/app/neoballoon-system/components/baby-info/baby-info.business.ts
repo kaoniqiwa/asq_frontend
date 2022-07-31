@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Page, PagedList } from "src/app/network/model/page_list.model";
-import { BabyInfoManageModel } from "src/app/view-model/baby-info-manage.model";
+import { BabyInfoModel } from "src/app/view-model/baby-info.model";
 
 @Injectable()
 export class BabyInfoManageBusiness {
-  data: BabyInfoManageModel[] = [
+  data: BabyInfoModel[] = [
 
   ]
   constructor() {
@@ -12,7 +12,7 @@ export class BabyInfoManageBusiness {
   }
   init() {
     for (let i = 0; i < 9; i++) {
-      let model = new BabyInfoManageModel();
+      let model = new BabyInfoModel();
       model.Id = (i + 1).toString();
       model.Name = "栲霓杞蛙";
       model.Birthday = '2022-7-1';
@@ -31,7 +31,7 @@ export class BabyInfoManageBusiness {
       RecordCount: 9,
       TotalRecordCount: 3398
     }
-    let res: PagedList<BabyInfoManageModel> = {
+    let res: PagedList<BabyInfoModel> = {
       Page: page,
       Data: this.data,
     };

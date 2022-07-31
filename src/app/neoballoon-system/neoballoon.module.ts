@@ -7,7 +7,7 @@ import { AccountComponent } from "./components/account/account.component";
 import { BabyAddComponent } from "./components/baby-add/baby-add.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
-import { BabyInfoManageComponent } from "./components/baby-info/baby-info-manage.component";
+import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { HeaderNavComponent } from "./components/header-nav/header-nav.component";
 import { NeoballoonComponentModule } from "./components/neoballoon-component.module";

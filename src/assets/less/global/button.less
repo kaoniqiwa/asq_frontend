@@ -1,7 +1,20 @@
+.small-button() {
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
 .normal-button() {
   font-size: 14px;
-  border-radius: 15px;
-  border: 1px solid #34bb45;
+  border-radius: 8px;
   height: 30px;
   border: none;
   cursor: pointer;
@@ -11,10 +24,41 @@
     filter: grayscale(1);
   }
 }
-.normal-green-button {
-  .normal-button();
+
+.large-button() {
+  font-size: 16px;
+  border-radius: 10px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  width: 130px;
+
+  &.disabled {
+    filter: grayscale(1);
+  }
+}
+
+.green-button() {
   background-color: #34bb45;
   color: white;
+  border: 1px solid #34bb45;
+}
+.gray-button() {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  &:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
+  i {
+    font-size: 15px;
+    color: #34bb45;
+  }
+}
+.normal-green-button {
+  .normal-button();
+  .green-button();
 }
 
 .reverse-green-button {
@@ -24,26 +68,20 @@
   color: #34bb45;
 }
 
-button {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  height: 30px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background-color: #e6e6e6;
-    border-color: #adadad;
-  }
-  i {
-    font-size: 15px;
-    color: #34bb45;
-  }
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
+.large-green-button {
+  .large-button();
+  .green-button();
+}
+.gray-small-button {
+  .small-button();
+  .gray-button();
+}
+.gray-normal-button {
+  .normal-button();
+  .gray-button();
+}
+
+.gray-large-button {
+  .large-button();
+  .gray-button();
 }
