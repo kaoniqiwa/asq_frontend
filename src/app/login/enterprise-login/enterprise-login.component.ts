@@ -29,7 +29,5 @@ export class EnterpriseLoginComponent implements OnInit {
     this.validate.emit(
       new EnterPriseLoginModel(this.myForm.value.username ?? "", this.myForm.value.password ?? "")
     )
-    // axios.get('/api/login.php').then((data) => console.log(data))
-    // this._toastrService.success('sdfdsf')
   }
 }

@@ -303,7 +303,7 @@
     <div class="license-footer-item">
       <button
         class="normal-green-button"
-        [class.disabled]="!agree"
+        [class.disabled]="isLogin || !agree"
         type="button"
         style="width: 170px"
         (click)="login()"

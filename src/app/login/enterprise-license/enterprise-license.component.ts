@@ -14,6 +14,7 @@ import { AuthorizationService } from 'src/app/network/auth/auth-request.service'
 export class EnterpriseLicenseComponent implements OnInit {
 
   agree = true;
+  isLogin = false;
 
   @Input() loginModel: LoginModel | null = null
 
@@ -24,10 +25,17 @@ export class EnterpriseLicenseComponent implements OnInit {
   }
   async login() {
     if (this.agree && this.loginModel) {
-      let res = await this._authorization.login('1', '2')
-      console.log(res)
-      if (res) {
-        this._router.navigateByUrl(RoutePath.neoballoon)
+      this.isLogin = true;
+      try {
+        let res = await this._authorization.login(this.loginModel.username, this.loginModel.password)
+        console.log(res)
+        if (res) {
+          this._router.navigateByUrl(RoutePath.neoballoon)
+        }
+      } catch (e) {
+
+      } finally {
+        this.isLogin = false;
       }
     }
   }
