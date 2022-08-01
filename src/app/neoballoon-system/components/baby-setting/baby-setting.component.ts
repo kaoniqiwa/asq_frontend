@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BabySettingModel } from 'src/app/enum/baby-setting.enum';
 
 @Component({
   selector: 'app-baby-setting',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./baby-setting.component.less']
 })
 export class BabySettingComponent implements OnInit {
+
+  BabySettingModel = BabySettingModel;
+  model: BabySettingModel = BabySettingModel.manualDownload;
 
   constructor() { }
 

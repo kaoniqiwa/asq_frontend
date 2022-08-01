@@ -1,13 +1,35 @@
 <div class="baby-setting">
   <div class="simple-title">系统操作</div>
   <div class="btns">
-    <button class="gray-large-button">使用手册</button>
-    <button class="gray-large-button">系统使用Q&A</button>
-    <button class="gray-large-button">更新日志</button>
+    <button
+      class="gray-large-button"
+      [class.selected]="model == BabySettingModel.manualDownload"
+      (click)="model = BabySettingModel.manualDownload"
+    >
+      使用手册
+    </button>
+    <button
+      class="gray-large-button"
+      [class.selected]="model == BabySettingModel.systemUsage"
+      (click)="model = BabySettingModel.systemUsage"
+    >
+      系统使用Q&A
+    </button>
+    <button
+      class="gray-large-button"
+      [class.selected]="model == BabySettingModel.updateBox"
+      (click)="model = BabySettingModel.updateBox"
+    >
+      更新日志
+    </button>
   </div>
   <div class="wrapper">
-    <!-- <system-usage></system-usage> -->
-    <!-- <manual-download></manual-download> -->
-    <update-box></update-box>
+    <ng-container [ngSwitch]="model">
+      <manual-download
+        *ngSwitchCase="BabySettingModel.manualDownload"
+      ></manual-download>
+      <system-usage *ngSwitchCase="BabySettingModel.systemUsage"></system-usage>
+      <update-box *ngSwitchCase="BabySettingModel.updateBox"></update-box>
+    </ng-container>
   </div>
 </div>
