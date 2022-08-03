@@ -6,8 +6,8 @@
         <input
           type="text"
           placeholder="账号"
-          autocomplete="off"
           formControlName="username"
+          autocomplete="new-password"
         />
       </div>
 
@@ -15,8 +15,8 @@
         <input
           type="password"
           placeholder="密码"
-          autocomplete="off"
           formControlName="password"
+          autocomplete="new-password"
         />
       </div>
     </form>
@@ -51,3 +51,6 @@
     </div>
   </div>
 </div>
+<!-- autocomplete="new-password" -->
+
+{{ myForm.value | json }}

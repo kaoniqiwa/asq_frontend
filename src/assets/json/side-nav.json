@@ -2,22 +2,27 @@
   "$schema": "./side-nav.schema.json",
   "data": [
     {
+      "id": "baby-info",
       "title": "宝宝库",
       "path": "/neoballoon/neoballoon-manage/baby-info"
     },
     {
+      "id": "baby-add",
       "title": "添加宝宝",
       "path": "/neoballoon/neoballoon-manage/baby-add"
     },
     {
+      "id": "baby-game",
       "title": "游戏活动",
       "path": "/neoballoon/neoballoon-manage/baby-game"
     },
     {
+      "id": "baby-setting",
       "title": "系统操作",
       "path": "/neoballoon/neoballoon-manage/baby-setting"
     },
     {
+      "id": "baby-age",
       "title": "矫正龄计算",
       "path": "/neoballoon/neoballoon-manage/baby-age"
     }

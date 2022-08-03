@@ -1,4 +1,8 @@
 <div class="baby-game">
+  <app-toast-window *ngIf="showToast">
+    <image-box [models]="toastModels" (closeEvent)="closeEvent()"></image-box>
+  </app-toast-window>
+
   <div class="simple-title">游戏活动</div>
 
   <div class="game-wrapper">
@@ -7,25 +11,29 @@
       <div class="content">
         <div
           class="game-item"
-          *ngFor="let item of asq3Data"
-          (click)="clickItem(item)"
-          [class.selected]="selection.isSelected(item)"
+          *ngFor="let model of asq3Data"
+          (click)="clickItem(model)"
+          [class.selected]="selection.isSelected(model)"
         >
           <div>
-            <label for="print"> {{ item.title }} </label>
+            <label for="print"> {{ model.title }} </label>
           </div>
           <div class="select-wrapper">
-            <select>
-              <option value="">选择操作</option>
-              <option value="">查看</option>
-              <option value="">打印</option>
+            <select
+              [(ngModel)]="model.operation"
+              (change)="selectChange($event, model)"
+              (click)="$event.stopPropagation()"
+            >
+              <option value="" disabled>选择操作</option>
+              <option value="0">查看</option>
+              <option value="1">打印</option>
             </select>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="game-group asq-se2">
+    <!-- <div class="game-group asq-se2">
       <div class="title">ASQ:SE-2</div>
       <div class="content">
         <div
@@ -39,15 +47,16 @@
           </div>
           <div class="select-wrapper">
             <select>
-              <option value="">选择操作</option>
-              <option value="">查看</option>
-              <option value="">打印</option>
+              <option value="" disabled>选择操作</option>
+              <option value="0">查看</option>
+              <option value="1">打印</option>
             </select>
           </div>
         </div>
       </div>
-    </div>
-
+    </div> -->
+  </div>
+  <div class="game-footer">
     <div class="hw-normal-btn-group">
       <button class="large-green-button">打印</button>
     </div>

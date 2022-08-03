@@ -1,0 +1,18 @@
+<div class="image-box popped-content">
+  <div class="closeImg" (click)="close()">
+    <img src="assets/img/close.png" alt="" />
+  </div>
+  <div class="popped-main">
+    <ng-container *ngFor="let model of models">
+      <img
+        [src]="model.imageBaseUrl + model.index + '.' + model.imageAppendix"
+        alt=""
+      />
+    </ng-container>
+  </div>
+  <div class="popped-footer">
+    <div class="popped-footer-item">
+      <button class="large-green-button">打印</button>
+    </div>
+  </div>
+</div>

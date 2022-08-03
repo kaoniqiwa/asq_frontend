@@ -13,6 +13,9 @@ import { BabyGameBusiness } from './baby-game.business';
 })
 export class BabyGameComponent implements OnInit {
 
+  showToast = false;
+  toastModels: BabyGameModel[] = [];
+
   asq3Data: BabyGameModel[] = [];
   asqSe2Data: BabyGameModel[] = [];
 
@@ -32,7 +35,15 @@ export class BabyGameComponent implements OnInit {
   }
 
   clickItem(model: BabyGameModel) {
-    console.log(model)
     this.selection.toggle(model)
+  }
+  closeEvent() {
+    this.showToast = false;
+  }
+  selectChange(e: Event, model: BabyGameModel) {
+    e.stopPropagation();
+    console.log(model)
+    this.showToast = true;
+    this.toastModels = [model]
   }
 }

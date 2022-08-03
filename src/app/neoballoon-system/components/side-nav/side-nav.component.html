@@ -1,6 +1,11 @@
 <div class="side-nav">
   <div class="nav-wrapper">
-    <a class="nav-item" *ngFor="let model of models" [routerLink]="model.path">
+    <a
+      class="nav-item"
+      [class.selected]="model.id == side"
+      *ngFor="let model of models"
+      [routerLink]="model.path"
+    >
       {{ model.title }}
     </a>
   </div>

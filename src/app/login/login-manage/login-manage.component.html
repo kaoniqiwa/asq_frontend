@@ -2,7 +2,7 @@
   <app-toast-window *ngIf="showLicense">
     <app-enterprise-license
       [loginModel]="loginModel"
-      (closeLicense)="closeLicense()"
+      (closeEvent)="closeEvent()"
     ></app-enterprise-license>
   </app-toast-window>
   <div class="login-logo">

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ export class EnterpriseLoginComponent implements OnInit {
   constructor(private _fb: FormBuilder,) { }
 
   ngOnInit(): void {
+   
   }
 
   login() {

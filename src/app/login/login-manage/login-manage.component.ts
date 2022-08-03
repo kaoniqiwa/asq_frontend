@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +27,7 @@ export class LoginManageComponent implements OnInit {
     this.showLicense = true;
     this.loginModel = model;
   }
-  closeLicense() {
+  closeEvent() {
     this.showLicense = false;
   }
 

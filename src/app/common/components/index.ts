@@ -1,5 +1,6 @@
 import { AccountOperationComponent } from "./account-operation/account-operation.component";
 import { CommonTableComponent } from "./common-table/common-table.component";
+import { ImageBoxComponent } from "./image-box/image-box.component";
 import { ManualDownloadComponent } from "./manual-download/manual-download.component";
 import { PaginatorComponent } from "./paginator/paginator.component";
 import { SimpleSearchComponent } from "./simple-search/simple-search.component";
@@ -15,5 +16,6 @@ export const CUSTOM_COMPONENTS = [
   PaginatorComponent,
   SystemUsageComponent,
   ManualDownloadComponent,
-  UpdateBoxComponent
+  UpdateBoxComponent,
+  ImageBoxComponent
 ]

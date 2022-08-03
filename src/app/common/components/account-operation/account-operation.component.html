@@ -1,16 +1,3 @@
-<!-- <div class="account-operation">
-  <div class="operation-link item">
-    <a
-      href="http://www.neoballoon.com/ASQ/main.html"
-      [class.jump]="currentAccount == 'family'"
-      >家庭版</a
-    >/<a [class.jump]="currentAccount == 'company'">企业版</a>
-  </div>
-  <div class="account-title item">您好,示教1</div>
-  <button class="reverse-green-button item" type="button">返回首页</button>
-  <button class="reverse-green-button item" type="button">登出</button>
-</div> -->
-
 <div class="account-operation">
   <div class="operation-item" [matMenuTriggerFor]="menu">
     <div class="log-out">
@@ -21,7 +8,11 @@
         <i class="howell-icon-account"></i>
         {{ userName }}
       </button>
-      <button mat-menu-item *ngIf="display.subAccount">
+      <button
+        mat-menu-item
+        *ngIf="display.subAccount"
+        (click)="selectSubAccount()"
+      >
         <i class="howell-icon-department-operator"></i>
         选择子账号
       </button>

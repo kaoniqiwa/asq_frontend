@@ -55,7 +55,7 @@ input[type="password"] {
   padding-left: 10px;
   box-sizing: border-box;
   outline: none;
-  transition: all 0.3s;
+  // transition: all 0.3s;
   &:focus {
     border-color: #66afe9;
     box-shadow: 0 1px 1px rgb(0 0 0 / 8%) inset, 0 0 8px rgb(102 175 233 / 60%);
@@ -81,28 +81,15 @@ select {
   background-repeat: no-repeat;
   background-position: 98% 50%;
   appearance: none;
-  color: #34bb45;
+  // color: #34bb45;
   cursor: pointer;
+  outline: none;
+  border-radius: 5px;
 }
 
 a {
   text-decoration: none;
   cursor: pointer;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  -webkit-transition-delay: 99999s;
-  transition-delay: 99999s;
-  -webkit-transition: color 99999s, background-color 99999s;
-  transition: color 99999s, background-color 99999s;
 }
 
 input[type="number"] {

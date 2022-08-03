@@ -5,6 +5,7 @@ import { LoginModel } from 'src/app/view-model/login.model';
 import axios from 'axios';
 import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from 'src/app/network/auth/auth-request.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-enterprise-license',
@@ -18,8 +19,8 @@ export class EnterpriseLicenseComponent implements OnInit {
 
   @Input() loginModel: LoginModel | null = null
 
-  @Output() closeLicense = new EventEmitter();
-  constructor(private _router: Router, private _authorization: AuthorizationService) { }
+  @Output() closeEvent = new EventEmitter();
+  constructor(private _router: Router, private _authorization: AuthorizationService, private _toastrService: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -27,8 +28,9 @@ export class EnterpriseLicenseComponent implements OnInit {
     if (this.agree && this.loginModel) {
       this.isLogin = true;
       try {
-        let res = await this._authorization.login(this.loginModel.username, this.loginModel.password)
-        console.log(res)
+        let res = await this._authorization.login(this.loginModel.username, this.loginModel.password).catch(e => {
+          this._toastrService.error('登录失败')
+        })
         if (res) {
           this._router.navigateByUrl(RoutePath.neoballoon)
         }
@@ -40,7 +42,7 @@ export class EnterpriseLicenseComponent implements OnInit {
     }
   }
   close() {
-    this.closeLicense.emit()
+    this.closeEvent.emit()
   }
 
 }
