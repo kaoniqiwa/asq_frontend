@@ -16,48 +16,53 @@
           [class.selected]="selection.isSelected(model)"
         >
           <div>
-            <label for="print"> {{ model.title }} </label>
+            <label> {{ model.title }} </label>
           </div>
-          <div class="select-wrapper">
+          <!-- <div class="select-wrapper" *ngIf="model.index != 12">
             <select
               [(ngModel)]="model.operation"
               (change)="selectChange($event, model)"
               (click)="$event.stopPropagation()"
             >
-              <option value="" disabled>选择操作</option>
+              <option value="-1" disabled>选择操作</option>
               <option value="0">查看</option>
               <option value="1">打印</option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
-    <!-- <div class="game-group asq-se2">
+    <div class="game-group asq3">
       <div class="title">ASQ:SE-2</div>
       <div class="content">
         <div
           class="game-item"
-          *ngFor="let item of asqSe2Data"
-          (click)="clickItem(item)"
-          [class.selected]="selection.isSelected(item)"
+          *ngFor="let model of asqSe2Data"
+          (click)="clickItem(model)"
+          [class.selected]="selection.isSelected(model)"
         >
           <div>
-            <label for="print"> {{ item.title }} </label>
+            <label> {{ model.title }} </label>
           </div>
-          <div class="select-wrapper">
-            <select>
-              <option value="" disabled>选择操作</option>
+          <!-- <div class="select-wrapper" *ngIf="model.index != 12">
+            <select
+              [(ngModel)]="model.operation"
+              (change)="selectChange($event, model)"
+              (click)="$event.stopPropagation()"
+            >
+              <option value="-1" disabled>选择操作</option>
               <option value="0">查看</option>
               <option value="1">打印</option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
   <div class="game-footer">
     <div class="hw-normal-btn-group">
+      <button class="large-green-button" (click)="viewModel()">查看</button>
       <button class="large-green-button">打印</button>
     </div>
   </div>

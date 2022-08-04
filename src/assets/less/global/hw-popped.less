@@ -29,8 +29,6 @@
 }
 
 .popped-content {
-  // width: 500px;
-  // height: 380px;
   padding: 20px 40px;
   box-sizing: border-box;
   background-color: white;
@@ -47,7 +45,7 @@
   }
   .popped-header {
     flex-shrink: 0;
-    border-bottom: 1px solid #dadddd;
+    border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
     .simple-title {
       margin: 10px 0 10px 0;
@@ -57,9 +55,11 @@
     flex-grow: 1;
     overflow: auto;
     font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
   }
   .popped-footer {
-    border-top: 1px solid #dadddd;
     padding-top: 10px;
     flex-shrink: 0;
     flex-basis: 10%;

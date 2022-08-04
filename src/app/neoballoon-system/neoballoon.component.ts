@@ -7,9 +7,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class NeoballoonComponent implements OnInit {
 
-  constructor(private _title: Title,) {
-    this._title.setTitle('ASQ儿童发育筛查系统')
-  }
 
   ngOnInit(): void {
   }

@@ -23,8 +23,7 @@ export class BabyGameComponent implements OnInit {
 
   selection: SelectionModel<BabyGameModel> = new SelectionModel(true)
 
-  //http://os.jtuntech.com/asq/img2/12_1.png
-  //ASQ:SE-2: http://os.jtuntech.com/asq/game/9_13.jpg
+  
 
 
   constructor(private _business: BabyGameBusiness) { }
@@ -40,10 +39,19 @@ export class BabyGameComponent implements OnInit {
   closeEvent() {
     this.showToast = false;
   }
+  viewModel() {
+    console.log(this.selection.selected)
+  }
   selectChange(e: Event, model: BabyGameModel) {
+    console.log('select ', model)
     e.stopPropagation();
     console.log(model)
-    this.showToast = true;
-    this.toastModels = [model]
+    if (model.operation == '0') {
+      this.showToast = true;
+      this.toastModels = [model];
+    } else if (model.operation == '1') {
+      window.open(model.pdfBaseUrl + model.index + ".pdf");
+
+    }
   }
 }

@@ -16,7 +16,6 @@ export class ImageBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('sdfsdf', this.models)
   }
   close() {
     this.closeEvent.emit(false);
