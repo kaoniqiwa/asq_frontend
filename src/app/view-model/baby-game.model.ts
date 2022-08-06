@@ -3,6 +3,5 @@ export interface BabyGameModel {
   index: number;
   imageBaseUrl: string;
   imageAppendix: string;
-  pdfBaseUrl: string;
   operation: string;
 }

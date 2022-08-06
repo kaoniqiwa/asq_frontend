@@ -3,7 +3,7 @@
     <image-box [models]="toastModels" (closeEvent)="closeEvent()"></image-box>
   </app-toast-window>
 
-  <div class="simple-title">游戏活动</div>
+  <div class="simple-title" id="printable">游戏活动</div>
 
   <div class="game-wrapper">
     <div class="game-group asq3">
@@ -15,25 +15,20 @@
           (click)="clickItem(model)"
           [class.selected]="selection.isSelected(model)"
         >
-          <div>
-            <label> {{ model.title }} </label>
-          </div>
-          <!-- <div class="select-wrapper" *ngIf="model.index != 12">
-            <select
-              [(ngModel)]="model.operation"
-              (change)="selectChange($event, model)"
-              (click)="$event.stopPropagation()"
-            >
-              <option value="-1" disabled>选择操作</option>
-              <option value="0">查看</option>
-              <option value="1">打印</option>
-            </select>
-          </div> -->
+          {{ model.title }}
+        </div>
+
+        <div
+          class="game-item"
+          [class.selected]="asq3BtnSelected"
+          (click)="toggleAsq3()"
+        >
+          <div>全部</div>
         </div>
       </div>
     </div>
 
-    <div class="game-group asq3">
+    <div class="game-group asq2">
       <div class="title">ASQ:SE-2</div>
       <div class="content">
         <div
@@ -42,20 +37,15 @@
           (click)="clickItem(model)"
           [class.selected]="selection.isSelected(model)"
         >
-          <div>
-            <label> {{ model.title }} </label>
-          </div>
-          <!-- <div class="select-wrapper" *ngIf="model.index != 12">
-            <select
-              [(ngModel)]="model.operation"
-              (change)="selectChange($event, model)"
-              (click)="$event.stopPropagation()"
-            >
-              <option value="-1" disabled>选择操作</option>
-              <option value="0">查看</option>
-              <option value="1">打印</option>
-            </select>
-          </div> -->
+          {{ model.title }}
+        </div>
+        <div
+          class="game-item"
+          [class.selected]="asq2BtnSelected"
+          (click)="toggleAsq2()"
+          style="grid-column-start: 1; grid-column-end: 4"
+        >
+          <div>全部</div>
         </div>
       </div>
     </div>
@@ -63,7 +53,7 @@
   <div class="game-footer">
     <div class="hw-normal-btn-group">
       <button class="large-green-button" (click)="viewModel()">查看</button>
-      <button class="large-green-button">打印</button>
+      <button class="large-green-button" (click)="printModel()">打印</button>
     </div>
   </div>
 </div>
