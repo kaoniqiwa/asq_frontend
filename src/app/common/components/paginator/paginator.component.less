@@ -19,7 +19,7 @@
         padding: 0;
         min-width: 30px;
         height: 30px;
-
+        color: #333;
         margin: 0 5px;
 
         display: flex;
@@ -27,7 +27,7 @@
         justify-content: center;
 
         svg {
-          fill: #cfd7ff;
+          fill: #333;
         }
         &.paginator-navigation-last,
         &.paginator-navigation-first {
@@ -51,8 +51,8 @@
           padding: 0 5px;
           &.active,
           &:hover {
-            background-color: #2d76ce;
-            color: #fff;
+            background-color: #e6e6e6;
+            border-color: #adadad;
           }
         }
       }
@@ -104,13 +104,23 @@
           outline: none;
         }
         .jump-to-button {
-          // background: #1f2e57;
-          cursor: pointer;
+          background: white;
+          border: 1px solid #ddd;
+          padding: 0;
           min-width: 30px;
+          height: 30px;
+          color: #333;
           margin: 0 5px;
-
+          padding: 5px;
+          border-radius: 4px;
           display: flex;
           align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          &:hover {
+            background-color: #e6e6e6;
+            border-color: #adadad;
+          }
         }
       }
     }

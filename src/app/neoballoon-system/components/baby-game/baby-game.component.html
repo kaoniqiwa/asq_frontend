@@ -3,7 +3,7 @@
     <image-box [models]="toastModels" (closeEvent)="closeEvent()"></image-box>
   </app-toast-window>
 
-  <div class="simple-title" id="printable">游戏活动</div>
+  <div class="title green-title large-title">游戏活动</div>
 
   <div class="game-wrapper">
     <div class="game-group asq3">
@@ -51,9 +51,13 @@
     </div>
   </div>
   <div class="game-footer">
-    <div class="hw-normal-btn-group">
-      <button class="large-green-button" (click)="viewModel()">查看</button>
-      <button class="large-green-button" (click)="printModel()">打印</button>
+    <div class="btn-group">
+      <button class="hw-normal-btn green-btn" (click)="viewModel()">
+        查看
+      </button>
+      <button class="hw-normal-btn green-btn" (click)="printModel()">
+        打印
+      </button>
     </div>
   </div>
 </div>

@@ -1,15 +1,25 @@
 <div class="baby-info vertical-layout">
+  <app-account-info></app-account-info>
   <div class="vertical-header">
-    <div class="simple-title">宝宝库</div>
+    <div class="title green-title large-title">宝宝库</div>
     <div class="operate-bar">
       <div class="left-wrapper">
-        <div class="select-wrapper">
-          <select [(ngModel)]="fileType">
-            <option value="">请选择</option>
-            <option value="1">个人档案</option>
-            <option value="2">全部档案</option>
-          </select>
+        <div class="select-file">
+          <span [class.active]="fileType == 'personal'">个人档案</span> /
+          <span [class.active]="fileType == 'total'">全部档案</span>
         </div>
+      </div>
+      <div class="right-wrapper">
+        <div class="search-wrapper">
+          <app-simple-search></app-simple-search>
+        </div>
+        <button class="hw-small-btn gray-btn">
+          添加宝宝
+          <i class="howell-icon-plus2" style="font-size: 17px"></i>
+        </button>
+        <button class="hw-small-btn gray-btn">
+          筛选<i class="mdi mdi-filter-outline"></i>
+        </button>
         <div class="select-wrapper" [class.expand]="questionType == '3'">
           <select [(ngModel)]="questionType">
             <option value="" disabled>请选择</option>
@@ -18,18 +28,6 @@
             <option value="3">ASQ:SE-2及其联结</option>
           </select>
         </div>
-      </div>
-      <div class="right-wrapper">
-        <div class="search-wrapper">
-          <app-simple-search></app-simple-search>
-        </div>
-        <button class="gray-small-button">
-          添加宝宝
-          <i class="howell-icon-plus2" style="font-size: 17px"></i>
-        </button>
-        <button class="gray-small-button">
-          筛选<i class="mdi mdi-filter-outline"></i>
-        </button>
       </div>
     </div>
     <!-- <div class="filter-wrapper">
@@ -153,6 +151,7 @@
       </div> -->
       <app-paginator
         *ngIf="page"
+        [showFirstLastButtons]="true"
         [length]="page.TotalRecordCount"
         [pageSize]="page.PageSize"
         [pagerCount]="pagerCount"

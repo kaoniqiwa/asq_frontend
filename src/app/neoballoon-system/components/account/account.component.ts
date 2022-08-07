@@ -12,5 +12,8 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  selectAccount() {
+
+  }
 
 }

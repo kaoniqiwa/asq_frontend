@@ -9,7 +9,6 @@ import { BabyInfoComponent } from './baby-info/baby-info.component';
 import { BabySettingComponent } from './baby-setting/baby-setting.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { NeoballoonManageComponent } from './neoballoon-manage/neoballoon-manage.component';
-import { SelectAccountComponent } from './select-account/select-account.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
 import { HowellModule } from 'src/app/common/howell.module';
@@ -26,7 +25,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BabySettingComponent,
     BabyGameComponent,
     BabyAgeComponent,
-    SelectAccountComponent,
     AccountComponent,
     AccountInfoComponent,
     BabyAddComponent,

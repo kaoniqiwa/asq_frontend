@@ -8,7 +8,6 @@ import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { NeoballoonManageComponent } from "./components/neoballoon-manage/neoballoon-manage.component";
-import { SelectAccountComponent } from "./components/select-account/select-account.component";
 
 const routes: Routes = [
   {

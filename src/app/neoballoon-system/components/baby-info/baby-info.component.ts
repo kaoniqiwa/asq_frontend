@@ -16,8 +16,8 @@ import { Page } from 'src/app/network/model/page_list.model';
 })
 export class BabyInfoComponent implements OnInit {
 
-  questionType = ''
-  fileType = '';
+  questionType = '1'
+  fileType = 'personal';
   searchInfo: any = {
     Age: '2',
     Filter: false
