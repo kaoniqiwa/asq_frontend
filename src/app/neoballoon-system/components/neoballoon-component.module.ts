@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BabyInfoOperateComponent } from './baby-info-operate/baby-info-operate.component';
 
 
 
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AccountComponent,
     AccountInfoComponent,
     BabyAddComponent,
-    BabyInfoComponent
+    BabyInfoComponent,
+    BabyInfoOperateComponent
   ],
   imports: [
     CommonModule,

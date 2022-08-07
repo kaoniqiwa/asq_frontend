@@ -1,6 +1,6 @@
 <div class="baby-game">
-  <app-toast-window *ngIf="showToast">
-    <image-box [models]="toastModels" (closeEvent)="closeEvent()"></image-box>
+  <app-toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
+    <image-box [models]="toastModels"></image-box>
   </app-toast-window>
 
   <div class="title green-title large-title">游戏活动</div>

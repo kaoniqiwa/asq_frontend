@@ -1,7 +1,4 @@
-<div class="image-box popped-content">
-  <div class="closeImg" (click)="close()">
-    <img src="assets/img/close.png" alt="" />
-  </div>
+<div class="image-box inner-popped">
   <div class="popped-main">
     <ng-container *ngFor="let model of models">
       <img
@@ -12,7 +9,9 @@
   </div>
   <div class="popped-footer">
     <div class="popped-footer-item">
-      <button class="large-green-button" (click)="printModel()">打印</button>
+      <button class="hw-normal-btn green-btn" (click)="printModel()">
+        打印
+      </button>
     </div>
   </div>
 </div>

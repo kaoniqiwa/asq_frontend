@@ -1,0 +1,68 @@
+<div class="baby-info-operate inner-popped">
+  <div class="popped-main">
+    <div class="form-wrapper">
+      <form class="hw-form vertical">
+        <div class="hw-form-group">
+          <div class="title">问卷年龄</div>
+          <div class="content questAge">
+            <select class="">
+              <option value="" disabled>请选择</option>
+              <option *ngFor="let age of AGE_DATE" [value]="age">
+                {{ age }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="hw-form-group">
+          <div class="title">问卷完成日期</div>
+          <div class="content questDate">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="dateFormat"
+              [date]="searchInfo.BeginTime"
+              (change)="changeBegin($event)"
+              class="hw-form-control hw-form-input"
+            />
+            <span>-</span
+            ><input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="dateFormat"
+              [date]="searchInfo.BeginTime"
+              (change)="changeBegin($event)"
+              class="hw-form-control hw-form-input"
+            />
+          </div>
+        </div>
+        <div class="hw-form-group">
+          <div class="title">医生姓名</div>
+          <div class="content questDoc">
+            <ul>
+              <li>示教1</li>
+              <li>示教2</li>
+              <li>示教3</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hw-form-group">
+          <div class="title">状态</div>
+          <div class="content">
+            <ul>
+              <li>已归档</li>
+              <li>未归档</li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="popped-footer">
+    <div class="popped-footer-item">
+      <button class="hw-normal-btn green-btn">完成</button>
+      <button class="hw-normal-btn reverse-green-btn">重置</button>
+    </div>
+  </div>
+</div>

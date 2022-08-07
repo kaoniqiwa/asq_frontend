@@ -1,1 +1,46 @@
-<p>baby-age works!</p>
+<div class="baby-age">
+  <div>矫正年龄计算</div>
+  <div class="form-wrapper">
+    <form class="hw-form">
+      <div class="hw-form-group">
+        <div class="title"></div>
+        <div class="content">
+          <input
+            type="text"
+            placeholder="筛查时间"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            class="hw-form-control hw-form-input"
+          />
+          <button class="appendix">sdfsdf</button>
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title"></div>
+        <div class="content">
+          <input
+            type="text"
+            placeholder="宝宝出生日期"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            class="hw-form-control hw-form-input"
+          />
+          <button class="appendix">sdfsdf</button>
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title"></div>
+        <div class="content">
+          <select>
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+          </select>
+          <button class="appendix">sdfsdf</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

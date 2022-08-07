@@ -1,7 +1,10 @@
 <div class="baby-info vertical-layout">
   <app-account-info></app-account-info>
+  <app-toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
+    <baby-info-operate></baby-info-operate>
+  </app-toast-window>
   <div class="vertical-header">
-    <div class="title green-title large-title">宝宝库</div>
+    <div class="green-title large-title underline-title">宝宝库</div>
     <div class="operate-bar">
       <div class="left-wrapper">
         <div class="select-file">
@@ -13,11 +16,11 @@
         <div class="search-wrapper">
           <app-simple-search></app-simple-search>
         </div>
-        <button class="hw-small-btn gray-btn">
+        <button class="hw-small-btn gray-btn" (click)="addBabyHandler()">
           添加宝宝
           <i class="howell-icon-plus2" style="font-size: 17px"></i>
         </button>
-        <button class="hw-small-btn gray-btn">
+        <button class="hw-small-btn gray-btn" (click)="filterHandler()">
           筛选<i class="mdi mdi-filter-outline"></i>
         </button>
         <div class="select-wrapper" [class.expand]="questionType == '3'">

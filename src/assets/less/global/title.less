@@ -1,24 +1,31 @@
-.title {
+.title() {
   width: 100%;
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  justify-content: flex-start;
+}
+.underline-title {
   border-bottom: 1px solid #eee;
 }
+.center-title {
+  justify-content: center;
+}
+
+.normal-title {
+  .title();
+  font-size: 24px;
+}
+.large-title {
+  .title();
+  font-size: 30px;
+}
+
 .green-title {
   color: #34bb45;
 }
 .gray-title {
   color: #d5d7d9;
 }
-.normal-title {
-  font-size: 24px;
-}
-.large-title {
-  font-size: 30px;
-}
-
 // .green-normal-title {
 //   .title();
 //   .green-title();

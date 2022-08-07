@@ -1,3 +1,8 @@
 <div class="toast-window">
-  <ng-content></ng-content>
+  <div class="popped-content">
+    <div class="closeImg" (click)="close()">
+      <img src="assets/img/close.png" alt="" />
+    </div>
+    <ng-content></ng-content>
+  </div>
 </div>

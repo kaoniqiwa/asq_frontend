@@ -7,6 +7,7 @@ import { BybyInfoManageConf } from './baby-info.config';
 import { BabyInfoModel } from 'src/app/view-model/baby-info.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Page } from 'src/app/network/model/page_list.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-baby-info',
@@ -37,8 +38,9 @@ export class BabyInfoComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
+  showToast = false;
 
-  constructor(private _business: BabyInfoBusiness) { }
+  constructor(private _business: BabyInfoBusiness, private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     let res = this._business.init()
@@ -52,6 +54,14 @@ export class BabyInfoComponent implements OnInit {
     // this._init();
     console.log(pageInfo)
   }
-
+  closeEvent() {
+    this.showToast = false;
+  }
+  filterHandler() {
+    this.showToast = !this.showToast;
+  }
+  addBabyHandler() {
+    this._router.navigateByUrl('/neoballoon/neoballoon-manage/baby-add')
+  }
 }
 

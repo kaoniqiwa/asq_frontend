@@ -14,16 +14,13 @@ export class ImageBoxComponent implements OnInit {
 
   @Input() models: BabyGameModel[] = [];
 
-  @Output() closeEvent = new EventEmitter();
 
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  close() {
-    this.closeEvent.emit(false);
-  }
+
   printModel() {
 
     let imageSrc = this.models.map(model => model.imageBaseUrl + model.index + "_p" + "." + model.imageAppendix)

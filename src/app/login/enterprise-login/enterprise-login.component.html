@@ -1,8 +1,8 @@
 <div class="enterprise-login login">
-  <div class="title normal-title">企业用户登录</div>
+  <div class="normal-title center-title">企业用户登录</div>
   <div class="form-wrapper">
-    <form [formGroup]="myForm">
-      <div class="form-group">
+    <form [formGroup]="myForm" class="hw-form vertical">
+      <div class="hw-form-group">
         <input
           type="text"
           placeholder="账号"
@@ -11,7 +11,7 @@
         />
       </div>
 
-      <div class="form-group">
+      <div class="hw-form-group">
         <input
           type="password"
           placeholder="密码"
@@ -39,10 +39,9 @@
     </div>
     <div class="login-footer-item">
       <button
-        class="normal-green-button"
+        class="hw-normal-btn green-btn round-btn"
         type="button"
         (click)="login()"
-        style="width: 170px"
         [class.disabled]="myForm.invalid"
         [disabled]="myForm.invalid"
       >

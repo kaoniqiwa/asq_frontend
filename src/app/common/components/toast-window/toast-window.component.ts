@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toast-window',
@@ -9,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   }
 })
 export class ToastWindowComponent implements OnInit {
+  @Output() closeEvent = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  close() {
+    this.closeEvent.emit(false);
+  }
 }

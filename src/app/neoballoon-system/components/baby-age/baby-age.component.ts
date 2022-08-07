@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BabyAgeComponent implements OnInit {
 
+  dateFormat: string = 'yyyy-MM-dd';
+
+
   constructor() { }
 
   ngOnInit(): void {

@@ -2,22 +2,25 @@
   <div class="title green-title large-title">系统操作</div>
   <div class="btns">
     <button
-      class="btn normal-btn gray-btn"
-      [class.selected]="model == BabySettingModel.manualDownload"
+      class="hw-normal-btn"
+      [class.gray-btn]="model != BabySettingModel.manualDownload"
+      [class.green-btn]="model == BabySettingModel.manualDownload"
       (click)="model = BabySettingModel.manualDownload"
     >
       使用手册
     </button>
     <button
-      class="gray-large-button"
-      [class.selected]="model == BabySettingModel.systemUsage"
+      class="hw-normal-btn gray-btn"
+      [class.gray-btn]="model != BabySettingModel.systemUsage"
+      [class.green-btn]="model == BabySettingModel.systemUsage"
       (click)="model = BabySettingModel.systemUsage"
     >
       系统使用Q&A
     </button>
     <button
-      class="gray-large-button"
-      [class.selected]="model == BabySettingModel.updateBox"
+      class="hw-normal-btn gray-btn"
+      [class.gray-btn]="model != BabySettingModel.updateBox"
+      [class.green-btn]="model == BabySettingModel.updateBox"
       (click)="model = BabySettingModel.updateBox"
     >
       更新日志
