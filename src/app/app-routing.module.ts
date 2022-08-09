@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginManageComponent } from './login/login-manage/login-manage.component';
 import { RoutePath } from './enum/route-path.enum';
+import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: RoutePath.login,
-    component: LoginManageComponent
+    component: LoginComponent
   },
   {
     path: RoutePath.neoballoon,

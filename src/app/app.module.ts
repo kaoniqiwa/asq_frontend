@@ -6,24 +6,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HowellModule } from './common/howell.module';
-import { EnterpriseLoginComponent } from './login/enterprise-login/enterprise-login.component';
-import { FamilyLoginComponent } from './login/family-login/family-login.component';
+import { LoginComponent } from './login/login/login.component';
 import { LoginManageComponent } from './login/login-manage/login-manage.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
-import { EnterpriseLicenseComponent } from './login/enterprise-license/enterprise-license.component';
-import { FamilyLicenseComponent } from './login/family-license/family-license.component';
+import { LicenseComponent } from './login/license/license.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginManageComponent,
-    FamilyLoginComponent,
-    EnterpriseLoginComponent,
-    EnterpriseLicenseComponent,
-    FamilyLicenseComponent,
+    LoginComponent,
+    LicenseComponent,
   ],
   imports: [
     BrowserModule,

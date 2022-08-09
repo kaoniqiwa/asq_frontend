@@ -8,11 +8,11 @@ import { AuthorizationService } from 'src/app/network/auth/auth-request.service'
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-enterprise-license',
-  templateUrl: './enterprise-license.component.html',
-  styleUrls: ['./enterprise-license.component.less']
+  selector: 'app-license',
+  templateUrl: './license.component.html',
+  styleUrls: ['./license.component.less']
 })
-export class EnterpriseLicenseComponent implements OnInit {
+export class LicenseComponent implements OnInit {
 
   agree = true;
   isLogin = false;
