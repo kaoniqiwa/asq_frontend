@@ -4,13 +4,12 @@ import { BabyInfoModel } from "src/app/view-model/baby-info.model";
 
 @Injectable()
 export class BabyInfoManageBusiness {
-  data: BabyInfoModel[] = [
 
-  ]
   constructor() {
 
   }
   init() {
+    let data: BabyInfoModel[] = []
     for (let i = 0; i < 9; i++) {
       let model = new BabyInfoModel();
       model.Id = (i + 1).toString();
@@ -21,7 +20,7 @@ export class BabyInfoManageBusiness {
       model.Status = '未归档';
       model.FileId = "E20220731161936945232";
 
-      this.data.push(model)
+      data.push(model)
     }
 
     let page: Page = {
@@ -33,7 +32,7 @@ export class BabyInfoManageBusiness {
     }
     let res: PagedList<BabyInfoModel> = {
       Page: page,
-      Data: this.data,
+      Data: data,
     };
     return res;
 

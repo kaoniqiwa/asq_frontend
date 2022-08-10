@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HowellModule } from './common/howell.module';
 import { LoginComponent } from './login/login/login.component';
-import { LoginManageComponent } from './login/login-manage/login-manage.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +16,6 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginManageComponent,
     LoginComponent,
     LicenseComponent,
   ],
