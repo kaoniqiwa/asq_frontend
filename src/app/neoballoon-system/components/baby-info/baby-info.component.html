@@ -1,133 +1,163 @@
-<div class="baby-info vertical-layout">
-  <app-account-info></app-account-info>
-  <app-toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
-    <baby-info-operate></baby-info-operate>
-  </app-toast-window>
-  <div class="vertical-header">
-    <div class="green-title large-title underline-title">宝宝库</div>
-    <div class="operate-bar">
-      <div class="left-wrapper">
-        <div class="select-file">
-          <span [class.active]="fileType == 'personal'">个人档案</span> /
-          <span [class.active]="fileType == 'total'">全部档案</span>
-        </div>
-      </div>
-      <div class="right-wrapper">
-        <div class="search-wrapper">
-          <app-simple-search></app-simple-search>
-        </div>
-        <button class="hw-small-btn gray-btn" (click)="addBabyHandler()">
-          添加宝宝
-          <i class="howell-icon-plus2" style="font-size: 17px"></i>
-        </button>
-        <button class="hw-small-btn gray-btn" (click)="filterHandler()">
-          筛选<i class="mdi mdi-filter-outline"></i>
-        </button>
-        <div class="select-wrapper" [class.expand]="questionType == '3'">
-          <select [(ngModel)]="questionType">
-            <option value="" disabled>请选择</option>
-            <option value="1">ASQ-3</option>
-            <option value="2">ASQ:SE</option>
-            <option value="3">ASQ:SE-2及其联结</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="vertical-main">
-    <!-- <table>
-      <thead>
-        <tr>
-          <th>宝宝姓名</th>
-          <th>出生年龄</th>
-          <th>家长</th>
-          <th>筛查时间</th>
-          <th>状态</th>
-          <th>档案号</th>
-          <th>操作</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>刘庭宇</td>
-          <td>2019-3-9</td>
-          <td>刘</td>
-          <td>2022-07-27 11:40:32-2</td>
-          <td>
-            <a class="_gd" href="" style="color: #34bb45">未归档</a>
-          </td>
-          <td>E20220727114032562475</td>
-          <td>
-            <input type="hidden" value="1" class="print1" />
-            <input type="hidden" value="42" class="print2" />
-            <input type="hidden" value="889248768" class="print3" />
-            <select class="choPrint" style="color: #34bb45; font-weight: bold">
-              <option value="" disabled selected hidden>选择打印</option>
-              <option value="1-1-42-889248768-14">家长报告</option>
-              <option value="2-1-42-889248768-14">打印全部</option>
-            </select>
-          </td>
-          <td>
-            <a href="8">
-              了解更多<img src="assets/img/arrow_w.png" alt="" id="leftmore" />
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>刘庭宇</td>
-          <td>2019-3-9</td>
-          <td>刘</td>
-          <td>2022-07-27 11:40:32-2</td>
-          <td>
-            <a class="_gd" href="" style="color: #34bb45">未归档</a>
-          </td>
-          <td>E20220727114032562475</td>
-          <td>
-            <input type="hidden" value="1" class="print1" />
-            <input type="hidden" value="42" class="print2" />
-            <input type="hidden" value="889248768" class="print3" />
-            <select class="choPrint" style="color: #34bb45; font-weight: bold">
-              <option value="" disabled selected hidden>选择打印</option>
-              <option value="1-1-42-889248768-14">家长报告</option>
-              <option value="2-1-42-889248768-14">打印全部</option>
-            </select>
-          </td>
-          <td>
-            <a href="8">
-              了解更多<img src="assets/img/arrow_w.png" alt="" id="leftmore" />
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-    <common-table
-      [dataSubject]="dataSubject"
-      [columnModel]="columnModel"
-      [displayedColumns]="displayedColumns"
-      [tableOperates]="tableOperates"
-    ></common-table>
-  </div>
-  <div class="vertical-footer">
-    <div class="footer-item">
-      <!-- <app-table-select (tableSelect)="tableSelect($event)"> </app-table-select> -->
-    </div>
-    <div class="footer-item">
-      <!-- <div class="footer-info">
-        <div class="info-item">已选择: {{ selectedRows.length }}</div>
-        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
-      </div> -->
-      <app-paginator
-        *ngIf="page"
-        [showFirstLastButtons]="true"
-        [length]="page.TotalRecordCount"
-        [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="pageIndex - 1"
-        (page)="pageEvent($event)"
+<div class="baby-info">
+  <div class="baby-box">
+    <div>
+      <div
+        class="green-title large-title underline-title"
+        style="margin-bottom: 10px"
       >
-      </app-paginator>
+        宝宝信息
+        <i>(注：*为必填项)</i>
+      </div>
     </div>
+
+    <div class="form-wrapper" style="margin-top: 25px">
+      <form>
+        <div class="form-group">
+          <label class="control-label col-sm-2"> <span>*</span> 姓名:</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2">身份信息: </label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" />
+          </div>
+          <div class="col-sm-2">
+            <select>
+              <option value="">儿童身份证</option>
+              <option value="">父亲身份证</option>
+              <option value="">母亲身份证</option>
+              <option value="">诊疗卡号</option>
+              <option value="">病历号</option>
+              <option value="">其他</option>
+            </select>
+          </div>
+          <label class="control-label col-sm-2" style="text-align: left">
+            (选填)
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2"> <span>*</span> 性别:</label>
+          <div class="col-sm-3">
+            <input type="radio" name="gender" /> 男 &nbsp;&nbsp;
+            <input type="radio" name="gender" /> 女
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2">
+            <span>*</span> 出生日期:</label
+          >
+          <div class="col-sm-3">
+            <input class="form-control" type="text" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2">
+            <span>*</span> 筛查时间:</label
+          >
+          <div class="col-sm-3">
+            <input class="form-control" type="text" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2"> <span>*</span> 早产:</label>
+          <div class="col-sm-3">
+            <input type="radio" name="gender" /> 是 &nbsp;&nbsp;
+            <input type="radio" name="gender" /> 否
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="family-box">
+    <div>
+      <div
+        class="green-title large-title underline-title"
+        style="margin-bottom: 10px"
+      >
+        问卷人信息
+      </div>
+    </div>
+    <div class="form-wrapper" style="margin-top: 25px">
+      <form>
+        <div class="form-group">
+          <label class="control-label col-sm-2"> <span>*</span> 姓名:</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" />
+          </div>
+          <label class="control-label col-sm-2"
+            ><span>*</span>您是宝宝的:
+          </label>
+          <div class="col-sm-2">
+            <select>
+              <option value="">父亲</option>
+              <option value="">母亲</option>
+              <option value="">父亲和母亲</option>
+              <option value="">照养人</option>
+              <option value="">老师</option>
+              <option value="">祖父母</option>
+              <option value="">其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2">省</label>
+          <div class="col-sm-2">
+            <select>
+              <option value="">父亲</option>
+              <option value="">母亲</option>
+              <option value="">父亲和母亲</option>
+              <option value="">照养人</option>
+              <option value="">老师</option>
+              <option value="">祖父母</option>
+              <option value="">其他</option>
+            </select>
+          </div>
+          <label class="control-label">省</label>
+          <div class="col-sm-2">
+            <select>
+              <option value="">父亲</option>
+              <option value="">母亲</option>
+              <option value="">父亲和母亲</option>
+              <option value="">照养人</option>
+              <option value="">老师</option>
+              <option value="">祖父母</option>
+              <option value="">其他</option>
+            </select>
+          </div>
+          <label class="control-label">省</label>
+          <div class="col-sm-2">
+            <select>
+              <option value="">父亲</option>
+              <option value="">母亲</option>
+              <option value="">父亲和母亲</option>
+              <option value="">照养人</option>
+              <option value="">老师</option>
+              <option value="">祖父母</option>
+              <option value="">其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2"> <span>*</span> 手机号:</label>
+          <div class="col-sm-3">
+            <input type="text" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="btnAddf">
+    显示更多信息
+    <img src="assets/img/icon_add.png" alt="" />
+  </div>
+  <div
+    style="display: flex; justify-content: center; margin-top: 10px"
+    (click)="submit()"
+  >
+    <button class="hw-normal-btn green-btn">提交信息</button>
   </div>
 </div>

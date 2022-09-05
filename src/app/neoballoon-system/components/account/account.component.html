@@ -1,13 +1,17 @@
 <div class="account">
   <div class="large-title green-title underline-title">
-    上海杖元信息科技有限公司
+    {{ user.name }}
   </div>
 
   <div class="normal-title green-title">选择子账号</div>
 
   <div class="accounts">
-    <div class="account-item" (click)="selectAccount()">示教1</div>
-    <div class="account-item" (click)="selectAccount()">示教2</div>
-    <div class="account-item" (click)="selectAccount()">示教3</div>
+    <div
+      class="account-item"
+      *ngFor="let doctor of doctors"
+      (click)="selectAccount(doctor)"
+    >
+      {{ doctor.name }}
+    </div>
   </div>
 </div>

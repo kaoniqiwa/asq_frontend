@@ -5,14 +5,14 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { CookieService } from "ngx-cookie-service";
 import { LocalStorageService } from "src/app/common/service/local-storage.service";
 import { SessionStorageService } from "src/app/common/service/session-storage.service";
-import { StoreService } from "src/app/common/service/store.service";
-import { User } from "../model/user.model";
 import { Md5 } from 'ts-md5';
 import CryptoJS from 'crypto-js';
 
-import { UserUrl } from "../url/user.url";
 import { DigestResponse } from "./digest-response.class";
 import { plainToClass } from "class-transformer";
+import { GlobalStoreService } from "src/app/common/service/global-store.service";
+import { User } from "../model/user.model";
+import { UserUrl } from "../url/user.url";
 
 @Injectable({
   providedIn: 'root',
@@ -29,34 +29,41 @@ export class AuthorizationService implements CanActivate {
 
     private _cookieService: CookieService,
     private _router: Router,
-    private _store: StoreService
+    private _store: GlobalStoreService
   ) {
-    if (this._cookieService.check('userName')) {
-      let userName = this._cookieService.get('userName');
-      userName = atob(userName);
-      let res = userName.match(
-        /[a-zA-Z0-9+/=]{32}(?<userName>[\w.]+)[a-zA-Z0-9+/=]{32}/
+    if (this._cookieService.check('username')) {
+      let username = this._cookieService.get('username');
+      username = atob(username);
+      let res = username.match(
+        /[a-zA-Z0-9+/=]{32}(?<username>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
-      userName = res.groups!['userName'];
+      username = res.groups!['username'];
 
-      this._username = userName;
+      this._username = username;
     }
 
-    if (this._cookieService.check('passWord')) {
-      let passWord = this._cookieService.get('passWord');
-      passWord = atob(passWord);
-      let res2 = passWord.match(
-        /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
+    if (this._cookieService.check('password')) {
+      let password = this._cookieService.get('password');
+      password = atob(password);
+      let res2 = password.match(
+        /[a-zA-Z0-9+/=]{32}(?<password>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
-      passWord = res2.groups!['passWord'];
+      password = res2.groups!['password'];
 
-      this._password = passWord;
+      this._password = password;
     }
   }
 
 
-
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // console.log(route, state);
+    let challenge = this._sessionStorageService.challenge;
+    let user = this._localStorageService.user;
+    let holdCookie = this._cookieService.check('userName');
+    // console.log(userResource);
+    if (challenge && user && user.id && holdCookie) {
+      return true;
+    }
 
     return this._router.parseUrl('/login');
   }
@@ -67,7 +74,7 @@ export class AuthorizationService implements CanActivate {
     // return axios.get('/api/login.php')
     this._username = username;
     this._password = password;
-    this._config.url = '/api/login.php';
+    this._config.url = '/api/frontend/login.php';
 
     this._config.headers = {
       'X-Webbrowser-Authentication': 'Forbidden',
@@ -94,8 +101,8 @@ export class AuthorizationService implements CanActivate {
         }
 
         this._sessionStorageService.challenge = challenge;
-        return axios(this._config).then((res: AxiosResponse<User>) => {
-          let result = plainToClass(User, res.data)
+        return axios(this._config).then((res: AxiosResponse<{ data: User }>) => {
+          let result = plainToClass(User, res.data.data)
           this._storeUserInfo(result, password,);
           return result;
         }
@@ -122,7 +129,7 @@ export class AuthorizationService implements CanActivate {
     ).toString();
 
     let userName = window.btoa(
-      prefix + user.Username + suffix
+      prefix + user.username + suffix
     );
     this._cookieService.set('userName', userName, options);
 

@@ -4,7 +4,7 @@ import { interval } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class StoreService {
+export class GlobalStoreService {
   statusChange = new EventEmitter();
 
   password?: string;

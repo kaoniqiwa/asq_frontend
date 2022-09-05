@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DoctorModel } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 
 /*
@@ -20,6 +21,15 @@ export class LocalStorageService {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  set doctor(doctor: DoctorModel) {
+    localStorage.setItem('doctor', JSON.stringify(doctor));
+  }
+  get doctor() {
+    let doctor = localStorage.getItem('doctor');
+    return doctor ? JSON.parse(doctor) : null;
+  }
+
   clear(name?: string) {
     if (name) {
       localStorage.removeItem(name);

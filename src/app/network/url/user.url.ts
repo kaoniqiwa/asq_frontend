@@ -2,15 +2,15 @@
  * @Author: pmx
  * @Date: 2021-09-13 15:05:27
  * @Last Modified by: pmx
- * @Last Modified time: 2022-07-30 21:39:49
+ * @Last Modified time: 2022-08-15 16:43:19
  */
 
-import { BaseUserUrl } from "./base.url";
+import { BaseASQUrl } from "./base.url";
 
 
 export class UserUrl {
   static basic() {
-    return `${BaseUserUrl}/Users`;
+    return `${BaseASQUrl}/Users`;
   }
   static login(username: string): string {
     return `${this.basic()}/Login/${username}`;

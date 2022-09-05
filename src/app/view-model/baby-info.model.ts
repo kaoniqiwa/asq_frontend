@@ -1,4 +1,4 @@
-export class BabyInfoModel {
+export class BabyManageModel {
   Id!: string;
   Name!: string;
   Birthday!: string;

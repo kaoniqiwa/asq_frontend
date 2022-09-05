@@ -10,11 +10,14 @@ import { BabyAddComponent } from './baby-add/baby-add.component';
 import { BabyAgeComponent } from './baby-age/baby-age.component';
 import { BabyGameComponent } from './baby-game/baby-game.component';
 import { BabyInfoOperateComponent } from './baby-info-operate/baby-info-operate.component';
-import { BabyInfoComponent } from './baby-info/baby-info.component';
+import { BabyManageComponent } from './baby-manage/baby-manage.component';
 import { BabySettingComponent } from './baby-setting/baby-setting.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { NeoballoonManageComponent } from './neoballoon-manage/neoballoon-manage.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { SurveyLicenseComponent } from './survey-license/survey-license.component';
+import { BabyInfoComponent } from './baby-info/baby-info.component';
+import { SurveyManageComponent } from './survey-manage/survey-manage.component';
 
 
 
@@ -29,8 +32,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     AccountComponent,
     AccountInfoComponent,
     BabyAddComponent,
+    BabyManageComponent,
+    BabyInfoOperateComponent,
+    SurveyLicenseComponent,
     BabyInfoComponent,
-    BabyInfoOperateComponent
+    SurveyManageComponent,
   ],
   imports: [
     CommonModule,

@@ -1386,3 +1386,216 @@ abbr[data-original-title] {
   cursor: help;
   border-bottom: 1px dotted #999;
 }
+
+form {
+  margin-top: 10px;
+}
+.form-group {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.form-control {
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  color: #555;
+  display: block;
+  font-size: 14px;
+  height: 34px;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0 0 8px rgba(102, 175, 233, 0.6);
+  outline: 0 none;
+}
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #eee;
+  cursor: not-allowed;
+  opacity: 1;
+}
+textarea.form-control {
+  height: auto;
+}
+input[type="search"] {
+}
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
+  line-height: 34px;
+}
+input.input-sm[type="date"],
+input.input-sm[type="time"],
+input.input-sm[type="datetime-local"],
+input.input-sm[type="month"] {
+  line-height: 30px;
+}
+input.input-lg[type="date"],
+input.input-lg[type="time"],
+input.input-lg[type="datetime-local"],
+input.input-lg[type="month"] {
+  line-height: 46px;
+}
+
+.form-group > div {
+  padding: 0 5px;
+}
+
+.form-group > label {
+  padding: 0 5px;
+}
+.radio,
+.checkbox {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  position: relative;
+}
+.radio label,
+.checkbox label {
+  cursor: pointer;
+  font-weight: 400;
+  margin-bottom: 0;
+  min-height: 20px;
+  padding-left: 20px;
+}
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  margin-left: -20px;
+  position: absolute;
+}
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: -5px;
+}
+.radio-inline,
+.checkbox-inline {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  margin-bottom: 0;
+  padding-left: 20px;
+  vertical-align: middle;
+}
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+  margin-left: 10px;
+  margin-top: 0;
+}
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input.disabled[type="radio"],
+input.disabled[type="checkbox"],
+fieldset[disabled] input[type="radio"],
+fieldset[disabled] input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.radio-inline.disabled,
+.checkbox-inline.disabled,
+fieldset[disabled] .radio-inline,
+fieldset[disabled] .checkbox-inline {
+  cursor: not-allowed;
+}
+.radio.disabled label,
+.checkbox.disabled label,
+fieldset[disabled] .radio label,
+fieldset[disabled] .checkbox label {
+  cursor: not-allowed;
+}
+.control-label {
+  text-align: right;
+}
+.form-control-static {
+  margin-bottom: 0;
+  padding-bottom: 7px;
+  padding-top: 7px;
+}
+.form-control-static.input-lg,
+.form-control-static.input-sm {
+  padding-left: 0;
+  padding-right: 0;
+}
+.input-sm,
+.form-group-sm .form-control {
+  border-radius: 3px;
+  font-size: 12px;
+  height: 30px;
+  line-height: 1.5;
+  padding: 5px 10px;
+}
+select.input-sm,
+select.form-group-sm .form-control {
+  height: 30px;
+  line-height: 30px;
+}
+textarea.input-sm,
+textarea.form-group-sm .form-control,
+select.input-sm[multiple],
+select.form-group-sm[multiple] .form-control {
+  height: auto;
+}
+.input-lg,
+.form-group-lg .form-control {
+  border-radius: 6px;
+  font-size: 18px;
+  height: 46px;
+  line-height: 1.33;
+  padding: 10px 16px;
+}
+select.input-lg,
+select.form-group-lg .form-control {
+  height: 46px;
+  line-height: 46px;
+}
+textarea.input-lg,
+textarea.form-group-lg .form-control,
+select.input-lg[multiple],
+select.form-group-lg[multiple] .form-control {
+  height: auto;
+}
+.has-feedback {
+  position: relative;
+}
+.has-feedback .form-control {
+  padding-right: 42.5px;
+}
+.form-control-feedback {
+  display: block;
+  height: 34px;
+  line-height: 34px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 34px;
+  z-index: 2;
+}
+.input-lg + .form-control-feedback {
+  height: 46px;
+  line-height: 46px;
+  width: 46px;
+}
+.input-sm + .form-control-feedback {
+  height: 30px;
+  line-height: 30px;
+  width: 30px;
+}

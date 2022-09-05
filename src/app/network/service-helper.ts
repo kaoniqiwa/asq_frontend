@@ -2,7 +2,7 @@
  * @Author: zzl
  * @Date: 2021-09-16 10:11:01
  * @Last Modified by: pmx
- * @Last Modified time: 2022-07-30 21:57:25
+ * @Last Modified time: 2022-08-26 16:08:28
  */
 import { ClassConstructor, plainToClass } from 'class-transformer';
 import { HowellResponse } from './model/howell-response.model';
@@ -27,20 +27,24 @@ export class ServiceHelper {
     t: ClassConstructor<T>
   ) {
     // 如果返回码不为0
-    if (response.FaultCode != 0) {
-      console.error(response.FaultReason, response.InnerException);
-      throw new Error(response.FaultReason);
+    if (response.faultCode != 0) {
+      console.error(response.faultReason, response.innerException);
+      throw new Error(response.faultReason);
     }
+    if (response.data) {
+      if ((response.data as PagedList<T>).page) {
+        let result = response.data as PagedList<T>;
+        result.data = plainToClass(
+          t,
+          (response.data as PagedList<T>).data
+        ) as unknown as T[];
+        return result;
+      } else {
+        return plainToClass(t, response.data);
+      }
 
-    if ((response.Data as PagedList<T>).Page) {
-      let result = response.Data as PagedList<T>;
-      result.Data = plainToClass(
-        t,
-        (response.Data as PagedList<T>).Data
-      ) as unknown as T[];
-      return result;
-    } else {
-      return plainToClass(t, response.Data);
     }
+    return plainToClass(t, response.data);;
+
   }
 }

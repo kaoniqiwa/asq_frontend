@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-28 13:20:43
  * @Last Modified by: pmx
- * @Last Modified time: 2022-07-30 21:36:45
+ * @Last Modified time: 2022-08-15 17:30:06
  */
 import { Injectable } from '@angular/core';
 import { DigestResponse } from 'src/app/network/auth/digest-response.class';
