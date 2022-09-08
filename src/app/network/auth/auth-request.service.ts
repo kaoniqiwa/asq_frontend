@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 import { DigestResponse } from "./digest-response.class";
 import { plainToClass } from "class-transformer";
-import { GlobalStoreService } from "src/app/common/service/global-store.service";
+import { GlobalStorageService } from "src/app/common/service/global-storage.service";
 import { User } from "../model/user.model";
 import { UserUrl } from "../url/user.url";
 
@@ -24,12 +24,11 @@ export class AuthorizationService implements CanActivate {
   private _config: AxiosRequestConfig = { headers: {} };
 
   constructor(
-    private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
-
+    private _globalStorage: GlobalStorageService,
     private _cookieService: CookieService,
     private _router: Router,
-    private _store: GlobalStoreService
+    private _store: GlobalStorageService
   ) {
     if (this._cookieService.check('username')) {
       let username = this._cookieService.get('username');
@@ -58,7 +57,7 @@ export class AuthorizationService implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
-    let user = this._localStorageService.user;
+    let user = this._globalStorage.user;
     let holdCookie = this._cookieService.check('userName');
     // console.log(userResource);
     if (challenge && user && user.id && holdCookie) {
@@ -74,7 +73,7 @@ export class AuthorizationService implements CanActivate {
     // return axios.get('/api/login.php')
     this._username = username;
     this._password = password;
-    this._config.url = '/api/frontend/login.php';
+    this._config.url = '/api/front_end.login.php';
 
     this._config.headers = {
       'X-Webbrowser-Authentication': 'Forbidden',
@@ -145,7 +144,7 @@ export class AuthorizationService implements CanActivate {
     );
     this._cookieService.set('passWord', passWord, options);
 
-    this._localStorageService.user = user;
+    this._globalStorage.user = user;
     this._store.password = passWord;
   }
 

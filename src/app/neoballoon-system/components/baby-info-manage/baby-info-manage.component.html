@@ -1,0 +1,455 @@
+<div class="baby-info-manage vertical-layout">
+  <div class="vertical-header">
+    <div style="width: 100%">
+      <button class="hw-small-btn gray-btn">
+        <img src="assets/img/back.png" alt="" />返回
+      </button>
+      <p class="chart-title">
+        <img src="assets/img/icon_edit.png" alt="" />
+        快来完善宝宝的信息和您的信息来测出宝宝的健康状况吧！
+      </p>
+    </div>
+  </div>
+  <div class="vertical-main">
+    <div class="addr-btns">
+      <div
+        class="addr-item"
+        [class.active]="i == currentIndex"
+        (click)="currentIndex = i"
+        *ngFor="let info of infoArr; let i = index"
+      >
+        <span>宝宝 {{ i + 1 | numtochina }}</span>
+        <div class="close-btn" *ngIf="i != 0" (click)="deleteInfo(i, $event)">
+          <i class="howell-icon-Close"></i>
+        </div>
+      </div>
+      <div
+        class="plus-btn"
+        (click)="addInfo()"
+        *ngIf="infoArr.length < maxLength"
+      >
+        添加宝宝<i class="howell-icon-plus2"></i>
+      </div>
+    </div>
+    <ng-container *ngFor="let info of infoArr; let i = index">
+      <form [formGroup]="info" style="margin: 0" *ngIf="currentIndex == i">
+        <!-- {{ info.value | json }} -->
+        <div class="baby-box" formGroupName="baby">
+          <div>
+            <div
+              class="green-title large-title underline-title"
+              style="margin-bottom: 10px"
+            >
+              宝宝信息
+              <i>(注：*为必填项)</i>
+            </div>
+          </div>
+
+          <div class="form-wrapper" style="margin-top: 25px">
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 姓名:</label
+              >
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="babyName"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">身份信息: </label>
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="babyIdentify"
+                />
+              </div>
+              <div class="col-sm-2">
+                <select formControlName="babyIdentityType">
+                  <option value="0">儿童身份证</option>
+                  <option value="1">父亲身份证</option>
+                  <option value="2">母亲身份证</option>
+                  <option value="3">诊疗卡号</option>
+                  <option value="4">病历号</option>
+                  <option value="5">其他</option>
+                </select>
+              </div>
+              <label class="control-label col-sm-2" style="text-align: left">
+                (选填)
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 性别:</label
+              >
+              <div class="col-sm-3">
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="babyGender"
+                    value="0"
+                  />男</label
+                >&nbsp;&nbsp;&nbsp;
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="babyGender"
+                    value="1"
+                  />女</label
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 出生日期:</label
+              >
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  DateTimePicker
+                  [format]="dateFormat"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 筛查时间:</label
+              >
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  readonly
+                  DateTimePicker
+                  [format]="dateFormat"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="form-group" style="align-items: flex-start">
+              <label class="control-label col-sm-2">
+                <div><span>*</span>是否早产:</div>
+                <div>（提前3周以上出生）</div>
+              </label>
+              <div class="col-sm-3">
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="babyEarly"
+                    value="0"
+                  />是</label
+                >
+                &nbsp;&nbsp;&nbsp;
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="babyEarly"
+                    value="1"
+                  />否</label
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <div>出生时体重:</div>
+                <div>（注：1斤=500克）</div>
+              </label>
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="number"
+                  formControlName="babyWeight"
+                />
+              </div>
+              <div>&nbsp;克</div>
+            </div>
+            <div class="form-group" style="align-items: flex-start">
+              <label class="control-label col-sm-2">
+                <div><span>*</span>出生时情况:</div>
+              </label>
+              <div class="col-sm-3" formGroupName="babyCondition">
+                <div class="item">
+                  <div>
+                    <label
+                      ><input
+                        type="radio"
+                        formControlName="isShun"
+                        value="0"
+                      />顺产</label
+                    >
+                  </div>
+                  <div>
+                    <label
+                      ><input
+                        type="radio"
+                        formControlName="isShun"
+                        value="1"
+                      />剖腹产</label
+                    >
+                  </div>
+                </div>
+                <div class="item">
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        formControlName="isHelp"
+                        value="0"
+                      />产钳助产
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      ><input
+                        type="radio"
+                        formControlName="isHelp"
+                        value="1"
+                      />吸引器助产</label
+                    >
+                  </div>
+                </div>
+                <div class="item">
+                  <div>
+                    <label
+                      ><input
+                        type="radio"
+                        formControlName="isMulti"
+                        value="0"
+                      />双胞胎</label
+                    >
+                  </div>
+
+                  <div>
+                    <label
+                      ><input
+                        type="radio"
+                        formControlName="isMulti"
+                        value="1"
+                      />多胞胎</label
+                    >
+                  </div>
+                </div>
+                <div>
+                  <span>其他异常情况</span>
+                  <textarea
+                    cols="30"
+                    rows="5"
+                    formControlName="yichang"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="family-box" formGroupName="family">
+          <div>
+            <div
+              class="green-title large-title underline-title"
+              style="margin-bottom: 10px"
+            >
+              问卷人信息
+            </div>
+          </div>
+          <div class="form-wrapper" style="margin-top: 25px">
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 姓名:</label
+              >
+              <div class="col-sm-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="guardName"
+                />
+              </div>
+              <label class="control-label col-sm-2"
+                ><span>*</span>您是宝宝的:
+              </label>
+              <div class="col-sm-2">
+                <select>
+                  <option value="0">父亲</option>
+                  <option value="1">母亲</option>
+                  <option value="2">父亲和母亲</option>
+                  <option value="3">照养人</option>
+                  <option value="4">老师</option>
+                  <option value="5">祖父母</option>
+                  <option value="6">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">省:</label>
+              <div class="col-sm-2">
+                <select>
+                  <option value="">父亲</option>
+                  <option value="">母亲</option>
+                  <option value="">父亲和母亲</option>
+                  <option value="">照养人</option>
+                  <option value="">老师</option>
+                  <option value="">祖父母</option>
+                  <option value="">其他</option>
+                </select>
+              </div>
+              <label class="control-label">市:</label>
+              <div class="col-sm-2">
+                <select>
+                  <option value="">父亲</option>
+                  <option value="">母亲</option>
+                  <option value="">父亲和母亲</option>
+                  <option value="">照养人</option>
+                  <option value="">老师</option>
+                  <option value="">祖父母</option>
+                  <option value="">其他</option>
+                </select>
+              </div>
+              <label class="control-label">地区(县):</label>
+              <div class="col-sm-2">
+                <select>
+                  <option value="">父亲</option>
+                  <option value="">母亲</option>
+                  <option value="">父亲和母亲</option>
+                  <option value="">照养人</option>
+                  <option value="">老师</option>
+                  <option value="">祖父母</option>
+                  <option value="">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 手机号:</label
+              >
+              <div class="col-sm-3">
+                <input type="number" formControlName="guardPhone" />
+              </div>
+
+              <label class="control-label col-sm-2"> 通信地址:</label>
+              <div class="col-sm-3">
+                <input type="text" formControlName="guardAddress" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2"> 电子邮箱:</label>
+              <div class="col-sm-3">
+                <input type="text" formControlName="guardEmail" />
+              </div>
+
+              <label class="control-label col-sm-2"> 邮政编码:</label>
+              <div class="col-sm-3">
+                <input type="text" formControlName="guardPostCode" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2"> 是否有人协助完成:</label>
+              <div class="col-sm-10">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="guardHelp"
+                    value="0"
+                  />是 </label
+                >&nbsp;&nbsp;&nbsp;
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="guardHelp"
+                    value="1"
+                  />否</label
+                >&nbsp;&nbsp;&nbsp;
+                <!-- <span
+                  >若有，请列出帮助完成问卷人的姓名，与宝宝的关系或身份:
+                </span>
+                <input type="text" class="col-sm-3" /> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2"> 母亲职业:</label>
+              <div class="col-sm-3">
+                <input type="text" formControlName="motherJob" />
+              </div>
+
+              <label class="control-label col-sm-2"> 父亲职业:</label>
+              <div class="col-sm-3">
+                <input type="text" formControlName="fatherJob" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">母亲文化程度:</label>
+              <div class="col-sm-2">
+                <select formControlName="motherDegree">
+                  <option value="" disabled>请选择</option>
+
+                  <option value="0">博士</option>
+                  <option value="1">硕士</option>
+                  <option value="2">本科</option>
+                  <option value="3">专科</option>
+                  <option value="4">高中</option>
+                  <option value="5">初中</option>
+                  <option value="6">小学及以下</option>
+                </select>
+              </div>
+              <label class="control-label">父亲文化程度:</label>
+              <div class="col-sm-2">
+                <select formControlName="fatherDegree">
+                  <option value="" disabled>请选择</option>
+
+                  <option value="0">博士</option>
+                  <option value="1">硕士</option>
+                  <option value="2">本科</option>
+                  <option value="3">专科</option>
+                  <option value="4">高中</option>
+                  <option value="5">初中</option>
+                  <option value="6">小学及以下</option>
+                </select>
+              </div>
+              <label class="control-label">主要照看者文化程度:</label>
+              <div class="col-sm-2">
+                <select formControlName="otherDegree">
+                  <option value="" disabled>请选择</option>
+                  <option value="0">博士</option>
+                  <option value="1">硕士</option>
+                  <option value="2">本科</option>
+                  <option value="3">专科</option>
+                  <option value="4">高中</option>
+                  <option value="5">初中</option>
+                  <option value="6">小学及以下</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2"> 母亲出生日期:</label>
+              <div class="col-sm-3">
+                <input type="text" DateTimePicker [format]="dateFormat" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2"> 父亲出生日期:</label>
+              <div class="col-sm-3">
+                <input type="text" DateTimePicker [format]="dateFormat" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
+    <div class="btnAddf">
+      显示更多信息
+      <img src="assets/img/icon_add.png" alt="" />
+    </div>
+    <button
+      class="hw-normal-btn green-btn"
+      style="margin: 20px auto"
+      (click)="onSubmit()"
+    >
+      开始答题
+    </button>
+  </div>
+</div>

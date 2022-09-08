@@ -4,6 +4,6 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-08-15 20:13:08
  */
-const BaseASQUrl = '/api/frontend';
+const BaseASQUrl = '/api';
 
 export { BaseASQUrl };

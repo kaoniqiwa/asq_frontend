@@ -9,8 +9,8 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Digest } from './digest';
-import { AuthorizationService } from './auth/auth-request.service';
-import { HowellResponse } from './model/howell-response.model';
+import { AuthorizationService } from '../auth/auth-request.service';
+import { HowellResponse } from '../model/howell-response.model';
 
 @Injectable({
   providedIn: 'root',

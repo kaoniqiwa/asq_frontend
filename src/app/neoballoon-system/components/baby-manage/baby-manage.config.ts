@@ -1,5 +1,4 @@
 import { BabyManageModel } from 'src/app/view-model/baby-info.model';
-import { EncodeDeviceManageModel } from 'src/app/view-model/encode-device-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 export const BybyManageConf: TableColumnModel[] = [

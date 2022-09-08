@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BaseRequestService, BaseTypeRequestService } from "../../base-request.service";
-import { HowellAuthHttpService } from "../../howell-auth-http.service";
+import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
+import { HowellAuthHttpService } from "../howell-auth-http.service";
 import { DoctorModel } from "../../model/doctor.model";
 import { DoctorUrl } from "../../url/doctor.url";
 import { GetDoctorParams } from "./doctor.params";

@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoutePath } from 'src/app/enum/route-path.enum';
 import { LoginModel } from 'src/app/view-model/login.model';
-import axios from 'axios';
-import { HttpClient } from '@angular/common/http';
 import { AuthorizationService } from 'src/app/network/auth/auth-request.service';
 import { ToastrService } from 'ngx-toastr';
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DoctorModel } from 'src/app/network/model/doctor.model';
 
 @Component({
   selector: 'app-account-info',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountInfoComponent implements OnInit {
 
-  constructor() { }
+  doctor: DoctorModel | null = null;
+
+  constructor(private _globalStorage: GlobalStorageService) { }
 
   ngOnInit(): void {
+    // console.log(this._globalStorage.doctor)
+    this.doctor = this._globalStorage.doctor;
   }
 
 }

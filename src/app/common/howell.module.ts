@@ -6,11 +6,13 @@ import { RouterModule } from "@angular/router";
 import { MaterialModule } from "../material.module";
 import { CUSTOM_COMPONENTS } from "./components";
 import { CUSTOM_DIRECTIVES } from "./directive";
+import { CUSTOM_PIPES } from "./pipes";
 
 @NgModule({
   declarations: [
     ...CUSTOM_COMPONENTS,
-    ...CUSTOM_DIRECTIVES
+    ...CUSTOM_DIRECTIVES,
+    ...CUSTOM_PIPES
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,7 @@ import { CUSTOM_DIRECTIVES } from "./directive";
     HttpClientModule,
     MaterialModule
   ],
-  exports: [...CUSTOM_COMPONENTS, ...CUSTOM_DIRECTIVES]
+  exports: [...CUSTOM_COMPONENTS, ...CUSTOM_DIRECTIVES, ...CUSTOM_PIPES]
 })
 export class HowellModule {
 

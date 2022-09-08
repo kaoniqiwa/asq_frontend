@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GlobalToastrConfig } from 'ngx-toastr';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { DoctorModel } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
@@ -16,23 +19,24 @@ export class AccountComponent implements OnInit {
 
   showInfo = false;
 
-  user: User;
+  user: User | null = null;
   doctors: DoctorModel[] = [];
 
 
-  constructor(private _localStorage: LocalStorageService, private _business: AccountBusiness) {
-    this.user = this._localStorage.user;
+  constructor(private _globalStorage: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
+    this.user = this._globalStorage.user;
   }
 
   async ngOnInit() {
     if (this.user) {
       this.doctors = await this._business.listDoctors(this.user.id);
+      console.log(this.doctors)
     }
   }
   selectAccount(doctor: DoctorModel) {
     console.log('select:', doctor)
-
-    this._localStorage.doctor = doctor;
+    this._globalStorage.doctor = doctor;
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-manage"])
   }
 
 }

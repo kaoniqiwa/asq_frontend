@@ -2,8 +2,8 @@ import { ClassConstructor, classToPlain } from 'class-transformer';
 import { lastValueFrom } from 'rxjs';
 import { HowellAuthHttpService } from './howell-auth-http.service';
 import { IParams } from './IParams.interface';
-import { HowellResponse } from './model/howell-response.model';
-import { PagedList } from './model/page_list.model';
+import { HowellResponse } from '../model/howell-response.model';
+import { PagedList } from '../model/page_list.model';
 import { ServiceHelper } from './service-helper';
 
 export class BaseRequestService {

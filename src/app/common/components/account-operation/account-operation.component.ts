@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/enum/route-path.enum';
+import { GlobalStorageService } from '../../service/global-storage.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 import { AccountOperationDisplay } from './account-operation.model';
 
 @Component({
@@ -10,10 +13,10 @@ import { AccountOperationDisplay } from './account-operation.model';
 })
 export class AccountOperationComponent implements OnInit {
 
-  userName = '示教账号';
   display = new AccountOperationDisplay();
 
-  constructor(private _router: Router, private route: ActivatedRoute) { }
+  constructor(private _router: Router, private route: ActivatedRoute, private _sessionStorage: SessionStorageService, private _globalStorage: GlobalStorageService, private _cookieService: CookieService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -25,9 +28,14 @@ export class AccountOperationComponent implements OnInit {
 
   }
   selectSubAccount() {
+    this._globalStorage.doctor = null;
+
     this._router.navigate(['account'], { relativeTo: this.route })
   }
   logoutHandler() {
+    this._globalStorage.doctor = null;
+    this._sessionStorage.clear();
+    this._cookieService.deleteAll();
     this._router.navigateByUrl(RoutePath.login)
   }
 }

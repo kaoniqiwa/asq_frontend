@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-baby-add',
-  templateUrl: './baby-add.component.html',
-  styleUrls: ['./baby-add.component.less']
+  selector: 'app-baby-add-manage',
+  templateUrl: './baby-add-manage.component.html',
+  styleUrls: ['./baby-add-manage.component.less']
 })
-export class BabyAddComponent implements OnInit {
+export class BabyAddManageComponent implements OnInit {
 
   showAuthorize = false;
   showQuick = false;

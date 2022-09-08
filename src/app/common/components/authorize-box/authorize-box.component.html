@@ -91,6 +91,8 @@
         class="hw-normal-btn green-btn"
         type="button"
         style="width: 170px"
+        [class.disabled]="!agree"
+        (click)="navigateToBabyInfo()"
       >
         下一步
       </button>

@@ -7,9 +7,9 @@
       "path": "/neoballoon/neoballoon-manage/baby-manage"
     },
     {
-      "id": "baby-add",
+      "id": "baby-add-manage",
       "title": "添加宝宝",
-      "path": "/neoballoon/neoballoon-manage/baby-add"
+      "path": "/neoballoon/neoballoon-manage/baby-add-manage"
     },
     {
       "id": "baby-game",

@@ -1358,16 +1358,6 @@ body.login2 .login-wrapper img {
   color: #ef6464;
 }
 
-input[type="number"] {
-  color: #cfd7ff;
-  border: 1px solid #5e6ebf;
-  font-size: 18px;
-  border-radius: unset;
-  background-color: #1d233b;
-  width: calc(100% - 10px - 2px);
-  padding: 0 5px;
-}
-
 .icon-button {
   color: #7586e0;
   background-color: transparent;
@@ -1598,4 +1588,26 @@ select.form-group-lg[multiple] .form-control {
   height: 30px;
   line-height: 30px;
   width: 30px;
+}
+
+ol,
+ul,
+li {
+  list-style-type: none;
+}
+
+input[type="radio"] {
+  margin-right: 3px;
+  /* -webkit-appearance: none;
+  background: url(src/assets/img/radio_unchecked.png) no-repeat 50%;
+  height: 26px;
+  width: 26px;
+  background-size: cover; */
+}
+label {
+  margin: 0;
+}
+
+button:focus {
+  outline: none;
 }

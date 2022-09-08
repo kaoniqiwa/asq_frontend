@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { EncodeDeviceManageModel } from 'src/app/view-model/encode-device-manage.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { BabyManageBusiness as BabyInfoBusiness } from './baby-manage.business';
 import { BybyManageConf } from './baby-manage.config';
@@ -29,8 +28,6 @@ export class BabyManageComponent implements OnInit {
   columnModel: TableColumnModel[] = [...BybyManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
-  selectedRows: EncodeDeviceManageModel[] = [];//table选中项
-  willBeDeleted: EncodeDeviceManageModel[] = [];
 
 
   // Paginator

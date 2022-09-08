@@ -1,6 +1,6 @@
 import { Exclude, Transform } from 'class-transformer';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { transformDateTime } from './model/transform.model';
+import { transformDateTime } from '../model/transform.model';
 
 export interface IParams { }
 export class PagedParams implements IParams {
