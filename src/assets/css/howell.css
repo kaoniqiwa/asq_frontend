@@ -1598,11 +1598,10 @@ li {
 
 input[type="radio"] {
   margin-right: 3px;
-  /* -webkit-appearance: none;
-  background: url(src/assets/img/radio_unchecked.png) no-repeat 50%;
-  height: 26px;
-  width: 26px;
-  background-size: cover; */
+  /* background-image: url(../img/radio_checked.png);
+  background-repeat: no-repeat;
+  width: 23px;
+  height: 23px; */
 }
 label {
   margin: 0;

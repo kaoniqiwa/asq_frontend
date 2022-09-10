@@ -2,9 +2,9 @@ export enum Gender {
   /**
    *  男
    */
-  Male = 1,
+  Male = 0,
   /**
    *  女
    */
-  Female = 2,
+  Female = 1,
 }

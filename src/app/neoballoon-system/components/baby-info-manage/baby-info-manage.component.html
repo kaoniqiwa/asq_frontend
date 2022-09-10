@@ -54,7 +54,7 @@
                 <input
                   class="form-control"
                   type="text"
-                  formControlName="babyName"
+                  formControlName="name"
                 />
               </div>
             </div>
@@ -64,11 +64,11 @@
                 <input
                   class="form-control"
                   type="text"
-                  formControlName="babyIdentify"
+                  formControlName="identity"
                 />
               </div>
               <div class="col-sm-2">
-                <select formControlName="babyIdentityType">
+                <select formControlName="identityType">
                   <option value="0">儿童身份证</option>
                   <option value="1">父亲身份证</option>
                   <option value="2">母亲身份证</option>
@@ -89,15 +89,15 @@
                 <label
                   ><input
                     type="radio"
-                    formControlName="babyGender"
-                    value="0"
+                    formControlName="gender"
+                    [value]="Gender.Male"
                   />男</label
                 >&nbsp;&nbsp;&nbsp;
                 <label
                   ><input
                     type="radio"
-                    formControlName="babyGender"
-                    value="1"
+                    formControlName="gender"
+                    [value]="Gender.Female"
                   />女</label
                 >
               </div>
@@ -141,16 +141,16 @@
                 <label
                   ><input
                     type="radio"
-                    formControlName="babyEarly"
-                    value="0"
+                    formControlName="premature"
+                    [value]="true"
                   />是</label
                 >
                 &nbsp;&nbsp;&nbsp;
                 <label
                   ><input
                     type="radio"
-                    formControlName="babyEarly"
-                    value="1"
+                    formControlName="premature"
+                    [value]="false"
                   />否</label
                 >
               </div>
@@ -164,7 +164,7 @@
                 <input
                   class="form-control"
                   type="number"
-                  formControlName="babyWeight"
+                  formControlName="weight"
                 />
               </div>
               <div>&nbsp;克</div>
@@ -173,14 +173,14 @@
               <label class="control-label col-sm-2">
                 <div><span>*</span>出生时情况:</div>
               </label>
-              <div class="col-sm-3" formGroupName="babyCondition">
+              <div class="col-sm-3" formGroupName="bornCondition">
                 <div class="item">
                   <div>
                     <label
                       ><input
                         type="radio"
                         formControlName="isShun"
-                        value="0"
+                        [value]="true"
                       />顺产</label
                     >
                   </div>
@@ -189,7 +189,7 @@
                       ><input
                         type="radio"
                         formControlName="isShun"
-                        value="1"
+                        [value]="false"
                       />剖腹产</label
                     >
                   </div>
@@ -240,7 +240,7 @@
                   <textarea
                     cols="30"
                     rows="5"
-                    formControlName="yichang"
+                    formControlName="yiChang"
                   ></textarea>
                 </div>
               </div>
@@ -248,7 +248,7 @@
           </div>
         </div>
 
-        <div class="family-box" formGroupName="family">
+        <div class="member-box" formGroupName="member">
           <div>
             <div
               class="green-title large-title underline-title"
@@ -266,14 +266,14 @@
                 <input
                   class="form-control"
                   type="text"
-                  formControlName="guardName"
+                  formControlName="name"
                 />
               </div>
               <label class="control-label col-sm-2"
                 ><span>*</span>您是宝宝的:
               </label>
               <div class="col-sm-2">
-                <select>
+                <select formControlName="role">
                   <option value="0">父亲</option>
                   <option value="1">母亲</option>
                   <option value="2">父亲和母亲</option>
@@ -327,23 +327,23 @@
                 <span>*</span> 手机号:</label
               >
               <div class="col-sm-3">
-                <input type="number" formControlName="guardPhone" />
+                <input type="number" formControlName="phone" />
               </div>
 
               <label class="control-label col-sm-2"> 通信地址:</label>
               <div class="col-sm-3">
-                <input type="text" formControlName="guardAddress" />
+                <input type="text" formControlName="address" />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-2"> 电子邮箱:</label>
               <div class="col-sm-3">
-                <input type="text" formControlName="guardEmail" />
+                <input type="text" formControlName="email" />
               </div>
 
               <label class="control-label col-sm-2"> 邮政编码:</label>
               <div class="col-sm-3">
-                <input type="text" formControlName="guardPostCode" />
+                <input type="text" formControlName="postCode" />
               </div>
             </div>
             <div class="form-group">
@@ -352,14 +352,14 @@
                 <label>
                   <input
                     type="radio"
-                    formControlName="guardHelp"
+                    formControlName="isHelp"
                     value="0"
                   />是 </label
                 >&nbsp;&nbsp;&nbsp;
                 <label
                   ><input
                     type="radio"
-                    formControlName="guardHelp"
+                    formControlName="isHelp"
                     value="1"
                   />否</label
                 >&nbsp;&nbsp;&nbsp;
