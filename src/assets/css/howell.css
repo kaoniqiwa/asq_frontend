@@ -11,17 +11,9 @@
 html,
 body {
   height: 100%;
-  font-family: "Source Han Sans CN Normal";
+  font-family: "微软雅黑", "Microsoft YaHei", 华文黑体, STHeiti, 宋体, helvetica,
+    arial, Verdana, Geneva, Tahoma, sans-serif;
   /* color: #99abb4; */
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Source Han Sans CN Normal";
 }
 
 h5 {
@@ -1609,4 +1601,12 @@ label {
 
 button:focus {
   outline: none;
+}
+ol,
+ul,
+li {
+  list-style-type: none;
+}
+li {
+  display: block;
 }

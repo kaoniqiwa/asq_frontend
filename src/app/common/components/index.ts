@@ -1,4 +1,5 @@
 import { AccountOperationComponent } from "./account-operation/account-operation.component";
+import { Asq3EntryComponent } from "./asq3-entry/asq3-entry.component";
 import { AuthorizeBoxComponent } from "./authorize-box/authorize-box.component";
 import { CommonTableComponent } from "./common-table/common-table.component";
 import { ImageBoxComponent } from "./image-box/image-box.component";
@@ -21,5 +22,6 @@ export const CUSTOM_COMPONENTS = [
   UpdateBoxComponent,
   ImageBoxComponent,
   AuthorizeBoxComponent,
-  QuickBoxComponent
+  QuickBoxComponent,
+  Asq3EntryComponent
 ]

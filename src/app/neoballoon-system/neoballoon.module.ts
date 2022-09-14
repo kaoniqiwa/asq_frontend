@@ -3,6 +3,9 @@ import { NeoballoonComponentModule } from "./components/neoballoon-component.mod
 import { NeoballoonRoutingModule } from "./neoballoon-routing.module";
 import { NeoballoonComponent } from "./neoballoon.component";
 
+import { SwiperModule } from 'swiper/angular';
+
+
 @NgModule({
   declarations: [
     NeoballoonComponent,
@@ -11,6 +14,7 @@ import { NeoballoonComponent } from "./neoballoon.component";
   imports: [
     NeoballoonComponentModule,
     NeoballoonRoutingModule,
+    SwiperModule
   ]
 })
 export class NeoballoonModule {

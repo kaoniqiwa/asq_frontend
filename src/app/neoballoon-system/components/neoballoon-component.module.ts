@@ -19,6 +19,7 @@ import { SurveyLicenseComponent } from './survey-license/survey-license.componen
 import { BabyInfoComponent } from './baby-info/baby-info.component';
 import { SurveyManageComponent } from './survey-manage/survey-manage.component';
 import { BabyInfoManageComponent } from './baby-info-manage/baby-info-manage.component';
+import { SwiperModule } from 'swiper/angular';
 
 
 
@@ -47,6 +48,7 @@ import { BabyInfoManageComponent } from './baby-info-manage/baby-info-manage.com
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    SwiperModule
   ]
 })
 export class NeoballoonComponentModule { }
