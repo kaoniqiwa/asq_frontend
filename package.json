@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href ./",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -24,6 +24,8 @@
     "bootstrap": "^5.2.0",
     "class-transformer": "^0.5.1",
     "crypto-js": "^4.1.1",
+    "csv-loader": "^3.0.5",
+    "excel-loader": "^1.0.1",
     "ngx-cookie-service": "^14.0.1",
     "ngx-toastr": "^15.0.0",
     "print-js": "^1.6.0",
@@ -34,6 +36,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^14.0.1",
     "@angular-devkit/build-angular": "^14.0.0",
     "@angular/cli": "~14.0.0",
     "@angular/compiler-cli": "^14.0.0",
