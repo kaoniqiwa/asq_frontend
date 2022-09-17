@@ -36,7 +36,7 @@ const routes: Routes = [
       {
         path: 'baby-add-manage',
         component: BabyAddManageComponent,
-        canActivate: [NeoballoonService]
+        // canActivate: [NeoballoonService]
       },
       {
         path: "baby-info-manage",
@@ -45,22 +45,22 @@ const routes: Routes = [
       {
         path: 'baby-manage',
         component: BabyManageComponent,
-        canActivate: [NeoballoonService]
+        // canActivate: [NeoballoonService]
       },
       {
         path: 'baby-game',
         component: BabyGameComponent,
-        canActivate: [NeoballoonService]
+        // canActivate: [NeoballoonService]
       },
       {
         path: 'baby-setting',
         component: BabySettingComponent,
-        canActivate: [NeoballoonService]
+        // canActivate: [NeoballoonService]
       },
       {
         path: 'baby-age',
         component: BabyAgeComponent,
-        canActivate: [NeoballoonService]
+        // canActivate: [NeoballoonService]
       },
       {
         path: "survey-manage",

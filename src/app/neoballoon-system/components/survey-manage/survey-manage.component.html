@@ -1,9 +1,13 @@
-<!-- <div class="survey-manage vertical-layout">
+<div class="survey-manage vertical-layout">
   <div class="vertical-header">
     <div class="baby-list">
-      <div class="baby-item">
-        <img src="assets/img/baby.png" alt="" />
-        王一
+      <div
+        class="baby-item"
+        [class.active]="currentBaby == baby"
+        *ngFor="let baby of babys; let i = index"
+        (click)="currentBaby = baby"
+      >
+        {{ baby.name }}
       </div>
     </div>
     <div style="width: 100%; margin: 20px 0">
@@ -15,18 +19,40 @@
 
   <div class="vertical-main vertical-layout">
     <div class="wrapper vertical-header">
-      <div class="item">
-        <div class="title">ASQ-3</div>
+      <!-- <div class="item" [class.active]="currentSurveyIndex == 0">
+        <div class="title">
+          <ng-container *ngIf="currentSurveyIndex != 0">
+            <img src="assets/img/ASQ-3_1.png" alt="" />
+          </ng-container>
+          <ng-container *ngIf="currentSurveyIndex == 0">
+            <img src="assets/img/ASQ-3_2.png" alt="" />
+          </ng-container>
+        </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
       </div>
-      <div class="item">
-        <div class="title">ASQ-3</div>
+      <div class="item" [class.active]="currentSurveyIndex == 1">
+        <div class="title">
+          <ng-container *ngIf="currentSurveyIndex != 1">
+            <img src="assets/img/ASQ-SE_1.png" alt="" />
+          </ng-container>
+          <ng-container *ngIf="currentSurveyIndex == 1">
+            <img src="assets/img/ASQ-SE_1.png" alt="" />
+          </ng-container>
+        </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
       </div>
-      <div class="item">
-        <div class="title">ASQ-3</div>
+      <div class="item" [class.active]="currentSurveyIndex == 2">
+        <div class="title">
+          <ng-container *ngIf="currentSurveyIndex != 1">
+            <img src="assets/img/ASQ-SE_1.png" alt="" />
+          </ng-container>
+          <ng-container *ngIf="currentSurveyIndex == 1">
+            <img src="assets/img/ASQ-SE_1.png" alt="" />
+          </ng-container>
+          <span class="version">-2及其联结</span>
+        </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div>
+      </div> -->
     </div>
     <div class="swiper-container vertical-main" style="min-height: 500px">
       <swiper [config]="config">
@@ -209,8 +235,8 @@
       </swiper>
     </div>
   </div>
-</div> -->
+</div>
 
 <!-- <asq3-entry></asq3-entry> -->
 
-<asq3-test></asq3-test>
+<!-- <asq3-test></asq3-test> -->

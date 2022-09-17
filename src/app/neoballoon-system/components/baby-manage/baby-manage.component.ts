@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { BabyManageBusiness as BabyInfoBusiness } from './baby-manage.business';
-import { BybyManageConf } from './baby-manage.config';
 import { BabyManageModel } from 'src/app/view-model/baby-info.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -25,8 +24,6 @@ export class BabyManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<BabyManageModel[]>([]);
-  columnModel: TableColumnModel[] = [...BybyManageConf]; // 表格列配置详情
-  displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
 
 

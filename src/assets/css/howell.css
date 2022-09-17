@@ -1593,7 +1593,7 @@ input[type="radio"] {
   -webkit-appearance: none;
   background: url(src/assets/img/rdo.png) no-repeat;
   height: 20px;
-  vertical-align: middle;
+  vertical-align: text-bottom;
   width: 20px;
   cursor: pointer;
 }

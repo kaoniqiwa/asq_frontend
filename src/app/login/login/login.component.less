@@ -13,3 +13,65 @@
 label {
   margin: 0;
 }
+.login {
+  width: 100%;
+  height: 100%;
+  background-image: url(/assets/img/login_bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+
+  .login-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .login-content {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 350px;
+    height: 260px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 10px;
+    box-sizing: border-box;
+
+    .form-wrapper {
+      width: 80%;
+      flex-grow: 1;
+    }
+
+    .login-footer {
+      flex-shrink: 0;
+      flex-basis: 30%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .login-footer-item {
+        font-size: 14px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0;
+        > div {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    a {
+      color: #36bd46;
+      &:hover {
+        color: forestgreen;
+      }
+    }
+  }
+}

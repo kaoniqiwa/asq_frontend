@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { CookieService } from "ngx-cookie-service";
-import { LocalStorageService } from "src/app/common/service/local-storage.service";
 import { SessionStorageService } from "src/app/common/service/session-storage.service";
 import { Md5 } from 'ts-md5';
 import CryptoJS from 'crypto-js';

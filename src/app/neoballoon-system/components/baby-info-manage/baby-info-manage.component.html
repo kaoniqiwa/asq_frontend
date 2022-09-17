@@ -33,7 +33,6 @@
     </div>
     <ng-container *ngFor="let info of infoArr; let i = index">
       <form [formGroup]="info" style="margin: 0" *ngIf="currentIndex == i">
-        {{ info.value.baby.more | json }}
         <div class="baby-box" formGroupName="baby">
           <div>
             <div
@@ -442,25 +441,24 @@
             </div>
           </div>
         </div>
+        <div
+          class="btnAddf"
+          (click)="info.value.baby.more = !info.value.baby.more"
+        >
+          <ng-container *ngIf="info.value.baby.more">
+            隐藏更多信息
+            <img
+              src="assets/img/icon_minus.png"
+              alt=""
+              style="width: 14px; height: 14px; margin-left: 2px"
+            />
+          </ng-container>
+          <ng-container *ngIf="!info.value.baby.more">
+            显示更多信息
+            <img src="assets/img/icon_add.png" alt="" />
+          </ng-container>
+        </div>
       </form>
-
-      <div
-        class="btnAddf"
-        (click)="info.value.baby.more = !info.value.baby.more"
-      >
-        <ng-container *ngIf="info.value.baby.more">
-          隐藏更多信息
-          <img
-            src="assets/img/icon_minus.png"
-            alt=""
-            style="width: 14px; height: 14px; margin-left: 2px"
-          />
-        </ng-container>
-        <ng-container *ngIf="!info.value.baby.more">
-          显示更多信息
-          <img src="assets/img/icon_add.png" alt="" />
-        </ng-container>
-      </div>
     </ng-container>
 
     <button

@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { interval } from 'rxjs';
+import { BabyModel } from 'src/app/network/model/baby.model';
 import { DoctorModel } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 
@@ -29,6 +30,13 @@ export class GlobalStorageService {
     return this._doctor;
   }
 
+  private _babys: BabyModel[] = [];
+  set babys(babys: BabyModel[]) {
+    this._babys = babys;
+  }
+  get babys() {
+    return this._babys;
+  }
 
 
   constructor() {

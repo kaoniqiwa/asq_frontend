@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalToastrConfig } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { DoctorModel } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 import { AccountBusiness } from './account.business';
@@ -36,6 +34,7 @@ export class AccountComponent implements OnInit {
   selectAccount(doctor: DoctorModel) {
     console.log('select:', doctor)
     this._globalStorage.doctor = doctor;
+
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-manage"])
   }
 

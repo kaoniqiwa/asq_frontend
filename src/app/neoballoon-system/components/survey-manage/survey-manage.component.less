@@ -3,20 +3,28 @@
     display: flex;
     font-size: 14px;
     border-bottom: 1px solid #e7e9e8;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     width: 100%;
     .baby-item {
-      background-color: #37bd46;
+      background: url(src/assets/img/baby2.png) no-repeat 7% 50%;
+      display: inline-block;
+      -webkit-appearance: none;
+      background-size: 16px;
+      padding: 0 10px 0 24px;
       min-width: 70px;
       height: 20px;
       border-radius: 10px;
+      color: #b5b9bd;
+      border: solid 1px #b5b9bd;
+      margin-right: 10px;
       cursor: pointer;
-      color: white;
-      display: flex;
-      align-items: center;
-      img {
-        clip-path: circle(50% at 50% 50%);
-        margin-right: 5px;
+
+      &.active {
+        border: none;
+        background: url(src/assets/img/baby.png) no-repeat 7% 50%;
+        background-size: 16px;
+        color: #ffffff;
+        background-color: #37bd46;
       }
     }
   }
@@ -24,9 +32,8 @@
   .wrapper {
     display: flex;
     justify-content: space-evenly;
+
     .item {
-      background-color: #36bd46;
-      color: white;
       width: 300px;
       height: 60px;
       border: 1px dotted #dadddd;
@@ -47,6 +54,16 @@
       .desc {
         font-size: 14px;
       }
+      .version {
+        font-size: 24px;
+        font-weight: 540;
+        color: #34bb45;
+        vertical-align: middle;
+      }
+    }
+    .item.active {
+      color: white;
+      background-color: #36bd46;
     }
   }
 }

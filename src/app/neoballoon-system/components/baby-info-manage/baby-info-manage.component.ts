@@ -23,6 +23,8 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
 })
 export class BabyInfoManageComponent implements OnInit {
 
+  babys: BabyModel[] = [];
+
   Gender = Gender;
 
   dateFormat: string = 'yyyy-MM-dd';
@@ -65,34 +67,34 @@ export class BabyInfoManageComponent implements OnInit {
   newInfo() {
     return this._fb.group({
       baby: this._fb.group({
-        name: ['test1'],
-        identityInfo: ['1212'],
+        name: [''],
+        identityInfo: [''],
         identityType: [IdentityType.Child],
         gender: [Gender.Male],
         birthday: [this.today],
         survey: [this.today],
         premature: [false],
-        weight: ['200'],
+        weight: [''],
         bornCondition: this._fb.group({
           isShun: true,
           isHelp: false,
           isMulti: false,
-          abnormal: 'rrr'
+          abnormal: ''
         }),
       }),
       member: this._fb.group({
-        name: ['测试宝宝1'],
+        name: [''],
         role: [MemberRole.Father],
         province: [''],
         city: [''],
         county: [''],
-        phone: ['18221662082'],
-        address: ['上海市'],
-        email: ['1061886912@qq.com'],
-        postCode: ['212300'],
+        phone: [''],
+        address: [''],
+        email: [''],
+        postCode: [''],
         isHelp: ['1'],
-        motherJob: ['教师'],
-        fatherJob: ['厨师'],
+        motherJob: [''],
+        fatherJob: [''],
         motherDegree: [''],
         fatherDegree: [''],
         otherDegree: [''],
@@ -106,55 +108,62 @@ export class BabyInfoManageComponent implements OnInit {
 
     let doctor = this._globalStorage.doctor;
     if (doctor) {
-      for (let i = 0; i < this.infoArr.length; i++) {
-        let info = this.infoArr[i];
-        let member = info.value.member as IMember;
-        let baby = info.value.baby as IBaby;
+      // for (let i = 0; i < this.infoArr.length; i++) {
+      //   let info = this.infoArr[i];
+      //   let member = info.value.member as IMember;
+      //   let baby = info.value.baby as IBaby;
 
-        let memberModel = new MemberModel();
-        memberModel.id = '';
-        memberModel.did = doctor.id;
-        memberModel.name = member.name;
-        memberModel.phone = member.phone;
-        memberModel.member_role = Language.MemberRoleInfo(member.role);
-        memberModel.province = member.province;
-        memberModel.city = member.city;
-        memberModel.county = member.county;
-        memberModel.email = member.email;
-        memberModel.post_code = member.postCode;
-        memberModel.address = member.address;
-        memberModel.mother_job = member.motherJob;
-        memberModel.father_job = member.fatherJob;
-        memberModel.mother_degree = member.motherDegree;
-        memberModel.father_degree = member.fatherDegree;
-        memberModel.other_degree = member.otherDegree;
-        memberModel.mother_birth = member.motherBirth;
-        memberModel.father_birth = member.fatherBirth;
-
-
-        let res = await this._business.addMember(memberModel)
-        if (res) {
-          let babyModel = new BabyModel();
-          babyModel.id = "";
-          babyModel.mid = res.id;
-
-          babyModel.name = baby.name;
-          babyModel.gender = baby.gender;
-          babyModel.birthday = baby.birthday;
-          babyModel.survey_time = baby.survey;
-          babyModel.premature = baby.premature;
-          babyModel.is_shun = baby.bornCondition.isShun;
-          babyModel.identity_info = baby.identityInfo;
-          babyModel.identity_type = baby.identityType;
-          babyModel.weight = baby.weight;
-          babyModel.is_help = baby.bornCondition.isHelp;
-          babyModel.is_multi = baby.bornCondition.isMulti;
-          babyModel.other_abnormal = baby.bornCondition.abnormal;
+      //   let memberModel = new MemberModel();
+      //   memberModel.id = '';
+      //   memberModel.did = doctor.id;
+      //   memberModel.name = member.name;
+      //   memberModel.phone = member.phone;
+      //   memberModel.member_role = Language.MemberRoleInfo(member.role);
+      //   memberModel.province = member.province;
+      //   memberModel.city = member.city;
+      //   memberModel.county = member.county;
+      //   memberModel.email = member.email;
+      //   memberModel.post_code = member.postCode;
+      //   memberModel.address = member.address;
+      //   memberModel.mother_job = member.motherJob;
+      //   memberModel.father_job = member.fatherJob;
+      //   memberModel.mother_degree = member.motherDegree;
+      //   memberModel.father_degree = member.fatherDegree;
+      //   memberModel.other_degree = member.otherDegree;
+      //   memberModel.mother_birth = member.motherBirth;
+      //   memberModel.father_birth = member.fatherBirth;
 
 
-          await this._business.addBaby(babyModel);
-        }
-      }
+      //   let memberRes = await this._business.addMember(memberModel);
+
+      //   console.log('添加 member ', memberRes);
+      //   if (memberRes) {
+      //     let babyModel = new BabyModel();
+      //     babyModel.id = "";
+      //     babyModel.mid = memberRes.id;
+
+      //     babyModel.name = baby.name;
+      //     babyModel.gender = baby.gender;
+      //     babyModel.birthday = baby.birthday;
+      //     babyModel.survey_time = baby.survey;
+      //     babyModel.premature = baby.premature;
+      //     babyModel.is_shun = baby.bornCondition.isShun;
+      //     babyModel.identity_info = baby.identityInfo;
+      //     babyModel.identity_type = baby.identityType;
+      //     babyModel.weight = baby.weight;
+      //     babyModel.is_help = baby.bornCondition.isHelp;
+      //     babyModel.is_multi = baby.bornCondition.isMulti;
+      //     babyModel.other_abnormal = baby.bornCondition.abnormal;
+
+
+      //     let babyRes = await this._business.addBaby(babyModel);
+      //     console.log('添加 baby ', babyRes);
+
+      //     this.babys.push(babyRes)
+      //   }
+      // }
+
+      this._globalStorage.babys = this.babys;
       this._toastrService.success('提交成功');
       this.navigateToSurveyManage();
 
@@ -167,21 +176,6 @@ export class BabyInfoManageComponent implements OnInit {
   }
 
 }
-
-
-// identity: ['1212'],
-// identityType: [IdentityType.Child],
-// gender: [Gender.Female],
-// birthday: [this.today],
-// survey: [this.today],
-// premature: ['1'],
-// weight: ['200'],
-// babyCondition: this._fb.group({
-//   isShun: false,
-//   isHelp: false,
-//   isMulti: false,
-//   yichang: 'rrr'
-// }),
 
 
 interface IBaby {

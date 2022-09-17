@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import hello from 'src/assets/files/test.xlsx';
 
-console.log(hello)
+// console.log(hello)
 @Component({
   selector: 'asq3-test',
   templateUrl: './asq3-test.component.html',
