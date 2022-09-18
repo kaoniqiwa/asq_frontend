@@ -6,9 +6,9 @@ import Swiper, { A11y, Navigation, Pagination, Scrollbar, SwiperOptions } from '
 import { SurveyManageBusiness } from './survey-manage.business';
 
 
-import asq_age from "src/assets/files/asq_month.xlsx";
+import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
-console.log(asq_age)
+// console.log(monthWorkBook)
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -24,6 +24,12 @@ Swiper.use([
   ]
 })
 export class SurveyManageComponent implements OnInit {
+  asq3Month: Array<string> = [];
+  asq3SEMonth: Array<string> = [];
+  asq3SE2Month: Array<string> = [];
+
+  currentMonth = this.asq3Month;
+
   babyId = "a26584f8-aa79-48b9-8fee-906025cd983c";
   babys: BabyModel[] = [];
 
@@ -35,15 +41,35 @@ export class SurveyManageComponent implements OnInit {
     navigation: {}
   }
 
-  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService) { }
+  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService) {
+    monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+      console.log(sheet)
+      sheet.data.shift();
+      if (sheet.name == 'asq3') {
+        this.asq3Month = sheet.data;
+      }
+      if (sheet.name == 'asqse') {
+        this.asq3SEMonth = sheet.data;
+      }
+      if (sheet.name == 'asqse2') {
+        this.asq3SE2Month = sheet.data;
+      }
+    })
+    console.log(this.asq3Month)
+  }
 
   async ngOnInit() {
-    console.log(this._globalStorage.babys)
 
+    console.log(this.currentMonth);
     this.babys = await this._business.listBaby();
-    console.log(this.babys);
     if (this.babys.length)
       this.currentBaby = this.babys[0]
   }
 
+}
+
+
+interface ASQMonthFilter {
+  name: string;
+  data: [string, string, string, string]
 }

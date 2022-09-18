@@ -19,7 +19,7 @@
 
   <div class="vertical-main vertical-layout">
     <div class="wrapper vertical-header">
-      <!-- <div class="item" [class.active]="currentSurveyIndex == 0">
+      <div class="item" [class.active]="currentSurveyIndex == 0">
         <div class="title">
           <ng-container *ngIf="currentSurveyIndex != 0">
             <img src="assets/img/ASQ-3_1.png" alt="" />
@@ -52,11 +52,29 @@
           <span class="version">-2及其联结</span>
         </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div> -->
+      </div>
     </div>
     <div class="swiper-container vertical-main" style="min-height: 500px">
       <swiper [config]="config">
-        <ng-template swiperSlide class="red">
+        <ng-template swiperSlide class="red" *ngFor="let month of asq3Month">
+          <div class="item">
+            <p>{{ month[0] }}</p>
+            月
+            <span class="status">未开始</span>
+            <div class="appendix">
+              适用于
+              <br />
+              1个月0天
+              <br />
+              |
+              <br />
+              2个月30天宝宝
+            </div>
+          </div>
+        </ng-template>
+
+        <!--
+           <ng-template swiperSlide class="red">
           <div class="item">
             <p>2</p>
             月
@@ -231,7 +249,7 @@
               2个月30天宝宝
             </div>
           </div>
-        </ng-template>
+        </ng-template> -->
       </swiper>
     </div>
   </div>
@@ -240,3 +258,5 @@
 <!-- <asq3-entry></asq3-entry> -->
 
 <!-- <asq3-test></asq3-test> -->
+
+{{ currentMonth }}
