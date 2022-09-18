@@ -8,7 +8,7 @@ import { SurveyManageBusiness } from './survey-manage.business';
 
 import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
-// console.log(monthWorkBook)
+console.log(monthWorkBook)
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -55,7 +55,7 @@ export class SurveyManageComponent implements OnInit {
         this.asq3SE2Month = sheet.data;
       }
     })
-    console.log(this.asq3Month)
+    // console.log(this.asq3Month)
   }
 
   async ngOnInit() {
