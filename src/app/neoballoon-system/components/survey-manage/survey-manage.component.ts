@@ -24,6 +24,8 @@ Swiper.use([
   ]
 })
 export class SurveyManageComponent implements OnInit {
+  myGender = '0';
+
   asq3Month: Array<string> = [];
   asq3SEMonth: Array<string> = [];
   asq3SE2Month: Array<string> = [];
@@ -64,6 +66,10 @@ export class SurveyManageComponent implements OnInit {
     this.babys = await this._business.listBaby();
     if (this.babys.length)
       this.currentBaby = this.babys[0]
+  }
+
+  changeGender(val: any) {
+    console.log(val)
   }
 
 }
