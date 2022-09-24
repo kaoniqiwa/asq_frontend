@@ -178,8 +178,8 @@
       <button class="btnNext">继续</button>
     </div>
   </div> -->
-  <ng-container :*ngFor="let intQuetion of intQuetions; let i = index;">
-    <div *ngIf="i==this.currentPage" class="quesBox">
+  <ng-container *ngFor="let intQuetion of intQuetions; let j = index;">
+    <div *ngIf="j==this.currentPage" class="quesBox">
       <h1>{{intQuetion[0]}}</h1>
       <p>
         这些选项是什么意思
@@ -194,14 +194,14 @@
             <td>否</td>
             <td>帮助</td>
           </tr>
-          <ng-container :*ngFor="let item of intQuetion; let i = index;">
+          <ng-container *ngFor="let item of intQuetion; let i = index;">
             <tr *ngIf="i!=0" class="model queNum1">
               <td>
                 <span class="dot2">{{item[0]}}.</span><span class="must">{{item[1]}}</span>
               </td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick()" value="1" /></td>
-              <td><input type="radio" [name]="'rdo'+i" value="2" /></td>
-              <td><input type="radio" [name]="'rdo'+i" value="3" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="1" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="2" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="3" /></td>
               <td>
                 <img
                   src="assets/img/icon_audio.png"
@@ -216,141 +216,8 @@
               </td>
             </tr>
           </ng-container>
-
-          
-          <!-- <tr class="model queNum1">
-            <td>
-              <span class="dot2">1.</span
-              ><span class="must">孩子有时候会发出喉音或“咯咯”声吗？</span>
-            </td>
-            <td><input type="radio" name="rdo0" value="1" /></td>
-            <td><input type="radio" name="rdo0" value="2" /></td>
-            <td><input type="radio" name="rdo0" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-1"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-1.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr>
-          <tr class="model queNum2">
-            <td>
-              <span class="dot2">2.</span
-              ><span class="must">孩子会发出“哦” “咯” 和“啊”等咕咕声吗?</span>
-            </td>
-            <td><input type="radio" name="rdo1" value="1" /></td>
-            <td><input type="radio" name="rdo1" value="2" /></td>
-            <td><input type="radio" name="rdo1" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-2"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-2.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr>
-          <tr class="model queNum3">
-            <td>
-              <span class="dot2">3.</span
-              ><span class="must">当您对孩子说话时,他/她能发出声音回应您吗?</span>
-            </td>
-            <td><input type="radio" name="rdo2" value="1" /></td>
-            <td><input type="radio" name="rdo2" value="2" /></td>
-            <td><input type="radio" name="rdo2" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-3"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-3.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr>
-          <tr class="model queNum4">
-            <td>
-              <span class="dot2">4.</span
-              ><span class="must">当您对孩子说话时,他/她会对您微笑吗?</span>
-            </td>
-            <td><input type="radio" name="rdo3" value="1" /></td>
-            <td><input type="radio" name="rdo3" value="2" /></td>
-            <td><input type="radio" name="rdo3" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-4"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-4.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr>
-          <tr class="model queNum5">
-            <td>
-              <span class="dot2">5.</span
-              ><span class="must">孩子会轻声咯咯笑吗？</span>
-            </td>
-            <td><input type="radio" name="rdo4" value="1" /></td>
-            <td><input type="radio" name="rdo4" value="2" /></td>
-            <td><input type="radio" name="rdo4" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-5"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-5.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr>
-          <tr class="model queNum6">
-            <td>
-              <span class="dot2">6.</span
-              ><span class="must"
-                >当您离开宝宝的视线,然后又出现在他/她面前时,他/她会笑起来或显得高兴吗？</span
-              >
-            </td>
-            <td><input type="radio" name="rdo5" value="1" /></td>
-            <td><input type="radio" name="rdo5" value="2" /></td>
-            <td><input type="radio" name="rdo5" value="3" /></td>
-            <td>
-              <img
-                src="assets/img/icon_audio.png"
-                alt=""
-                class="signal"
-                data-url="2-6"
-                data-type="2"
-              /><audio
-                src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-6.mp3"
-                preload="none"
-              ></audio>
-            </td>
-          </tr> -->
         </tbody>
       </table>
-
-      
-
       <div class="divBtn">
         <button class="btnPre">返回</button>
         <button class="btnNext">继续</button>

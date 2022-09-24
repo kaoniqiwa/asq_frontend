@@ -1210,8 +1210,8 @@ export class Asq3TestComponent implements OnInit {
     
   }
 
-  radioClick(){
-    //console.log(e.target.value);
+  radioClick(e:Event){
+    console.log((e.target as HTMLInputElement).value);
   }
 
 }
