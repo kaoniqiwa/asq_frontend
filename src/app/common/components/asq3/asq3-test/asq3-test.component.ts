@@ -1192,7 +1192,7 @@ export class Asq3TestComponent implements OnInit {
     //console.log('title:', this.babyQuestions[this.mounthNum].name);
   }
 
-  setQuetions(arr:any){
+  setQuetions(arr:any){//重组数据
     let quetions:any = [];
     let quetion:any = [];
     arr.forEach(function(obj:any,index:any){
