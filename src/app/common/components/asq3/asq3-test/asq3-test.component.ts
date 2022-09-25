@@ -1175,7 +1175,10 @@ export class Asq3TestComponent implements OnInit {
   title:any='';
   currentQuetions:any = null;
   intQuetions:any = null;
-  currentPage:any = 0;
+  currentPage:any = 5;
+  allPages:any = 0;
+  currentAnswers:any = [];
+  currentAnswer:any = {};
 
   constructor() {
     
@@ -1183,13 +1186,24 @@ export class Asq3TestComponent implements OnInit {
 
   async ngOnInit(){
     this.currentQuetionsObject = this.babyQuestions[this.mounthNum];
-    console.log(this.currentQuetionsObject.name);
+    //console.log(this.currentQuetionsObject.name);
     this.title = this.currentQuetionsObject.name;
     this.currentQuetions = this.currentQuetionsObject.data;
    
-    console.log('currentQuetions',this.currentQuetions,this.mounthNum,this.currentQuetions.length);
+    //console.log('currentQuetions',this.currentQuetions,this.mounthNum,this.currentQuetions.length);
     this.intQuetions = this.setQuetions(this.currentQuetions);
     //console.log('title:', this.babyQuestions[this.mounthNum].name);
+    this.allPages = this.intQuetions.length;
+    for(let i=0;i<this.intQuetions.length;i++){
+      this.currentAnswers[i] = {'answer':[],nextStatus:false,prevStatus:true};
+      console.log('this.currentAnswer_old:',i,this.currentAnswers[i]);
+      if(i==0){
+        this.currentAnswers[i].prevStatus = false;
+      }
+      console.log('this.currentAnswer_new:',i,this.currentAnswers[i]);
+    }
+    this.currentAnswer = this.currentAnswers[0];
+    
   }
 
   setQuetions(arr:any){//重组数据
@@ -1211,7 +1225,38 @@ export class Asq3TestComponent implements OnInit {
   }
 
   radioClick(e:Event){
-    console.log((e.target as HTMLInputElement).value);
+    
+    let l = Number((e.target as HTMLInputElement).getAttribute('l'))-1;
+    let xu = Number((e.target as HTMLInputElement).getAttribute('xu'));
+    let v = (e.target as HTMLInputElement).value;
+    //console.log(xu,v,this.currentAnswer.answer.length,this.currentAnswer.answer,'---before');
+
+    this.currentAnswer.answer[xu] = v;
+
+    console.log(xu,v,this.currentAnswer.answer.length,this.currentAnswer.answer,'---after');
+    /*this.currentAnswer.map(function(item:any,index:any){
+      console.log('map1',index,item);
+      if(item == undefined){
+        console.log('map2',index,item);
+      }
+    })*/
+    if(Object.keys(this.currentAnswer.answer).length == l){
+      this.currentAnswer.nextStatus = true;
+      this.currentAnswers[this.currentPage] = this.currentAnswer;
+      console.log('currentAnswers:',this.currentAnswers);
+    }
+
+    //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
+  }
+
+  nextQuestions(e:Event){
+    this.currentPage++;
+    this.currentAnswer = this.currentAnswers[this.currentPage];
+  }
+
+  prevQuestions(e:Event){
+    this.currentPage--;
+    this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
 }

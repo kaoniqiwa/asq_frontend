@@ -178,7 +178,7 @@
       <button class="btnNext">继续</button>
     </div>
   </div> -->
-  <ng-container *ngFor="let intQuetion of intQuetions; let j = index;">
+  <ng-container *ngFor="let intQuetion of intQuetions; let j = index;let k = count;">
     <div *ngIf="j==this.currentPage" class="quesBox">
       <h1>{{intQuetion[0]}}</h1>
       <p>
@@ -194,14 +194,14 @@
             <td>否</td>
             <td>帮助</td>
           </tr>
-          <ng-container *ngFor="let item of intQuetion; let i = index;">
+          <ng-container *ngFor="let item of intQuetion; let i = index; let l = count;">
             <tr *ngIf="i!=0" class="model queNum1">
               <td>
                 <span class="dot2">{{item[0]}}.</span><span class="must">{{item[1]}}</span>
               </td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="1" /></td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="2" /></td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" value="3" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="1" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="2" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="3" /></td>
               <td>
                 <img
                   src="assets/img/icon_audio.png"
@@ -215,17 +215,22 @@
                 ></audio>
               </td>
             </tr>
+            <tr *ngIf="i!=0 && j==(k-1)">
+              <td colspan="4">
+                <textarea class="last_textarea" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
+              </td>
+            </tr>
           </ng-container>
         </tbody>
       </table>
       <div class="divBtn">
-        <button class="btnPre">返回</button>
-        <button class="btnNext">继续</button>
+        <button class="btnPre" [class.btn-default1]="this.currentAnswer.prevStatus" (click)="prevQuestions($event)">返回</button>
+        <button class="btnNext" [class.btn-default1]="this.currentAnswer.nextStatus" (click)="nextQuestions($event)">继续</button>
       </div>
     </div>
   </ng-container>
   <div class="bottom">
-    <span class="pagenum">1/6</span>
+    <span class="pagenum">{{(this.currentPage+1)+'/'+this.allPages}}</span>
     <span>
       本问卷译自《年龄与发育进程问卷®-第三版》（ASQ-3™），Jane Squires和Diane
       Bricker。2009年布鲁克斯出版公司版权所有© <br />
