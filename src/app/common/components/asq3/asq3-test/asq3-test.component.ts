@@ -1191,11 +1191,13 @@ export class Asq3TestComponent implements OnInit {
     this.currentQuetions = this.currentQuetionsObject.data;
     this.intQuetions = this.setQuetions(this.currentQuetions);
     console.log('thisAnswers:', this.thisAnswers);
+    this.allPages = this.intQuetions.length;
     if(this.thisAnswers.length>0){
       this.currentAnswers = this.thisAnswers;
+      this.currentAnswer = this.currentAnswers[0];
       return
     }
-    this.allPages = this.intQuetions.length;
+    
     for(let i=0;i<this.intQuetions.length;i++){
       this.currentAnswers[i] = {'answer':[],nextStatus:false,prevStatus:true};
       console.log('this.currentAnswer_old:',i,this.currentAnswers[i]);
