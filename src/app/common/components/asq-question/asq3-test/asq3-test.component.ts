@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { QuestType } from 'src/app/enum/ques-type.enum';
 import { QuestionModel } from 'src/app/view-model/question.model';
-import { ASQTestBusiness } from './asq-test.business';
+import { ASQTestBusiness } from './asq3-test.business';
 
 import questions from "./data.json";
 
@@ -13,14 +13,14 @@ console.log('12', questions)
 
 //console.log('asq3',JSON.stringify(asq3));
 @Component({
-  selector: 'asq-test',
-  templateUrl: './asq-test.component.html',
-  styleUrls: ['./asq-test.component.less'],
+  selector: 'asq3-test',
+  templateUrl: './asq3-test.component.html',
+  styleUrls: ['./asq3-test.component.less'],
   providers: [
     ASQTestBusiness
   ]
 })
-export class AsqTestComponent implements OnInit {
+export class Asq3TestComponent implements OnInit {
 
   @Input() mounthNum: NumberSymbol = 0;
   @Input() thisAnswers: any = [];
