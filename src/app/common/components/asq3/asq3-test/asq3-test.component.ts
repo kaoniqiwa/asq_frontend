@@ -1172,10 +1172,10 @@ export class Asq3TestComponent implements OnInit {
           [10, "孩子有什么情况令您感到担心吗？如果勾选“是”，请说明："]
       ]
   }];
-  currentQuetionsObject:any={name:'',data:[[],[],[]]};
+  currentQuestionsObject:any={name:'',data:[[],[],[]]};
   title:any='';
-  currentQuetions:any = null;
-  intQuetions:any = null;
+  currentQuestions:any = null;
+  intQuestions:any = null;
   currentPage:any = 0;
   allPages:any = 0;
   currentAnswers:any = [];
@@ -1186,19 +1186,26 @@ export class Asq3TestComponent implements OnInit {
   }
 
   async ngOnInit(){//thisAnswers
-    this.currentQuetionsObject = this.babyQuestions[this.mounthNum];
-    this.title = this.currentQuetionsObject.name;
-    this.currentQuetions = this.currentQuetionsObject.data;
-    this.intQuetions = this.setQuetions(this.currentQuetions);
+    this.currentQuestionsObject = this.babyQuestions[this.mounthNum];
+    this.title = this.currentQuestionsObject.name;
+    this.currentQuestions = this.currentQuestionsObject.data;
+    this.intQuestions = this.setQuestions(this.currentQuestions);
     console.log('thisAnswers:', this.thisAnswers);
-    this.allPages = this.intQuetions.length;
+    this.allPages = this.intQuestions.length;
     if(this.thisAnswers.length>0){
       this.currentAnswers = this.thisAnswers;
       this.currentAnswer = this.currentAnswers[0];
+      
+      //答案和题目合并
+      for(let i=0;i<this.intQuestions.length;i++){
+        if(i!=0){
+          this.intQuestions[i-1].
+        }
+      }
       return
     }
     
-    for(let i=0;i<this.intQuetions.length;i++){
+    for(let i=0;i<this.intQuestions.length;i++){
       this.currentAnswers[i] = {'answer':[],nextStatus:false,prevStatus:true};
       console.log('this.currentAnswer_old:',i,this.currentAnswers[i]);
       if(i==0){
@@ -1210,21 +1217,23 @@ export class Asq3TestComponent implements OnInit {
     
   }
 
-  setQuetions(arr:any){//重组数据
-    let quetions:any = [];
-    let quetion:any = [];
+  setQuestions(arr:any){//重组数据
+    let questions:any = [];
+    let question:any = [];
+    let queAndAns:any = {};
     arr.forEach(function(obj:any,index:any){
       if(index != 0 && obj.length != 0){
-        quetion.push(obj);
+        question.push(obj);
         if((arr[index+1] && arr[index+1].length == 0) || (index+1) == arr.length){
-          quetions.push(quetion);
-          quetion = [];
+          queAndAns.question = question;
+          questions.push(queAndAns);
+          question = [];
         }
 
       }
     })
-    console.log('quetions',quetions)
-    return quetions;
+    console.log('questions',questions)
+    return questions;
     
   }
 

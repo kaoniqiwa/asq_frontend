@@ -199,9 +199,9 @@
               <td>
                 <span class="dot2">{{item[0]}}.</span><span class="must">{{item[1]}}</span>
               </td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="1" /></td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="2" /></td>
-              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="3" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="1" [checked]="true" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="2" [checked]="false" /></td>
+              <td><input type="radio" [name]="'rdo'+i" (click)="radioClick($event)" attr.l="{{l}}" attr.xu="{{i-1}}" value="3" [checked]="false" /></td>
               <td>
                 <img
                   src="assets/img/icon_audio.png"
