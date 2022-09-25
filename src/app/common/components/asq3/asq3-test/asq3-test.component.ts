@@ -1175,7 +1175,7 @@ export class Asq3TestComponent implements OnInit {
   title:any='';
   currentQuetions:any = null;
   intQuetions:any = null;
-  currentPage:any = 5;
+  currentPage:any = 0;
   allPages:any = 0;
   currentAnswers:any = [];
   currentAnswer:any = {};
