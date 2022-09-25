@@ -37,6 +37,7 @@ export class SurveyManageComponent implements OnInit {
 
   currentBaby: BabyModel | null = null;
   currentSurveyIndex = 0;
+  thisAnswers = [{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": false},{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": true},{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": true},{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": true},{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": true},{"answer": ["1","1","1","1","1","1"],"nextStatus": true,"prevStatus": true}];
 
   config: SwiperOptions = {
     slidesPerView: 8,

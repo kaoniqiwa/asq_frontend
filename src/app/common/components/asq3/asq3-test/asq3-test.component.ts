@@ -1,9 +1,9 @@
 import { NumberSymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
-import asq3 from '../../../../../assets/files/ASQ_3.xlsx';
+//import asq3 from '../../../../../assets/files/ASQ_3.xlsx';
 
-console.log('asq3',JSON.stringify(asq3));
+//console.log('asq3',JSON.stringify(asq3));
 @Component({
   selector: 'asq3-test',
   templateUrl: './asq3-test.component.html',
@@ -12,6 +12,7 @@ console.log('asq3',JSON.stringify(asq3));
 export class Asq3TestComponent implements OnInit {
 
   @Input() mounthNum:NumberSymbol = 0;
+  @Input() thisAnswers:any = [];
   
 
   babyQuestions: any = [
@@ -1184,15 +1185,16 @@ export class Asq3TestComponent implements OnInit {
     
   }
 
-  async ngOnInit(){
+  async ngOnInit(){//thisAnswers
     this.currentQuetionsObject = this.babyQuestions[this.mounthNum];
-    //console.log(this.currentQuetionsObject.name);
     this.title = this.currentQuetionsObject.name;
     this.currentQuetions = this.currentQuetionsObject.data;
-   
-    //console.log('currentQuetions',this.currentQuetions,this.mounthNum,this.currentQuetions.length);
     this.intQuetions = this.setQuetions(this.currentQuetions);
-    //console.log('title:', this.babyQuestions[this.mounthNum].name);
+    console.log('thisAnswers:', this.thisAnswers);
+    if(this.thisAnswers.length>0){
+      this.currentAnswers = this.thisAnswers;
+      return
+    }
     this.allPages = this.intQuetions.length;
     for(let i=0;i<this.intQuetions.length;i++){
       this.currentAnswers[i] = {'answer':[],nextStatus:false,prevStatus:true};

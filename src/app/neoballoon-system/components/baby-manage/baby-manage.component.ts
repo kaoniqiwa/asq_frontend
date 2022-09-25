@@ -31,6 +31,7 @@ export class BabyManageComponent implements OnInit {
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
+  
 
   showToast = false;
 
