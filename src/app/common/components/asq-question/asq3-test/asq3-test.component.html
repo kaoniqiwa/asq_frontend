@@ -201,8 +201,8 @@
           >
             <tr *ngIf="i != 0" class="model queNum1">
               <td>
-                <span class="dot2">{{ item[0] }}.</span
-                ><span class="must">{{ item[1] }}</span>
+                <span class="dot2">{{ item.question[i][0] }}.</span
+                ><span class="must">{{ item.question[i][1] }}</span>
               </td>
               <td>
                 <input
@@ -212,7 +212,8 @@
                   attr.l="{{ l }}"
                   attr.xu="{{ i - 1 }}"
                   value="1"
-                  [checked]="true"
+                  attr.an="{{item.answer[i-1]}}"
+                  [(ngModel)]="item.answer[i-1]"
                 />
               </td>
               <td>

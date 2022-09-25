@@ -45,7 +45,7 @@ export class Asq3TestComponent implements OnInit {
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;
     this.intQuestions = this.setQuestions(this.currentQuestions);
-    console.log('thisAnswers:', this.thisAnswers);
+    
     this.allPages = this.intQuestions.length;
     if (this.thisAnswers.length > 0) {
       this.currentAnswers = this.thisAnswers;
@@ -54,9 +54,10 @@ export class Asq3TestComponent implements OnInit {
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
         if (i != 0) {
-          // this.intQuestions[i - 1].
+          this.intQuestions[i].answer = this.currentAnswers[i-1];
         }
       }
+      console.log('intQuestions:', this.intQuestions);
       return
     }
 
