@@ -28,5 +28,8 @@ export class QuestionRequestService {
     params.flow = 'listQuestion';
     return this.type.postArray(QuestionUrl.list(), params)
   }
+  get(params: GetQuestionParams = new GetQuestionParams()) {
+
+  }
 
 }

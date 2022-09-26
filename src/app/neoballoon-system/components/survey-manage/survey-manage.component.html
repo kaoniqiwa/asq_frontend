@@ -19,7 +19,7 @@
 
   <div class="vertical-main vertical-layout">
     <div class="wrapper vertical-header">
-      <div class="item" [class.active]="currentSurveyIndex == 0">
+      <!-- <div class="item" [class.active]="currentSurveyIndex == 0">
         <div class="title">
           <ng-container *ngIf="currentSurveyIndex != 0">
             <img src="assets/img/ASQ-3_1.png" alt="" />
@@ -29,8 +29,20 @@
           </ng-container>
         </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
+      </div> -->
+
+      <div class="item" *ngFor="let surveyBtn of surveyBtns; let i = index">
+        <div class="icon">
+          <ng-container *ngIf="currentSurveyIndex != i">
+            <img [src]="'assets/img/' + surveyBtn.normalIcon" alt="" />
+          </ng-container>
+          <ng-container *ngIf="currentSurveyIndex == i">
+            <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
+          </ng-container>
+        </div>
+        <div class="content">{{ surveyBtn.content }}</div>
       </div>
-      <div class="item" [class.active]="currentSurveyIndex == 1">
+      <!-- <div class="item" [class.active]="currentSurveyIndex == 1">
         <div class="title">
           <ng-container *ngIf="currentSurveyIndex != 1">
             <img src="assets/img/ASQ-SE_1.png" alt="" />
@@ -40,8 +52,8 @@
           </ng-container>
         </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div>
-      <div class="item" [class.active]="currentSurveyIndex == 2">
+      </div> -->
+      <!-- <div class="item" [class.active]="currentSurveyIndex == 2">
         <div class="title">
           <ng-container *ngIf="currentSurveyIndex != 1">
             <img src="assets/img/ASQ-SE_1.png" alt="" />
@@ -52,7 +64,7 @@
           <span class="version">-2及其联结</span>
         </div>
         <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div>
+      </div> -->
     </div>
     <div class="swiper-container vertical-main" style="min-height: 500px">
       <swiper [config]="config">
@@ -72,188 +84,7 @@
             </div>
           </div>
         </ng-template>
-
-        <!--
-           <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="green"
-          ><div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div></ng-template
-        >
-        <ng-template swiperSlide class="blue">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template>
-        <ng-template swiperSlide class="red">
-          <div class="item">
-            <p>2</p>
-            月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              1个月0天
-              <br />
-              |
-              <br />
-              2个月30天宝宝
-            </div>
-          </div>
-        </ng-template> -->
       </swiper>
     </div>
   </div>
 </div>
-
-<!-- <asq3-entry></asq3-entry> -->
-<asq3-test [mounthNum]="0" [thisAnswers]="thisAnswers"></asq3-test>

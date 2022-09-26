@@ -12,29 +12,4 @@ export class SurveyManageBusiness {
   getBaby(id: string) {
     return this._babyRequest.get(id)
   }
-  getSurvey() {
-    let data: SurveyBtnModel[] = [
-      {
-        title: "年龄与发育进程问卷——第三版",
-        normalIcon: "ASQ-3_1.png",
-        activeIcon: "ASQ-3_2.png",
-
-      },
-      {
-        title: "年龄与发育进程问卷：社交——情绪",
-        normalIcon: "ASQ-SE_1.png",
-        activeIcon: "ASQ-SE_2.png",
-
-      },
-      {
-        title: "年龄与发育进程问卷——第三版",
-        normalIcon: "ASQ-SE_1.png",
-        activeIcon: "ASQ-SE_2.png",
-        version: "-2及其联结"
-      }
-    ]
-
-    return data;
-
-  }
 }

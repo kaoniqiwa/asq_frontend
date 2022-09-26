@@ -1,6 +1,7 @@
-export interface SurveyBtnModel {
-  title: string;
-  normalIcon: string;
-  activeIcon: string;
-  version?: string;
+export class SurveyBtnModel {
+  normalIcon!: string;
+  activeIcon!: string;
+  content!: string;
+  index!: number;
+  subIcon?: string;
 }
