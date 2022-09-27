@@ -2,6 +2,7 @@ import { NumberSymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { PageType } from 'src/app/enum/page-type.enum';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { QuestionModel } from 'src/app/network/model/question.model';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
@@ -36,6 +37,11 @@ export class Asq3QuestionComponent implements OnInit {
   allPages: any = 0;
   currentAnswers: any = [];
   currentAnswer: any = {};
+
+  pageType: PageType = PageType.dati;
+  questType: QuestType = QuestType.ASQ3;
+  questMonth: number = 0;
+  bid: string = "";
 
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService) {
     console.log('constructor', testTest.user?.name, testTest.doctor);

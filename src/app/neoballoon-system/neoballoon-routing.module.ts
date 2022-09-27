@@ -12,6 +12,7 @@ import { NeoballoonManageComponent } from "./components/neoballoon-manage/neobal
 import { SurveyManageComponent } from "./components/survey-manage/survey-manage.component";
 import { BabyInfoManageComponent } from "./components/baby-info-manage/baby-info-manage.component";
 import { NeoballoonService } from "./neoballoon.service";
+import { Asq3QuestionComponent } from "../common/components/asq-question/asq3-question/asq3-question.component";
 
 
 const routes: Routes = [
@@ -65,6 +66,10 @@ const routes: Routes = [
       {
         path: "survey-manage",
         component: SurveyManageComponent
+      },
+      {
+        path: "asq3-question",
+        component: Asq3QuestionComponent
       }
     ]
   }

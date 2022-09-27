@@ -20,6 +20,8 @@ import { DateDifference } from 'src/app/common/tools/tool';
 import { formatDate } from '@angular/common';
 import { Time, TimerDiff } from 'src/app/common/tools/time';
 import { SwiperComponent } from 'swiper/angular';
+import { GlobalToastrConfig } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -70,7 +72,8 @@ export class SurveyManageComponent implements OnInit {
 
   @ViewChild(SwiperComponent) swiper!: SwiperComponent;
 
-  constructor(private _business: SurveyManageBusiness) {
+  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService, private _router: Router) {
+    console.log(this._globalStorage.user)
 
     monthWorkBook.forEach((sheet: ASQMonthFilter) => {
       // 去掉标题
@@ -109,7 +112,7 @@ export class SurveyManageComponent implements OnInit {
         }
       }
     }
-    console.log(this.monthMap)
+    // console.log(this.monthMap)
 
 
     //  currentType可以任意指定，不需硬绑定数组下标
@@ -120,12 +123,11 @@ export class SurveyManageComponent implements OnInit {
       this.currentSwiperMonth = this.sheetMap.get(currentBtn.questType) ?? null;
     }
 
-
-
   }
 
   async ngOnInit() {
 
+    // console.log(this._globalStorage.babys);
     this.babys = await this._business.listBaby();
     if (this.babys.length)
       this.currentBaby = this.babys[0]
@@ -178,14 +180,7 @@ export class SurveyManageComponent implements OnInit {
     console.log(this.currentMonthIndex)
   }
   submit() {
-    let model = new QuestionModel();
-    model.Id = "";
-    model.Bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
-    model.QuestType = QuestType.ASQ3;
-    model.QuestMonth = "0";
-    model.QuestResult = [{ "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": false }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }];
-
-    this._business.create(model)
+    this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question"])
   }
 
   gotoQuest() {
