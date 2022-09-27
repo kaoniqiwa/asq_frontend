@@ -1,5 +1,6 @@
 import { NumberSymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { PageType } from 'src/app/enum/page-type.enum';
@@ -43,11 +44,27 @@ export class Asq3QuestionComponent implements OnInit {
   questMonth: number = 0;
   bid: string = "";
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService) {
-    console.log('constructor', testTest.user?.name, testTest.doctor);
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService, private _activeRoute: ActivatedRoute) {
+    // console.log('constructor', testTest.user?.name, testTest.doctor);
+
+    this._activeRoute.params.subscribe((params: Params) => {
+      this.bid = params['bid'];
+    })
+
+    this._activeRoute.queryParams.subscribe(params => {
+      this.pageType = params['pageType'];
+      this.questType = params['questType'];
+      this.questMonth = params['questMonth'];
+
+    })
+
+    console.log(this.bid, this.pageType, this.questType, this.questMonth);
+
+
   }
 
   async ngOnInit() {//thisAnswers
+
     this.currentQuestionsObject = this.babyQuestions[this.mounthNum];
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;

@@ -68,7 +68,7 @@ const routes: Routes = [
         component: SurveyManageComponent
       },
       {
-        path: "asq3-question",
+        path: "asq3-question/:bid",
         component: Asq3QuestionComponent
       }
     ]

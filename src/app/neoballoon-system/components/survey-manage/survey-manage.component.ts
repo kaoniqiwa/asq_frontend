@@ -22,6 +22,7 @@ import { Time, TimerDiff } from 'src/app/common/tools/time';
 import { SwiperComponent } from 'swiper/angular';
 import { GlobalToastrConfig } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { PageType } from 'src/app/enum/page-type.enum';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -127,7 +128,7 @@ export class SurveyManageComponent implements OnInit {
 
   async ngOnInit() {
 
-    // console.log(this._globalStorage.babys);
+    console.log(this._globalStorage.babys);
     this.babys = await this._business.listBaby();
     if (this.babys.length)
       this.currentBaby = this.babys[0]
@@ -180,7 +181,13 @@ export class SurveyManageComponent implements OnInit {
     console.log(this.currentMonthIndex)
   }
   submit() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question"])
+    this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", "a26584f8-aa79-48b9-8fee-906025cd983c"], {
+      queryParams: {
+        pageType: PageType.shaicha,
+        questType: QuestType.ASQSE,
+        questMonth: 2
+      }
+    })
   }
 
   gotoQuest() {
