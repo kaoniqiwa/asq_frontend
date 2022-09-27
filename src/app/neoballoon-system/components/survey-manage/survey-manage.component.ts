@@ -192,7 +192,6 @@ export class SurveyManageComponent implements OnInit {
     console.log(this.currentMonthIndex)
   }
   submit() {
-<<<<<<< HEAD
     this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", "a26584f8-aa79-48b9-8fee-906025cd983c"], {
       queryParams: {
         pageType: PageType.dati,
@@ -200,9 +199,6 @@ export class SurveyManageComponent implements OnInit {
         questMonth: 0
       }
     })
-=======
-
->>>>>>> c2a2ac07cd9d69c4cde92e8c41aefdfe41a15093
   }
 
   gotoQuest() {
