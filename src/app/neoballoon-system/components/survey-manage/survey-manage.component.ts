@@ -20,7 +20,7 @@ import { DateDifference } from 'src/app/common/tools/tool';
 import { formatDate } from '@angular/common';
 import { Time, TimerDiff } from 'src/app/common/tools/time';
 import { SwiperComponent } from 'swiper/angular';
-import { GlobalToastrConfig } from 'ngx-toastr';
+import { GlobalToastrConfig, ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { PageType } from 'src/app/enum/page-type.enum';
 
@@ -73,7 +73,7 @@ export class SurveyManageComponent implements OnInit {
 
   @ViewChild(SwiperComponent) swiper!: SwiperComponent;
 
-  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService, private _router: Router) {
+  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService, private _router: Router, private _toastrService: ToastrService) {
     console.log(this._globalStorage.user)
 
     monthWorkBook.forEach((sheet: ASQMonthFilter) => {
@@ -100,11 +100,11 @@ export class SurveyManageComponent implements OnInit {
         if (startRes && endRes) {
           let start = {
             month: +startRes[0],
-            day: +startRes[1]
+            day: startRes[1] ? +startRes[1] : 0
           }
           let end = {
             month: +endRes[0],
-            day: +endRes[1]
+            day: endRes[1] ? + endRes[1] : 0
           }
           duration.push({
             start,
@@ -113,7 +113,7 @@ export class SurveyManageComponent implements OnInit {
         }
       }
     }
-    // console.log(this.monthMap)
+    console.log(this.monthMap)
 
 
     //  currentType可以任意指定，不需硬绑定数组下标
@@ -129,16 +129,17 @@ export class SurveyManageComponent implements OnInit {
   async ngOnInit() {
 
     console.log(this._globalStorage.babys);
-    this.babys = await this._business.listBaby();
-    if (this.babys.length)
-      this.currentBaby = this.babys[0]
+    this.babys = this._globalStorage.babys;// await this._business.listBaby();
+    if (this.babys.length) {
+      this.currentBaby = this.babys[0];
 
-    let end = new Date();
-    let start = new Date('2022-07-01 00:00:00');
-    // this.diff(start, today);
-    this.timerDiff = Time.diff(start, end);
-    console.log(this.timerDiff)
-    // 1月10天 2月20天
+      // let start = new Date(this.currentBaby.birthday);
+      // let end = new Date(this.currentBaby.survey_time);
+
+      // console.log(this.currentBaby)
+    }
+
+
 
     this.checkRange();
   }
@@ -146,20 +147,23 @@ export class SurveyManageComponent implements OnInit {
   clickSurveyBtn(model: SurveyBtnModel) {
     this.currentType = model.questType;
     this.currentSwiperMonth = this.sheetMap.get(model.questType) ?? null;
-    // console.log(this.currentMonth)
-
-    // console.log(this.swiper.swiperRef.slideTo(0))
-
-    // this.swiper.slideTo(0)
 
     this.checkRange();
 
-    if (this.currentMonthIndex != -1) {
-      this.swiper.swiperRef.slideTo(this.currentMonthIndex)
-    }
+    // if (this.currentMonthIndex != -1) {
+    //   this.swiper.swiperRef.slideTo(this.currentMonthIndex)
+    // }
+  }
+  changeBaby(baby: BabyModel) {
+    this.currentBaby = baby;
+    this.checkRange()
   }
   checkRange() {
-    if (this.timerDiff) {
+    if (this.currentBaby) {
+      let start = new Date(this.currentBaby.birthday);
+      let end = new Date(this.currentBaby.survey_time);
+      this.timerDiff = Time.diff(start, end);
+
       let months = this.monthMap.get(this.currentType);
       console.log(months)
       if (!months) return;
@@ -168,7 +172,7 @@ export class SurveyManageComponent implements OnInit {
         let start = months[i].start;
         let end = months[i].end;
 
-        let startDays = start.month * 30 + end.day;
+        let startDays = start.month * 30 + start.day;
         let endDays = end.month * 30 + end.day
 
         let curDays = this.timerDiff.month * 30 + this.timerDiff.day;
@@ -176,21 +180,31 @@ export class SurveyManageComponent implements OnInit {
         if (curDays >= startDays && curDays <= endDays) {
           this.currentMonthIndex = i;
         }
+        if (i == 0) {
+          if (curDays < startDays) {
+            this._toastrService.warning("该宝宝年龄过小还没有适用的问卷！");
+          }
+        }
+
       }
+
     }
     console.log(this.currentMonthIndex)
   }
   submit() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", "a26584f8-aa79-48b9-8fee-906025cd983c"], {
-      queryParams: {
-        pageType: PageType.shaicha,
-        questType: QuestType.ASQSE,
-        questMonth: 2
-      }
-    })
+
   }
 
   gotoQuest() {
+    if (this.currentBaby) {
+      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.currentBaby.id], {
+        queryParams: {
+          pageType: PageType.shaicha,
+          questType: this.currentType,
+          questMonth: this.currentMonthIndex
+        }
+      })
+    }
 
   }
 

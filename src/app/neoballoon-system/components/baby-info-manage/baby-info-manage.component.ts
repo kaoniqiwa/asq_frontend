@@ -88,81 +88,87 @@ export class BabyInfoManageComponent implements OnInit {
   }
   newInfo() {
     return this._fb.group({
-      baby: this._fb.group({
-        name: [''],
-        identityInfo: [''],
-        identityType: [IdentityType.Child],
-        gender: [Gender.Male],
-        birthday: [this.today],
-        survey: [this.today],
-        premature: [false],
-        weight: [''],
-        bornCondition: this._fb.group({
-          isShun: true,
-          isHelp: false,
-          isMulti: false,
-          abnormal: ''
-        }),
+      name: [''],
+      identityInfo: [''],
+      identityType: [IdentityType.Child],
+      gender: [Gender.Male],
+      birthday: [this.today],
+      survey: [this.today],
+      premature: [false],
+      weight: [''],
+      bornCondition: this._fb.group({
+        isShun: true,
+        isHelp: false,
+        isMulti: false,
+        abnormal: ''
       }),
+    })
+  }
+  changeBirthday(date: Date, group: FormGroup) {
+    group.patchValue({
+      birthday: date
     })
   }
   async onSubmit() {
 
+    console.log(this.infoArr)
     let doctor = this._globalStorage.doctor;
     if (doctor) {
+
+      let member = this.memberGroup.value;
+
+      let memberModel = new MemberModel();
+      memberModel.id = '';
+      memberModel.did = doctor.id;
+      memberModel.name = member.name ?? '';
+      memberModel.phone = member.phone ?? "";
+      memberModel.member_role = Language.MemberRoleInfo(+(member.role ?? ""));
+      memberModel.province = member.province ?? "";
+      memberModel.city = member.city ?? "";
+      memberModel.county = member.county ?? "";
+      memberModel.email = member.email ?? "";
+      memberModel.post_code = member.postCode ?? "";
+      memberModel.address = member.address ?? "";
+      memberModel.mother_job = member.motherJob ?? "";
+      memberModel.father_job = member.fatherJob ?? "";
+      memberModel.mother_degree = +(member.motherDegree ?? "");
+      memberModel.father_degree = +(member.fatherDegree ?? "");
+      memberModel.other_degree = +(member.otherDegree ?? "");
+      memberModel.mother_birth = member.motherBirth ?? "";
+      memberModel.father_birth = member.fatherBirth ?? "";
+
+
+      let memberRes = await this._business.addMember(memberModel);
+
+      console.log('添加 member ', memberRes);
+
       for (let i = 0; i < this.infoArr.length; i++) {
         let info = this.infoArr[i];
-        let member = this.memberGroup.value;
-        let baby = info.value.baby as IBaby;
-
-        let memberModel = new MemberModel();
-        memberModel.id = '';
-        memberModel.did = doctor.id;
-        memberModel.name = member.name ?? '';
-        memberModel.phone = member.phone ?? "";
-        memberModel.member_role = Language.MemberRoleInfo(+(member.role ?? ""));
-        memberModel.province = member.province ?? "";
-        memberModel.city = member.city ?? "";
-        memberModel.county = member.county ?? "";
-        memberModel.email = member.email ?? "";
-        memberModel.post_code = member.postCode ?? "";
-        memberModel.address = member.address ?? "";
-        memberModel.mother_job = member.motherJob ?? "";
-        memberModel.father_job = member.fatherJob ?? "";
-        memberModel.mother_degree = +(member.motherDegree ?? "");
-        memberModel.father_degree = +(member.fatherDegree ?? "");
-        memberModel.other_degree = +(member.otherDegree ?? "");
-        memberModel.mother_birth = member.motherBirth ?? "";
-        memberModel.father_birth = member.fatherBirth ?? "";
+        let baby = info.value as IBaby;
 
 
-        let memberRes = await this._business.addMember(memberModel);
+        let babyModel = new BabyModel();
+        babyModel.id = "";
+        babyModel.mid = memberRes.id;
 
-        console.log('添加 member ', memberRes);
-        if (memberRes) {
-          let babyModel = new BabyModel();
-          babyModel.id = "";
-          babyModel.mid = memberRes.id;
-
-          babyModel.name = baby.name;
-          babyModel.gender = baby.gender;
-          babyModel.birthday = baby.birthday;
-          babyModel.survey_time = baby.survey;
-          babyModel.premature = baby.premature;
-          babyModel.is_shun = baby.bornCondition.isShun;
-          babyModel.identity_info = baby.identityInfo;
-          babyModel.identity_type = baby.identityType;
-          babyModel.weight = baby.weight;
-          babyModel.is_help = baby.bornCondition.isHelp;
-          babyModel.is_multi = baby.bornCondition.isMulti;
-          babyModel.other_abnormal = baby.bornCondition.abnormal;
+        babyModel.name = baby.name;
+        babyModel.gender = baby.gender;
+        babyModel.birthday = baby.birthday;
+        babyModel.survey_time = baby.survey;
+        babyModel.premature = baby.premature;
+        babyModel.is_shun = baby.bornCondition.isShun;
+        babyModel.identity_info = baby.identityInfo;
+        babyModel.identity_type = baby.identityType;
+        babyModel.weight = baby.weight;
+        babyModel.is_help = baby.bornCondition.isHelp;
+        babyModel.is_multi = baby.bornCondition.isMulti;
+        babyModel.other_abnormal = baby.bornCondition.abnormal;
 
 
-          let babyRes = await this._business.addBaby(babyModel);
-          console.log('添加 baby ', babyRes);
+        let babyRes = await this._business.addBaby(babyModel);
+        console.log('添加 baby ', babyRes);
 
-          this.babys.push(babyRes)
-        }
+        this.babys.push(babyRes)
       }
 
       this._globalStorage.babys = this.babys;
