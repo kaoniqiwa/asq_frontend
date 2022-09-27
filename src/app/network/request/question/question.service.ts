@@ -4,7 +4,7 @@ import { HowellAuthHttpService } from "../howell-auth-http.service";
 import { DoctorModel } from "../../model/doctor.model";
 import { DoctorUrl } from "../../url/doctor.url";
 import { GetQuestionParams } from "./question.params";
-import { QuestionModel } from "src/app/view-model/question.model";
+import { QuestionModel } from "src/app/network/model/question.model";
 import { QuestionUrl } from "../../url/question.url";
 
 @Injectable({
@@ -21,15 +21,16 @@ export class QuestionRequestService {
   }
 
   create(model: QuestionModel) {
-    model.flow = 'addQuestion';
+    model.Flow = 'addQuestion';
     return this.type.post(QuestionUrl.create(), model);
   }
   list(params: GetQuestionParams = new GetQuestionParams()) {
-    params.flow = 'listQuestion';
+    params.Flow = 'listQuestion';
     return this.type.postArray(QuestionUrl.list(), params)
   }
-  get(params: GetQuestionParams = new GetQuestionParams()) {
-
+  getQuestion(params: GetQuestionParams = new GetQuestionParams()) {
+    params.Flow = 'getQuestion';
+    return this.type.post(QuestionUrl.get(), params);
   }
 
 }

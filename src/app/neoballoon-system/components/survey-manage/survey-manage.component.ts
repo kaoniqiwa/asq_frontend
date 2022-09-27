@@ -14,7 +14,7 @@ import SurveyBtns from "src/assets/json/survey-manage.json";
 
 import { plainToClass, plainToInstance } from 'class-transformer';
 import { SurveyBtnModel } from 'src/app/view-model/survey-manage.model';
-import { QuestionModel } from 'src/app/view-model/question.model';
+import { QuestionModel } from 'src/app/network/model/question.model';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { DateDifference } from 'src/app/common/tools/tool';
 import { formatDate } from '@angular/common';
@@ -179,11 +179,11 @@ export class SurveyManageComponent implements OnInit {
   }
   submit() {
     let model = new QuestionModel();
-    model.id = "";
-    model.bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
-    model.questType = QuestType.ASQ3;
-    model.questMonth = "0";
-    model.questResult = [{ "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": false }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }];
+    model.Id = "";
+    model.Bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
+    model.QuestType = QuestType.ASQ3;
+    model.QuestMonth = "0";
+    model.QuestResult = [{ "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": false }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }];
 
     this._business.create(model)
   }

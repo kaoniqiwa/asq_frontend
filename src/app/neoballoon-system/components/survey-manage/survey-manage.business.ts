@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
 import { QuestionRequestService } from "src/app/network/request/question/question.service";
-import { QuestionModel } from "src/app/view-model/question.model";
+import { QuestionModel } from "src/app/network/model/question.model";
 import { SurveyBtnModel } from "src/app/view-model/survey-manage.model";
 
 @Injectable()

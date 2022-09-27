@@ -11,8 +11,8 @@ export class QuestionUrl {
   static list() {
     return `${this.basic}.php`;
   }
-  static get(id: string) {
-    return `${this.basic}.php?id=${id}`
+  static get() {
+    return `${this.basic}.php?`;
   }
   static delete() {
     return `${this.basic}.php`;

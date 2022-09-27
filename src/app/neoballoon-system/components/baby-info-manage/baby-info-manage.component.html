@@ -246,220 +246,207 @@
             </div>
           </div>
         </div>
-
-        <div class="member-box" formGroupName="member">
-          <div>
-            <div
-              class="green-title large-title underline-title"
-              style="margin-bottom: 10px"
-            >
-              问卷人信息
-            </div>
-          </div>
-          <div class="form-wrapper" style="margin-top: 25px">
-            <div class="form-group">
-              <label class="control-label col-sm-2">
-                <span>*</span> 姓名:</label
-              >
-              <div class="col-sm-3">
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="name"
-                />
-              </div>
-              <label class="control-label col-sm-2"
-                ><span>*</span>您是宝宝的:
-              </label>
-              <div class="col-sm-2">
-                <select formControlName="role">
-                  <option value="0">父亲</option>
-                  <option value="1">母亲</option>
-                  <option value="2">父亲和母亲</option>
-                  <option value="3">照养人</option>
-                  <option value="4">老师</option>
-                  <option value="5">祖父母</option>
-                  <option value="6">其他</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">省:</label>
-              <div class="col-sm-2">
-                <select>
-                  <option value="">父亲</option>
-                  <option value="">母亲</option>
-                  <option value="">父亲和母亲</option>
-                  <option value="">照养人</option>
-                  <option value="">老师</option>
-                  <option value="">祖父母</option>
-                  <option value="">其他</option>
-                </select>
-              </div>
-              <label class="control-label">市:</label>
-              <div class="col-sm-2">
-                <select>
-                  <option value="">父亲</option>
-                  <option value="">母亲</option>
-                  <option value="">父亲和母亲</option>
-                  <option value="">照养人</option>
-                  <option value="">老师</option>
-                  <option value="">祖父母</option>
-                  <option value="">其他</option>
-                </select>
-              </div>
-              <label class="control-label">地区(县):</label>
-              <div class="col-sm-2">
-                <select>
-                  <option value="">父亲</option>
-                  <option value="">母亲</option>
-                  <option value="">父亲和母亲</option>
-                  <option value="">照养人</option>
-                  <option value="">老师</option>
-                  <option value="">祖父母</option>
-                  <option value="">其他</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-2">
-                <span>*</span> 手机号:</label
-              >
-              <div class="col-sm-3">
-                <input type="number" formControlName="phone" />
-              </div>
-
-              <label
-                class="control-label col-sm-2"
-                *ngIf="info.value.baby.more"
-              >
-                通信地址:</label
-              >
-              <div class="col-sm-3" *ngIf="info.value.baby.more">
-                <input type="text" formControlName="address" />
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2"> 电子邮箱:</label>
-              <div class="col-sm-3">
-                <input type="text" formControlName="email" />
-              </div>
-
-              <label class="control-label col-sm-2"> 邮政编码:</label>
-              <div class="col-sm-3">
-                <input type="text" formControlName="postCode" />
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2"> 是否有人协助完成:</label>
-              <div class="col-sm-10">
-                <label>
-                  <input
-                    type="radio"
-                    formControlName="isHelp"
-                    value="0"
-                  />是 </label
-                >&nbsp;&nbsp;&nbsp;
-                <label
-                  ><input
-                    type="radio"
-                    formControlName="isHelp"
-                    value="1"
-                  />否</label
-                >&nbsp;&nbsp;&nbsp;
-                <!-- <span
-                  >若有，请列出帮助完成问卷人的姓名，与宝宝的关系或身份:
-                </span>
-                <input type="text" class="col-sm-3" /> -->
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2"> 母亲职业:</label>
-              <div class="col-sm-3">
-                <input type="text" formControlName="motherJob" />
-              </div>
-
-              <label class="control-label col-sm-2"> 父亲职业:</label>
-              <div class="col-sm-3">
-                <input type="text" formControlName="fatherJob" />
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2">母亲文化程度:</label>
-              <div class="col-sm-2">
-                <select formControlName="motherDegree">
-                  <option value="" disabled>请选择</option>
-
-                  <option value="0">博士</option>
-                  <option value="1">硕士</option>
-                  <option value="2">本科</option>
-                  <option value="3">专科</option>
-                  <option value="4">高中</option>
-                  <option value="5">初中</option>
-                  <option value="6">小学及以下</option>
-                </select>
-              </div>
-              <label class="control-label">父亲文化程度:</label>
-              <div class="col-sm-2">
-                <select formControlName="fatherDegree">
-                  <option value="" disabled>请选择</option>
-
-                  <option value="0">博士</option>
-                  <option value="1">硕士</option>
-                  <option value="2">本科</option>
-                  <option value="3">专科</option>
-                  <option value="4">高中</option>
-                  <option value="5">初中</option>
-                  <option value="6">小学及以下</option>
-                </select>
-              </div>
-              <label class="control-label">主要照看者文化程度:</label>
-              <div class="col-sm-2">
-                <select formControlName="otherDegree">
-                  <option value="" disabled>请选择</option>
-                  <option value="0">博士</option>
-                  <option value="1">硕士</option>
-                  <option value="2">本科</option>
-                  <option value="3">专科</option>
-                  <option value="4">高中</option>
-                  <option value="5">初中</option>
-                  <option value="6">小学及以下</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2"> 母亲出生日期:</label>
-              <div class="col-sm-3">
-                <input type="text" DateTimePicker [format]="dateFormat" />
-              </div>
-            </div>
-            <div class="form-group" *ngIf="info.value.baby.more">
-              <label class="control-label col-sm-2"> 父亲出生日期:</label>
-              <div class="col-sm-3">
-                <input type="text" DateTimePicker [format]="dateFormat" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="btnAddf"
-          (click)="info.value.baby.more = !info.value.baby.more"
-        >
-          <ng-container *ngIf="info.value.baby.more">
-            隐藏更多信息
-            <img
-              src="assets/img/icon_minus.png"
-              alt=""
-              style="width: 14px; height: 14px; margin-left: 2px"
-            />
-          </ng-container>
-          <ng-container *ngIf="!info.value.baby.more">
-            显示更多信息
-            <img src="assets/img/icon_add.png" alt="" />
-          </ng-container>
-        </div>
       </form>
     </ng-container>
+
+    <hr />
+    <div class="member-box">
+      <div>
+        <div
+          class="green-title large-title underline-title"
+          style="margin-bottom: 10px"
+        >
+          问卷人信息
+        </div>
+      </div>
+      <form [formGroup]="memberGroup">
+        <div class="form-wrapper" style="margin-top: 25px">
+          <div class="form-group">
+            <label class="control-label col-sm-2"> <span>*</span> 姓名:</label>
+            <div class="col-sm-3">
+              <input class="form-control" type="text" formControlName="name" />
+            </div>
+            <label class="control-label col-sm-2"
+              ><span>*</span>您是宝宝的:
+            </label>
+            <div class="col-sm-2">
+              <select formControlName="role">
+                <option value="0">父亲</option>
+                <option value="1">母亲</option>
+                <option value="2">父亲和母亲</option>
+                <option value="3">照养人</option>
+                <option value="4">老师</option>
+                <option value="5">祖父母</option>
+                <option value="6">其他</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">省:</label>
+            <div class="col-sm-2">
+              <select>
+                <option value="">父亲</option>
+                <option value="">母亲</option>
+                <option value="">父亲和母亲</option>
+                <option value="">照养人</option>
+                <option value="">老师</option>
+                <option value="">祖父母</option>
+                <option value="">其他</option>
+              </select>
+            </div>
+            <label class="control-label">市:</label>
+            <div class="col-sm-2">
+              <select>
+                <option value="">父亲</option>
+                <option value="">母亲</option>
+                <option value="">父亲和母亲</option>
+                <option value="">照养人</option>
+                <option value="">老师</option>
+                <option value="">祖父母</option>
+                <option value="">其他</option>
+              </select>
+            </div>
+            <label class="control-label">地区(县):</label>
+            <div class="col-sm-2">
+              <select>
+                <option value="">父亲</option>
+                <option value="">母亲</option>
+                <option value="">父亲和母亲</option>
+                <option value="">照养人</option>
+                <option value="">老师</option>
+                <option value="">祖父母</option>
+                <option value="">其他</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">
+              <span>*</span> 手机号:</label
+            >
+            <div class="col-sm-3">
+              <input type="number" formControlName="phone" />
+            </div>
+
+            <label class="control-label col-sm-2" *ngIf="moreDetail">
+              通信地址:</label
+            >
+            <div class="col-sm-3" *ngIf="moreDetail">
+              <input type="text" formControlName="address" />
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2"> 电子邮箱:</label>
+            <div class="col-sm-3">
+              <input type="text" formControlName="email" />
+            </div>
+
+            <label class="control-label col-sm-2"> 邮政编码:</label>
+            <div class="col-sm-3">
+              <input type="text" formControlName="postCode" />
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2"> 是否有人协助完成:</label>
+            <div class="col-sm-10">
+              <label>
+                <input
+                  type="radio"
+                  formControlName="isHelp"
+                  value="0"
+                />是 </label
+              >&nbsp;&nbsp;&nbsp;
+              <label
+                ><input
+                  type="radio"
+                  formControlName="isHelp"
+                  value="1"
+                />否</label
+              >&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2"> 母亲职业:</label>
+            <div class="col-sm-3">
+              <input type="text" formControlName="motherJob" />
+            </div>
+
+            <label class="control-label col-sm-2"> 父亲职业:</label>
+            <div class="col-sm-3">
+              <input type="text" formControlName="fatherJob" />
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2">母亲文化程度:</label>
+            <div class="col-sm-2">
+              <select formControlName="motherDegree">
+                <option value="" disabled>请选择</option>
+
+                <option value="0">博士</option>
+                <option value="1">硕士</option>
+                <option value="2">本科</option>
+                <option value="3">专科</option>
+                <option value="4">高中</option>
+                <option value="5">初中</option>
+                <option value="6">小学及以下</option>
+              </select>
+            </div>
+            <label class="control-label">父亲文化程度:</label>
+            <div class="col-sm-2">
+              <select formControlName="fatherDegree">
+                <option value="" disabled>请选择</option>
+
+                <option value="0">博士</option>
+                <option value="1">硕士</option>
+                <option value="2">本科</option>
+                <option value="3">专科</option>
+                <option value="4">高中</option>
+                <option value="5">初中</option>
+                <option value="6">小学及以下</option>
+              </select>
+            </div>
+            <label class="control-label">主要照看者文化程度:</label>
+            <div class="col-sm-2">
+              <select formControlName="otherDegree">
+                <option value="" disabled>请选择</option>
+                <option value="0">博士</option>
+                <option value="1">硕士</option>
+                <option value="2">本科</option>
+                <option value="3">专科</option>
+                <option value="4">高中</option>
+                <option value="5">初中</option>
+                <option value="6">小学及以下</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2"> 母亲出生日期:</label>
+            <div class="col-sm-3">
+              <input type="text" DateTimePicker [format]="dateFormat" />
+            </div>
+          </div>
+          <div class="form-group" *ngIf="moreDetail">
+            <label class="control-label col-sm-2"> 父亲出生日期:</label>
+            <div class="col-sm-3">
+              <input type="text" DateTimePicker [format]="dateFormat" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="btnAddf" (click)="moreDetail = !moreDetail">
+      <ng-container *ngIf="moreDetail">
+        隐藏更多信息
+        <img
+          src="assets/img/icon_minus.png"
+          alt=""
+          style="width: 14px; height: 14px; margin-left: 2px"
+        />
+      </ng-container>
+      <ng-container *ngIf="!moreDetail">
+        显示更多信息
+        <img src="assets/img/icon_add.png" alt="" />
+      </ng-container>
+    </div>
 
     <button
       class="hw-normal-btn green-btn"
