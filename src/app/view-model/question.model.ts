@@ -1,4 +1,4 @@
-import { QuestType } from "../enum/ques-type.enum";
+import { QuestType } from "../enum/quest-type.enum";
 
 export class QuestionModel {
   id!: string;

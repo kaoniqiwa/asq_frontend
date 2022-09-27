@@ -3,12 +3,14 @@
     "content": "年龄与发育进程问卷——第三版",
     "normalIcon": "ASQ-3_1.png",
     "activeIcon": "ASQ-3_2.png",
+    "key": "asq3",
     "index": 0
   },
   {
     "content": "年龄与发育进程问卷：社交——情绪",
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
+    "key": "asqse",
     "index": 1
   },
   {
@@ -16,6 +18,7 @@
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
     "subIcon": "-2及其联结",
+    "key": "asqse2",
     "index": 2
   }
 ]

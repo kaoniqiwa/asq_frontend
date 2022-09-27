@@ -8,13 +8,14 @@ import { SurveyManageBusiness } from './survey-manage.business';
 
 import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
-// console.log(monthWorkBook)
+console.log(monthWorkBook)
 
 import SurveyBtns from "src/assets/json/survey-manage.json";
 import { plainToClass, plainToInstance } from 'class-transformer';
 import { SurveyBtnModel } from 'src/app/view-model/survey-manage.model';
+import { QuestionModel } from 'src/app/view-model/question.model';
+import { QuestType } from 'src/app/enum/quest-type.enum';
 
-console.log(SurveyBtns)
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
 ])
@@ -29,57 +30,72 @@ Swiper.use([
   ]
 })
 export class SurveyManageComponent implements OnInit {
-  myGender = '0';
 
+  // 保存月份表单信息
+  sheetMap = new Map<string, Array<string>>();
   surveyBtns = plainToInstance(SurveyBtnModel, SurveyBtns)
 
-  asq3Month: Array<string> = [];
-  asq3SEMonth: Array<string> = [];
-  asq3SE2Month: Array<string> = [];
+  currentIndex = 0;
+  currentMonth: Array<string> | null = null;
 
-  currentMonth = this.asq3Month;
 
   babyId = "a26584f8-aa79-48b9-8fee-906025cd983c";
   babys: BabyModel[] = [];
 
   currentBaby: BabyModel | null = null;
-  currentSurveyIndex = 0;
 
-  thisAnswers = [{ "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": false }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }];
+  // get currentSheet() {
+  //   return this.sheetMap.get(this.currentIndex)
+  // }
+
 
   config: SwiperOptions = {
     slidesPerView: 8,
     navigation: {}
   }
 
-  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService) {
-    console.log(this.surveyBtns)
-    // monthWorkBook.forEach((sheet: ASQMonthFilter) => {
-    //   console.log(sheet)
-    //   sheet.data.shift();
-    //   if (sheet.name == 'asq3') {
-    //     this.asq3Month = sheet.data;
-    //   }
-    //   if (sheet.name == 'asqse') {
-    //     this.asq3SEMonth = sheet.data;
-    //   }
-    //   if (sheet.name == 'asqse2') {
-    //     this.asq3SE2Month = sheet.data;
-    //   }
-    // })
-    // console.log(this.asq3Month)
+  constructor(private _business: SurveyManageBusiness) {
+
+    monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+      // 去掉标题
+      sheet.data.shift();
+
+      // 去掉列名
+      sheet.data.shift();
+      this.sheetMap.set(sheet.name, sheet.data)
+    })
+    console.log(this.surveyBtns);
+
+    let currentBtn = this.surveyBtns.find(model => {
+      return model.index == this.currentIndex
+    })
+    if (currentBtn) {
+      this.currentMonth = this.sheetMap.get(currentBtn.key) ?? null;
+    }
   }
 
   async ngOnInit() {
 
-    // console.log(this.currentMonth);
-    // this.babys = await this._business.listBaby();
-    // if (this.babys.length)
-    //   this.currentBaby = this.babys[0]
+    this.babys = await this._business.listBaby();
+    if (this.babys.length)
+      this.currentBaby = this.babys[0]
   }
 
-  changeGender(val: any) {
-    console.log(val)
+  clickSurveyBtn(model: SurveyBtnModel) {
+    this.currentIndex = model.index;
+    this.currentMonth = this.sheetMap.get(model.key) ?? null;
+    // console.log(this.currentMonth)
+
+  }
+  submit() {
+    let model = new QuestionModel();
+    model.id = "";
+    model.bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
+    model.questType = QuestType.Asq3;
+    model.questMonth = "0";
+    model.questResult = [{ "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": false }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }, { "answer": ["1", "1", "1", "1", "1", "1"], "nextStatus": true, "prevStatus": true }];
+
+    this._business.create(model)
   }
 
 }

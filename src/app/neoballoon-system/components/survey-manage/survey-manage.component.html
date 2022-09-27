@@ -19,68 +19,40 @@
 
   <div class="vertical-main vertical-layout">
     <div class="wrapper vertical-header">
-      <!-- <div class="item" [class.active]="currentSurveyIndex == 0">
-        <div class="title">
-          <ng-container *ngIf="currentSurveyIndex != 0">
-            <img src="assets/img/ASQ-3_1.png" alt="" />
-          </ng-container>
-          <ng-container *ngIf="currentSurveyIndex == 0">
-            <img src="assets/img/ASQ-3_2.png" alt="" />
-          </ng-container>
-        </div>
-        <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div> -->
-
-      <div class="item" *ngFor="let surveyBtn of surveyBtns; let i = index">
+      <div
+        class="item"
+        [class.active]="currentIndex == surveyBtn.index"
+        *ngFor="let surveyBtn of surveyBtns"
+        (click)="clickSurveyBtn(surveyBtn)"
+      >
         <div class="icon">
-          <ng-container *ngIf="currentSurveyIndex != i">
+          <ng-container *ngIf="currentIndex != surveyBtn.index">
             <img [src]="'assets/img/' + surveyBtn.normalIcon" alt="" />
           </ng-container>
-          <ng-container *ngIf="currentSurveyIndex == i">
+          <ng-container *ngIf="currentIndex == surveyBtn.index">
             <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
           </ng-container>
+          <span class="sub-icon">{{ surveyBtn.subIcon }}</span>
         </div>
         <div class="content">{{ surveyBtn.content }}</div>
       </div>
-      <!-- <div class="item" [class.active]="currentSurveyIndex == 1">
-        <div class="title">
-          <ng-container *ngIf="currentSurveyIndex != 1">
-            <img src="assets/img/ASQ-SE_1.png" alt="" />
-          </ng-container>
-          <ng-container *ngIf="currentSurveyIndex == 1">
-            <img src="assets/img/ASQ-SE_1.png" alt="" />
-          </ng-container>
-        </div>
-        <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div> -->
-      <!-- <div class="item" [class.active]="currentSurveyIndex == 2">
-        <div class="title">
-          <ng-container *ngIf="currentSurveyIndex != 1">
-            <img src="assets/img/ASQ-SE_1.png" alt="" />
-          </ng-container>
-          <ng-container *ngIf="currentSurveyIndex == 1">
-            <img src="assets/img/ASQ-SE_1.png" alt="" />
-          </ng-container>
-          <span class="version">-2及其联结</span>
-        </div>
-        <div class="desc">年龄与发育进程问卷——第三版</div>
-      </div> -->
     </div>
+    {{ currentIndex }}
     <div class="swiper-container vertical-main" style="min-height: 500px">
       <swiper [config]="config">
-        <ng-template swiperSlide class="red" *ngFor="let month of asq3Month">
+        <ng-template swiperSlide class="red" *ngFor="let month of currentMonth">
           <div class="item">
-            <p>{{ month[0] }}</p>
+            <p>{{ month[0] | trimoffset }}</p>
             月
             <span class="status">未开始</span>
             <div class="appendix">
               适用于
               <br />
-              1个月0天
+              {{ month[1] }}
               <br />
               |
               <br />
-              2个月30天宝宝
+              {{ month[2] }}{{ month[3] }}
             </div>
           </div>
         </ng-template>
@@ -88,3 +60,4 @@
     </div>
   </div>
 </div>
+<button (click)="submit()">Submit</button>
