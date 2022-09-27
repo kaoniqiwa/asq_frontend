@@ -2,7 +2,7 @@
 export class GetQuestionParams {
   Id?: string;
   Bid!: string;
-  Questtype?: string;
-  Questmonth?: string;
+  QuestType?: string;
+  QuestMonth?: string;
   Flow!: string;
 }

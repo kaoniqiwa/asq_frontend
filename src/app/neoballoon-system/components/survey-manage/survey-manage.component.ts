@@ -183,9 +183,9 @@ export class SurveyManageComponent implements OnInit {
   submit() {
     this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", "a26584f8-aa79-48b9-8fee-906025cd983c"], {
       queryParams: {
-        pageType: PageType.shaicha,
-        questType: QuestType.ASQSE,
-        questMonth: 2
+        pageType: PageType.dati,
+        questType: QuestType.ASQ3,
+        questMonth: 0
       }
     })
   }

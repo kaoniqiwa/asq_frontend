@@ -6,6 +6,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { PageType } from 'src/app/enum/page-type.enum';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { QuestionModel } from 'src/app/network/model/question.model';
+import { GetQuestionParams } from 'src/app/network/request/question/question.params';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
 
 import questions from "./data.json";
@@ -28,7 +29,6 @@ export class Asq3QuestionComponent implements OnInit {
   @Input() mounthNum: NumberSymbol = 0;
   @Input() thisAnswers: any = [];
 
-
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
   title: any = '';
@@ -38,15 +38,49 @@ export class Asq3QuestionComponent implements OnInit {
   allPages: any = 0;
   currentAnswers: any = [];
   currentAnswer: any = {};
+  scoreArr:any = [];
+  /* scoreArr:any = [
+    {
+        "score": 40,
+        "nengqu": "沟通",
+        "jiezhi": "高于界值"
+    },
+    {
+        "score": 30,
+        "nengqu": "粗大动作",
+        "jiezhi": "接近界值"
+    },
+    {
+        "score": 10,
+        "nengqu": "精细动作",
+        "jiezhi": "低于界值"
+    },
+    {
+        "score": 0,
+        "nengqu": "解决问题",
+        "jiezhi": "低于界值"
+    },
+    {
+        "score": 30,
+        "nengqu": "个人-社会",
+        "jiezhi": "接近界值"
+    }
+  ]; */
 
   pageType: PageType = PageType.dati;
   questType: QuestType = QuestType.ASQ3;
   questMonth: number = 0;
   bid: string = "";
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService, private _activeRoute: ActivatedRoute) {
-    // console.log('constructor', testTest.user?.name, testTest.doctor);
+  nengQu = ['沟通','粗大动作','精细动作','解决问题','个人-社会'];
+  gaoArr:any = [];
+  jieArr:any = [];
+  diArr:any = [];
+  
 
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService, private _activeRoute: ActivatedRoute) {
+    console.log('constructor', testTest.user?.name, testTest.doctor);
+    
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];
     })
@@ -58,7 +92,21 @@ export class Asq3QuestionComponent implements OnInit {
 
     })
 
-    console.log(this.bid, this.pageType, this.questType, this.questMonth);
+    console.log("getparams",this.bid, this.pageType, this.questType, this.questMonth);
+    if(this.pageType != 0){
+      let that = this;
+      this.scoreArr.map(function(item:any,index:any){
+        if(item.jiezhi == '低于界值'){
+          that.diArr.push(item);
+        }else if(item.jiezhi == '接近界值'){
+          that.jieArr.push(item);
+        }else{
+          that.gaoArr.push(item);
+        }
+      })
+      console.log('gaojiediarr',this.gaoArr,this.jieArr,this.diArr);
+      //this.request();
+    }
 
 
   }
@@ -154,8 +202,9 @@ export class Asq3QuestionComponent implements OnInit {
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
-  getScore(arr: any) {
+  getScore(arr: any,indexFa:any) {//界值状态转化
     let thisScore = 0;
+    let thisScoreObj:any = {};
     arr.map(function (item: any, index: any) {
       if (Number(item) == 1) {
         thisScore += 10;
@@ -163,31 +212,63 @@ export class Asq3QuestionComponent implements OnInit {
         thisScore += 5;
       }
     })
+
+    thisScoreObj.score = thisScore;
+    thisScoreObj.nengqu = this.nengQu[indexFa];
+    if(thisScore<=3.3*arr.length){
+      thisScoreObj.jiezhi = "低于界值";
+      this.diArr.push(thisScoreObj);
+    }else if(thisScore>3.3*arr.length && thisScore<6.6*arr.length){
+      thisScoreObj.jiezhi = "接近界值";
+      this.jieArr.push(thisScoreObj);
+    }else{
+      thisScoreObj.jiezhi = "高于界值";
+      this.gaoArr.push(thisScoreObj);
+    }
+    
+    return thisScoreObj;
+  }
+
+  gotoShuaiCha(){
+    this.pageType = 2;
+    
   }
 
   async request() {
-    /* let model = new QuestionModel();
-    model.bid = "sdfsdf";// 宝宝ID；
-    model.questType = QuestType.Asq3;// asq3答卷
-    model.questMonth = "0";//2月份
 
-    let res = await this._business.create(model);
+    let model = new GetQuestionParams();
+    model.Bid = this.bid;// 宝宝ID；
+    model.QuestType = this.questType;// asq3答卷
+    model.QuestMonth = String(this.questMonth);//2月份
+
+    let res = await this._business.getQuestion(model);
     if (res) {
+      console.log('res:',res);
       this.toastrService.success('提交成功');
-    } */
+    }
   }
 
   async submit() {
+    let that = this;
+    this.currentAnswers.map(function(item:any,index:any){
+      if((index+1)!= that.currentAnswers.length){
+        that.scoreArr.push(that.getScore(item.answer,index));
+      }
+    });
+    
     let model = new QuestionModel();
     model.Id = "";
-    model.Bid = "sdfsdf";// 宝宝ID；
-    model.QuestType = QuestType.ASQ3;// asq3答卷
-    model.QuestMonth = "0";//2月份
-    model.QuestResult = ['sdf'];// 答题结果
+    model.Bid = this.bid;// 宝宝ID；
+    model.QuestType = this.questType;// asq3答卷
+    model.QuestMonth = String(this.questMonth);//2月份
+    model.QuestResult = this.currentAnswers;// 答题结果
+    model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
 
     let res = await this._business.create(model);
     if (res) {
+      console.log('res:',JSON.parse(res.QuestScore));
       this.toastrService.success('提交成功');
+      
     }
   }
 

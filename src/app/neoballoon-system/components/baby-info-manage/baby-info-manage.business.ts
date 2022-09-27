@@ -23,7 +23,7 @@ export class BabyInfoManageBusiness {
   getQuestion() {
     let params = new GetQuestionParams();
     params.Bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
-    params.Questtype = "asq3";
+    params.QuestType = "asq3";
     // params.questMonth = "0";
     return this.questionRequest.getQuestion(params);
   }

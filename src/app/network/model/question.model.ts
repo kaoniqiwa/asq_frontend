@@ -6,6 +6,7 @@ export class QuestionModel {
   QuestType!: QuestType;
   QuestMonth!: string;
   QuestResult!: Array<any>;
+  QuestScore!: string;
   CreateTime?: string;
   UpdateTime?: string;
   Flow?: string;
