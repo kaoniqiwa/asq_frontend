@@ -42,7 +42,7 @@
         <ng-template
           swiperSlide
           class="red"
-          *ngFor="let month of currentMonth; let i = index"
+          *ngFor="let month of currentSwiperMonth; let i = index"
         >
           <div class="item">
             <p>{{ month[0] | trimoffset }}</p>
@@ -67,7 +67,9 @@
                 <br />
                 该做此套问卷啦
               </div>
-              <button class="hw-small-btn start-btn">立即筛查</button>
+              <button class="hw-small-btn start-btn" (click)="gotoQuest()">
+                立即筛查
+              </button>
             </ng-container>
           </div>
         </ng-template>

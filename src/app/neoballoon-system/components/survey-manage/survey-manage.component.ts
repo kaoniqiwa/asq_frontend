@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { BabyModel } from 'src/app/network/model/baby.model';
 
@@ -8,9 +8,10 @@ import { SurveyManageBusiness } from './survey-manage.business';
 
 import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
-console.log(monthWorkBook)
+// console.log(monthWorkBook)
 
 import SurveyBtns from "src/assets/json/survey-manage.json";
+
 import { plainToClass, plainToInstance } from 'class-transformer';
 import { SurveyBtnModel } from 'src/app/view-model/survey-manage.model';
 import { QuestionModel } from 'src/app/view-model/question.model';
@@ -18,6 +19,7 @@ import { QuestType } from 'src/app/enum/quest-type.enum';
 import { DateDifference } from 'src/app/common/tools/tool';
 import { formatDate } from '@angular/common';
 import { Time, TimerDiff } from 'src/app/common/tools/time';
+import { SwiperComponent } from 'swiper/angular';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -37,14 +39,17 @@ export class SurveyManageComponent implements OnInit {
   // 保存年龄段表单信息
   sheetMap = new Map<string, Array<string>>();
 
+  // 根据表单信息，提取出开始、结束天数
+  monthMap = new Map<string, Array<Duration>>();
+
   // 保存问卷类型按钮信息
   surveyBtns = plainToInstance(SurveyBtnModel, SurveyBtns)
 
   // 当前问卷类型
   currentType = QuestType.ASQ3;
 
-  // 当前问卷年龄段
-  currentMonth: Array<string> | null = null;
+  // 当前swiper内容
+  currentSwiperMonth: Array<string> | null = null;
 
   // 计算后得到的年龄段
   timerDiff: TimerDiff | null = null;
@@ -63,6 +68,8 @@ export class SurveyManageComponent implements OnInit {
     navigation: {}
   }
 
+  @ViewChild(SwiperComponent) swiper!: SwiperComponent;
+
   constructor(private _business: SurveyManageBusiness) {
 
     monthWorkBook.forEach((sheet: ASQMonthFilter) => {
@@ -73,15 +80,44 @@ export class SurveyManageComponent implements OnInit {
       sheet.data.shift();
 
       this.sheetMap.set(sheet.name, sheet.data)
+
     })
+
     // console.log(this.sheetMap);
+
+    // 提取数值
+    for (let [key, value] of this.sheetMap.entries()) {
+      // console.log(key, value)
+      let duration: Array<Duration> = [];
+      this.monthMap.set(key, duration)
+      for (let i = 0; i < value.length; i++) {
+        let startRes = value[i][1].match(/\d+/g);
+        let endRes = value[i][2].match(/\d+/g);
+        if (startRes && endRes) {
+          let start = {
+            month: +startRes[0],
+            day: +startRes[1]
+          }
+          let end = {
+            month: +endRes[0],
+            day: +endRes[1]
+          }
+          duration.push({
+            start,
+            end
+          })
+        }
+      }
+    }
+    console.log(this.monthMap)
+
 
     //  currentType可以任意指定，不需硬绑定数组下标
     let currentBtn = this.surveyBtns.find(model => {
       return model.questType == this.currentType
     })
     if (currentBtn) {
-      this.currentMonth = this.sheetMap.get(currentBtn.key) ?? null;
+      this.currentSwiperMonth = this.sheetMap.get(currentBtn.questType) ?? null;
     }
 
 
@@ -99,13 +135,47 @@ export class SurveyManageComponent implements OnInit {
     // this.diff(start, today);
     this.timerDiff = Time.diff(start, end);
     console.log(this.timerDiff)
+    // 1月10天 2月20天
+
+    this.checkRange();
   }
 
   clickSurveyBtn(model: SurveyBtnModel) {
     this.currentType = model.questType;
-    this.currentMonth = this.sheetMap.get(model.key) ?? null;
+    this.currentSwiperMonth = this.sheetMap.get(model.questType) ?? null;
     // console.log(this.currentMonth)
 
+    // console.log(this.swiper.swiperRef.slideTo(0))
+
+    // this.swiper.slideTo(0)
+
+    this.checkRange();
+
+    if (this.currentMonthIndex != -1) {
+      this.swiper.swiperRef.slideTo(this.currentMonthIndex)
+    }
+  }
+  checkRange() {
+    if (this.timerDiff) {
+      let months = this.monthMap.get(this.currentType);
+      console.log(months)
+      if (!months) return;
+      this.currentMonthIndex = -1;
+      for (let i = 0; i < months.length; i++) {
+        let start = months[i].start;
+        let end = months[i].end;
+
+        let startDays = start.month * 30 + end.day;
+        let endDays = end.month * 30 + end.day
+
+        let curDays = this.timerDiff.month * 30 + this.timerDiff.day;
+
+        if (curDays >= startDays && curDays <= endDays) {
+          this.currentMonthIndex = i;
+        }
+      }
+    }
+    console.log(this.currentMonthIndex)
   }
   submit() {
     let model = new QuestionModel();
@@ -118,6 +188,9 @@ export class SurveyManageComponent implements OnInit {
     this._business.create(model)
   }
 
+  gotoQuest() {
+
+  }
 
 }
 
@@ -128,3 +201,13 @@ interface ASQMonthFilter {
 }
 // 2022-7-1
 // 2022-9-27
+export interface Duration {
+  start: {
+    month: number,
+    day: number
+  },
+  end: {
+    month: number,
+    day: number
+  }
+}

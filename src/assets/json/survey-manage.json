@@ -3,22 +3,19 @@
     "content": "年龄与发育进程问卷——第三版",
     "normalIcon": "ASQ-3_1.png",
     "activeIcon": "ASQ-3_2.png",
-    "key": "asq3",
-    "questType": 0
+    "questType": "asq3"
   },
   {
     "content": "年龄与发育进程问卷：社交——情绪",
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
-    "key": "asqse",
-    "questType": 1
+    "questType": "asqse"
   },
   {
     "content": "年龄与发育进程问卷：社会——情绪（第2版）",
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
     "subIcon": "-2及其联结",
-    "key": "asqse2",
-    "questType": 2
+    "questType": "asqse2"
   }
 ]
