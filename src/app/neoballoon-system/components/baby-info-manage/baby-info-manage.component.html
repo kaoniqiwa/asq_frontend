@@ -33,7 +33,7 @@
     </div>
     <ng-container *ngFor="let info of infoArr; let i = index">
       <form [formGroup]="info" style="margin: 0" *ngIf="currentIndex == i">
-        <div class="baby-box" formGroupName="baby">
+        <div class="baby-box">
           <div>
             <div
               class="green-title large-title underline-title"
@@ -112,6 +112,7 @@
                   type="text"
                   DateTimePicker
                   [format]="dateFormat"
+                  (change)="changeBirthday($event, info)"
                 />
               </div>
             </div>

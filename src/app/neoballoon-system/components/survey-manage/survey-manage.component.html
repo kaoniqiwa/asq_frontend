@@ -5,7 +5,7 @@
         class="baby-item"
         [class.active]="currentBaby == baby"
         *ngFor="let baby of babys; let i = index"
-        (click)="currentBaby = baby"
+        (click)="changeBaby(baby)"
       >
         {{ baby.name }}
       </div>
@@ -77,4 +77,4 @@
     </div>
   </div>
 </div>
-<button (click)="submit()">Submit</button>
+<!-- <button (click)="submit()">Submit</button> -->
