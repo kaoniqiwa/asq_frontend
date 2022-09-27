@@ -182,7 +182,7 @@
     *ngFor="let intQuetion of intQuestions; let j = index; let k = count"
   >
     <div *ngIf="j == this.currentPage" class="quesBox">
-      <h1>{{ intQuetion[0] }}</h1>
+      <h1>{{ intQuetion.question[0] }}</h1>
       <p>
         这些选项是什么意思
         <img src="assets/img/arrow.png" alt="" />
@@ -197,12 +197,12 @@
             <td>帮助</td>
           </tr>
           <ng-container
-            *ngFor="let item of intQuestions; let i = index; let l = count"
+            *ngFor="let item of intQuetion.question; let i = index; let l = count"
           >
             <tr *ngIf="i != 0" class="model queNum1">
               <td>
-                <span class="dot2">{{ item.question[i][0] }}.</span
-                ><span class="must">{{ item.question[i][1] }}</span>
+                <span class="dot2">{{ item[0] }}.</span
+                ><span class="must">{{ item[1] }}</span>
               </td>
               <td>
                 <input
@@ -212,8 +212,7 @@
                   attr.l="{{ l }}"
                   attr.xu="{{ i - 1 }}"
                   value="1"
-                  attr.an="{{item.answer[i-1]}}"
-                  [(ngModel)]="item.answer[i-1]"
+                  [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]"
                 />
               </td>
               <td>
@@ -224,7 +223,7 @@
                   attr.l="{{ l }}"
                   attr.xu="{{ i - 1 }}"
                   value="2"
-                  [checked]="false"
+                  [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]"
                 />
               </td>
               <td>
@@ -235,7 +234,7 @@
                   attr.l="{{ l }}"
                   attr.xu="{{ i - 1 }}"
                   value="3"
-                  [checked]="false"
+                  [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]"
                 />
               </td>
               <td>

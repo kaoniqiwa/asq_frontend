@@ -3,7 +3,7 @@ import { QuestionRequestService } from "src/app/network/request/question/questio
 import { QuestionModel } from "src/app/view-model/question.model";
 
 @Injectable()
-export class ASQTestBusiness {
+export class ASQ3ResultBusiness {
   constructor(private questionRequest: QuestionRequestService) {
 
   }

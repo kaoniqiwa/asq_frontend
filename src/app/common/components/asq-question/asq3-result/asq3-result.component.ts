@@ -1,9 +1,10 @@
 import { NumberSymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { QuestType } from 'src/app/enum/ques-type.enum';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { QuestType } from 'src/app/enum/quest-type.enum';
 import { QuestionModel } from 'src/app/view-model/question.model';
-import { ASQTestBusiness } from './asq3-test.business';
+import { ASQ3ResultBusiness } from './asq3-result.business';
 
 import questions from "./data.json";
 
@@ -13,18 +14,18 @@ console.log('12', questions)
 
 //console.log('asq3',JSON.stringify(asq3));
 @Component({
-  selector: 'asq3-test',
-  templateUrl: './asq3-test.component.html',
-  styleUrls: ['./asq3-test.component.less'],
+  selector: 'asq3-result',
+  templateUrl: './asq3-result.component.html',
+  styleUrls: ['./asq3-result.component.less'],
   providers: [
-    ASQTestBusiness
+    ASQ3ResultBusiness
   ]
 })
-export class Asq3TestComponent implements OnInit {
+export class Asq3ResultComponent implements OnInit {
 
   @Input() mounthNum: NumberSymbol = 0;
   @Input() thisAnswers: any = [];
-
+    
 
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
@@ -36,16 +37,17 @@ export class Asq3TestComponent implements OnInit {
   currentAnswers: any = [];
   currentAnswer: any = {};
 
-  constructor(private _business: ASQTestBusiness, private toastrService: ToastrService) {
-
+  constructor(private _business: ASQ3ResultBusiness, private toastrService: ToastrService , private testTest: GlobalStorageService) {
+    console.log('constructor',testTest.user?.name,testTest.doctor);
   }
 
   async ngOnInit() {//thisAnswers
     this.currentQuestionsObject = this.babyQuestions[this.mounthNum];
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;
+    console.log('currentQuestions:', this.currentQuestions);
     this.intQuestions = this.setQuestions(this.currentQuestions);
-    
+    //console.log('intQuestions1:', this.intQuestions);
     this.allPages = this.intQuestions.length;
     if (this.thisAnswers.length > 0) {
       this.currentAnswers = this.thisAnswers;
@@ -53,9 +55,9 @@ export class Asq3TestComponent implements OnInit {
 
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
-        if (i != 0) {
-          this.intQuestions[i].answer = this.currentAnswers[i-1];
-        }
+        //if (i != 0) {
+          this.intQuestions[i].answer = this.currentAnswers[i].answer;
+        //}
       }
       console.log('intQuestions:', this.intQuestions);
       return
@@ -76,11 +78,12 @@ export class Asq3TestComponent implements OnInit {
   setQuestions(arr: any) {//重组数据
     let questions: any = [];
     let question: any = [];
-    let queAndAns: any = {};
+   
     arr.forEach(function (obj: any, index: any) {
       if (index != 0 && obj.length != 0) {
         question.push(obj);
         if ((arr[index + 1] && arr[index + 1].length == 0) || (index + 1) == arr.length) {
+          let queAndAns: any = {};
           queAndAns.question = question;
           questions.push(queAndAns);
           question = [];
@@ -126,6 +129,29 @@ export class Asq3TestComponent implements OnInit {
   prevQuestions(e: Event) {
     this.currentPage--;
     this.currentAnswer = this.currentAnswers[this.currentPage];
+  }
+
+  getScore(arr:any){
+    let thisScore = 0;
+    arr.map(function(item:any,index:any){
+      if(Number(item)==1){
+        thisScore+=10;
+      }else if(Number(item)==2){
+        thisScore+=5;
+      }
+    })
+  }
+
+  async request() {
+    let model = new QuestionModel();
+    model.bid = "sdfsdf";// 宝宝ID；
+    model.questType = QuestType.Asq3;// asq3答卷
+    model.questMonth = "0";//2月份
+
+    let res = await this._business.create(model);
+    if (res) {
+      this.toastrService.success('提交成功');
+    }
   }
 
   async submit() {
