@@ -37,8 +37,8 @@ export class Asq3QuestionComponent implements OnInit {
   currentAnswers: any = [];
   currentAnswer: any = {};
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService , private testTest: GlobalStorageService) {
-    console.log('constructor',testTest.user?.name,testTest.doctor);
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService) {
+    console.log('constructor', testTest.user?.name, testTest.doctor);
   }
 
   async ngOnInit() {//thisAnswers
@@ -56,7 +56,7 @@ export class Asq3QuestionComponent implements OnInit {
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
         //if (i != 0) {
-          this.intQuestions[i].answer = this.currentAnswers[i].answer;
+        this.intQuestions[i].answer = this.currentAnswers[i].answer;
         //}
       }
       console.log('intQuestions:', this.intQuestions);
@@ -78,7 +78,7 @@ export class Asq3QuestionComponent implements OnInit {
   setQuestions(arr: any) {//重组数据
     let questions: any = [];
     let question: any = [];
-   
+
     arr.forEach(function (obj: any, index: any) {
       if (index != 0 && obj.length != 0) {
         question.push(obj);
@@ -131,13 +131,13 @@ export class Asq3QuestionComponent implements OnInit {
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
-  getScore(arr:any){
+  getScore(arr: any) {
     let thisScore = 0;
-    arr.map(function(item:any,index:any){
-      if(Number(item)==1){
-        thisScore+=10;
-      }else if(Number(item)==2){
-        thisScore+=5;
+    arr.map(function (item: any, index: any) {
+      if (Number(item) == 1) {
+        thisScore += 10;
+      } else if (Number(item) == 2) {
+        thisScore += 5;
       }
     })
   }
