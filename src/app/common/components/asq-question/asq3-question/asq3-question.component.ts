@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { QuestType } from 'src/app/enum/quest-type.enum';
-import { QuestionModel } from 'src/app/view-model/question.model';
+import { QuestionModel } from 'src/app/network/model/question.model';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
 
 import questions from "./data.json";
@@ -143,7 +143,7 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   async request() {
-    let model = new QuestionModel();
+    /* let model = new QuestionModel();
     model.bid = "sdfsdf";// 宝宝ID；
     model.questType = QuestType.Asq3;// asq3答卷
     model.questMonth = "0";//2月份
@@ -151,16 +151,16 @@ export class Asq3QuestionComponent implements OnInit {
     let res = await this._business.create(model);
     if (res) {
       this.toastrService.success('提交成功');
-    }
+    } */
   }
 
   async submit() {
     let model = new QuestionModel();
-    model.id = "";
-    model.bid = "sdfsdf";// 宝宝ID；
-    model.questType = QuestType.Asq3;// asq3答卷
-    model.questMonth = "0";//2月份
-    model.questResult = ['sdf'];// 答题结果
+    model.Id = "";
+    model.Bid = "sdfsdf";// 宝宝ID；
+    model.QuestType = QuestType.ASQ3;// asq3答卷
+    model.QuestMonth = "0";//2月份
+    model.QuestResult = ['sdf'];// 答题结果
 
     let res = await this._business.create(model);
     if (res) {
