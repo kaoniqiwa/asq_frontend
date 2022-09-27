@@ -58,9 +58,13 @@ export function DateDifference(faultDate: string, completeTime: Date) {
   var etime = completeTime.getTime();
 
   var usedTime = etime - stime; //两个时间戳相差的毫秒数
+
+
   var days = Math.floor(usedTime / (24 * 3600 * 1000));
+
   //计算出小时数
   var leave1 = usedTime % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+
   var hours = Math.floor(leave1 / (3600 * 1000));
   //计算相差分钟数
   var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数

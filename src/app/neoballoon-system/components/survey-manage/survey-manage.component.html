@@ -21,15 +21,15 @@
     <div class="wrapper vertical-header">
       <div
         class="item"
-        [class.active]="currentIndex == surveyBtn.index"
+        [class.active]="currentType == surveyBtn.questType"
         *ngFor="let surveyBtn of surveyBtns"
         (click)="clickSurveyBtn(surveyBtn)"
       >
         <div class="icon">
-          <ng-container *ngIf="currentIndex != surveyBtn.index">
+          <ng-container *ngIf="currentType != surveyBtn.questType">
             <img [src]="'assets/img/' + surveyBtn.normalIcon" alt="" />
           </ng-container>
-          <ng-container *ngIf="currentIndex == surveyBtn.index">
+          <ng-container *ngIf="currentType == surveyBtn.questType">
             <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
           </ng-container>
           <span class="sub-icon">{{ surveyBtn.subIcon }}</span>
@@ -37,23 +37,38 @@
         <div class="content">{{ surveyBtn.content }}</div>
       </div>
     </div>
-    {{ currentIndex }}
     <div class="swiper-container vertical-main" style="min-height: 500px">
       <swiper [config]="config">
-        <ng-template swiperSlide class="red" *ngFor="let month of currentMonth">
+        <ng-template
+          swiperSlide
+          class="red"
+          *ngFor="let month of currentMonth; let i = index"
+        >
           <div class="item">
             <p>{{ month[0] | trimoffset }}</p>
             月
-            <span class="status">未开始</span>
-            <div class="appendix">
-              适用于
-              <br />
-              {{ month[1] }}
-              <br />
-              |
-              <br />
-              {{ month[2] }}{{ month[3] }}
-            </div>
+            <ng-container *ngIf="currentMonthIndex != i">
+              <span class="status">未开始</span>
+              <div class="appendix">
+                适用于
+                <br />
+                {{ month[1] }}
+                <br />
+                |
+                <br />
+                {{ month[2] }}{{ month[3] }}
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="currentMonthIndex == i">
+              <span class="status active">可筛查</span>
+              <div class="appendix active">
+                您的宝宝
+                <br />
+                该做此套问卷啦
+              </div>
+              <button class="hw-small-btn start-btn">立即筛查</button>
+            </ng-container>
           </div>
         </ng-template>
       </swiper>

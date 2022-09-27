@@ -11,8 +11,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
 import { LicenseComponent } from './login/license/license.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import zh from "@angular/common/locales/zh";
 
+registerLocaleData(zh, 'zh-CN');
 
 
 @NgModule({
