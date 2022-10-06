@@ -6,7 +6,7 @@ import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
 import { BabyAddManageComponent } from "./components/baby-add-manage/baby-add-manage.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
-import { BabyManageComponent } from "./components/baby-manage/baby-manage.component";
+import { BabyLibComponent } from "./components/baby-lib/baby-lib.component";
 import { BabySettingComponent } from "./components/baby-setting/baby-setting.component";
 import { NeoballoonManageComponent } from "./components/neoballoon-manage/neoballoon-manage.component";
 import { SurveyManageComponent } from "./components/survey-manage/survey-manage.component";
@@ -44,8 +44,8 @@ const routes: Routes = [
         component: BabyInfoManageComponent
       },
       {
-        path: 'baby-manage',
-        component: BabyManageComponent,
+        path: 'baby-lib',
+        component: BabyLibComponent,
         canActivate: [NeoballoonService]
       },
       {
@@ -64,7 +64,7 @@ const routes: Routes = [
         canActivate: [NeoballoonService]
       },
       {
-        path: "survey-manage",
+        path: "survey-manage/:mid",
         component: SurveyManageComponent
       },
       {

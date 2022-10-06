@@ -6,7 +6,7 @@
  */
 import { ClassConstructor, plainToClass } from 'class-transformer';
 import { HowellResponse } from '../model/howell-response.model';
-import { PagedList } from '../model/page_list.model';
+import { PagedList } from '../model/page-list.model';
 
 export class ServiceHelper {
   static ResponseProcess<T>(
@@ -27,24 +27,24 @@ export class ServiceHelper {
     t: ClassConstructor<T>
   ) {
     // 如果返回码不为0
-    if (response.faultCode != 0) {
-      console.error(response.faultReason, response.innerException);
-      throw new Error(response.faultReason);
+    if (response.FaultCode != 0) {
+      console.error(response.FaultReason, response.InnerException);
+      throw new Error(response.FaultReason);
     }
-    if (response.data) {
-      if ((response.data as PagedList<T>).page) {
-        let result = response.data as PagedList<T>;
-        result.data = plainToClass(
+    if (response.Data) {
+      if ((response.Data as PagedList<T>).Page) {
+        let result = response.Data as PagedList<T>;
+        result.Data = plainToClass(
           t,
-          (response.data as PagedList<T>).data
+          (response.Data as PagedList<T>).Data
         ) as unknown as T[];
         return result;
       } else {
-        return plainToClass(t, response.data);
+        return plainToClass(t, response.Data);
       }
 
     }
-    return plainToClass(t, response.data);;
+    return plainToClass(t, response.Data);;
 
   }
 }

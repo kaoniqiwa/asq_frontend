@@ -10,7 +10,7 @@ import { BabyAddManageComponent } from './baby-add-manage/baby-add-manage.compon
 import { BabyAgeComponent } from './baby-age/baby-age.component';
 import { BabyGameComponent } from './baby-game/baby-game.component';
 import { BabyInfoOperateComponent } from './baby-info-operate/baby-info-operate.component';
-import { BabyManageComponent } from './baby-manage/baby-manage.component';
+import { BabyLibComponent } from './baby-lib/baby-lib.component';
 import { BabySettingComponent } from './baby-setting/baby-setting.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { NeoballoonManageComponent } from './neoballoon-manage/neoballoon-manage.component';
@@ -34,7 +34,7 @@ import { SwiperModule } from 'swiper/angular';
     AccountComponent,
     AccountInfoComponent,
     BabyAddManageComponent,
-    BabyManageComponent,
+    BabyLibComponent,
     BabyInfoOperateComponent,
     SurveyLicenseComponent,
     BabyInfoComponent,

@@ -9,8 +9,8 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import { IdentityType } from 'src/app/enum/identity-type.enum';
 import { MemberRole } from 'src/app/enum/member-role.enum';
-import { BabyModel } from 'src/app/network/model/baby.model';
-import { MemberModel } from 'src/app/network/model/member.model';
+import { Baby } from 'src/app/network/model/baby.model';
+import { Member } from 'src/app/network/model/member.model';
 import { BabyInfoManageBusiness } from './baby-info-manage.business';
 
 @Component({
@@ -23,7 +23,7 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
 })
 export class BabyInfoManageComponent implements OnInit {
 
-  babys: BabyModel[] = [];
+  babys: Baby[] = [];
 
   Gender = Gender;
 
@@ -117,70 +117,69 @@ export class BabyInfoManageComponent implements OnInit {
 
       let member = this.memberGroup.value;
 
-      let memberModel = new MemberModel();
-      memberModel.id = '';
-      memberModel.did = doctor.id;
-      memberModel.name = member.name ?? '';
-      memberModel.phone = member.phone ?? "";
-      memberModel.member_role = Language.MemberRoleInfo(+(member.role ?? ""));
-      memberModel.province = member.province ?? "";
-      memberModel.city = member.city ?? "";
-      memberModel.county = member.county ?? "";
-      memberModel.email = member.email ?? "";
-      memberModel.post_code = member.postCode ?? "";
-      memberModel.address = member.address ?? "";
-      memberModel.mother_job = member.motherJob ?? "";
-      memberModel.father_job = member.fatherJob ?? "";
-      memberModel.mother_degree = +(member.motherDegree ?? "");
-      memberModel.father_degree = +(member.fatherDegree ?? "");
-      memberModel.other_degree = +(member.otherDegree ?? "");
-      memberModel.mother_birth = member.motherBirth ?? "";
-      memberModel.father_birth = member.fatherBirth ?? "";
+      let memberModel = new Member();
+      memberModel.Id = '';
+      memberModel.Did = doctor.Id;
+      memberModel.Name = member.name ?? '';
+      memberModel.Phone = member.phone ?? "";
+      // memberModel.member_role = Language.MemberRoleInfo(+(member.role ?? ""));
+      memberModel.Province = member.province ?? "";
+      memberModel.City = member.city ?? "";
+      memberModel.County = member.county ?? "";
+      memberModel.Email = member.email ?? "";
+      memberModel.PostCode = member.postCode ?? "";
+      memberModel.Address = member.address ?? "";
+      memberModel.MotherJob = member.motherJob ?? "";
+      memberModel.FatherJob = member.fatherJob ?? "";
+      memberModel.MotherDegree = +(member.motherDegree ?? "");
+      memberModel.FatherDegree = +(member.fatherDegree ?? "");
+      memberModel.OtherDegree = +(member.otherDegree ?? "");
+      memberModel.MotherBirth = member.motherBirth ?? "";
+      memberModel.FatherBirth = member.fatherBirth ?? "";
 
 
       let memberRes = await this._business.addMember(memberModel);
 
-      console.log('添加 member ', memberRes);
+      // console.log('添加 member ', memberRes);
 
       for (let i = 0; i < this.infoArr.length; i++) {
         let info = this.infoArr[i];
         let baby = info.value as IBaby;
 
 
-        let babyModel = new BabyModel();
-        babyModel.id = "";
-        babyModel.mid = memberRes.id;
+        let babyModel = new Baby();
+        babyModel.Id = "";
+        babyModel.Mid = memberRes.Id;
 
-        babyModel.name = baby.name;
-        babyModel.gender = baby.gender;
-        babyModel.birthday = baby.birthday;
-        babyModel.survey_time = baby.survey;
-        babyModel.premature = baby.premature;
-        babyModel.is_shun = baby.bornCondition.isShun;
-        babyModel.identity_info = baby.identityInfo;
-        babyModel.identity_type = baby.identityType;
-        babyModel.weight = baby.weight;
-        babyModel.is_help = baby.bornCondition.isHelp;
-        babyModel.is_multi = baby.bornCondition.isMulti;
-        babyModel.other_abnormal = baby.bornCondition.abnormal;
+        babyModel.Name = baby.name;
+        babyModel.Gender = baby.gender;
+        babyModel.Birthday = baby.birthday;
+        babyModel.SurveyTime = baby.survey;
+        babyModel.Premature = baby.premature;
+        babyModel.IsShun = baby.bornCondition.isShun;
+        babyModel.IdentityInfo = baby.identityInfo;
+        babyModel.IdentityType = baby.identityType;
+        babyModel.Weight = baby.weight;
+        babyModel.IsHelp = baby.bornCondition.isHelp;
+        babyModel.IsMulti = baby.bornCondition.isMulti;
+        babyModel.OtherAbnormal = baby.bornCondition.abnormal;
 
 
         let babyRes = await this._business.addBaby(babyModel);
-        console.log('添加 baby ', babyRes);
+        // console.log('添加 baby ', babyRes);
 
         this.babys.push(babyRes)
       }
 
-      this._globalStorage.babys = this.babys;
       this._toastrService.success('提交成功');
-      this.navigateToSurveyManage();
+      this.navigateToSurveyManage(memberRes.Id);
 
     }
 
 
   }
-  navigateToSurveyManage() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage"])
+  navigateToSurveyManage(mid: string) {
+    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid])
   }
 
 }

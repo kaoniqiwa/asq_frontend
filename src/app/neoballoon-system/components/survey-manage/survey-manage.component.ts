@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { BabyModel } from 'src/app/network/model/baby.model';
+import { Baby } from 'src/app/network/model/baby.model';
 
 import Swiper, { A11y, Navigation, Pagination, Scrollbar, SwiperOptions } from 'swiper';
 import { SurveyManageBusiness } from './survey-manage.business';
@@ -8,21 +8,31 @@ import { SurveyManageBusiness } from './survey-manage.business';
 
 import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
-// console.log(monthWorkBook)
+
+
+monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+  // 去掉标题
+  sheet.data.shift();
+
+  // 去掉列名
+  sheet.data.shift();
+
+})
 
 import SurveyBtns from "src/assets/json/survey-manage.json";
 
 import { plainToClass, plainToInstance } from 'class-transformer';
 import { SurveyBtnModel } from 'src/app/view-model/survey-manage.model';
-import { QuestionModel } from 'src/app/network/model/question.model';
+import { Question } from 'src/app/network/model/question.model';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { DateDifference } from 'src/app/common/tools/tool';
 import { formatDate } from '@angular/common';
 import { Time, TimerDiff } from 'src/app/common/tools/time';
 import { SwiperComponent } from 'swiper/angular';
 import { GlobalToastrConfig, ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PageType } from 'src/app/enum/page-type.enum';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -37,7 +47,9 @@ Swiper.use([
     SurveyManageBusiness
   ]
 })
-export class SurveyManageComponent implements OnInit {
+export class SurveyManageComponent implements OnInit, OnDestroy {
+
+  mid: string = "";
 
   // 保存年龄段表单信息
   sheetMap = new Map<string, Array<string>>();
@@ -61,10 +73,9 @@ export class SurveyManageComponent implements OnInit {
   currentMonthIndex = -1;
 
 
-  babyId = "a26584f8-aa79-48b9-8fee-906025cd983c";
-  babys: BabyModel[] = [];
+  babys: Baby[] = [];
 
-  currentBaby: BabyModel | null = null;
+  currentBaby: Baby | null = null;
 
   config: SwiperOptions = {
     slidesPerView: 8,
@@ -73,18 +84,14 @@ export class SurveyManageComponent implements OnInit {
 
   @ViewChild(SwiperComponent) swiper!: SwiperComponent;
 
-  constructor(private _business: SurveyManageBusiness, private _globalStorage: GlobalStorageService, private _router: Router, private _toastrService: ToastrService) {
-    console.log(this._globalStorage.user)
+  constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
+
+    this._activeRoute.params.subscribe((params: Params) => {
+      this.mid = params['mid'];
+    })
 
     monthWorkBook.forEach((sheet: ASQMonthFilter) => {
-      // 去掉标题
-      sheet.data.shift();
-
-      // 去掉列名
-      sheet.data.shift();
-
       this.sheetMap.set(sheet.name, sheet.data)
-
     })
 
     // console.log(this.sheetMap);
@@ -124,24 +131,27 @@ export class SurveyManageComponent implements OnInit {
       this.currentSwiperMonth = this.sheetMap.get(currentBtn.questType) ?? null;
     }
 
+
+
+
   }
 
   async ngOnInit() {
 
-    console.log(this._globalStorage.babys);
-    this.babys = this._globalStorage.babys;// await this._business.listBaby();
+
+
+
+    this.babys = await this._business.listBaby(this.mid);
+    console.log('babys', this.babys)
+
     if (this.babys.length) {
       this.currentBaby = this.babys[0];
 
-      // let start = new Date(this.currentBaby.birthday);
-      // let end = new Date(this.currentBaby.survey_time);
-
-      // console.log(this.currentBaby)
     }
 
-
-
     this.checkRange();
+
+
   }
 
   clickSurveyBtn(model: SurveyBtnModel) {
@@ -154,14 +164,14 @@ export class SurveyManageComponent implements OnInit {
     //   this.swiper.swiperRef.slideTo(this.currentMonthIndex)
     // }
   }
-  changeBaby(baby: BabyModel) {
+  changeBaby(baby: Baby) {
     this.currentBaby = baby;
     this.checkRange()
   }
   checkRange() {
     if (this.currentBaby) {
-      let start = new Date(this.currentBaby.birthday);
-      let end = new Date(this.currentBaby.survey_time);
+      let start = new Date(this.currentBaby.Birthday);
+      let end = new Date(this.currentBaby.SurveyTime);
       this.timerDiff = Time.diff(start, end);
 
       let months = this.monthMap.get(this.currentType);
@@ -203,7 +213,7 @@ export class SurveyManageComponent implements OnInit {
 
   gotoQuest() {
     if (this.currentBaby) {
-      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.currentBaby.id], {
+      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.currentBaby.Id], {
         queryParams: {
           pageType: PageType.shaicha,
           questType: this.currentType,
@@ -212,6 +222,9 @@ export class SurveyManageComponent implements OnInit {
       })
     }
 
+  }
+  ngOnDestroy(): void {
+    console.log('destroy');
   }
 
 }

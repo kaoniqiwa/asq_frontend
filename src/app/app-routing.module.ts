@@ -19,7 +19,7 @@ const routes: Routes = [
     path: RoutePath.neoballoon,
     loadChildren: () =>
       import('./neoballoon-system/neoballoon.module').then((mod) => mod.NeoballoonModule),
-    canActivate: [AuthorizationService],
+    // canActivate: [AuthorizationService],
   }
 ]
 

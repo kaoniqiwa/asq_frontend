@@ -2,9 +2,9 @@
   "$schema": "./side-nav.schema.json",
   "data": [
     {
-      "id": "baby-manage",
+      "id": "baby-lib",
       "title": "宝宝库",
-      "path": "/neoballoon/neoballoon-manage/baby-manage"
+      "path": "/neoballoon/neoballoon-manage/baby-lib"
     },
     {
       "id": "baby-add-manage",

@@ -1,12 +1,12 @@
-export class DoctorModel {
-  id!: string;
-  cid!: string;
-  name!: string;
-  level?: string;
-  dept?: string;
-  phone?: string;
-  create_time!: string;
-  update_time!: string;
-  flow?: string;
+export class Doctor {
+  Id!: string;
+  Cid!: string;
+  Name!: string;
+  Level?: string;
+  Dept?: string;
+  Phone?: string;
+  CreateTime!: string;
+  UpdateTime!: string;
+  Flow?: string;
 
 }

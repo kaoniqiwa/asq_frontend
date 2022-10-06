@@ -9,7 +9,7 @@ export class AccountBusiness {
   }
   listDoctors(cid: string) {
     let params = new GetDoctorParams();
-    params.cid = cid;
+    params.Cid = cid;
     return this._doctorRequest.list(params)
   }
 }

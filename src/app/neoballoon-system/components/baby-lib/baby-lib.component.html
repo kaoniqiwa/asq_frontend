@@ -23,8 +23,8 @@
         <button class="hw-small-btn gray-btn" (click)="filterHandler()">
           筛选<i class="mdi mdi-filter-outline"></i>
         </button>
-        <div class="select-wrapper" [class.expand]="questionType == '3'">
-          <select [(ngModel)]="questionType">
+        <div class="select-wrapper" [class.expand]="true">
+          <select>
             <option value="" disabled>请选择</option>
             <option value="1">ASQ-3</option>
             <option value="2">ASQ:SE</option>
@@ -161,15 +161,15 @@
   <div class="vertical-footer" style="justify-content: flex-end">
     <div class="footer-item">
       <div class="footer-info">
-        <div class="info-item">当前数量: {{ page && page.recordCount }}</div>
-        <div class="info-item">总数量: {{ page && page.totalRecordCount }}</div>
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
 
       <app-paginator
         *ngIf="page"
         [showFirstLastButtons]="true"
-        [length]="page.totalRecordCount"
-        [pageSize]="page.pageSize"
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
         [pagerCount]="pagerCount"
         [pageIndex]="pageIndex - 1"
         (page)="pageEvent($event)"

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DoctorModel } from 'src/app/network/model/doctor.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Doctor } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 import { AccountBusiness } from './account.business';
 
@@ -18,24 +19,24 @@ export class AccountComponent implements OnInit {
   showInfo = false;
 
   user: User | null = null;
-  doctors: DoctorModel[] = [];
+  doctors: Doctor[] = [];
 
 
-  constructor(private _globalStorage: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
-    this.user = this._globalStorage.user;
+  constructor(private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
+    this.user = this._localStorage.user;
   }
 
   async ngOnInit() {
     if (this.user) {
-      this.doctors = await this._business.listDoctors(this.user.id);
-      console.log(this.doctors)
+      this.doctors = await this._business.listDoctors(this.user.Id);
+      // console.log(this.doctors)
     }
   }
-  selectAccount(doctor: DoctorModel) {
-    console.log('select:', doctor)
+  selectAccount(doctor: Doctor) {
+    // console.log('select:', doctor)
     this._globalStorage.doctor = doctor;
 
-    this._router.navigate(["/neoballoon/neoballoon-manage/baby-manage"])
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-lib"])
   }
 
 }

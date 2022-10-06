@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { QuestType } from "src/app/enum/quest-type.enum";
-import { BabyModel } from "src/app/network/model/baby.model";
-import { MemberModel } from "src/app/network/model/member.model";
-import { QuestionModel } from "src/app/network/model/question.model";
+import { Baby } from "src/app/network/model/baby.model";
+import { Member } from "src/app/network/model/member.model";
+import { Question } from "src/app/network/model/question.model";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
 import { MemberRequestService } from "src/app/network/request/member/member.service";
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
@@ -13,10 +13,10 @@ export class BabyInfoManageBusiness {
   constructor(private memberRequest: MemberRequestService, private babyRequest: BabyRequestService, private questionRequest: QuestionRequestService) {
 
   }
-  addMember(member: MemberModel) {
+  addMember(member: Member) {
     return this.memberRequest.create(member)
   }
-  addBaby(baby: BabyModel) {
+  addBaby(baby: Baby) {
     return this.babyRequest.create(baby);
   }
 
@@ -28,7 +28,7 @@ export class BabyInfoManageBusiness {
     return this.questionRequest.getQuestion(params);
   }
   createQuestion() {
-    let model = new QuestionModel();
+    let model = new Question();
     model.Id = "";
     model.Bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
     model.QuestType = QuestType.ASQ3;

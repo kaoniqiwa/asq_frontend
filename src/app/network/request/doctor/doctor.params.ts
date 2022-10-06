@@ -1,7 +1,7 @@
 
 export class GetDoctorParams {
-  name?: string;
-  id?: string;
-  cid!: string;
-  flow!: string;
+  Name?: string;
+  Id?: string;
+  Cid!: string;
+  Flow!: string;
 }

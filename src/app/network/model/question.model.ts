@@ -1,6 +1,6 @@
 import { QuestType } from "../../enum/quest-type.enum";
 
-export class QuestionModel {
+export class Question {
   Id!: string;
   Bid!: string;
   QuestType!: QuestType;

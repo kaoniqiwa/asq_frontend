@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { DoctorModel } from "../../model/doctor.model";
+import { Doctor } from "../../model/doctor.model";
 import { DoctorUrl } from "../../url/doctor.url";
 import { GetQuestionParams } from "./question.params";
-import { QuestionModel } from "src/app/network/model/question.model";
+import { Question } from "src/app/network/model/question.model";
 import { QuestionUrl } from "../../url/question.url";
 
 @Injectable({
@@ -13,14 +13,14 @@ import { QuestionUrl } from "../../url/question.url";
 export class QuestionRequestService {
 
   private basic: BaseRequestService;
-  private type: BaseTypeRequestService<QuestionModel>;
+  private type: BaseTypeRequestService<Question>;
 
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
-    this.type = this.basic.type(QuestionModel);
+    this.type = this.basic.type(Question);
   }
 
-  create(model: QuestionModel) {
+  create(model: Question) {
     model.Flow = 'addQuestion';
     return this.type.post(QuestionUrl.create(), model);
   }

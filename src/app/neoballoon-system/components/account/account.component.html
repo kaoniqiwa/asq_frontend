@@ -1,6 +1,6 @@
 <div class="account">
   <div class="large-title green-title underline-title">
-    {{ user?.name }}
+    {{ user?.Name }}
   </div>
 
   <div class="normal-title green-title">选择子账号</div>
@@ -11,7 +11,7 @@
       *ngFor="let doctor of doctors"
       (click)="selectAccount(doctor)"
     >
-      {{ doctor.name }}
+      {{ doctor.Name }}
     </div>
   </div>
 </div>

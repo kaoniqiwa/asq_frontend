@@ -10,7 +10,7 @@ import { BaseASQUrl } from "./base.url";
 
 export class UserUrl {
   static basic() {
-    return `${BaseASQUrl}/Users`;
+    return `${BaseASQUrl}/User`;
   }
   static login(username: string): string {
     return `${this.basic()}/Login/${username}`;

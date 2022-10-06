@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DoctorModel } from 'src/app/network/model/doctor.model';
+import { Doctor } from 'src/app/network/model/doctor.model';
 
 @Component({
   selector: 'app-account-info',
@@ -9,7 +9,7 @@ import { DoctorModel } from 'src/app/network/model/doctor.model';
 })
 export class AccountInfoComponent implements OnInit {
 
-  doctor: DoctorModel | null = null;
+  doctor: Doctor | null = null;
 
   constructor(private _globalStorage: GlobalStorageService) { }
 

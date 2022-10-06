@@ -4,14 +4,15 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { CookieService } from "ngx-cookie-service";
 import { SessionStorageService } from "src/app/common/service/session-storage.service";
+import { GlobalStorageService } from "src/app/common/service/global-storage.service";
 import { Md5 } from 'ts-md5';
 import CryptoJS from 'crypto-js';
 
 import { DigestResponse } from "./digest-response.class";
 import { plainToClass } from "class-transformer";
-import { GlobalStorageService } from "src/app/common/service/global-storage.service";
 import { User } from "../model/user.model";
 import { UserUrl } from "../url/user.url";
+import { LocalStorageService } from "src/app/common/service/local-storage.service";
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +25,9 @@ export class AuthorizationService implements CanActivate {
 
   constructor(
     private _sessionStorageService: SessionStorageService,
-    private _globalStorage: GlobalStorageService,
+    private _localStorage: LocalStorageService,
     private _cookieService: CookieService,
     private _router: Router,
-    private _store: GlobalStorageService
   ) {
     if (this._cookieService.check('username')) {
       let username = this._cookieService.get('username');
@@ -56,17 +56,17 @@ export class AuthorizationService implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
-    let user = this._globalStorage.user;
-    let holdCookie = this._cookieService.check('userName');
+    let user = this._localStorage.user;
+    let holdCookie = this._cookieService.check('username');
     // console.log(userResource);
-    if (challenge && user && user.id && holdCookie) {
+    if (challenge && user && user.Id && holdCookie) {
       return true;
     }
 
     return this._router.parseUrl('/login');
   }
   login(username: string, password: string): Promise<User | AxiosResponse<any> | null> {
-    return this.loginByUsername(username, password)
+    return this.loginByUsername(username.trim(), password.trim())
   }
   async loginByUsername(username: string, password: string) {
     // return axios.get('/api/login.php')
@@ -99,8 +99,8 @@ export class AuthorizationService implements CanActivate {
         }
 
         this._sessionStorageService.challenge = challenge;
-        return axios(this._config).then((res: AxiosResponse<{ data: User }>) => {
-          let result = plainToClass(User, res.data.data)
+        return axios(this._config).then((res: AxiosResponse<{ Data: User }>) => {
+          let result = plainToClass(User, res.data.Data)
           this._storeUserInfo(result, password,);
           return result;
         }
@@ -117,6 +117,7 @@ export class AuthorizationService implements CanActivate {
       expires: new Date(Date.now() + 60 * 60 * 1000),
       path: '/',
       secure: false,
+
     };
     // username
     let prefix = CryptoJS.MD5(
@@ -127,9 +128,9 @@ export class AuthorizationService implements CanActivate {
     ).toString();
 
     let userName = window.btoa(
-      prefix + user.username + suffix
+      prefix + user.Username + suffix
     );
-    this._cookieService.set('userName', userName, options);
+    this._cookieService.set('username', userName, options);
 
     //password
     prefix = CryptoJS.MD5(
@@ -141,10 +142,9 @@ export class AuthorizationService implements CanActivate {
     let passWord = window.btoa(
       prefix + password + suffix
     );
-    this._cookieService.set('passWord', passWord, options);
+    this._cookieService.set('password', passWord, options);
 
-    this._globalStorage.user = user;
-    this._store.password = passWord;
+    this._localStorage.user = user;
   }
 
 

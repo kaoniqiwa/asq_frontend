@@ -1,23 +1,23 @@
 /** 应答信息 */
 interface HowellResponse<T> {
   /**	Int32	错误码间附录3.3	M */
-  faultCode: number;
+  FaultCode: number;
   /**	String 	错误原因	M */
-  faultReason: string;
+  FaultReason: string;
   /**	ExceptionData	内部异常	O */
-  innerException?: ExceptionData;
+  InnerException?: ExceptionData;
   /**	T	应答实体数据	O */
-  data?: T;
+  Data?: T;
 }
 
 /** 内部异常 */
 interface ExceptionData {
   /**	String	异常消息	M */
-  message: string;
+  Message: string;
   /**	String	异常类型	M */
-  exceptionType: string;
+  ExceptionType: string;
   /**	ExceptionData	内部异常	O */
-  innerException?: ExceptionData;
+  InnerException?: ExceptionData;
 }
 
 interface HttpResponse<T> {
@@ -27,10 +27,10 @@ interface HttpResponse<T> {
 }
 
 class Fault {
-  faultCode!: number;
-  faultReason!: string;
-  exception?: ExceptionData;
-  id?: string;
+  FaultCode!: number;
+  FaultReason!: string;
+  Exception?: ExceptionData;
+  Id?: string;
 }
 
 export { HowellResponse, ExceptionData, HttpResponse, Fault };
