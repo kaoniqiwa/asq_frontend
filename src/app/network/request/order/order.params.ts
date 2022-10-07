@@ -1,9 +1,8 @@
 import { PagedParams } from "../IParams.interface";
 
-export class GetMemberParams extends PagedParams {
+export class GetOrderParams extends PagedParams {
   Ids?: string[];
-  Dids?: string[];
-  Name?: string;
+  Phone?: string;
   BeginTime?: Date;
   EndTime?: Date;
   Flow!: string;

@@ -1,7 +1,8 @@
+import { PagedParams } from "../IParams.interface";
 
-export class GetBabyParams {
+export class GetBabyParams extends PagedParams {
   Name?: string;
-  Id?: string;
-  Mid!: string;
+  Ids?: string[];
+  Mids!: string[];
   Flow!: string;
 }

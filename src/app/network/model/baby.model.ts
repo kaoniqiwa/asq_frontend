@@ -6,6 +6,7 @@ export class Baby {
   Mid!: string;
   Name!: string;
   Gender!: Gender;
+  Relation!: string;
   Birthday!: string;
   SurveyTime!: string;
   Premature!: boolean;

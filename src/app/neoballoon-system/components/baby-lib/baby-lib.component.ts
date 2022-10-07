@@ -8,6 +8,7 @@ import { Page } from 'src/app/network/model/page-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { BabyManageSearchInfo } from 'src/app/view-model/baby-manage.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Component({
   selector: 'app-baby-lib',
@@ -21,6 +22,7 @@ export class BabyLibComponent implements OnInit {
 
   fileType = 'personal';
   searchInfo: BabyManageSearchInfo = {
+    did: "",
     name: "",
     questType: QuestType.ASQ3,
   }
@@ -34,10 +36,16 @@ export class BabyLibComponent implements OnInit {
 
   showToast = false;
 
-  constructor(private _business: BabyInfoBusiness, private _router: Router, private _route: ActivatedRoute) { }
+  constructor(private _business: BabyInfoBusiness, private _router: Router, private _globalStorage: GlobalStorageService) { }
 
   ngOnInit(): void {
-    let res = this._business.init(this.searchInfo, this.pageIndex, this.pageSize)
+    let doctor = this._globalStorage.doctor;
+
+    if (doctor) {
+      this.searchInfo.did = doctor.Id;
+      let res = this._business.init(this.searchInfo, this.pageIndex, this.pageSize)
+    }
+
     // this.dataSubject.next(res.Data)
     // this.page = res.Page
   }

@@ -3,6 +3,8 @@ import { GlobalStorageService } from "src/app/common/service/global-storage.serv
 import { Page, PagedList } from "src/app/network/model/page-list.model";
 import { GetBabyParams } from "src/app/network/request/baby/baby.params";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
+import { GetMemberParams } from "src/app/network/request/member/member.params";
+import { MemberRequestService } from "src/app/network/request/member/member.service";
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
 import { QuestionRequestService } from "src/app/network/request/question/question.service";
 import { BabyManageModel } from "src/app/view-model/baby-info.model";
@@ -11,7 +13,7 @@ import { BabyManageSearchInfo } from "src/app/view-model/baby-manage.model";
 @Injectable()
 export class BabyManageBusiness {
 
-  constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _globalStorage: GlobalStorageService) {
+  constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _globalStorage: GlobalStorageService) {
 
   }
   async init(searchInfo: BabyManageSearchInfo, pageIndex = 1, pageSize = 9) {
@@ -24,11 +26,20 @@ export class BabyManageBusiness {
 
     // console.log(res);
 
-    // let params = new GetBabyParams()
-    // params.
+    let members = await this._listMember(searchInfo.did);
+    console.log(members)
+
   }
 
+  private _listMember(did: string) {
+    let params = new GetMemberParams();
+    params.Dids = [did];
+
+    this._memberRequest.list(params)
+  }
   private _listBaby() {
+    let params = new GetBabyParams();
+    // params.Mid
 
   }
   private _listQuestion(params: GetQuestionParams) {

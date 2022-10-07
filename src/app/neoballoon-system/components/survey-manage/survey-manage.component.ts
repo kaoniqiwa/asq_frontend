@@ -111,7 +111,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
           }
           let end = {
             month: +endRes[0],
-            day: endRes[1] ? + endRes[1] : 0
+            day: endRes[1] ? + endRes[1] : 30
           }
           duration.push({
             start,
@@ -141,8 +141,9 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
 
 
-    this.babys = await this._business.listBaby(this.mid);
-    console.log('babys', this.babys)
+    let { Data: babys } = await this._business.listBaby(this.mid);
+    this.babys = babys;
+    // console.log('babys', this.babys)
 
     if (this.babys.length) {
       this.currentBaby = this.babys[0];
@@ -175,7 +176,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       this.timerDiff = Time.diff(start, end);
 
       let months = this.monthMap.get(this.currentType);
-      console.log(months)
+      // console.log(months)
       if (!months) return;
       this.currentMonthIndex = -1;
       for (let i = 0; i < months.length; i++) {
@@ -201,21 +202,13 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     }
     console.log(this.currentMonthIndex)
   }
-  submit() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", "a26584f8-aa79-48b9-8fee-906025cd983c"], {
-      queryParams: {
-        pageType: PageType.dati,
-        questType: QuestType.ASQ3,
-        questMonth: 0
-      }
-    })
-  }
 
-  gotoQuest() {
+  gotoQuest(e: Event) {
+    e.stopPropagation();
     if (this.currentBaby) {
       this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.currentBaby.Id], {
         queryParams: {
-          pageType: PageType.shaicha,
+          pageType: PageType.dati,
           questType: this.currentType,
           questMonth: this.currentMonthIndex
         }

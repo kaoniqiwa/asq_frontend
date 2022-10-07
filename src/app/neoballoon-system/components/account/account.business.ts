@@ -7,9 +7,9 @@ export class AccountBusiness {
   constructor(private _doctorRequest: DoctorRequestService) {
 
   }
-  listDoctors(cid: string) {
+  listDoctors(cids: string[]) {
     let params = new GetDoctorParams();
-    params.Cid = cid;
+    params.Cids = cids;
     return this._doctorRequest.list(params)
   }
 }

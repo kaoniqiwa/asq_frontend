@@ -1,7 +1,8 @@
+import { PagedParams } from "../IParams.interface";
 
-export class GetDoctorParams {
+export class GetDoctorParams extends PagedParams {
   Name?: string;
-  Id?: string;
-  Cid!: string;
+  Ids?: string[];
+  Cids?: string[];
   Flow!: string;
 }

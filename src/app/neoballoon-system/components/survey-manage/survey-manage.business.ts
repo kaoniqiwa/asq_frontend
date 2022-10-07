@@ -11,7 +11,8 @@ export class SurveyManageBusiness {
 
   listBaby(mid: string) {
     let params = new GetBabyParams();
-    params.Mid = mid;
+    params.Mids = [];
+    mid && params.Mids.push(mid);
     return this._babyRequest.list(params);
   }
   getBaby(id: string) {

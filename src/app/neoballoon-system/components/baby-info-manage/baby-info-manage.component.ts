@@ -23,7 +23,6 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
 })
 export class BabyInfoManageComponent implements OnInit {
 
-  babys: Baby[] = [];
 
   Gender = Gender;
 
@@ -150,7 +149,7 @@ export class BabyInfoManageComponent implements OnInit {
         let babyModel = new Baby();
         babyModel.Id = "";
         babyModel.Mid = memberRes.Id;
-
+        babyModel.Relation = '父亲';
         babyModel.Name = baby.name;
         babyModel.Gender = baby.gender;
         babyModel.Birthday = baby.birthday;
@@ -166,9 +165,8 @@ export class BabyInfoManageComponent implements OnInit {
 
 
         let babyRes = await this._business.addBaby(babyModel);
-        // console.log('添加 baby ', babyRes);
+        console.log('添加 baby ', babyRes);
 
-        this.babys.push(babyRes)
       }
 
       this._toastrService.success('提交成功');

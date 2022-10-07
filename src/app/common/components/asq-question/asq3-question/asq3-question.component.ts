@@ -3,15 +3,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { PageType } from 'src/app/enum/page-type.enum';
 import { QuestType } from 'src/app/enum/quest-type.enum';
-import { QuestionModel } from 'src/app/network/model/question.model';
+import { Question } from 'src/app/network/model/question.model';
 import { GetQuestionParams } from 'src/app/network/request/question/question.params';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
 
 import questions from "./data.json";
 
-console.log('12', questions)
+// console.log('12', questions)
 
 //import asq3 from '../../../../../assets/files/ASQ_3.xlsx';
 
@@ -38,7 +39,7 @@ export class Asq3QuestionComponent implements OnInit {
   allPages: any = 0;
   currentAnswers: any = [];
   currentAnswer: any = {};
-  scoreArr:any = [];
+  scoreArr: any = [];
   /* scoreArr:any = [
     {
         "score": 40,
@@ -72,15 +73,15 @@ export class Asq3QuestionComponent implements OnInit {
   questMonth: number = 0;
   bid: string = "";
 
-  nengQu = ['沟通','粗大动作','精细动作','解决问题','个人-社会'];
-  gaoArr:any = [];
-  jieArr:any = [];
-  diArr:any = [];
-  
+  nengQu = ['沟通', '粗大动作', '精细动作', '解决问题', '个人-社会'];
+  gaoArr: any = [];
+  jieArr: any = [];
+  diArr: any = [];
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private testTest: GlobalStorageService, private _activeRoute: ActivatedRoute) {
-    console.log('constructor', testTest.user?.name, testTest.doctor);
-    
+
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _globalStorage: GlobalStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute) {
+    console.log('constructor', this._localStorage.user.Name, _globalStorage.doctor);
+
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];
     })
@@ -92,19 +93,19 @@ export class Asq3QuestionComponent implements OnInit {
 
     })
 
-    console.log("getparams",this.bid, this.pageType, this.questType, this.questMonth);
-    if(this.pageType != 0){
+    console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
+    if (this.pageType != 0) {
       let that = this;
-      this.scoreArr.map(function(item:any,index:any){
-        if(item.jiezhi == '低于界值'){
+      this.scoreArr.map(function (item: any, index: any) {
+        if (item.jiezhi == '低于界值') {
           that.diArr.push(item);
-        }else if(item.jiezhi == '接近界值'){
+        } else if (item.jiezhi == '接近界值') {
           that.jieArr.push(item);
-        }else{
+        } else {
           that.gaoArr.push(item);
         }
       })
-      console.log('gaojiediarr',this.gaoArr,this.jieArr,this.diArr);
+      console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr);
       //this.request();
     }
 
@@ -202,9 +203,9 @@ export class Asq3QuestionComponent implements OnInit {
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
-  getScore(arr: any,indexFa:any) {//界值状态转化
+  getScore(arr: any, indexFa: any) {//界值状态转化
     let thisScore = 0;
-    let thisScoreObj:any = {};
+    let thisScoreObj: any = {};
     arr.map(function (item: any, index: any) {
       if (Number(item) == 1) {
         thisScore += 10;
@@ -215,23 +216,23 @@ export class Asq3QuestionComponent implements OnInit {
 
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
-    if(thisScore<=3.3*arr.length){
+    if (thisScore <= 3.3 * arr.length) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
-    }else if(thisScore>3.3*arr.length && thisScore<6.6*arr.length){
+    } else if (thisScore > 3.3 * arr.length && thisScore < 6.6 * arr.length) {
       thisScoreObj.jiezhi = "接近界值";
       this.jieArr.push(thisScoreObj);
-    }else{
+    } else {
       thisScoreObj.jiezhi = "高于界值";
       this.gaoArr.push(thisScoreObj);
     }
-    
+
     return thisScoreObj;
   }
 
-  gotoShuaiCha(){
+  gotoShuaiCha() {
     this.pageType = 2;
-    
+
   }
 
   async request() {
@@ -243,20 +244,20 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getQuestion(model);
     if (res) {
-      console.log('res:',res);
+      console.log('res:', res);
       this.toastrService.success('提交成功');
     }
   }
 
   async submit() {
     let that = this;
-    this.currentAnswers.map(function(item:any,index:any){
-      if((index+1)!= that.currentAnswers.length){
-        that.scoreArr.push(that.getScore(item.answer,index));
+    this.currentAnswers.map(function (item: any, index: any) {
+      if ((index + 1) != that.currentAnswers.length) {
+        that.scoreArr.push(that.getScore(item.answer, index));
       }
     });
-    
-    let model = new QuestionModel();
+
+    let model = new Question();
     model.Id = "";
     model.Bid = this.bid;// 宝宝ID；
     model.QuestType = this.questType;// asq3答卷
@@ -266,9 +267,9 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.create(model);
     if (res) {
-      console.log('res:',JSON.parse(res.QuestScore));
+      console.log('res:', JSON.parse(res.QuestScore));
       this.toastrService.success('提交成功');
-      
+
     }
   }
 

@@ -28,12 +28,11 @@ export class AccountComponent implements OnInit {
 
   async ngOnInit() {
     if (this.user) {
-      this.doctors = await this._business.listDoctors(this.user.Id);
-      // console.log(this.doctors)
+      let { Data: doctors } = await this._business.listDoctors([this.user.Id]);
+      this.doctors = doctors;
     }
   }
   selectAccount(doctor: Doctor) {
-    // console.log('select:', doctor)
     this._globalStorage.doctor = doctor;
 
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-lib"])

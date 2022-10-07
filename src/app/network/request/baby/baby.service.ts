@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { mode } from "crypto-js";
 import { Baby } from "../../model/baby.model";
+import { Company } from "../../model/company.model";
 import { BabyUrl } from "../../url/baby.url";
+import { CompanyUrl } from "../../url/company.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
 import { GetBabyParams } from "./baby.params";
@@ -20,12 +21,12 @@ export class BabyRequestService {
   }
 
   create(model: Baby) {
-    model.Flow = 'addBaby';
+    model.Flow = "addBaby";
     return this.type.post(BabyUrl.create(), model);
   }
   list(params: GetBabyParams = new GetBabyParams()) {
     params.Flow = 'listBaby';
-    return this.type.postArray(BabyUrl.list(), params)
+    return this.type.paged(BabyUrl.list(), params)
   }
 
   delete(params: GetBabyParams = new GetBabyParams()) {
