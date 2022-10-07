@@ -4,6 +4,7 @@ import { NeoballoonRoutingModule } from "./neoballoon-routing.module";
 import { NeoballoonComponent } from "./neoballoon.component";
 
 import { SwiperModule } from 'swiper/angular';
+import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 
 
 @NgModule({
@@ -15,6 +16,12 @@ import { SwiperModule } from 'swiper/angular';
     NeoballoonComponentModule,
     NeoballoonRoutingModule,
     SwiperModule
+  ],
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
   ]
 })
 export class NeoballoonModule {

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { GlobalStorageService } from "../common/service/global-storage.service";
 
@@ -7,7 +7,8 @@ import { GlobalStorageService } from "../common/service/global-storage.service";
   providedIn: "root"
 })
 export class NeoballoonService implements CanActivate {
-  constructor(private _globalStorage: GlobalStorageService, private _toastrService: ToastrService) {
+  constructor(private _globalStorage: GlobalStorageService, private _toastrService: ToastrService, private _router: Router,
+  ) {
 
   }
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -16,6 +17,8 @@ export class NeoballoonService implements CanActivate {
       return true;
     }
     this._toastrService.warning('请选择子账号')
-    return false;
+    return this._router.parseUrl('/neoballoon/neoballoon-manage/account');
+
+
   }
 }
