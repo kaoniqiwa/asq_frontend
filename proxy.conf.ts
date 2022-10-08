@@ -1,13 +1,14 @@
 const PROXY_CONFIG = [
   {
     context: [
-      '/api',
+      '/app/asq_server',
     ],
-    target: 'http://localhost:8888/gitstore/ASQ/asq_server',
+    target: 'https://asq.neoballoon.com/app/asq_server/',
+    // target: "http://localhost:8888/Project/asq_server",
     changeOrigin: true,
     secure: false,
     pathRewrite: {
-      "^/api": ""
+      "^/app/asq_server": ""
     }
   },
 ];
