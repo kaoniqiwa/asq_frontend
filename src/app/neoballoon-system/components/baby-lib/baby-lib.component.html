@@ -1,8 +1,8 @@
 <div class="baby-info vertical-layout">
   <!-- <app-account-info></app-account-info> -->
-  <app-toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
+  <toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
     <baby-info-operate></baby-info-operate>
-  </app-toast-window>
+  </toast-window>
   <div class="vertical-header">
     <div class="green-title large-title underline-title">宝宝库</div>
     <div class="operate-bar">

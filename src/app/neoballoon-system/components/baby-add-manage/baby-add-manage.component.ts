@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BabyAddManageComponent implements OnInit {
 
+  // 新用户同意协议
   showAuthorize = false;
+
+  showOldMember = false;
+
+  // 快速了解三种筛查模式
   showQuick = false;
 
   selectUser = "";
@@ -21,7 +26,7 @@ export class BabyAddManageComponent implements OnInit {
 
 
   changeUser() {
-    console.log(this.selectUser)
+    // console.log(this.selectUser)
     if (this.selectUser == '0') {
       this.showAuthorize = true;
     }

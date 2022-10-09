@@ -1,9 +1,10 @@
 export enum MemberRole {
-  Father = 0,
-  Mother = 1,
-  FatherAndMother = 2,
-  Caregiver = 3,
-  Teacher = 4,
-  GrandParents = 5,
-  Other = 6
+  None = "",
+  Father = "父亲",
+  Mother = "母亲",
+  FatherAndMother = "父亲和母亲",
+  Caregiver = "照养人",
+  Teacher = "老师",
+  GrandParents = "祖父母",
+  Other = "其他"
 }

@@ -1,7 +1,7 @@
 <div class="login">
-  <app-toast-window *ngIf="showLicense" (closeEvent)="closeEvent()">
+  <toast-window *ngIf="showLicense" (closeEvent)="closeEvent()">
     <app-license [loginModel]="loginModel"></app-license>
-  </app-toast-window>
+  </toast-window>
   <div class="login-logo">
     <a href="http://www.neoballoon.com/">
       <img src="assets/img/login_logo.png" alt=""

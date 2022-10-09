@@ -34,6 +34,7 @@ export class AccountComponent implements OnInit {
   }
   selectAccount(doctor: Doctor) {
     this._globalStorage.doctor = doctor;
+    this._localStorage.doctor = doctor;
 
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-lib"])
   }

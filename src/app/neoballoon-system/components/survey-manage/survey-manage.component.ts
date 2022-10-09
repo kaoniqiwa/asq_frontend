@@ -219,6 +219,9 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('destroy');
   }
+  goBack() {
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+  }
 
 }
 

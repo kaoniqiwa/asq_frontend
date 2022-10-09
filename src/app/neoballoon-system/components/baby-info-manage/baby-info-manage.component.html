@@ -1,7 +1,7 @@
 <div class="baby-info-manage vertical-layout">
   <div class="vertical-header">
     <div style="width: 100%">
-      <button class="hw-small-btn gray-btn">
+      <button class="hw-small-btn gray-btn" (click)="goBack()">
         <img src="assets/img/back.png" alt="" />返回
       </button>
       <p class="chart-title">
@@ -271,14 +271,15 @@
               ><span>*</span>您是宝宝的:
             </label>
             <div class="col-sm-2">
-              <select formControlName="role">
-                <option value="0">父亲</option>
-                <option value="1">母亲</option>
-                <option value="2">父亲和母亲</option>
-                <option value="3">照养人</option>
-                <option value="4">老师</option>
-                <option value="5">祖父母</option>
-                <option value="6">其他</option>
+              <select formControlName="relation">
+                <option value="" disabled>请选择</option>
+                <option value="父亲">父亲</option>
+                <option value="母亲">母亲</option>
+                <option value="父亲和母亲">父亲和母亲</option>
+                <option value="照养人">照养人</option>
+                <option value="老师">老师</option>
+                <option value="祖父母">祖父母</option>
+                <option value="其他">其他</option>
               </select>
             </div>
           </div>
@@ -310,13 +311,14 @@
             <label class="control-label">地区(县):</label>
             <div class="col-sm-2">
               <select>
-                <option value="">父亲</option>
-                <option value="">母亲</option>
-                <option value="">父亲和母亲</option>
-                <option value="">照养人</option>
-                <option value="">老师</option>
-                <option value="">祖父母</option>
-                <option value="">其他</option>
+                <option value="" disabled>请选择</option>
+                <option value="父亲">父亲</option>
+                <option value="母亲">母亲</option>
+                <option value="父亲和母亲">父亲和母亲</option>
+                <option value="照养人">照养人</option>
+                <option value="老师">老师</option>
+                <option value="祖父母">祖父母</option>
+                <option value="其他">其他</option>
               </select>
             </div>
           </div>

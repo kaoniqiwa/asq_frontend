@@ -1,11 +1,15 @@
 <div class="baby-add-manage vertical-layout">
-  <app-toast-window *ngIf="showAuthorize" (closeEvent)="closeAuthorize()">
+  <toast-window *ngIf="showAuthorize" (closeEvent)="closeAuthorize()">
     <authorize-box></authorize-box>
-  </app-toast-window>
+  </toast-window>
 
-  <app-toast-window *ngIf="showQuick" (closeEvent)="closeQuick()">
+  <toast-window *ngIf="true" (closeEvent)="closeAuthorize()">
+    <baby-in-member></baby-in-member
+  ></toast-window>
+
+  <toast-window *ngIf="showQuick" (closeEvent)="closeQuick()">
     <quick-box></quick-box>
-  </app-toast-window>
+  </toast-window>
   <div class="vertical-header">
     <div class="title green-title large-title underline-title">添加宝宝</div>
   </div>

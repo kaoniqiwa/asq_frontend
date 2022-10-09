@@ -47,7 +47,7 @@
   font-style: normal;
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
-  *margin-right: 0.3em;
+  margin-right: 0.3em;
 }
 
 [class^="icon-"]:before,
@@ -314,12 +314,12 @@ a [class*=" icon-"] {
   height: 100%;
   font-size: 1em;
   line-height: inherit;
-  *line-height: 2em;
+  line-height: 2em;
 }
 
 .icon-stack .icon-stack-base {
   font-size: 2em;
-  *line-height: 1em;
+  line-height: 1em;
 }
 
 /* Animated rotating icon */

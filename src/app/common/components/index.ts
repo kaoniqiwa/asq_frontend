@@ -2,6 +2,7 @@ import { AccountOperationComponent } from "./account-operation/account-operation
 import { Asq3EntryComponent } from "./asq-question/asq-entry/asq-entry.component";
 import { Asq3QuestionComponent } from "./asq-question/asq3-question/asq3-question.component";
 import { AuthorizeBoxComponent } from "./authorize-box/authorize-box.component";
+import { BabyInMemberComponent } from "./baby-in-member/baby-in-member.component";
 import { CommonTableComponent } from "./common-table/common-table.component";
 import { ImageBoxComponent } from "./image-box/image-box.component";
 import { ManualDownloadComponent } from "./manual-download/manual-download.component";
@@ -26,4 +27,5 @@ export const CUSTOM_COMPONENTS = [
   QuickBoxComponent,
   Asq3EntryComponent,
   Asq3QuestionComponent,
+  BabyInMemberComponent
 ]

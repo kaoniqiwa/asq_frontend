@@ -27,7 +27,7 @@ export class BabyManageBusiness {
     // console.log(res);
 
     let members = await this._listMember(searchInfo.did);
-    console.log(members)
+    // console.log(members)
 
   }
 
