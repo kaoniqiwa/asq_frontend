@@ -4,6 +4,7 @@ const PROXY_CONFIG = [
       '/api',
     ],
     target: 'http://localhost:8888/gitstore/ASQ/asq_server',
+    //target: 'http://asq.neoballoon.com/app/asq_server',
     changeOrigin: true,
     secure: false,
     pathRewrite: {
