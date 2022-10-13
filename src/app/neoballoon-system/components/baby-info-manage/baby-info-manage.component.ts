@@ -287,60 +287,60 @@ export class BabyInfoManageComponent implements OnInit {
           }
 
 
-          // let memberModel = new Member();
-          // memberModel.Id = '';
-          // memberModel.Did = doctor.Id;
-          // memberModel.Name = this.memberGroup.value.name ?? '';
-          // memberModel.Phone = this.memberGroup.value.phone ?? "";
-          // memberModel.Province = this.memberGroup.value.province ?? "";
-          // memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
-          // memberModel.City = this.memberGroup.value.city ?? "";
-          // memberModel.County = this.memberGroup.value.county ?? "";
-          // memberModel.Email = this.memberGroup.value.email ?? "";
-          // memberModel.IsHelp = this.memberGroup.value.isHelp ?? "";
-          // memberModel.HelpInfo = this.memberGroup.value.helpInfo ?? "";
-          // memberModel.PostCode = this.memberGroup.value.postCode ?? "";
-          // memberModel.Address = this.memberGroup.value.address ?? "";
-          // memberModel.MotherJob = this.memberGroup.value.motherJob ?? "";
-          // memberModel.FatherJob = this.memberGroup.value.fatherJob ?? "";
-          // memberModel.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
-          // memberModel.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
-          // memberModel.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
-          // memberModel.MotherBirth = this.memberGroup.value.motherBirth ?? "";
-          // memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
+          let memberModel = new Member();
+          memberModel.Id = '';
+          memberModel.Did = doctor.Id;
+          memberModel.Name = this.memberGroup.value.name ?? '';
+          memberModel.Phone = this.memberGroup.value.phone ?? "";
+          memberModel.Province = this.memberGroup.value.province ?? "";
+          memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
+          memberModel.City = this.memberGroup.value.city ?? "";
+          memberModel.County = this.memberGroup.value.county ?? "";
+          memberModel.Email = this.memberGroup.value.email ?? "";
+          memberModel.IsHelp = this.memberGroup.value.isHelp ?? "";
+          memberModel.HelpInfo = this.memberGroup.value.helpInfo ?? "";
+          memberModel.PostCode = this.memberGroup.value.postCode ?? "";
+          memberModel.Address = this.memberGroup.value.address ?? "";
+          memberModel.MotherJob = this.memberGroup.value.motherJob ?? "";
+          memberModel.FatherJob = this.memberGroup.value.fatherJob ?? "";
+          memberModel.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
+          memberModel.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
+          memberModel.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
+          memberModel.MotherBirth = this.memberGroup.value.motherBirth ?? "";
+          memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
 
-          // let memberRes = await this._business.addMember(memberModel);
+          let memberRes = await this._business.addMember(memberModel);
 
 
-          // for (let i = 0; i < this.babyGroupArr.length; i++) {
-          //   let babyGroup = this.babyGroupArr[i];
-          //   let rawValue = babyGroup.getRawValue();
+          for (let i = 0; i < this.babyGroupArr.length; i++) {
+            let babyGroup = this.babyGroupArr[i];
+            let rawValue = babyGroup.getRawValue();
 
-          //   let babyModel = new Baby();
-          //   babyModel.Id = "";
-          //   babyModel.Mid = memberRes.Id;
-          //   babyModel.Name = rawValue.name;
-          //   babyModel.Gender = rawValue.gender;
-          //   babyModel.Birthday = rawValue.birthday;
-          //   babyModel.SurveyTime = rawValue.surveyTime;
-          //   babyModel.Premature = rawValue.premature;
-          //   babyModel.IsShun = rawValue.bornCondition.isShun;
-          //   babyModel.IdentityInfo = rawValue.identityInfo;
-          //   babyModel.IdentityType = rawValue.identityType;
-          //   babyModel.Weight = rawValue.weight;
-          //   babyModel.IsChanqian = rawValue.bornCondition.isChanqian;
-          //   babyModel.IsMulti = rawValue.bornCondition.isMulti;
-          //   babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
+            let babyModel = new Baby();
+            babyModel.Id = "";
+            babyModel.Mid = memberRes.Id;
+            babyModel.Name = rawValue.name;
+            babyModel.Gender = rawValue.gender;
+            babyModel.Birthday = rawValue.birthday;
+            babyModel.SurveyTime = rawValue.surveyTime;
+            babyModel.Premature = rawValue.premature;
+            babyModel.IsShun = rawValue.bornCondition.isShun;
+            babyModel.IdentityInfo = rawValue.identityInfo;
+            babyModel.IdentityType = rawValue.identityType;
+            babyModel.Weight = rawValue.weight;
+            babyModel.IsChanqian = rawValue.bornCondition.isChanqian;
+            babyModel.IsMulti = rawValue.bornCondition.isMulti;
+            babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
 
 
-          //   let babyRes = await this._business.addBaby(babyModel);
-          //   console.log('添加 baby ', babyRes);
+            let babyRes = await this._business.addBaby(babyModel);
+            console.log('添加 baby ', babyRes);
 
-          // }
+          }
 
-          // this._toastrService.success('提交成功');
-          // this.navigateToSurveyManage(memberRes.Id);
+          this._toastrService.success('提交成功');
+          this.navigateToSurveyManage(memberRes.Id);
 
 
 
