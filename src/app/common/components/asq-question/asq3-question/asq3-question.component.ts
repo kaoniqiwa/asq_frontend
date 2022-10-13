@@ -132,19 +132,21 @@ export class Asq3QuestionComponent implements OnInit {
         this.intQuestions[i].answer = this.currentAnswers[i].answer;
         //}
       }
-      console.log('intQuestions:', this.intQuestions);
+      //console.log('intQuestions:', this.intQuestions);
       return
     }
 
     for (let i = 0; i < this.intQuestions.length; i++) {
       this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true };
-      console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
+      //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
       if (i == 0) {
         this.currentAnswers[i].prevStatus = false;
+        this.intQuestions[i].answer = this.currentAnswers[i].answer;
       }
-      console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
+      //console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
     }
     this.currentAnswer = this.currentAnswers[0];
+    
 
   }
 
@@ -164,7 +166,7 @@ export class Asq3QuestionComponent implements OnInit {
 
       }
     })
-    console.log('questions', questions)
+    //console.log('questions', questions)
     return questions;
 
   }
@@ -178,7 +180,7 @@ export class Asq3QuestionComponent implements OnInit {
 
     this.currentAnswer.answer[xu] = v;
 
-    console.log(xu, v, this.currentAnswer.answer.length, this.currentAnswer.answer, '---after');
+    //console.log(xu, v, this.currentAnswer.answer.length, this.currentAnswer.answer, '---after');
     /*this.currentAnswer.map(function(item:any,index:any){
       console.log('map1',index,item);
       if(item == undefined){
@@ -188,8 +190,10 @@ export class Asq3QuestionComponent implements OnInit {
     if (Object.keys(this.currentAnswer.answer).length == l) {
       this.currentAnswer.nextStatus = true;
       this.currentAnswers[this.currentPage] = this.currentAnswer;
-      console.log('currentAnswers:', this.currentAnswers);
+      //console.log('currentAnswers:', this.currentAnswers);
     }
+    this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
+    console.log('intQuestions:', this.intQuestions);
 
     //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
   }
@@ -233,7 +237,12 @@ export class Asq3QuestionComponent implements OnInit {
 
   gotoShuaiCha() {
     this.pageType = 2;
+  }
 
+  gotoBack() {
+    console.log('this.pageType_before',this.pageType);
+    this.pageType --;
+    console.log('this.pageType_after',this.pageType);
   }
 
   async request() {
@@ -245,8 +254,8 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getQuestion(model);
     if (res) {
-      console.log('res:', res);
       this.toastrService.success('提交成功');
+      console.log('res:', res,'this.pageType',this.pageType);
     }
   }
 
@@ -268,9 +277,9 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.create(model);
     if (res) {
-      console.log('res:', JSON.parse(res.QuestScore));
       this.toastrService.success('提交成功');
-
+      this.pageType = 2;
+      console.log('res:', res,'this.pageType',this.pageType);
     }
   }
 
