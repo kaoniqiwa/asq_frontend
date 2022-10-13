@@ -1,5 +1,5 @@
 <div class="baby-in-member">
-  <div class="normal-title center-title">用户信息查询</div>
+  <div class="normal-title center-title">老用户信息查询</div>
   <div class="form-wrapper" style="margin-left: -40px">
     <form [formGroup]="myForm" class="hw-form vertical">
       <div class="form-group">
@@ -12,7 +12,12 @@
       <div class="form-group">
         <label class="control-label col-sm-3"> <span>*</span> 手机号:</label>
         <div class="col-sm-9">
-          <input class="form-control" type="text" formControlName="phone" />
+          <input
+            class="form-control"
+            type="text"
+            formControlName="phone"
+            maxLength="11"
+          />
         </div>
       </div>
     </form>
@@ -23,6 +28,7 @@
         class="hw-normal-btn green-btn"
         type="button"
         style="width: 110px"
+        (click)="submit()"
       >
         查询
       </button>

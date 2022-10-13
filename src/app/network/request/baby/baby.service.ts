@@ -38,6 +38,7 @@ export class BabyRequestService {
   }
 
   update(model: Baby) {
+    model.Flow = 'updateBaby';
     return this.type.post(BabyUrl.update(), model)
 
   }

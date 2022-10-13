@@ -3,7 +3,7 @@
     <authorize-box></authorize-box>
   </toast-window>
 
-  <toast-window *ngIf="true" (closeEvent)="closeAuthorize()">
+  <toast-window *ngIf="showOldMember" (closeEvent)="closeOld()">
     <baby-in-member></baby-in-member
   ></toast-window>
 

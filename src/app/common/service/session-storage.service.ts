@@ -6,11 +6,28 @@
  */
 import { Injectable } from '@angular/core';
 import { DigestResponse } from 'src/app/network/auth/digest-response.class';
+import { Doctor } from 'src/app/network/model/doctor.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionStorageService {
+
+
+
+
+  private _doctor: Doctor | null = null;
+  set doctor(doctor: Doctor | null) {
+    sessionStorage.setItem('doctor', JSON.stringify(doctor));
+  }
+  get doctor() {
+    let doctor = sessionStorage.getItem('doctor');
+    return doctor ? JSON.parse(doctor) : null;
+  }
+
+
+
+
   set challenge(challenge: DigestResponse) {
     sessionStorage.setItem('challenge', JSON.stringify(challenge));
   }

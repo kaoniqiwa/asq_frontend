@@ -3,17 +3,18 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { ToastrService } from "ngx-toastr";
 import { GlobalStorageService } from "../common/service/global-storage.service";
 import { LocalStorageService } from "../common/service/local-storage.service";
+import { SessionStorageService } from "../common/service/session-storage.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class NeoballoonService implements CanActivate {
-  constructor(private _localStorage: LocalStorageService, private _toastrService: ToastrService, private _router: Router,
+  constructor(private sessionStorage: SessionStorageService, private _toastrService: ToastrService, private _router: Router,
   ) {
 
   }
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let doctor = this._localStorage.doctor
+    let doctor = this.sessionStorage.doctor
     if (doctor) {
       return true;
     }

@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { BabyManageSearchInfo } from 'src/app/view-model/baby-manage.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
 @Component({
   selector: 'app-baby-lib',
@@ -36,10 +37,10 @@ export class BabyLibComponent implements OnInit {
 
   showToast = false;
 
-  constructor(private _business: BabyInfoBusiness, private _router: Router, private _globalStorage: GlobalStorageService) { }
+  constructor(private _business: BabyInfoBusiness, private _router: Router, private sessionStorage: SessionStorageService) { }
 
   ngOnInit(): void {
-    let doctor = this._globalStorage.doctor;
+    let doctor = this.sessionStorage.doctor;
 
     if (doctor) {
       this.searchInfo.did = doctor.Id;

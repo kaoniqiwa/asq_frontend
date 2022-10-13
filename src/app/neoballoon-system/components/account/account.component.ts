@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { Doctor } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 import { AccountBusiness } from './account.business';
@@ -22,7 +23,7 @@ export class AccountComponent implements OnInit {
   doctors: Doctor[] = [];
 
 
-  constructor(private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
+  constructor(private _localStorage: LocalStorageService, private _sessionStorage: SessionStorageService, private _business: AccountBusiness, private _router: Router) {
     this.user = this._localStorage.user;
   }
 
@@ -33,9 +34,7 @@ export class AccountComponent implements OnInit {
     }
   }
   selectAccount(doctor: Doctor) {
-    this._globalStorage.doctor = doctor;
-    this._localStorage.doctor = doctor;
-
+    this._sessionStorage.doctor = doctor;
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-lib"])
   }
 

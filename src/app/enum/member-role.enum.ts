@@ -1,4 +1,4 @@
-export enum MemberRole {
+export enum MemberRelation {
   None = "",
   Father = "父亲",
   Mother = "母亲",

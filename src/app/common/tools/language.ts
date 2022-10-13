@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { EducateDegree } from 'src/app/enum/educate-degree.enum';
 import { IdentityType } from 'src/app/enum/identity-type.enum';
-import { MemberRole } from 'src/app/enum/member-role.enum';
+import { MemberRelation } from 'src/app/enum/member-role.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import language from './language.json';
 
@@ -74,21 +74,21 @@ export class Language {
         return ''
     }
   }
-  static MemberRoleInfo(type: MemberRole) {
+  static MemberRoleInfo(type: MemberRelation) {
     switch (type) {
-      case MemberRole.Father:
+      case MemberRelation.Father:
         return Language.json.MemberRole.father;
-      case MemberRole.Mother:
+      case MemberRelation.Mother:
         return Language.json.MemberRole.mother;
-      case MemberRole.FatherAndMother:
+      case MemberRelation.FatherAndMother:
         return Language.json.MemberRole.fatherandmother;
-      case MemberRole.Teacher:
+      case MemberRelation.Teacher:
         return Language.json.MemberRole.teacher;
-      case MemberRole.Caregiver:
+      case MemberRelation.Caregiver:
         return Language.json.MemberRole.caregiver;
-      case MemberRole.GrandParents:
+      case MemberRelation.GrandParents:
         return Language.json.MemberRole.grandparents;
-      case MemberRole.Other:
+      case MemberRelation.Other:
         return Language.json.MemberRole.other;
       default:
         return "";

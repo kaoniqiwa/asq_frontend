@@ -26,9 +26,10 @@ export class BabyAddManageComponent implements OnInit {
 
 
   changeUser() {
-    // console.log(this.selectUser)
     if (this.selectUser == '0') {
       this.showAuthorize = true;
+    } else if (this.selectUser == '1') {
+      this.showOldMember = true;
     }
   }
   changeScan() {
@@ -41,7 +42,12 @@ export class BabyAddManageComponent implements OnInit {
     this.showAuthorize = false;
     this.selectUser = "";
   }
+  closeOld() {
+    this.showOldMember = false;
+    this.selectUser = "";
+  }
   closeQuick() {
     this.showQuick = false;
   }
+
 }

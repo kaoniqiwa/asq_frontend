@@ -13,16 +13,6 @@ export class GlobalStorageService {
 
 
 
-
-  private _doctor: Doctor | null = null;
-  set doctor(doctor: Doctor | null) {
-    this._doctor = doctor;
-  }
-  get doctor() {
-    return this._doctor;
-  }
-
-
   private _member: Member | null = null;
   set member(member: Member | null) {
     this._member = member

@@ -24,17 +24,6 @@ export class LocalStorageService {
   }
 
 
-
-  private _doctor: Doctor | null = null;
-  set doctor(doctor: Doctor | null) {
-    localStorage.setItem('doctor', JSON.stringify(doctor));
-  }
-  get doctor() {
-    let doctor = localStorage.getItem('doctor');
-    return doctor ? JSON.parse(doctor) : null;
-  }
-
-
   private _member: Member | null = null;
   set member(member: Member | null) {
     this._member = member

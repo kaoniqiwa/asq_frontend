@@ -35,7 +35,7 @@ export class MemberRequestService {
 
   }
   update(model: Member) {
-    model.Flow = 'editMember';
+    model.Flow = 'updateMember';
     return this.type.post(MemberUrl.update(), model)
   }
   export(params: GetMemberParams = new GetMemberParams()) {

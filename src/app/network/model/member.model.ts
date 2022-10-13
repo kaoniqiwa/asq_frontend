@@ -1,5 +1,5 @@
 import { EducateDegree } from "src/app/enum/educate-degree.enum";
-import { MemberRole } from "src/app/enum/member-role.enum";
+import { MemberRelation } from "src/app/enum/member-role.enum";
 import { Baby } from "./baby.model";
 
 export class Member {
@@ -7,6 +7,7 @@ export class Member {
   Did!: string;
   Name!: string;
   Phone!: string;
+  Relation!: MemberRelation;
   Province?: string;
   City?: string;
   County?: string;
@@ -22,5 +23,7 @@ export class Member {
   FatherBirth?: string;
   CreateTime?: string;
   UpdateTime?: string;
+  IsHelp?: string;
+  HelpInfo?: string;
   Flow?: string;
 }

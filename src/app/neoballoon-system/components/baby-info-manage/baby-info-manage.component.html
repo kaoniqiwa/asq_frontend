@@ -1,4 +1,20 @@
 <div class="baby-info-manage vertical-layout">
+  <ng-container *ngIf="showConfirm">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="dialogModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="showExist">
+    <howell-confirm-dialog
+      [dialogModel]="dialogModelExist"
+      (dialogMsgEvent)="dialogEditMsgEvent($event)"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+
   <div class="vertical-header">
     <div style="width: 100%">
       <button class="hw-small-btn gray-btn" (click)="goBack()">
@@ -16,31 +32,36 @@
         class="addr-item"
         [class.active]="i == currentIndex"
         (click)="currentIndex = i"
-        *ngFor="let info of infoArr; let i = index"
+        *ngFor="let babyGroup of babyGroupArr; let i = index"
       >
         <span>宝宝 {{ i + 1 | numtochina }}</span>
-        <div class="close-btn" *ngIf="i != 0" (click)="deleteInfo(i, $event)">
+        <!-- i >= babyInMember.length && -->
+        <div
+          class="close-btn"
+          *ngIf="i != 0"
+          (click)="deleteBabyGroup(i, $event)"
+        >
           <i class="howell-icon-Close"></i>
         </div>
       </div>
       <div
         class="plus-btn"
-        (click)="addInfo()"
-        *ngIf="infoArr.length < maxLength"
+        (click)="addBabyGroup()"
+        *ngIf="babyGroupArr.length < maxLength"
       >
         添加宝宝<i class="howell-icon-plus2"></i>
       </div>
     </div>
-    <ng-container *ngFor="let info of infoArr; let i = index">
-      <form [formGroup]="info" style="margin: 0" *ngIf="currentIndex == i">
+    <ng-container *ngFor="let babyGroup of babyGroupArr; let i = index">
+      <form [formGroup]="babyGroup" style="margin: 0" *ngIf="currentIndex == i">
         <div class="baby-box">
-          <div>
-            <div
-              class="green-title large-title underline-title"
-              style="margin-bottom: 10px"
-            >
-              宝宝信息
-              <i>(注：*为必填项)</i>
+          <div
+            class="green-title large-title underline-title"
+            style="margin-bottom: 10px; justify-content: space-between"
+          >
+            <div class="left-wrapper">宝宝信息 <i>(注：*为必填项)</i></div>
+            <div class="right-wrapper" *ngIf="i < babyInMember.length">
+              <button class="hw-normal-btn green-btn">修改信息</button>
             </div>
           </div>
 
@@ -54,6 +75,7 @@
                   class="form-control"
                   type="text"
                   formControlName="name"
+                  (keyup)="keyupHandler(babyGroup)"
                 />
               </div>
             </div>
@@ -68,12 +90,12 @@
               </div>
               <div class="col-sm-2">
                 <select formControlName="identityType">
-                  <option value="0">儿童身份证</option>
-                  <option value="1">父亲身份证</option>
-                  <option value="2">母亲身份证</option>
-                  <option value="3">诊疗卡号</option>
-                  <option value="4">病历号</option>
-                  <option value="5">其他</option>
+                  <option value="儿童身份证">儿童身份证</option>
+                  <option value="父亲身份证">父亲身份证</option>
+                  <option value="母亲身份证">母亲身份证</option>
+                  <option value="诊疗卡号">诊疗卡号</option>
+                  <option value="诊疗卡号">病历号</option>
+                  <option value="诊疗卡号">其他</option>
                 </select>
               </div>
               <label class="control-label col-sm-2" style="text-align: left">
@@ -112,7 +134,8 @@
                   type="text"
                   DateTimePicker
                   [format]="dateFormat"
-                  (change)="changeBirthday($event, info)"
+                  (change)="changeBirthday($event, babyGroup)"
+                  formControlName="birthday"
                 />
               </div>
             </div>
@@ -127,7 +150,7 @@
                   readonly
                   DateTimePicker
                   [format]="dateFormat"
-                  disabled
+                  formControlName="surveyTime"
                 />
               </div>
             </div>
@@ -142,7 +165,7 @@
                   ><input
                     type="radio"
                     formControlName="premature"
-                    [value]="true"
+                    value="是"
                   />是</label
                 >
                 &nbsp;&nbsp;&nbsp;
@@ -150,7 +173,7 @@
                   ><input
                     type="radio"
                     formControlName="premature"
-                    [value]="false"
+                    value="否"
                   />否</label
                 >
               </div>
@@ -180,7 +203,7 @@
                       ><input
                         type="radio"
                         formControlName="isShun"
-                        [value]="true"
+                        value="是"
                       />顺产</label
                     >
                   </div>
@@ -189,7 +212,7 @@
                       ><input
                         type="radio"
                         formControlName="isShun"
-                        [value]="false"
+                        value="否"
                       />剖腹产</label
                     >
                   </div>
@@ -199,8 +222,8 @@
                     <label>
                       <input
                         type="radio"
-                        formControlName="isHelp"
-                        value="0"
+                        formControlName="isChanqian"
+                        value="是"
                       />产钳助产
                     </label>
                   </div>
@@ -208,8 +231,8 @@
                     <label
                       ><input
                         type="radio"
-                        formControlName="isHelp"
-                        value="1"
+                        formControlName="isChanqian"
+                        value="否"
                       />吸引器助产</label
                     >
                   </div>
@@ -220,7 +243,7 @@
                       ><input
                         type="radio"
                         formControlName="isMulti"
-                        value="0"
+                        value="是"
                       />双胞胎</label
                     >
                   </div>
@@ -230,7 +253,7 @@
                       ><input
                         type="radio"
                         formControlName="isMulti"
-                        value="1"
+                        value="否"
                       />多胞胎</label
                     >
                   </div>
@@ -252,14 +275,16 @@
 
     <hr />
     <div class="member-box">
-      <div>
-        <div
-          class="green-title large-title underline-title"
-          style="margin-bottom: 10px"
-        >
-          问卷人信息
+      <div
+        class="green-title large-title underline-title"
+        style="margin-bottom: 10px; justify-content: space-between"
+      >
+        <div class="left-wrapper">问卷人信息</div>
+        <div class="right-wrapper" *ngIf="member">
+          <button class="hw-normal-btn green-btn">修改信息</button>
         </div>
       </div>
+
       <form [formGroup]="memberGroup">
         <div class="form-wrapper" style="margin-top: 25px">
           <div class="form-group">
@@ -364,7 +389,8 @@
                   formControlName="isHelp"
                   value="1"
                 />否</label
-              >&nbsp;&nbsp;&nbsp;
+              >&nbsp;&nbsp;&nbsp;若有,请列出帮助完成问卷人的姓名，与宝宝的关系或身份
+              <input type="text" class="col-sm-3" formControlName="helpInfo" />
             </div>
           </div>
           <div class="form-group" *ngIf="moreDetail">
@@ -382,55 +408,66 @@
             <label class="control-label col-sm-2">母亲文化程度:</label>
             <div class="col-sm-2">
               <select formControlName="motherDegree">
-                <option value="" disabled>请选择</option>
+                <option value="">请选择</option>
 
-                <option value="0">博士</option>
-                <option value="1">硕士</option>
-                <option value="2">本科</option>
-                <option value="3">专科</option>
-                <option value="4">高中</option>
-                <option value="5">初中</option>
-                <option value="6">小学及以下</option>
+                <option value="博士">博士</option>
+                <option value="硕士">硕士</option>
+                <option value="本科">本科</option>
+                <option value="专科">专科</option>
+                <option value="高中">高中</option>
+                <option value="初中">初中</option>
+                <option value="小学及以下">小学及以下</option>
               </select>
             </div>
             <label class="control-label">父亲文化程度:</label>
             <div class="col-sm-2">
               <select formControlName="fatherDegree">
-                <option value="" disabled>请选择</option>
+                <option value="">请选择</option>
 
-                <option value="0">博士</option>
-                <option value="1">硕士</option>
-                <option value="2">本科</option>
-                <option value="3">专科</option>
-                <option value="4">高中</option>
-                <option value="5">初中</option>
-                <option value="6">小学及以下</option>
+                <option value="博士">博士</option>
+                <option value="硕士">硕士</option>
+                <option value="本科">本科</option>
+                <option value="专科">专科</option>
+                <option value="高中">高中</option>
+                <option value="初中">初中</option>
+                <option value="小学及以下">小学及以下</option>
               </select>
             </div>
             <label class="control-label">主要照看者文化程度:</label>
             <div class="col-sm-2">
               <select formControlName="otherDegree">
-                <option value="" disabled>请选择</option>
-                <option value="0">博士</option>
-                <option value="1">硕士</option>
-                <option value="2">本科</option>
-                <option value="3">专科</option>
-                <option value="4">高中</option>
-                <option value="5">初中</option>
-                <option value="6">小学及以下</option>
+                <option value="">请选择</option>
+
+                <option value="博士">博士</option>
+                <option value="硕士">硕士</option>
+                <option value="本科">本科</option>
+                <option value="专科">专科</option>
+                <option value="高中">高中</option>
+                <option value="初中">初中</option>
+                <option value="小学及以下">小学及以下</option>
               </select>
             </div>
           </div>
           <div class="form-group" *ngIf="moreDetail">
             <label class="control-label col-sm-2"> 母亲出生日期:</label>
             <div class="col-sm-3">
-              <input type="text" DateTimePicker [format]="dateFormat" />
+              <input
+                type="text"
+                DateTimePicker
+                [format]="dateFormat"
+                formControlName="motherBirth"
+              />
             </div>
           </div>
           <div class="form-group" *ngIf="moreDetail">
             <label class="control-label col-sm-2"> 父亲出生日期:</label>
             <div class="col-sm-3">
-              <input type="text" DateTimePicker [format]="dateFormat" />
+              <input
+                type="text"
+                DateTimePicker
+                [format]="dateFormat"
+                formControlName="fatherBirth"
+              />
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { PageType } from 'src/app/enum/page-type.enum';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { Question } from 'src/app/network/model/question.model';
@@ -79,8 +80,8 @@ export class Asq3QuestionComponent implements OnInit {
   diArr: any = [];
 
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _globalStorage: GlobalStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute) {
-    console.log('constructor', this._localStorage.user.Name, _globalStorage.doctor);
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute) {
+    console.log('constructor', this._localStorage.user.Name, _sessionStorage.doctor);
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];

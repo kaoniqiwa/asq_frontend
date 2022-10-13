@@ -9,7 +9,7 @@ import { ServiceHelper } from './service-helper';
 export class BaseRequestService {
   constructor(public http: HowellAuthHttpService) { }
   async get<T>(url: string, type: ClassConstructor<T>) {
-    let response = await lastValueFrom(this.http.get(url));
+    let response = await lastValueFrom(this.http.get<T>(url));
     return ServiceHelper.ResponseProcess(response, type);
   }
   async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {

@@ -4,6 +4,7 @@ import { Asq3QuestionComponent } from "./asq-question/asq3-question/asq3-questio
 import { AuthorizeBoxComponent } from "./authorize-box/authorize-box.component";
 import { BabyInMemberComponent } from "./baby-in-member/baby-in-member.component";
 import { CommonTableComponent } from "./common-table/common-table.component";
+import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { ImageBoxComponent } from "./image-box/image-box.component";
 import { ManualDownloadComponent } from "./manual-download/manual-download.component";
 import { PaginatorComponent } from "./paginator/paginator.component";
@@ -27,5 +28,6 @@ export const CUSTOM_COMPONENTS = [
   QuickBoxComponent,
   Asq3EntryComponent,
   Asq3QuestionComponent,
-  BabyInMemberComponent
+  BabyInMemberComponent,
+  ConfirmDialogComponent
 ]
