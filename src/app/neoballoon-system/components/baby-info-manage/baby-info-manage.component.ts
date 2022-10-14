@@ -63,6 +63,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   city = "请选择";
   county = "请选择";
 
+  editMemberInfo = false;
   // 问卷人信息
   memberGroup = this._fb.group({
     name: ['', Validators.required],
@@ -70,7 +71,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     province: [''],
     city: [''],
     county: [''],
-    phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11),]],
+    phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern(ValidPhone)]],
     address: [''],
     email: [''],
     postCode: [''],
@@ -98,6 +99,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
 
 
+  get Phone() {
+    return this.memberGroup.get('phone') as FormControl;
+  }
+  getBirthday(group: FormGroup) {
+    return group.get('birthday') as FormControl;
+  }
+
   constructor(private _business: BabyInfoManageBusiness, private _fb: FormBuilder, private _router: Router, private _toastrService: ToastrService, private _activeRoute: ActivatedRoute, private _sessionStorage: SessionStorageService) {
     this._activeRoute.queryParams.subscribe((params) => {
       this.mid = params['mid'];
@@ -118,14 +126,22 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     }
     this._updateForm();
 
+    // this.province = "辽宁省";
+    // this.city = "大连市";
+
+    // this.county = "中山区"
+
+
+
 
   }
   ngAfterViewInit(): void {
-    $('#target').distpicker({
-      province: this.province,
-      city: this.city,
-      district: this.county
-    });
+    console.log('view init');
+    // $('#target').distpicker({
+    //   province: this.province,
+    //   city: this.city,
+    //   district: this.county
+    // });
   }
   changeProvince(province: string) {
     this.province = province;
@@ -165,6 +181,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   addBabyGroup() {
     if (this.babyGroupArr.length < this.maxLength) {
       let newGroup = this.newBabyGroup();
+      newGroup.get('surveyTime')?.disable();
       this.babyGroupToBeAdd.push(newGroup);
       this.babyGroupArr.push(newGroup);
 
@@ -190,15 +207,12 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
   newBabyGroup() {
     return this._fb.group({
-      name: ['', Validators.required],
+      name: ["", Validators.required],
       identityInfo: [''],
       identityType: [IdentityType.Child],
       gender: ['', Validators.required],
       birthday: [this.transformDate(this.today)],
-      surveyTime: [{
-        value: this.transformDate(this.today),
-        disabled: true
-      }],
+      surveyTime: [this.transformDate(this.today)],
       premature: ['否'],
       weight: [''],
       bornCondition: this._fb.group({
@@ -207,6 +221,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         isMulti: "",
         abnormal: ''
       }),
+      editBabyInfo: false
     })
   }
   async dialogMsgEvent(status: DialogEnum) {
@@ -243,6 +258,36 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     group.patchValue({
       birthday: this.transformDate(date)
     })
+  }
+  changeBabyInfo(group: FormGroup) {
+    let editBabyInfo = group.value.editBabyInfo;
+    editBabyInfo = !editBabyInfo;
+    group.patchValue({
+      editBabyInfo
+    })
+
+    if (editBabyInfo) {
+      group.enable();
+      group.get('birthday')?.disable();
+      group.get('surveyTime')?.disable();
+    } else {
+      group.disable();
+
+    }
+
+  }
+  changeMemberInfo() {
+    this.editMemberInfo = !this.editMemberInfo;
+    if (this.editMemberInfo) {
+
+      this.memberGroup.enable();
+
+      this.Phone.disable();
+    } else {
+      this.memberGroup.disable();
+
+    }
+
   }
   keyupHandler(group: FormGroup) {
     // console.log(group.value.name)
@@ -295,25 +340,32 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           if (this.babyGroupToBeAdd) {
             for (let i = 0; i < this.babyGroupToBeAdd.length; i++) {
               let babyGroup = this.babyGroupToBeAdd[i];
+
+              let rawValue = babyGroup.getRawValue();
+
+
               let babyModel = new Baby();
               babyModel.Id = "";
               babyModel.Mid = this.member.Id;
-              babyModel.Name = babyGroup.value.name;
-              babyModel.Gender = babyGroup.value.gender;
-              babyModel.Birthday = babyGroup.value.birthday;
-              babyModel.SurveyTime = babyGroup.value.surveyTime;
-              babyModel.Premature = babyGroup.value.premature;
-              babyModel.IsShun = babyGroup.value.bornCondition.isShun;
-              babyModel.IdentityInfo = babyGroup.value.identityInfo;
-              babyModel.IdentityType = babyGroup.value.identityType;
-              babyModel.Weight = babyGroup.value.weight;
-              babyModel.IsChanqian = babyGroup.value.bornCondition.isChanqian;
-              babyModel.IsMulti = babyGroup.value.bornCondition.isMulti;
-              babyModel.OtherAbnormal = babyGroup.value.bornCondition.abnormal;
+              babyModel.Name = rawValue.name;
+              babyModel.Gender = rawValue.gender;
+              babyModel.Birthday = rawValue.birthday;
+              babyModel.SurveyTime = rawValue.surveyTime;
+              babyModel.Premature = rawValue.premature;
+              babyModel.IsShun = rawValue.bornCondition.isShun;
+              babyModel.IdentityInfo = rawValue.identityInfo;
+              babyModel.IdentityType = rawValue.identityType;
+              babyModel.Weight = rawValue.weight;
+              babyModel.IsChanqian = rawValue.bornCondition.isChanqian;
+              babyModel.IsMulti = rawValue.bornCondition.isMulti;
+              babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
 
               let babyRes = await this._business.addBaby(babyModel);
             }
           }
+          this._toastrService.success('提交成功');
+          this.navigateToSurveyManage(this.member.Id);
+
 
         }
 
@@ -415,8 +467,16 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   private _updateForm() {
 
+
     if (this.member) {
       this.memberGroup.disable();
+
+      this.province = this.member.Province ?? "";
+      this.city = this.member.City ?? "";
+      this.county = this.member.County ?? "";
+
+
+
       this.memberGroup.patchValue({
         name: this.member.Name,
         relation: this.member.Relation,
@@ -437,37 +497,40 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         motherBirth: this.member.MotherBirth,
         fatherBirth: this.member.FatherBirth,
       })
+      if (this.babyInMember) {
+        for (let i = 0; i < this.babyInMember.length; i++) {
+          let baby = this.babyInMember[i];
+          let info = this.newBabyGroup();
+          info.disable();
+          info.patchValue({
+            name: baby.Name,
+            gender: baby.Gender,
+            birthday: this.transformDate(baby.Birthday),
+            surveyTime: this.transformDate(baby.SurveyTime),
+            identityType: baby.IdentityType,
+            identityInfo: baby.IdentityInfo,
+            premature: baby.Premature,
+            weight: baby.Weight,
+            bornCondition: {
+              isShun: baby.IsShun,
+              isChanqian: baby.IsChanqian,
+              isMulti: baby.IsMulti,
+              abnormal: baby.OtherAbnormal
+            }
 
-    }
-
-    if (this.babyInMember) {
-      for (let i = 0; i < this.babyInMember.length; i++) {
-        let baby = this.babyInMember[i];
-        let info = this.newBabyGroup();
-        info.disable();
-        info.patchValue({
-          name: baby.Name,
-          gender: baby.Gender,
-          birthday: this.transformDate(baby.Birthday),
-          surveyTime: {
-            value: this.transformDate(baby.SurveyTime),
-            disabled: true
-          },
-          identityType: baby.IdentityType,
-          identityInfo: baby.IdentityInfo,
-          premature: baby.Premature,
-          weight: baby.Weight,
-          bornCondition: {
-            isShun: baby.IsShun,
-            isChanqian: baby.IsChanqian,
-            isMulti: baby.IsMulti,
-            abnormal: baby.OtherAbnormal
-          }
-
-        })
-        this.babyGroupArr.push(info)
+          })
+          this.babyGroupArr.push(info)
+        }
       }
+
     }
+
+
+    $('#target').distpicker({
+      province: this.province,
+      city: this.city,
+      district: this.county
+    });
   }
 
   private _checkForm() {
@@ -500,12 +563,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           this._toastrService.warning('请输入问卷人手机号');
           return false;
         }
-        if (this.memberGroup.get('phone')!.value!.length != 11) {
-          this._toastrService.warning('请输入11位手机号');
-          return false;
-        }
+        // if (this.memberGroup.get('phone')!.value!.length != 11) {
+        //   this._toastrService.warning('请输入11位手机号');
+        //   return false;
+        // }
         if ('pattern' in this.memberGroup.get('phone')!.errors!) {
           this._toastrService.warning('请输入正确的手机号格式');
+          return
         }
         return false;
       }

@@ -40,10 +40,10 @@
         *ngFor="let babyGroup of babyGroupArr; let i = index"
       >
         <span>宝宝 {{ i + 1 | numtochina }}</span>
-        <!-- i >= babyInMember.length && -->
+        <!-- -->
         <div
           class="close-btn"
-          *ngIf="i != 0"
+          *ngIf="i >= babyInMember.length && i != 0"
           (click)="deleteBabyGroup(i, $event)"
         >
           <i class="howell-icon-Close"></i>
@@ -66,7 +66,12 @@
           >
             <div class="left-wrapper">宝宝信息 <i>(注：*为必填项)</i></div>
             <div class="right-wrapper" *ngIf="i < babyInMember.length">
-              <button class="hw-normal-btn green-btn">修改信息</button>
+              <button
+                class="hw-normal-btn green-btn"
+                (click)="changeBabyInfo(babyGroup)"
+              >
+                {{ babyGroup.value.editBabyInfo ? "正在修改" : "修改信息" }}
+              </button>
             </div>
           </div>
 
@@ -76,21 +81,13 @@
                 <span>*</span> 姓名:</label
               >
               <div class="col-sm-3">
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="name"
-                />
+                <input type="text" formControlName="name" />
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-2">身份信息: </label>
               <div class="col-sm-3">
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="identityInfo"
-                />
+                <input type="text" formControlName="identityInfo" />
               </div>
               <div class="col-sm-2">
                 <select formControlName="identityType">
@@ -134,7 +131,6 @@
               >
               <div class="col-sm-3">
                 <input
-                  class="form-control"
                   type="text"
                   DateTimePicker
                   [format]="dateFormat"
@@ -149,7 +145,6 @@
               >
               <div class="col-sm-3">
                 <input
-                  class="form-control"
                   type="text"
                   readonly
                   DateTimePicker
@@ -285,7 +280,9 @@
       >
         <div class="left-wrapper">问卷人信息</div>
         <div class="right-wrapper" *ngIf="member">
-          <button class="hw-normal-btn green-btn">修改信息</button>
+          <button class="hw-normal-btn green-btn" (click)="changeMemberInfo()">
+            {{ editMemberInfo ? "正在修改" : "修改信息" }}
+          </button>
         </div>
       </div>
 
@@ -294,7 +291,7 @@
           <div class="form-group">
             <label class="control-label col-sm-2"> <span>*</span> 姓名:</label>
             <div class="col-sm-3">
-              <input class="form-control" type="text" formControlName="name" />
+              <input class="" type="text" formControlName="name" />
             </div>
             <label class="control-label col-sm-2"
               ><span>*</span>您是宝宝的:
@@ -318,7 +315,6 @@
               <select
                 #provinceRef
                 formControlName="province"
-                [attr.data-province]="province"
                 (change)="changeProvince(provinceRef.value)"
               ></select>
             </div>
@@ -327,7 +323,6 @@
               <select
                 #cityRef
                 formControlName="city"
-                [attr.data-city]="city"
                 (change)="changeCity(cityRef.value)"
               ></select>
             </div>
@@ -336,7 +331,6 @@
               <select
                 #countyRef
                 formControlName="county"
-                [attr.data-district]="county"
                 (change)="changeCounty(countyRef.value)"
               ></select>
             </div>
