@@ -1,4 +1,9 @@
 <div class="baby-info-manage vertical-layout">
+  <!-- <div>
+    <select></select>
+    <select></select>
+    <select></select>
+  </div> -->
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog
       (dialogMsgEvent)="dialogMsgEvent($event)"
@@ -307,43 +312,33 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" data-toggle="distpicker" id="target">
             <label class="control-label col-sm-2">省:</label>
             <div class="col-sm-2">
-              <select>
-                <option value="">父亲</option>
-                <option value="">母亲</option>
-                <option value="">父亲和母亲</option>
-                <option value="">照养人</option>
-                <option value="">老师</option>
-                <option value="">祖父母</option>
-                <option value="">其他</option>
-              </select>
+              <select
+                #provinceRef
+                formControlName="province"
+                [attr.data-province]="province"
+                (change)="changeProvince(provinceRef.value)"
+              ></select>
             </div>
             <label class="control-label">市:</label>
             <div class="col-sm-2">
-              <select>
-                <option value="">父亲</option>
-                <option value="">母亲</option>
-                <option value="">父亲和母亲</option>
-                <option value="">照养人</option>
-                <option value="">老师</option>
-                <option value="">祖父母</option>
-                <option value="">其他</option>
-              </select>
+              <select
+                #cityRef
+                formControlName="city"
+                [attr.data-city]="city"
+                (change)="changeCity(cityRef.value)"
+              ></select>
             </div>
             <label class="control-label">地区(县):</label>
             <div class="col-sm-2">
-              <select>
-                <option value="" disabled>请选择</option>
-                <option value="父亲">父亲</option>
-                <option value="母亲">母亲</option>
-                <option value="父亲和母亲">父亲和母亲</option>
-                <option value="照养人">照养人</option>
-                <option value="老师">老师</option>
-                <option value="祖父母">祖父母</option>
-                <option value="其他">其他</option>
-              </select>
+              <select
+                #countyRef
+                formControlName="county"
+                [attr.data-district]="county"
+                (change)="changeCounty(countyRef.value)"
+              ></select>
             </div>
           </div>
           <div class="form-group">
@@ -351,7 +346,7 @@
               <span>*</span> 手机号:</label
             >
             <div class="col-sm-3">
-              <input type="number" formControlName="phone" />
+              <input type="number" formControlName="phone" maxlength="11" />
             </div>
 
             <label class="control-label col-sm-2" *ngIf="moreDetail">

@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -27,7 +27,7 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
     BabyInfoManageBusiness
   ]
 })
-export class BabyInfoManageComponent implements OnInit {
+export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   // member id
   mid = "";
 
@@ -59,6 +59,10 @@ export class BabyInfoManageComponent implements OnInit {
   transformDate = (date: Date | string) => {
     return formatDate(date, this.dateFormat, 'en')
   }
+  province = "请选择";
+  city = "请选择";
+  county = "请选择";
+
   // 问卷人信息
   memberGroup = this._fb.group({
     name: ['', Validators.required],
@@ -66,7 +70,7 @@ export class BabyInfoManageComponent implements OnInit {
     province: [''],
     city: [''],
     county: [''],
-    phone: ['', [Validators.required, Validators.pattern(ValidPhone)]],
+    phone: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11),]],
     address: [''],
     email: [''],
     postCode: [''],
@@ -115,6 +119,48 @@ export class BabyInfoManageComponent implements OnInit {
     this._updateForm();
 
 
+  }
+  ngAfterViewInit(): void {
+    $('#target').distpicker({
+      province: this.province,
+      city: this.city,
+      district: this.county
+    });
+  }
+  changeProvince(province: string) {
+    this.province = province;
+
+    this.city = "";
+
+    this.county = "";
+
+    this.memberGroup.patchValue({
+      province: this.province,
+      city: this.city,
+      county: this.county
+
+    })
+  }
+  changeCity(city: string) {
+    this.city = city;
+
+    this.county = "";
+    this.memberGroup.patchValue({
+      province: this.province,
+      city: this.city,
+      county: this.county
+
+    })
+
+  }
+  changeCounty(county: string) {
+    this.county = county;
+    this.memberGroup.patchValue({
+      province: this.province,
+      city: this.city,
+      county: this.county
+
+    })
   }
   addBabyGroup() {
     if (this.babyGroupArr.length < this.maxLength) {
@@ -212,6 +258,7 @@ export class BabyInfoManageComponent implements OnInit {
   async onSubmit() {
     console.log(this.babyGroupArr)
     console.log(this.memberGroup)
+
     if (this._checkForm()) {
       if (this.mid) {
         console.log('老用户');
@@ -219,9 +266,9 @@ export class BabyInfoManageComponent implements OnInit {
         if (this.member) {
           this.member.Name = this.memberGroup.value.name ?? "";
           this.member.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
-          this.member.Province = this.memberGroup.value.province ?? "";
-          this.member.City = this.memberGroup.value.city ?? "";
-          this.member.County = this.memberGroup.value.county ?? "";
+          this.member.Province = this.province;
+          this.member.City = this.city
+          this.member.County = this.county;
           this.member.Email = this.memberGroup.value.email ?? "";
           this.member.PostCode = this.memberGroup.value.postCode ?? "";
           this.member.Address = this.memberGroup.value.address ?? "";
@@ -292,8 +339,8 @@ export class BabyInfoManageComponent implements OnInit {
           memberModel.Did = doctor.Id;
           memberModel.Name = this.memberGroup.value.name ?? '';
           memberModel.Phone = this.memberGroup.value.phone ?? "";
-          memberModel.Province = this.memberGroup.value.province ?? "";
           memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
+          memberModel.Province = this.memberGroup.value.province ?? "";
           memberModel.City = this.memberGroup.value.city ?? "";
           memberModel.County = this.memberGroup.value.county ?? "";
           memberModel.Email = this.memberGroup.value.email ?? "";
@@ -369,7 +416,7 @@ export class BabyInfoManageComponent implements OnInit {
   private _updateForm() {
 
     if (this.member) {
-      // this.memberGroup.disable();
+      this.memberGroup.disable();
       this.memberGroup.patchValue({
         name: this.member.Name,
         relation: this.member.Relation,
@@ -424,6 +471,7 @@ export class BabyInfoManageComponent implements OnInit {
   }
 
   private _checkForm() {
+    console.log(this.memberGroup.get('phone')!.errors)
     for (let i = 0; i < this.babyGroupArr.length; i++) {
       let control = this.babyGroupArr[i];
       // console.log(control)
@@ -450,6 +498,11 @@ export class BabyInfoManageComponent implements OnInit {
       if (this.memberGroup.get('phone')!.invalid) {
         if ('required' in this.memberGroup.get('phone')!.errors!) {
           this._toastrService.warning('请输入问卷人手机号');
+          return false;
+        }
+        if (this.memberGroup.get('phone')!.value!.length != 11) {
+          this._toastrService.warning('请输入11位手机号');
+          return false;
         }
         if ('pattern' in this.memberGroup.get('phone')!.errors!) {
           this._toastrService.warning('请输入正确的手机号格式');
