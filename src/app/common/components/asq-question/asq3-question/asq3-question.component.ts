@@ -28,9 +28,85 @@ import questions from "./data.json";
 })
 export class Asq3QuestionComponent implements OnInit {
 
-  @Input() mounthNum: NumberSymbol = 0;
-  @Input() thisAnswers: any = [];
-
+  //@Input() mounthNum: NumberSymbol = 0;
+  //@Input() thisAnswers: any = [];
+  //thisAnswers:any = [];
+  thisAnswers:any = [
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": false
+    },
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": true
+    },
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": true
+    },
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": true
+    },
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": true
+    },
+    {
+        "answer": [
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3",
+            "3"
+        ],
+        "nextStatus": true,
+        "prevStatus": true
+    }
+];
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
   title: any = '';
@@ -40,11 +116,11 @@ export class Asq3QuestionComponent implements OnInit {
   allPages: any = 0;
   currentAnswers: any = [];
   currentAnswer: any = {};
-  //scoreArr: any = [];
+  scoreArr: any = [];
   mouthArr:any = [2,4,6,8,9,10,12,14,16,18,20,22,24,27,30,33,36,42,48,54.60];
   gamesArr:any = [];
   dividingArr:any = [];
-  scoreArr:any = [
+  /* scoreArr:any = [
     {
         "score": 40,
         "nengqu": "沟通",
@@ -70,7 +146,7 @@ export class Asq3QuestionComponent implements OnInit {
         "nengqu": "个人-社会",
         "jiezhi": "低于界值"
     }
-  ];
+  ]; */
 
   pageType: PageType = PageType.dati;
   questType: QuestType = QuestType.ASQ3;
@@ -89,12 +165,12 @@ export class Asq3QuestionComponent implements OnInit {
 
 
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
-    this.monthWorkBook = this._globalStorage.monthWorkBook;
+    this.monthWorkBook = this._sessionStorage.monthWorkBook;
     this.doctor = this._sessionStorage.doctor;
     this.user = this._localStorage.user;
     this.baby = this._sessionStorage.baby;
     this.age = this.birthToAge(this.baby.Birthday.split(' ')[0],this.baby.CreateTime.split(' ')[0]);
-    console.log('constructor', this._localStorage.user, this.doctor,this.monthWorkBook,this.baby,this.age);
+    
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];
@@ -106,7 +182,57 @@ export class Asq3QuestionComponent implements OnInit {
       this.questMonth = params['questMonth'];
 
     })
+    console.log('constructor', this._localStorage.user, this.doctor,this.monthWorkBook,this.baby,this.age,this.questMonth);
 
+    
+
+
+  }
+
+  async ngOnInit() {//thisAnswers
+
+    this.currentQuestionsObject = this.babyQuestions[this.questMonth];
+    this.title = this.currentQuestionsObject.name;
+    this.currentQuestions = this.currentQuestionsObject.data;
+    console.log('currentQuestions:', this.currentQuestions);
+    this.intQuestions = this.setQuestions(this.currentQuestions);
+    //console.log('intQuestions1:', this.intQuestions);
+    this.allPages = this.intQuestions.length;
+
+    this.getGames(this.questMonth);
+    this.getDividing(this.questMonth);
+
+    
+
+  }
+
+  init(){
+    if (this.thisAnswers.length > 0) {
+      this.currentAnswers = this.thisAnswers;
+      this.currentAnswer = this.currentAnswers[0];
+
+      console.log('this.currentAnswer:', this.currentAnswer);
+
+      //答案和题目合并
+      for (let i = 0; i < this.intQuestions.length; i++) {
+        this.intQuestions[i].answer = this.currentAnswers[i].answer;
+      }
+      this.setCurrentAnswers();
+      //console.log('intQuestions:', this.intQuestions);
+      //return
+    }else{
+      for (let i = 0; i < this.intQuestions.length; i++) {
+        this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true };
+        //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
+        if (i == 0) {
+          this.currentAnswers[i].prevStatus = false;
+          this.intQuestions[i].answer = this.currentAnswers[i].answer;
+        }
+        //console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
+      }
+      this.currentAnswer = this.currentAnswers[0];
+    }
+    
     console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
     if (this.pageType != 0) {
       let that = this;
@@ -120,50 +246,15 @@ export class Asq3QuestionComponent implements OnInit {
         }
       })
       console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr);
-      //this.request();
     }
-
-
   }
 
-  async ngOnInit() {//thisAnswers
+  checkDetil(){
+    this.pageType = 3;
+  }
 
-    this.currentQuestionsObject = this.babyQuestions[this.mounthNum];
-    this.title = this.currentQuestionsObject.name;
-    this.currentQuestions = this.currentQuestionsObject.data;
-    console.log('currentQuestions:', this.currentQuestions);
-    this.intQuestions = this.setQuestions(this.currentQuestions);
-    //console.log('intQuestions1:', this.intQuestions);
-    this.allPages = this.intQuestions.length;
-    if (this.thisAnswers.length > 0) {
-      this.currentAnswers = this.thisAnswers;
-      this.currentAnswer = this.currentAnswers[0];
-
-      //答案和题目合并
-      for (let i = 0; i < this.intQuestions.length; i++) {
-        //if (i != 0) {
-        this.intQuestions[i].answer = this.currentAnswers[i].answer;
-        //}
-      }
-      //console.log('intQuestions:', this.intQuestions);
-      return
-    }
-
-    for (let i = 0; i < this.intQuestions.length; i++) {
-      this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true };
-      //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
-      if (i == 0) {
-        this.currentAnswers[i].prevStatus = false;
-        this.intQuestions[i].answer = this.currentAnswers[i].answer;
-      }
-      //console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
-    }
-    this.currentAnswer = this.currentAnswers[0];
-    
-    this.getGames(this.questMonth);
-    this.getDividing(this.questMonth);
-    //this.setCurrentAnswers();
-
+  next(){
+    this.pageType = 4;
   }
 
   setQuestions(arr: any) {//重组数据
@@ -245,7 +336,7 @@ export class Asq3QuestionComponent implements OnInit {
     if (Object.keys(this.currentAnswer.answer).length == l) {
       this.currentAnswer.nextStatus = true;
       this.currentAnswers[this.currentPage] = this.currentAnswer;
-      //console.log('currentAnswers:', this.currentAnswers);
+      console.log('currentAnswers:', this.currentAnswers);
     }
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
     console.log('intQuestions:', this.intQuestions);
@@ -263,17 +354,28 @@ export class Asq3QuestionComponent implements OnInit {
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
+  setThisScore(num:any){
+    if (Number(num) == 1) {
+      return 10;
+    } else if (Number(num) == 2) {
+      return 5;
+    }else{
+      return 0;
+    }
+  }
+
   getScore(arr: any, indexFa: any) {//界值状态转化
     let thisScore = 0;
     let thisScoreObj: any = {};
+    let that = this;
     arr.map(function (item: any, index: any) {
       if (Number(item) == 1) {
-        thisScore += 10;
+        thisScore += that.setThisScore(1);
       } else if (Number(item) == 2) {
-        thisScore += 5;
+        thisScore += that.setThisScore(2);
       }
     })
-    thisScoreObj.answers = arr;
+    thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
     console.log('indexFa',indexFa);
@@ -350,9 +452,10 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getGames(TestId);
     if (res) {
-      this.toastrService.success('返回成功');
+      //this.toastrService.success('返回成功');
       that.gamesArr = res;
       console.log('getGames_res:', that.gamesArr);
+      
     }
   }
 
@@ -361,10 +464,10 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getDividing(TestId);
     if (res) {
-      this.toastrService.success('返回成功');
+      //this.toastrService.success('返回成功');
       that.dividingArr = res;
-      
       console.log('getDividing_res:',that.dividingArr);
+      this.init();
     }
   }
 

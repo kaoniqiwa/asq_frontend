@@ -1,7 +1,7 @@
 <div class="asq-test">
   <div>
     <div style="width: 100%; margin: 10px 0">
-      <button (click)="gotoBack()" class="hw-small-btn gray-btn">
+      <button *ngIf="pageType>=2" (click)="gotoBack()" class="hw-small-btn gray-btn">
         <img src="assets/img/back.png" alt="" />返回
       </button>
     </div>
@@ -147,14 +147,14 @@
     <p class="p_indent">ASQ-3是对5岁半以内儿童神经心理发育的评估量表，关注儿童发育的重要能区，可以帮助你了解宝宝的长处以及哪些技能需要训练，帮助你作为父母和宝宝共同成长。</p>
     <p>祝好！</p>
     <div>
-      <button class="btn-default1 btnDetail">查看详情</button>
+      <button class="btn-default1 btnDetail" (click)="checkDetil()">查看详情</button>
       <button class="btn-default1 complete">完成</button>
     </div>
     <div class="bottom bottom1">
       译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
     </div>
   </div>
-  <div class="screenBox">
+  <div class="screenBox" *ngIf="this.pageType==3">
     <div class="gameBox">
       <div class="resInfo">
         <!-- <img src="/assets/img/ASQ3.png" alt="" height="80%"><div class="testLogo"><p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span></div> -->
@@ -267,7 +267,7 @@
       </div>
     </div>
     <div style="text-align: center;">
-      <button class="btn-default1 btnAdvice">下一步</button>
+      <button class="btn-default1 btnAdvice" (click)="next()">下一步</button>
       <button class="btn-default1 btnPrint">打印</button>
       <button class="btn-default1 complete" style="display: none;">完成</button>
     </div>
@@ -276,7 +276,7 @@
     </div>
   </div>
 
-  <div class="screenBox">
+  <div class="screenBox" *ngIf="this.pageType==4">
     <div class="resultBox">
       <div class="resCon">
         <div>
@@ -325,6 +325,7 @@
             <h2>1.信息汇总于下表</h2>
             <table class="tabRecord">
               <tbody>
+
                 <tr>
                   <th>能区</th>
                   <th>1</th>
@@ -336,61 +337,17 @@
                   <th>合计</th>
                   <th>结果</th>
                 </tr>
-                <tr>
-                  <td>沟通</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>低于界值</td>
-                </tr>
-                <tr>
-                  <td>粗大动作</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>低于界值</td>
-                </tr>
-                <tr>
-                  <td>精细动作</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>低于界值</td>
-                </tr>
-                <tr>
-                  <td>解决问题</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>低于界值</td>
-                </tr>
-                <tr>
-                  <td>个人-社会</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>低于界值</td>
-                </tr>
+
+                <ng-container *ngFor="let score of scoreArr;">
+                  <tr>
+                    <td>{{score.nengqu}}</td>
+                    <ng-container *ngFor="let answer of score.answer;">
+                      <td>{{setThisScore(answer)}}</td>
+                    </ng-container>
+                    <td>{{score.score}}</td>
+                    <td>{{score.jiezhi}}</td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
             <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
