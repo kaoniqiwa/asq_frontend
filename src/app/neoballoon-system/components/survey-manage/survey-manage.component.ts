@@ -152,7 +152,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     // console.log('babys', this.babys)
 
     if (this.babys.length) {
-      this.currentBaby = this.babys[0];
+      // this.currentBaby = this.babys[0];
+      this.changeBaby(this.babys[0]);
 
     }
 
@@ -173,7 +174,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   }
   changeBaby(baby: Baby) {
     this.currentBaby = baby;
-    this.checkRange()
+    this.checkRange();
+    this._globalStorage.baby = baby;
   }
   checkRange() {
     if (this.currentBaby) {

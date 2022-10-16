@@ -36,6 +36,14 @@ export class GlobalStorageService {
   monthWorkBook = monthWorkBook;
 
 
+  private _baby: Baby | null = null;
+  set baby(baby: Baby | null) {
+    this._baby = baby
+  }
+  get baby() {
+    return this.baby;
+  }
+
   private _member: Member | null = null;
   set member(member: Member | null) {
     this._member = member

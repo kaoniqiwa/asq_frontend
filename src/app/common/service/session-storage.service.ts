@@ -6,13 +6,32 @@
  */
 import { Injectable } from '@angular/core';
 import { DigestResponse } from 'src/app/network/auth/digest-response.class';
+import { Baby } from 'src/app/network/model/baby.model';
 import { Doctor } from 'src/app/network/model/doctor.model';
+import { Member } from 'src/app/network/model/member.model';
+
+
+import monthWorkBook from "src/assets/files/asq_month.xlsx";
+
+
+
+monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+  // 去掉标题
+  sheet.data.shift();
+
+  // 去掉列名
+  sheet.data.shift();
+
+})
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionStorageService {
 
+  monthWorkBook = monthWorkBook;
 
 
 
@@ -23,6 +42,24 @@ export class SessionStorageService {
   get doctor() {
     let doctor = sessionStorage.getItem('doctor');
     return doctor ? JSON.parse(doctor) : null;
+  }
+
+
+
+  private _baby: Baby | null = null;
+  set baby(baby: Baby | null) {
+    this._baby = baby
+  }
+  get baby() {
+    return this.baby;
+  }
+
+  private _member: Member | null = null;
+  set member(member: Member | null) {
+    this._member = member
+  }
+  get member() {
+    return this.member;
   }
 
 
@@ -44,4 +81,11 @@ export class SessionStorageService {
       sessionStorage.clear();
     }
   }
+}
+
+
+
+interface ASQMonthFilter {
+  name: string;
+  data: [string, string, string, string]
 }
