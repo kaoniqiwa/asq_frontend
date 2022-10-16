@@ -1259,10 +1259,14 @@ resBox .jielist {
   margin-top: 12px;
   height: 80px;
 }
+.testInfo tr {
+  height: auto;
+}
 .testInfo tr td {
   width: 50%;
-  /*font-size: .06rem;*/
+  font-size:medium;
   text-align: left;
+
 
   /*padding: 0 10px;*/
 }
@@ -1359,6 +1363,7 @@ h2 {
   border-spacing: 0;
 }
 .tabRecord tr {
+  height: auto;
   border-bottom: dashed 1px #e1e2e1;
 }
 .tabRecord tr th {
@@ -1978,7 +1983,7 @@ h2 {
 .gameBox .gameList ul li img {
   float: left;
   width: 60px;
-  margin: 9 16px;
+  margin: 9px 16px!important;
 }
 .gameBox .gameList ul li p {
   font-size: 16px;
@@ -1999,7 +2004,7 @@ h2 {
   font-size: 14px;
   text-align: left;
   padding: 30px 10px 20px 10px;
-  display: none;
+  //display: none;
 }
 .gameBox .according span {
   font-weight: 600;
@@ -2016,14 +2021,14 @@ h2 {
 .gameBox .recBox {
   width: 90%;
   margin: auto;
-  display: none;
+  //display: none;
 }
 .gameBox .recBox .recList {
   border: solid 1px #e7e9e8;
   text-align: left;
   border-radius: 10px;
   margin: 10px 0;
-  display: none;
+  //display: none;
 }
 .gameBox .recBox .recList img {
   float: left;
@@ -2060,7 +2065,7 @@ h2 {
   display: inline-block;
 }
 .complete {
-  margin: 20px auto;
+  margin: 20px 5px;
 }
 .complete a {
   color: #ffffff;
@@ -2133,4 +2138,12 @@ h2 {
   .resInfo .testLogo p {
     font-size: 30px;
   }
+}
+
+td:first-of-type{
+  padding-left: 0;
+}
+
+td span{
+  margin: 0;
 }

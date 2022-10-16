@@ -154,4 +154,328 @@
       译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
     </div>
   </div>
+  <div class="screenBox">
+    <div class="gameBox">
+      <div class="resInfo">
+        <!-- <img src="/assets/img/ASQ3.png" alt="" height="80%"><div class="testLogo"><p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span></div> -->
+        <table>
+          <tbody>
+            <tr>
+              <td class="asqtd3">
+                <img src="/assets/img/ASQ3.png" alt="">
+              </td>
+              <td>
+                <div class="testLogo">
+                  <!-- <p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span> -->
+                  <p>亲子游戏活动</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="accord">根据筛查结果提供如下游戏活动。这些游戏是促进<span
+          class="baby">宝宝</span>能力的发育/发展的点子或方法，你可以根据家庭的文化习俗以及可用的生活物件对这些游戏进行修改。请你利用一切可以利用的机会与<span
+          class="baby">宝宝</span>一起玩游戏。</p>
+      <div class="gameList">
+        <ul>
+
+          <ng-container *ngFor="let game of gamesArr;">
+            <li> <img src="/assets/img/{{game.function}}.png" alt="">
+              <p>{{game.standard.split('$')[0]}}</p> <span>{{game.standard.split('$')[1]}}</span>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+      <p class="according" *ngIf="gaoArr.length!=scoreArr.length">
+        根据
+        <span class="baby">宝宝</span>的筛查结果，推荐如下点子／方法以促进<span class="ergoregion">
+          <ng-container *ngFor="let score of scoreArr; let i=index;">
+            <ng-container *ngIf="score.jiezhi!='高于界值'">
+              “<span>{{score.nengqu}}</span>”
+              <ng-container *ngIf="i!=scoreArr.length-1">
+                、
+              </ng-container>
+            </ng-container>
+
+          </ng-container>
+
+        </span>的发育／发展。
+      </p>
+      <div class="recBox" *ngIf="gaoArr.length!=scoreArr.length">
+        <ng-container *ngFor="let game of gamesArr; let i=index;">
+          <div *ngIf="scoreArr[i].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+game.function}}">
+            <img src="/assets/img/{{game.function}}.png" alt="">
+            <ul>
+
+              <li *ngIf="game.backup1!=''"><i></i>
+                <div>
+                  <p>{{game.backup1.split('$')[0]}}</p> <span>{{game.backup1.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup2!=''"><i></i>
+                <div>
+                  <p>{{game.backup2.split('$')[0]}}</p> <span>{{game.backup2.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup3!=''"><i></i>
+                <div>
+                  <p>{{game.backup3.split('$')[0]}}</p> <span>{{game.backup3.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup3!=''"><i></i>
+                <div>
+                  <p>{{game.backup4.split('$')[0]}}</p> <span>{{game.backup4.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup5!=''"><i></i>
+                <div>
+                  <p>{{game.backup5.split('$')[0]}}</p> <span>{{game.backup5.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup6!=''"><i></i>
+                <div>
+                  <p>{{game.backup6.split('$')[0]}}</p> <span>{{game.backup6.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup7!=''"><i></i>
+                <div>
+                  <p>{{game.backup7.split('$')[0]}}</p> <span>{{game.backup7.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup8!=''">
+                <div>
+                  <p>{{game.backup8.split('$')[0]}}</p> <span>{{game.backup8.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup9!=''"><i></i>
+                <div>
+                  <p>{{game.backup9.split('$')[0]}}</p> <span>{{game.backup9.split('$')[1]}}</span>
+                </div>
+              </li>
+              <li *ngIf="game.backup10!=''"><i></i>
+                <div>
+                  <p>{{game.backup10.split('$')[0]}}</p> <span>{{game.backup10.split('$')[1]}}</span>
+                </div>
+              </li>
+
+            </ul>
+            <br style="clear:both;">
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-default1 btnAdvice">下一步</button>
+      <button class="btn-default1 btnPrint">打印</button>
+      <button class="btn-default1 complete" style="display: none;">完成</button>
+    </div>
+    <div class="bottom">
+      译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+    </div>
+  </div>
+
+  <div class="screenBox">
+    <div class="resultBox">
+      <div class="resCon">
+        <div>
+          <div class="resInfo">
+            <table>
+              <tbody>
+                <tr>
+                  <td class="asqtd3">
+                    <img src="/assets/img/ASQ3.png" alt="">
+                  </td>
+                  <td>
+                    <div class="testLogo">
+                      <p><span class="month">{{mouthArr[questMonth]}}</span>个月ASQ-3信息汇总</p>
+                      <span class="desc">适用于{{monthWorkBook[0].data[questMonth][1]}}<br>至{{monthWorkBook[0].data[questMonth][2]}}{{monthWorkBook[0].data[questMonth][3]}}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table class="testInfo">
+            <tbody>
+              <tr>
+                <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+              </tr>
+              <tr>
+                <td class="identity">问卷编号：<span class="babyid">E20221016160729154595</span></td>
+                <td>完成问卷日期：<span class="overtime">{{setDate(baby.CreateTime.split(' ')[0])}}</span></td>
+              </tr>
+              <tr>
+                <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
+                <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split(' ')[0])}}</span></td>
+              </tr>
+              <tr>
+                <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                <td>完成问卷年龄：<span class="babyAge">{{age}}</span></td>
+              </tr>
+              <tr>
+                <td class="early"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="resRecord">
+            <h2>1.信息汇总于下表</h2>
+            <table class="tabRecord">
+              <tbody>
+                <tr>
+                  <th>能区</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                  <th>合计</th>
+                  <th>结果</th>
+                </tr>
+                <tr>
+                  <td>沟通</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>低于界值</td>
+                </tr>
+                <tr>
+                  <td>粗大动作</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>低于界值</td>
+                </tr>
+                <tr>
+                  <td>精细动作</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>低于界值</td>
+                </tr>
+                <tr>
+                  <td>解决问题</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>低于界值</td>
+                </tr>
+                <tr>
+                  <td>个人-社会</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>低于界值</td>
+                </tr>
+              </tbody>
+            </table>
+            <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
+          </div>
+          <div class="resQues">
+            <h2>2.综合问题记录如下</h2>
+            <table class="tabQues">
+              <tbody>
+                <tr class="filing">
+                  <td>1. 宝宝对称地运动双手和双腿吗？如果勾选“否”，请说明：</td>
+                  <td><input type="radio" name="rdo0" value="1" data-m="n" disabled="disabled">是</td>
+                  <td class="fontStyle"><input type="radio" name="rdo0" value="2" data-m="n" disabled="disabled"
+                      checked="checked">否</td>
+                  <td>2. 当您扶宝宝站立时，他 /她的双脚大多数时间是平放在所踩物体的表面上吗？如果勾选“否”，请说明：</td>
+                  <td><input type="radio" name="rdo1" value="1" data-m="n" disabled="disabled">是</td>
+                  <td class="fontStyle"><input type="radio" name="rdo1" value="2" data-m="n" disabled="disabled"
+                      checked="checked">否</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><textarea class="filing0" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                  <td colspan="3"><textarea class="filing1" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                </tr>
+                <tr class="filing">
+                  <td>3. 您是否担心宝宝太安静、不像其他／她宝宝那样发出声音？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo2" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo2" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                  <td>4. 宝宝父母的任一方有儿童时期耳聋或听力障碍家族史吗？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo3" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo3" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><textarea class="filing2" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                  <td colspan="3"><textarea class="filing3" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                </tr>
+                <tr class="filing">
+                  <td>5. 您担心宝宝的视力吗？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo4" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo4" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                  <td>6. 宝宝最近几个月生过什么病吗？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo5" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo5" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><textarea class="filing4" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                  <td colspan="3"><textarea class="filing5" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                </tr>
+                <tr class="filing">
+                  <td>7. 您对宝宝的行为有什么担忧吗？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo6" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo6" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                  <td>8. 宝宝有什么情况令您感到担心吗？如果勾选“是”，请说明：</td>
+                  <td class="fontStyle"><input type="radio" name="rdo7" value="1" data-m="y" disabled="disabled">是</td>
+                  <td><input type="radio" name="rdo7" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
+                </tr>
+                <tr>
+                  <td colspan="3"><textarea class="filing6" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                  <td colspan="3"><textarea class="filing7" name="" cols="30" rows="10" maxlength="30"
+                      disabled="disabled"></textarea></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="resExplain">
+            <h2>3.ASQ-3分数的解释和建议</h2>
+            <p>如果<span class="baby">宝宝</span>某能区得分<span>高于界值</span>，说明此能区目前发育正常；</p>
+            <p>如果<span class="baby">宝宝</span>某能区得分<span>接近界值</span>，建议给予游戏活动并发育监测；</p>
+            <p>如果<span class="baby">宝宝</span>某能区得分<span>低于界值</span>，建议由专业人员进一步发育评估。</p>
+          </div>
+
+          <button class="btn-default1 btnAdvice" style="display: none;">下一步</button>
+          <button class="btn-default1 btnPrint">打印</button>
+          <button class="btn-default1 complete">完成</button>
+          <div class="bottom">
+            译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

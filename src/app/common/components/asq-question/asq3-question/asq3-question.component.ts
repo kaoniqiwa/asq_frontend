@@ -8,15 +8,15 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import { PageType } from 'src/app/enum/page-type.enum';
 import { QuestType } from 'src/app/enum/quest-type.enum';
 import { Question } from 'src/app/network/model/question.model';
+import { GetDividingParams } from 'src/app/network/request/games/dividing.params';
+import { GetGamesParams } from 'src/app/network/request/games/games.params';
 import { GetQuestionParams } from 'src/app/network/request/question/question.params';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
 
 import questions from "./data.json";
 
 // console.log('12', questions)
-
-//import asq3 from '../../../../../assets/files/ASQ_3.xlsx';
-
+//import asq3 from '../../../../../assets/files/ASQGAME.xlsx';
 //console.log('asq3',JSON.stringify(asq3));
 @Component({
   selector: 'asq3-question',
@@ -40,8 +40,11 @@ export class Asq3QuestionComponent implements OnInit {
   allPages: any = 0;
   currentAnswers: any = [];
   currentAnswer: any = {};
-  scoreArr: any = [];
-  /* scoreArr:any = [
+  //scoreArr: any = [];
+  mouthArr:any = [2,4,6,8,9,10,12,14,16,18,20,22,24,27,30,33,36,42,48,54.60];
+  gamesArr:any = [];
+  dividingArr:any = [];
+  scoreArr:any = [
     {
         "score": 40,
         "nengqu": "沟通",
@@ -55,19 +58,19 @@ export class Asq3QuestionComponent implements OnInit {
     {
         "score": 10,
         "nengqu": "精细动作",
-        "jiezhi": "低于界值"
+        "jiezhi": "接近界值"
     },
     {
         "score": 0,
         "nengqu": "解决问题",
-        "jiezhi": "低于界值"
+        "jiezhi": "高于界值"
     },
     {
         "score": 30,
         "nengqu": "个人-社会",
-        "jiezhi": "接近界值"
+        "jiezhi": "低于界值"
     }
-  ]; */
+  ];
 
   pageType: PageType = PageType.dati;
   questType: QuestType = QuestType.ASQ3;
@@ -78,10 +81,20 @@ export class Asq3QuestionComponent implements OnInit {
   gaoArr: any = [];
   jieArr: any = [];
   diArr: any = [];
+  monthWorkBook:any = [];
+  doctor:any = null;
+  user:any = null;
+  baby:any = null;
+  age:any = null;
 
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute) {
-    console.log('constructor', this._localStorage.user.Name, _sessionStorage.doctor);
+  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
+    this.monthWorkBook = this._globalStorage.monthWorkBook;
+    this.doctor = this._sessionStorage.doctor;
+    this.user = this._localStorage.user;
+    this.baby = this._sessionStorage.baby;
+    this.age = this.birthToAge(this.baby.Birthday.split(' ')[0],this.baby.CreateTime.split(' ')[0]);
+    console.log('constructor', this._localStorage.user, this.doctor,this.monthWorkBook,this.baby,this.age);
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];
@@ -147,6 +160,9 @@ export class Asq3QuestionComponent implements OnInit {
     }
     this.currentAnswer = this.currentAnswers[0];
     
+    this.getGames(this.questMonth);
+    this.getDividing(this.questMonth);
+    //this.setCurrentAnswers();
 
   }
 
@@ -169,6 +185,45 @@ export class Asq3QuestionComponent implements OnInit {
     //console.log('questions', questions)
     return questions;
 
+  }
+
+  setDate(str:string){
+    var reg =/(\d{4})\-(\d{2})\-(\d{2})/;
+    var date = str.replace(reg,"$1年$2月$3日");
+    return date;
+  }
+
+  birthToAge(birthday:any,completeday:any){
+    console.log("birthday：",birthday)
+    if(birthday){
+      let birth = birthday.split('-');
+      let complete = completeday.split('-');
+      // 新建日期对象
+      let date = new Date();
+      // 今天日期，数组，同 birthday
+      let today = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
+      // 分别计算年月日差值
+      let age = complete.map((val:any, index:any) => {
+        return Number(val) - Number(birth[index]);
+      })
+      // 当天数为负数时，月减 1，天数加上月总天数
+      if (age[2] < 0) {
+        // 简单获取上个月总天数的方法，不会错
+        let lastMonth = new Date(today[0], today[1], 0)
+        age[1]--
+        age[2] += lastMonth.getDate()
+      }
+      // 当月数为负数时，年减 1，月数加上 12
+      if (age[1] < 0) {
+        age[0]--
+        age[1] += 12
+      }
+      let thisAge = (Number(age[0])>0?(age[0]+'岁'):'')+(Number(age[1])>0?(age[1]+'月'):'')+(Number(age[2])>0?(age[2]+'天'):'')
+      return thisAge;
+      
+    }else{
+      return '';
+    }
   }
 
   radioClick(e: Event) {
@@ -218,13 +273,14 @@ export class Asq3QuestionComponent implements OnInit {
         thisScore += 5;
       }
     })
-
+    thisScoreObj.answers = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
-    if (thisScore <= 3.3 * arr.length) {
+    console.log('indexFa',indexFa);
+    if (thisScore <= this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
-    } else if (thisScore > 3.3 * arr.length && thisScore < 6.6 * arr.length) {
+    } else if (thisScore > this.dividingArr[indexFa].min && thisScore < this.dividingArr[indexFa].max) {
       thisScoreObj.jiezhi = "接近界值";
       this.jieArr.push(thisScoreObj);
     } else {
@@ -259,13 +315,19 @@ export class Asq3QuestionComponent implements OnInit {
     }
   }
 
-  async submit() {
+  setCurrentAnswers(){
     let that = this;
-    this.currentAnswers.map(function (item: any, index: any) {
+    that.currentAnswers.map(function (item: any, index: any) {
       if ((index + 1) != that.currentAnswers.length) {
+        
         that.scoreArr.push(that.getScore(item.answer, index));
       }
     });
+  }
+
+  async submit() {
+   
+    this.setCurrentAnswers();
 
     let model = new Question();
     model.Id = "";
@@ -280,6 +342,29 @@ export class Asq3QuestionComponent implements OnInit {
       this.toastrService.success('提交成功');
       this.pageType = 2;
       console.log('res:', res,'this.pageType',this.pageType);
+    }
+  }
+
+  async getGames(TestId:any) {
+    let that = this;
+
+    let res = await this._business.getGames(TestId);
+    if (res) {
+      this.toastrService.success('返回成功');
+      that.gamesArr = res;
+      console.log('getGames_res:', that.gamesArr);
+    }
+  }
+
+  async getDividing(TestId:any) {
+    let that = this;
+
+    let res = await this._business.getDividing(TestId);
+    if (res) {
+      this.toastrService.success('返回成功');
+      that.dividingArr = res;
+      
+      console.log('getDividing_res:',that.dividingArr);
     }
   }
 
