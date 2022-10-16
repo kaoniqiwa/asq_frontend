@@ -48,13 +48,6 @@ export class BabyInfoManageBusiness {
 
     return this._memberRequest.list(params);
   }
-  getQuestion() {
-    let params = new GetQuestionParams();
-    params.Bid = "a26584f8-aa79-48b9-8fee-906025cd983c";
-    params.QuestType = "asq3";
-    // params.questMonth = "0";
-    return this._questionRequest.getQuestion(params);
-  }
   createQuestion() {
     let model = new Question();
     model.Id = "";

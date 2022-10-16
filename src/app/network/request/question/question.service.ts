@@ -26,7 +26,7 @@ export class QuestionRequestService {
   }
   list(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'listQuestion';
-    return this.type.postArray(QuestionUrl.list(), params)
+    return this.type.paged(QuestionUrl.list(), params)
   }
   getQuestion(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'getQuestion';

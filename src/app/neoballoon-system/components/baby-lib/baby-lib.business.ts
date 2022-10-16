@@ -1,6 +1,8 @@
+import { formatDate } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { param } from "jquery";
 import { GlobalStorageService } from "src/app/common/service/global-storage.service";
+import { QuestType } from "src/app/enum/quest-type.enum";
 import { Page, PagedList } from "src/app/network/model/page-list.model";
 import { GetBabyParams } from "src/app/network/request/baby/baby.params";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
@@ -19,41 +21,76 @@ export class BabyManageBusiness {
   }
   async init(searchInfo: BabyLibSearchInfo) {
 
-    let { Data: members } = await this._listMember(searchInfo.Dids)
+    // let { Data: questions, Page } = await this._listQuestion(searchInfo.QuestType, searchInfo.QuestMonth)
+    // console.log(questions)
+    // let babyIds = questions.map(question => question.Bid);
+    // let { Data: babys } = await this._listBaby(babyIds);
 
-    console.log(members);
+    // let mids = babys.map(baby => baby.Mid);
 
-    let params = new GetBabyParams();
-    params.Name = searchInfo.Name;
-    params.PageIndex = searchInfo.PageIndex;
-    params.PageSize = searchInfo.PageSize;
+    // let res = await this._listMember(mids)
+    let { Data: members } = await this._listMember(searchInfo.Dids);
 
-    let { Data: babys, Page } = await this._listBaby(params);
-    let data = this._converter.iterateToModel(babys)
+    searchInfo.Mids = members.map(member => member.Id);
 
-    let res: PagedList<BabyLibModel> = {
-      Page: Page,
-      Data: data,
-    };
+    let { Data: babys } = await this._listBaby(searchInfo.Mids, searchInfo.Name)
+    console.log(babys)
 
+    searchInfo.Bids = babys.map(baby => baby.Id)
+
+    let { Data: questions, Page } = await this._listQuestion(searchInfo.Bids, searchInfo.QuestType, searchInfo.QuestMonth);
+
+    console.log(questions)
+
+
+    let models: BabyLibModel[] = []
+    let res = {
+      Data: models,
+      Page: Page
+    }
+
+    for (let i = 0; i < questions.length; i++) {
+      let model = new BabyLibModel();
+
+      let question = questions[i];
+      let babyId = question.Bid;
+      let baby = babys.find(baby => baby.Id == babyId)
+      console.log(baby)
+      if (baby) {
+        model.Id = baby.Id;
+        model.Name = baby.Name;
+        model.Birthday = formatDate(baby.Birthday, 'yyyy-MM-dd', 'en');
+        model.SurveyTime = formatDate(baby.SurveyTime, 'yyyy-MM-dd', 'en');
+        model.FileId = question.Id;
+        let member = members.find(member => member.Id == baby!.Mid)
+        if (member) {
+          model.Member = member;
+        }
+        res.Data.push(model)
+      }
+    }
     return res;
-
   }
 
   private _listMember(dids: string[]) {
     let params = new GetMemberParams();
-    params.Dids = dids;
-
+    params.Dids = dids
 
     return this._memberRequest.list(params)
   }
-  private _listBaby(params: GetBabyParams) {
-    // params.Mid
+  private _listBaby(mids: string[], name: string) {
 
+    let params: GetBabyParams = new GetBabyParams();
+    params.Mids = mids;
+    params.Name = name;
     return this._babyRequest.list(params);
 
   }
-  private _listQuestion(params: GetQuestionParams) {
+  private _listQuestion(bids: string[], questType: QuestType, questMonth = "0") {
+    let params: GetQuestionParams = new GetQuestionParams();
+    params.Bids = bids;
+    params.QuestType = questType;
+    params.QuestMonth = questMonth;
     return this._questionRequest.list(params);
   }
 

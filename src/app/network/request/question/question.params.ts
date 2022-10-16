@@ -1,10 +1,11 @@
+import { QuestType } from "src/app/enum/quest-type.enum";
 
 export class GetQuestionParams {
   PageIndex?: number;
   PageSize?: number;
-  Id?: string;
-  Bid?: string;
-  QuestType?: string;
+  Ids?: string[];
+  Bids?: string[];
+  QuestType?: QuestType;
   QuestMonth?: string;
   Flow!: string;
 }
