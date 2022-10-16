@@ -48,10 +48,12 @@ export class SessionStorageService {
 
   private _baby: Baby | null = null;
   set baby(baby: Baby | null) {
-    this._baby = baby
+    sessionStorage.setItem('baby', JSON.stringify(baby));
+
   }
   get baby() {
-    return this._baby;
+    let baby = sessionStorage.getItem('baby');
+    return baby ? JSON.parse(baby) : null;
   }
 
   private _member: Member | null = null;
