@@ -29,46 +29,65 @@ export class BabyManageBusiness {
     // let mids = babys.map(baby => baby.Mid);
 
     // let res = await this._listMember(mids)
-    let { Data: members } = await this._listMember(searchInfo.Dids);
 
-    searchInfo.Mids = members.map(member => member.Id);
-
-    let { Data: babys } = await this._listBaby(searchInfo.Mids, searchInfo.Name)
-    console.log(babys)
-
-    searchInfo.Bids = babys.map(baby => baby.Id)
-
-    let { Data: questions, Page } = await this._listQuestion(searchInfo.Bids, searchInfo.QuestType, searchInfo.QuestMonth);
-
-    console.log(questions)
-
-
-    let models: BabyLibModel[] = []
+    let models: BabyLibModel[] = [];
+    let page: Page = {
+      PageIndex: 0,
+      PageSize: 0,
+      RecordCount: 0,
+      TotalRecordCount: 0,
+      PageCount: 0,
+    };
     let res = {
       Data: models,
-      Page: Page
+      Page: page
     }
 
-    for (let i = 0; i < questions.length; i++) {
-      let model = new BabyLibModel();
+    let { Data: members } = await this._listMember(searchInfo.Dids);
 
-      let question = questions[i];
-      let babyId = question.Bid;
-      let baby = babys.find(baby => baby.Id == babyId)
-      console.log(baby)
-      if (baby) {
-        model.Id = baby.Id;
-        model.Name = baby.Name;
-        model.Birthday = formatDate(baby.Birthday, 'yyyy-MM-dd', 'en');
-        model.SurveyTime = formatDate(baby.SurveyTime, 'yyyy-MM-dd', 'en');
-        model.FileId = question.Id;
-        let member = members.find(member => member.Id == baby!.Mid)
-        if (member) {
-          model.Member = member;
+    if (members.length) {
+      searchInfo.Mids = members.map(member => member.Id);
+
+      let { Data: babys } = await this._listBaby(searchInfo.Mids, searchInfo.Name)
+      console.log(babys)
+
+      if (babys.length) {
+        searchInfo.Bids = babys.map(baby => baby.Id)
+
+        let { Data: questions, Page } = await this._listQuestion(searchInfo.Bids, searchInfo.QuestType, searchInfo.QuestMonth);
+
+        console.log(questions)
+        res.Page = Page
+
+        for (let i = 0; i < questions.length; i++) {
+          let model = new BabyLibModel();
+
+          let question = questions[i];
+          let babyId = question.Bid;
+          let baby = babys.find(baby => baby.Id == babyId)
+          console.log(baby)
+          if (baby) {
+            model.Id = baby.Id;
+            model.Name = baby.Name;
+            model.Birthday = formatDate(baby.Birthday, 'yyyy-MM-dd', 'en');
+            model.SurveyTime = formatDate(baby.SurveyTime, 'yyyy-MM-dd', 'en');
+            model.FileId = question.Id;
+            let member = members.find(member => member.Id == baby!.Mid)
+            if (member) {
+              model.Member = member;
+            }
+            res.Data.push(model)
+          }
         }
-        res.Data.push(model)
       }
+
+
     }
+
+
+
+
+
     return res;
   }
 
