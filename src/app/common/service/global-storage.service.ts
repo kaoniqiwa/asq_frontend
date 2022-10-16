@@ -41,7 +41,7 @@ export class GlobalStorageService {
     this._baby = baby
   }
   get baby() {
-    return this.baby;
+    return this._baby;
   }
 
   private _member: Member | null = null;
@@ -49,7 +49,7 @@ export class GlobalStorageService {
     this._member = member
   }
   get member() {
-    return this.member;
+    return this._member;
   }
 
   constructor() {

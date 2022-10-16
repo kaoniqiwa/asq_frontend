@@ -51,7 +51,7 @@ export class SessionStorageService {
     this._baby = baby
   }
   get baby() {
-    return this.baby;
+    return this._baby;
   }
 
   private _member: Member | null = null;
@@ -59,11 +59,8 @@ export class SessionStorageService {
     this._member = member
   }
   get member() {
-    return this.member;
+    return this._member;
   }
-
-
-
 
   set challenge(challenge: DigestResponse) {
     sessionStorage.setItem('challenge', JSON.stringify(challenge));

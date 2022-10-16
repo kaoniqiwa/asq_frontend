@@ -52,8 +52,8 @@ export class BabyLibComponent implements OnInit {
 
       let res = await this._business.init(this.searchInfo)
       console.log(res)
-      this.page = res.Page;
-      this.dataSource = res.Data;
+      // this.page = res.Page;
+      // this.dataSource = res.Data;
 
     }
 

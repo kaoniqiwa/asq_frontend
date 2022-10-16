@@ -23,7 +23,7 @@ export class AccountComponent implements OnInit {
   doctors: Doctor[] = [];
 
 
-  constructor(private _localStorage: LocalStorageService, private _sessionStorage: SessionStorageService, private _business: AccountBusiness, private _router: Router) {
+  constructor(private _localStorage: LocalStorageService, private _sessionStorage: SessionStorageService, private _g: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
     this.user = this._localStorage.user;
   }
 
