@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { BabyManageBusiness as BabyInfoBusiness } from './baby-lib.business';
-import { BabyManageModel } from 'src/app/view-model/baby-info.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Page } from 'src/app/network/model/page-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestType } from 'src/app/enum/quest-type.enum';
-import { BabyManageSearchInfo } from 'src/app/view-model/baby-manage.model';
+import { BabyLibModel, BabyLibSearchInfo } from 'src/app/view-model/baby-lib.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
@@ -19,36 +18,48 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 })
 export class BabyLibComponent implements OnInit {
 
+
+  dataSource: BabyLibModel[] = [];
+
+
   questType: QuestType = QuestType.ASQ3;
 
   fileType = 'personal';
-  searchInfo: BabyManageSearchInfo = {
-    did: "",
-    name: "",
-    questType: QuestType.ASQ3,
+  searchInfo: BabyLibSearchInfo = {
+    Name: "",
+    PageIndex: 1,
+    PageSize: 9,
+    Dids: []
   }
 
   // Paginator
   page: Page | null = null;
-  pagerCount: number = 4;
   pageIndex = 1;
-  pageSize = 2;
+  pageSize = 9;
 
 
   showToast = false;
 
   constructor(private _business: BabyInfoBusiness, private _router: Router, private sessionStorage: SessionStorageService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     let doctor = this.sessionStorage.doctor;
 
     if (doctor) {
-      this.searchInfo.did = doctor.Id;
-      let res = this._business.init(this.searchInfo, this.pageIndex, this.pageSize)
+
+      this.searchInfo.Dids = [doctor.Id];
+
+
+      let res = await this._business.init(this.searchInfo)
+      console.log(res)
+      this.page = res.Page;
+      this.dataSource = res.Data;
+
     }
 
     // this.dataSubject.next(res.Data)
     // this.page = res.Page
+
   }
 
   pageEvent(pageInfo: PageEvent) {

@@ -6,18 +6,20 @@ import Swiper, { A11y, Navigation, Pagination, Scrollbar, SwiperOptions } from '
 import { SurveyManageBusiness } from './survey-manage.business';
 
 
-import monthWorkBook from "src/assets/files/asq_month.xlsx";
+// import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
 
 
-monthWorkBook.forEach((sheet: ASQMonthFilter) => {
-  // 去掉标题
-  sheet.data.shift();
+// monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+//   // 去掉标题
+//   sheet.data.shift();
 
-  // 去掉列名
-  sheet.data.shift();
+//   // 去掉列名
+//   sheet.data.shift();
 
-})
+// })
+
+// console.log(monthWorkBook);
 
 import SurveyBtns from "src/assets/json/survey-manage.json";
 
@@ -49,6 +51,7 @@ Swiper.use([
 })
 export class SurveyManageComponent implements OnInit, OnDestroy {
 
+  monthWorkBook: any;
   mid: string = "";
 
   // 保存年龄段表单信息
@@ -90,11 +93,14 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       this.mid = params['mid'];
     })
 
-    monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+
+    this.monthWorkBook = this._globalStorage.monthWorkBook;
+    // console.log(this.sheetMap);
+
+    this.monthWorkBook.forEach((sheet: ASQMonthFilter) => {
       this.sheetMap.set(sheet.name, sheet.data)
     })
 
-    // console.log(this.sheetMap);
 
     // 提取数值
     for (let [key, value] of this.sheetMap.entries()) {

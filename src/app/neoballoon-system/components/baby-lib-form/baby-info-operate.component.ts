@@ -6,7 +6,7 @@ import { Time } from 'src/app/common/tools/time';
   templateUrl: './baby-info-operate.component.html',
   styleUrls: ['./baby-info-operate.component.less']
 })
-export class BabyInfoOperateComponent implements OnInit {
+export class BabyLibFormComponent implements OnInit {
   dateFormat: string = 'yyyy-MM-dd';
   today = new Date();
 

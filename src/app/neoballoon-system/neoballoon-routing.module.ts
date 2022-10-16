@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HowellModule } from "../common/howell.module";
 import { AccountComponent } from "./components/account/account.component";
-import { BabyInfoComponent } from "./components/baby-info/baby-info.component";
 import { BabyAddManageComponent } from "./components/baby-add-manage/baby-add-manage.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";

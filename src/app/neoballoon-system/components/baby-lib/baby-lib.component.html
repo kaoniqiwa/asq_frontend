@@ -74,7 +74,13 @@
           <col style="width: 10%" />
         </colgroup>
         <tbody>
-          <tr>
+          <ng-container *ngFor="let data of dataSource; let e = even">
+            <tr>
+              <td>{{ data.Name }}</td>
+              <td>{{ data.SurveyTime }}</td>
+            </tr>
+          </ng-container>
+          <!-- <tr>
             <td>王辰欣</td>
             <td>2019-10-26</td>
             <td>戴倩</td>
@@ -153,7 +159,7 @@
             <td>E20220908165626418228</td>
             <td><a tabindex>打印</a></td>
             <td>了解更多</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -170,8 +176,7 @@
         [showFirstLastButtons]="true"
         [length]="page.TotalRecordCount"
         [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="pageIndex - 1"
+        [pageIndex]="page.PageIndex - 1"
         (page)="pageEvent($event)"
       >
       </app-paginator>
