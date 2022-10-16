@@ -35,6 +35,7 @@ import { GlobalToastrConfig, ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PageType } from 'src/app/enum/page-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar, A11y
@@ -87,7 +88,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   @ViewChild(SwiperComponent) swiper!: SwiperComponent;
 
-  constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
+  constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.mid = params['mid'];
@@ -157,7 +158,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     }
 
-    this.checkRange();
+    // this.checkRange();
 
 
   }
@@ -175,6 +176,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   changeBaby(baby: Baby) {
     this.currentBaby = baby;
     this.checkRange();
+    this._sessionStorage.baby = baby;
     this._globalStorage.baby = baby;
   }
   checkRange() {
