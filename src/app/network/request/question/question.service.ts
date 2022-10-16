@@ -6,6 +6,10 @@ import { DoctorUrl } from "../../url/doctor.url";
 import { GetQuestionParams } from "./question.params";
 import { Question } from "src/app/network/model/question.model";
 import { QuestionUrl } from "../../url/question.url";
+import { GetGamesParams } from "../games/games.params";
+import { GamesUrl } from "../../url/games.url";
+import { GetDividingParams } from "../games/dividing.params";
+import { Games } from "../../model/games.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +18,12 @@ export class QuestionRequestService {
 
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Question>;
+  private gamesType: BaseTypeRequestService<Games>;
 
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Question);
+    this.gamesType = this.basic.type(Games);
   }
 
   create(model: Question) {
@@ -26,11 +32,19 @@ export class QuestionRequestService {
   }
   list(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'listQuestion';
-    return this.type.postArray(QuestionUrl.list(), params)
+    return this.type.paged(QuestionUrl.list(), params)
   }
   getQuestion(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'getQuestion';
     return this.type.post(QuestionUrl.get(), params);
+  }
+  getGames(params:GetGamesParams = new GetGamesParams()) {
+    params.Flow = 'getGames';
+    return this.gamesType.paged(GamesUrl.list(), params);
+  }
+  getDividing(params:GetDividingParams = new GetDividingParams()) {
+    params.Flow = 'getDividing';
+    return this.gamesType.paged(GamesUrl.listDividing(), params);
   }
 
 }
