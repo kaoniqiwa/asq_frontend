@@ -16,7 +16,13 @@
         </p>
         <table class="tabQues">
           <tbody>
-            <tr class="line">
+            <tr class="line" *ngIf="j == k - 1">
+              <td></td>
+              <td>是</td>
+              <td>否</td>
+              <td>帮助</td>
+            </tr>
+            <tr class="line" *ngIf="j != k - 1">
               <td></td>
               <td>是</td>
               <td>有时是</td>
@@ -32,10 +38,12 @@
                   <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
                     attr.xu="{{ i - 1 }}" value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
                 </td>
-                <td>
-                  <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
-                    attr.xu="{{ i - 1 }}" value="2" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
-                </td>
+                <ng-container *ngIf="!(i != 0 && j == k - 1)">
+                  <td>
+                    <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
+                      attr.xu="{{ i - 1 }}" value="2" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
+                  </td>
+                </ng-container>
                 <td>
                   <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
                     attr.xu="{{ i - 1 }}" value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
@@ -82,7 +90,7 @@
   </ng-container>
   <div class="resBox res1" *ngIf="this.pageType==2">
     <img src="/assets/img/ASQ3.png" alt="">
-    <p>尊敬的<em class="childName">test</em>的父母/监护人：</p>
+    <p>尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
     <p class="p_indent">感谢你为宝宝完成了ASQ-3问卷！</p>
 
     <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0" style="display: block;">

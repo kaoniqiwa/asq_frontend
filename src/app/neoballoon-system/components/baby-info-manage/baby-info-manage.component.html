@@ -160,23 +160,65 @@
                 <div>（提前3周以上出生）</div>
               </label>
               <div class="col-sm-3">
-                <label
-                  ><input
+                <label>
+                  <input
                     type="radio"
                     formControlName="premature"
                     value="是"
-                  />是</label
-                >
+                  />是
+                </label>
                 &nbsp;&nbsp;&nbsp;
-                <label
-                  ><input
+                <label>
+                  <input
                     type="radio"
                     formControlName="premature"
                     value="否"
-                  />否</label
-                >
+                  />否
+                </label>
               </div>
             </div>
+            <div class="form-group" *ngIf="babyGroupArr[currentIndex].getRawValue().premature == '是'">
+              <label class="control-label col-sm-2">
+                <div><span>*</span>若早产，请填写孕周:</div>
+              </label>
+              <div class="col-sm-2">
+                <select formControlName="prematrueweek">
+                  <option value="" disabled>周</option>
+                  <option value="36">36周</option>
+                  <option value="35">35周</option>
+                  <option value="34">34周</option>
+                  <option value="33">33周</option>
+                  <option value="32">32周</option>
+                  <option value="31">31周</option>
+                  <option value="30">30周</option>
+                  <option value="29">29周</option>
+                  <option value="28">28周</option>
+                  <option value="27">27周</option>
+                  <option value="26">26周</option>
+                  <option value="25">25周</option>
+                  <option value="24">24周</option>
+                  <option value="23">23周</option>
+                  <option value="22">22周</option>
+                  <option value="21">21周</option>
+                  <option value="20">20周</option>
+                  <option value="19">19周</option>
+              </select>
+              </div>
+              <div class="col-sm-2">
+                <select formControlName="prematrueday">
+                  <option value="" disabled>天</option>
+                  <option value="6">6天</option>
+                  <option value="5">5天</option>
+                  <option value="4">4天</option>
+                  <option value="3">3天</option>
+                  <option value="2">2天</option>
+                  <option value="1">1天</option>
+                  <option value="0">0天</option>
+                </select> 
+              </div>
+              
+            </div>
+            
             <div class="form-group">
               <label class="control-label col-sm-2">
                 <div>出生时体重:</div>

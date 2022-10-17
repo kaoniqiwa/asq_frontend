@@ -30,8 +30,8 @@ export class Asq3QuestionComponent implements OnInit {
 
   //@Input() mounthNum: NumberSymbol = 0;
   //@Input() thisAnswers: any = [];
-  //thisAnswers:any = [];
-  thisAnswers:any = [
+  thisAnswers:any = [];
+  /* thisAnswers:any = [
     {
         "answer": [
             "3",
@@ -106,7 +106,7 @@ export class Asq3QuestionComponent implements OnInit {
         "nextStatus": true,
         "prevStatus": true
     }
-];
+]; */
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
   title: any = '';
