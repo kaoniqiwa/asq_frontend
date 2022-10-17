@@ -95,7 +95,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     })
 
 
-    this.monthWorkBook = this._globalStorage.monthWorkBook;
+    this.monthWorkBook = this._sessionStorage.monthWorkBook;
     // console.log(this.sheetMap);
 
     this.monthWorkBook.forEach((sheet: ASQMonthFilter) => {
@@ -210,7 +210,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       }
 
     }
-    console.log(this.currentMonthIndex)
+    console.log('this.currentMonthIndex',this.currentMonthIndex)
   }
 
   gotoQuest(e: Event) {

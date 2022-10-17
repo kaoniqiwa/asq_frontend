@@ -214,6 +214,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       birthday: [this.transformDate(this.today)],
       surveyTime: [this.transformDate(this.today)],
       premature: ['否'],
+      prematrueweek: '0',
+      prematrueday: '0',
       weight: [''],
       bornCondition: this._fb.group({
         isShun: '是',
@@ -301,8 +303,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   }
   async onSubmit() {
-    console.log(this.babyGroupArr)
-    console.log(this.memberGroup)
+    console.log(this.babyGroupArr,this.babyGroupArr[this.currentIndex].getRawValue().premature);
+    console.log(this.memberGroup);
 
     if (this._checkForm()) {
       if (this.mid) {
@@ -352,6 +354,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
               babyModel.Birthday = rawValue.birthday;
               babyModel.SurveyTime = rawValue.surveyTime;
               babyModel.Premature = rawValue.premature;
+              babyModel.Prematrueweek = rawValue.prematrueweek;
+              babyModel.Prematrueday = rawValue.prematrueday;
               babyModel.IsShun = rawValue.bornCondition.isShun;
               babyModel.IdentityInfo = rawValue.identityInfo;
               babyModel.IdentityType = rawValue.identityType;
@@ -424,6 +428,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             babyModel.Birthday = rawValue.birthday;
             babyModel.SurveyTime = rawValue.surveyTime;
             babyModel.Premature = rawValue.premature;
+            babyModel.Prematrueweek = rawValue.prematrueweek;
+            babyModel.Prematrueday = rawValue.prematrueday;
             babyModel.IsShun = rawValue.bornCondition.isShun;
             babyModel.IdentityInfo = rawValue.identityInfo;
             babyModel.IdentityType = rawValue.identityType;
@@ -510,6 +516,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             identityType: baby.IdentityType,
             identityInfo: baby.IdentityInfo,
             premature: baby.Premature,
+            prematrueweek: baby.Prematrueweek,
+            prematrueday: baby.Prematrueday,
             weight: baby.Weight,
             bornCondition: {
               isShun: baby.IsShun,
@@ -589,6 +597,8 @@ interface IBaby {
   birthday: string;
   survey: string;
   premature: boolean;
+  prematrueweek: string;
+  prematrueday: string;
   weight: string;
   bornCondition: IBabyCondition;
 

@@ -1636,6 +1636,3 @@ h3,
   margin-top: 20px;
 }
 
-table > tbody > tr:nth-child(2n + 1) {
-  background-color: #f9f9f9;
-}
