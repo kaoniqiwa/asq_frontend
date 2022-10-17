@@ -79,7 +79,7 @@ export class BabyLibComponent implements OnInit {
     this.showToast = !this.showToast;
   }
   addBabyHandler() {
-    this._router.navigateByUrl('/neoballoon/neoballoon-manage/baby-add')
+    this._router.navigateByUrl('/neoballoon/neoballoon-manage/baby-add-manage')
   }
 }
 

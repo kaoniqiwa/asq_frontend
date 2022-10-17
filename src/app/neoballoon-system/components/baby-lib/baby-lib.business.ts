@@ -21,14 +21,6 @@ export class BabyManageBusiness {
   }
   async init(searchInfo: BabyLibSearchInfo) {
 
-    // let { Data: questions, Page } = await this._listQuestion(searchInfo.QuestType, searchInfo.QuestMonth)
-    // console.log(questions)
-    // let babyIds = questions.map(question => question.Bid);
-    // let { Data: babys } = await this._listBaby(babyIds);
-
-    // let mids = babys.map(baby => baby.Mid);
-
-    // let res = await this._listMember(mids)
 
     let models: BabyLibModel[] = [];
     let page: Page = {
