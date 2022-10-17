@@ -30,7 +30,7 @@ export class Asq3QuestionComponent implements OnInit {
 
   //@Input() mounthNum: NumberSymbol = 0;
   //@Input() thisAnswers: any = [];
-  thisAnswers:any = [];
+  thisAnswers: any = [];
   /* thisAnswers:any = [
     {
         "answer": [
@@ -117,9 +117,9 @@ export class Asq3QuestionComponent implements OnInit {
   currentAnswers: any = [];
   currentAnswer: any = {};
   scoreArr: any = [];
-  mouthArr:any = [2,4,6,8,9,10,12,14,16,18,20,22,24,27,30,33,36,42,48,54.60];
-  gamesArr:any = [];
-  dividingArr:any = [];
+  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  gamesArr: any = [];
+  dividingArr: any = [];
   /* scoreArr:any = [
     {
         "score": 40,
@@ -157,11 +157,11 @@ export class Asq3QuestionComponent implements OnInit {
   gaoArr: any = [];
   jieArr: any = [];
   diArr: any = [];
-  monthWorkBook:any = [];
-  doctor:any = null;
-  user:any = null;
-  baby:any = null;
-  age:any = null;
+  monthWorkBook: any = [];
+  doctor: any = null;
+  user: any = null;
+  baby: any = null;
+  age: any = null;
 
 
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
@@ -169,8 +169,8 @@ export class Asq3QuestionComponent implements OnInit {
     this.doctor = this._sessionStorage.doctor;
     this.user = this._localStorage.user;
     this.baby = this._sessionStorage.baby;
-    this.age = this.birthToAge(this.baby.Birthday.split(' ')[0],this.baby.CreateTime.split(' ')[0]);
-    
+    this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
+
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.bid = params['bid'];
@@ -182,9 +182,9 @@ export class Asq3QuestionComponent implements OnInit {
       this.questMonth = params['questMonth'];
 
     })
-    console.log('constructor', this._localStorage.user, this.doctor,this.monthWorkBook,this.baby,this.age,this.questMonth);
+    console.log('constructor', this._localStorage.user, this.doctor, this.monthWorkBook, this.baby, this.age, this.questMonth);
 
-    
+
 
 
   }
@@ -202,11 +202,11 @@ export class Asq3QuestionComponent implements OnInit {
     this.getGames(this.questMonth);
     this.getDividing(this.questMonth);
 
-    
+
 
   }
 
-  init(){
+  init() {
     if (this.thisAnswers.length > 0) {
       this.currentAnswers = this.thisAnswers;
       this.currentAnswer = this.currentAnswers[0];
@@ -220,7 +220,7 @@ export class Asq3QuestionComponent implements OnInit {
       this.setCurrentAnswers();
       //console.log('intQuestions:', this.intQuestions);
       //return
-    }else{
+    } else {
       for (let i = 0; i < this.intQuestions.length; i++) {
         this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true };
         //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
@@ -232,7 +232,7 @@ export class Asq3QuestionComponent implements OnInit {
       }
       this.currentAnswer = this.currentAnswers[0];
     }
-    
+
     console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
     if (this.pageType != 0) {
       let that = this;
@@ -249,11 +249,11 @@ export class Asq3QuestionComponent implements OnInit {
     }
   }
 
-  checkDetil(){
+  checkDetil() {
     this.pageType = 3;
   }
 
-  next(){
+  next() {
     this.pageType = 4;
   }
 
@@ -278,15 +278,15 @@ export class Asq3QuestionComponent implements OnInit {
 
   }
 
-  setDate(str:string){
-    var reg =/(\d{4})\-(\d{2})\-(\d{2})/;
-    var date = str.replace(reg,"$1年$2月$3日");
+  setDate(str: string) {
+    var reg = /(\d{4})\-(\d{2})\-(\d{2})/;
+    var date = str.replace(reg, "$1年$2月$3日");
     return date;
   }
 
-  birthToAge(birthday:any,completeday:any){
-    console.log("birthday：",birthday)
-    if(birthday){
+  birthToAge(birthday: any, completeday: any) {
+    console.log("birthday：", birthday)
+    if (birthday) {
       let birth = birthday.split('-');
       let complete = completeday.split('-');
       // 新建日期对象
@@ -294,7 +294,7 @@ export class Asq3QuestionComponent implements OnInit {
       // 今天日期，数组，同 birthday
       let today = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
       // 分别计算年月日差值
-      let age = complete.map((val:any, index:any) => {
+      let age = complete.map((val: any, index: any) => {
         return Number(val) - Number(birth[index]);
       })
       // 当天数为负数时，月减 1，天数加上月总天数
@@ -309,10 +309,10 @@ export class Asq3QuestionComponent implements OnInit {
         age[0]--
         age[1] += 12
       }
-      let thisAge = (Number(age[0])>0?(age[0]+'岁'):'')+(Number(age[1])>0?(age[1]+'月'):'')+(Number(age[2])>0?(age[2]+'天'):'')
+      let thisAge = (Number(age[0]) > 0 ? (age[0] + '岁') : '') + (Number(age[1]) > 0 ? (age[1] + '月') : '') + (Number(age[2]) > 0 ? (age[2] + '天') : '')
       return thisAge;
-      
-    }else{
+
+    } else {
       return '';
     }
   }
@@ -354,12 +354,12 @@ export class Asq3QuestionComponent implements OnInit {
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
 
-  setThisScore(num:any){
+  setThisScore(num: any) {
     if (Number(num) == 1) {
       return 10;
     } else if (Number(num) == 2) {
       return 5;
-    }else{
+    } else {
       return 0;
     }
   }
@@ -378,7 +378,7 @@ export class Asq3QuestionComponent implements OnInit {
     thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
-    console.log('indexFa',indexFa);
+    console.log('indexFa', indexFa);
     if (thisScore <= this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
@@ -398,37 +398,37 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   gotoBack() {
-    console.log('this.pageType_before',this.pageType);
-    this.pageType --;
-    console.log('this.pageType_after',this.pageType);
+    console.log('this.pageType_before', this.pageType);
+    this.pageType--;
+    console.log('this.pageType_after', this.pageType);
   }
 
   async request() {
 
     let model = new GetQuestionParams();
-    model.Bid = this.bid;// 宝宝ID；
+    model.Bids = [this.bid];// 宝宝ID；
     model.QuestType = this.questType;// asq3答卷
     model.QuestMonth = String(this.questMonth);//2月份
 
     let res = await this._business.getQuestion(model);
     if (res) {
       this.toastrService.success('提交成功');
-      console.log('res:', res,'this.pageType',this.pageType);
+      console.log('res:', res, 'this.pageType', this.pageType);
     }
   }
 
-  setCurrentAnswers(){
+  setCurrentAnswers() {
     let that = this;
     that.currentAnswers.map(function (item: any, index: any) {
       if ((index + 1) != that.currentAnswers.length) {
-        
+
         that.scoreArr.push(that.getScore(item.answer, index));
       }
     });
   }
 
   async submit() {
-   
+
     this.setCurrentAnswers();
 
     let model = new Question();
@@ -443,11 +443,11 @@ export class Asq3QuestionComponent implements OnInit {
     if (res) {
       this.toastrService.success('提交成功');
       this.pageType = 2;
-      console.log('res:', res,'this.pageType',this.pageType);
+      console.log('res:', res, 'this.pageType', this.pageType);
     }
   }
 
-  async getGames(TestId:any) {
+  async getGames(TestId: any) {
     let that = this;
 
     let res = await this._business.getGames(TestId);
@@ -455,18 +455,18 @@ export class Asq3QuestionComponent implements OnInit {
       //this.toastrService.success('返回成功');
       that.gamesArr = res;
       console.log('getGames_res:', that.gamesArr);
-      
+
     }
   }
 
-  async getDividing(TestId:any) {
+  async getDividing(TestId: any) {
     let that = this;
 
     let res = await this._business.getDividing(TestId);
     if (res) {
       //this.toastrService.success('返回成功');
       that.dividingArr = res;
-      console.log('getDividing_res:',that.dividingArr);
+      console.log('getDividing_res:', that.dividingArr);
       this.init();
     }
   }
