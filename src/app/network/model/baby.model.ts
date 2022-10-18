@@ -11,6 +11,7 @@ export class Baby {
   Premature!: string;
   Prematrueweek?: string;
   Prematrueday?: string;
+  Rectifyage?: any;
   IsShun!: string;
   IdentityInfo?: string;
   IdentityType?: IdentityType;

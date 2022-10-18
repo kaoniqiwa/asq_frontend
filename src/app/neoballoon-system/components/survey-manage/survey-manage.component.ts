@@ -174,6 +174,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     // }
   }
   changeBaby(baby: Baby) {
+    console.log('baby',baby);
     this.currentBaby = baby;
     this.checkRange();
     this._sessionStorage.baby = baby;
@@ -181,30 +182,19 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   }
   checkRange() {
     if (this.currentBaby) {
-      let start = new Date(this.currentBaby.Birthday);
-      let end = new Date(this.currentBaby.SurveyTime);
-      this.timerDiff = Time.diff(start, end);
-
       let months = this.monthMap.get(this.currentType);
-      // console.log(months)
+      //console.log('months',months);
+      let currentage = this.currentBaby.Rectifyage;
+      let currentmonth = Number(currentage.split('月')[0]);
+
       if (!months) return;
       this.currentMonthIndex = -1;
       for (let i = 0; i < months.length; i++) {
-        let start = months[i].start;
-        let end = months[i].end;
-
-        let startDays = start.month * 30 + start.day;
-        let endDays = end.month * 30 + end.day
-
-        let curDays = this.timerDiff.month * 30 + this.timerDiff.day;
-
-        if (curDays >= startDays && curDays <= endDays) {
+        let startmonth =  months[i].start.month;
+        let endmonth =  months[i].end.month;
+        if(currentmonth>=startmonth && currentmonth<=endmonth){
           this.currentMonthIndex = i;
-        }
-        if (i == 0) {
-          if (curDays < startDays) {
-            this._toastrService.warning("该宝宝年龄过小还没有适用的问卷！");
-          }
+          break;
         }
 
       }

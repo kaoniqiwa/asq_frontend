@@ -115,7 +115,6 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.rectify();
     if (this.mid) {
       this.member = await this._business.getMember(this.mid);
 
@@ -218,6 +217,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       premature: ['否'],
       prematrueweek: '0',
       prematrueday: '0',
+      rectifyage: '',
       weight: [''],
       bornCondition: this._fb.group({
         isShun: '是',
@@ -358,6 +358,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
               babyModel.Premature = rawValue.premature;
               babyModel.Prematrueweek = rawValue.prematrueweek;
               babyModel.Prematrueday = rawValue.prematrueday;
+              console.log('rectify',this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday),rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
+              babyModel.Rectifyage = this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
               babyModel.IsShun = rawValue.bornCondition.isShun;
               babyModel.IdentityInfo = rawValue.identityInfo;
               babyModel.IdentityType = rawValue.identityType;
@@ -432,6 +434,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             babyModel.Premature = rawValue.premature;
             babyModel.Prematrueweek = rawValue.prematrueweek;
             babyModel.Prematrueday = rawValue.prematrueday;
+            console.log('rectify',this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday),rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
+            babyModel.Rectifyage = this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
             babyModel.IsShun = rawValue.bornCondition.isShun;
             babyModel.IdentityInfo = rawValue.identityInfo;
             babyModel.IdentityType = rawValue.identityType;
@@ -468,21 +472,41 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   goBack() {
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
   }
+  rectify(birthday:any,surveyTime:any,week:any,day:any) {
 
-  birthToAge(birthday: any, completeday: any) {
-    console.log("birthday：", birthday)
+    const MAX_WEEK = 40;
+    const MAX_DAY = 0;
+    const WEEK_UNIT = 7;
+
+    let aweek = 0;
+    let aday = 0;
+    let month = 0;
+    let halfmoth = 0;
+    let leftweek = 0;
+
+    if(week != 0 ){
+      aweek = MAX_WEEK-week;
+      if(day>0){
+        aweek--;
+        aday = WEEK_UNIT-day;
+      }
+      month = Math.trunc(aweek/4);
+      halfmoth = Math.trunc((aweek%4)/2);
+      leftweek = (aweek%4)%2;
+    }
+
     if (birthday) {
       let birth = birthday.split('-');
-      let complete = completeday.split('-');
+      let survey = surveyTime.split('-');
 
       // 分别计算年月日差值
-      let age = complete.map((val: any, index: any) => {
+      let age = survey.map((val: any, index: any) => {
         return Number(val) - Number(birth[index]);
       })
       // 当天数为负数时，月减 1，天数加上月总天数
       if (age[2] < 0) {
         // 简单获取上个月总天数的方法，不会错
-        let lastMonth = new Date(complete[0], complete[1], 0)
+        let lastMonth = new Date(survey[0], survey[1], 0)
         age[1]--
         age[2] += lastMonth.getDate()
       }
@@ -491,57 +515,22 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         age[0]--
         age[1] += 12
       }
-      let thisAge = {
-        month: (Number(age[0]) * 12 + Number(age[1])),
-        day: +age[2]
+      let birthMonth = (Number(age[0]) * 12 + Number(age[1]));
+      let birthDay = age[2];
+
+      let lmonth = birthMonth-month;
+      let lday = birthDay - leftweek*WEEK_UNIT - aday;
+      if(lday<0){
+        lmonth--;
+        lday = lday+30;
       }
-      return thisAge;
+      
+      return lmonth+'月'+lday+'日';
 
     } else {
       return '';
     }
-  }
 
-  rectify() {
-
-    let birthday = '2021-07-01';
-    let surveyTime = '2022-10-17';
-
-    let diff = this.birthToAge(birthday, surveyTime);
-
-    // let diff = Time.diff(birthday, surveyTime)
-    console.log(diff);
-
-    const MAX_WEEK = 40;
-    const MAX_DAY = 0;
-    const WEEK_UNIT = 7;
-
-    let totalDay = MAX_WEEK * WEEK_UNIT + MAX_DAY;
-
-    let prematrueweek = 34;
-    let prematrueday = 5;
-
-    let offsetTotalDay = totalDay - (prematrueweek * WEEK_UNIT + prematrueday)
-
-    console.log('早产 ' + offsetTotalDay + "天");
-
-    let offsetWeek = Math.floor(offsetTotalDay / WEEK_UNIT);
-    let offsetDay = offsetTotalDay % WEEK_UNIT
-
-    console.log('相当于: ' + offsetWeek + "周" + offsetDay + "天");
-
-    let multiFour = Math.floor(offsetWeek / 4);
-    let multiTwo = Math.floor((offsetWeek % 4) / 2);
-    let multiOne = offsetWeek - multiFour * 4 - multiTwo * 2;
-
-    console.log(multiFour)
-    console.log(multiTwo)
-    console.log(multiOne)
-
-    let minusDay = multiFour * 30 + multiTwo * 15 + multiOne * 7 + offsetDay
-    console.log(minusDay);
-
-    // let tmp = diff.month * 30 + diff.day - minusDay;
   }
 
   /*************private ********************/
@@ -594,6 +583,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             premature: baby.Premature,
             prematrueweek: baby.Prematrueweek,
             prematrueday: baby.Prematrueday,
+            rectifyage: this.rectify(baby.Birthday,baby.SurveyTime,baby.Prematrueweek,baby.Prematrueday),
             weight: baby.Weight,
             bornCondition: {
               isShun: baby.IsShun,
@@ -675,6 +665,7 @@ interface IBaby {
   premature: boolean;
   prematrueweek: string;
   prematrueday: string;
+  rectifyage: any;
   weight: string;
   bornCondition: IBabyCondition;
 

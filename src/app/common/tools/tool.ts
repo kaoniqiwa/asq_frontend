@@ -240,4 +240,4 @@ export function convertToChinaNum(num: number) {
 }
 export const ValidIP = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
 
-export const ValidPhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,2,3,5-9])|19[0-9])\d{8}$/
+export const ValidPhone = /^(((1[3-9][0-9]{1}))+\d{8})$/

@@ -169,7 +169,7 @@ export class Asq3QuestionComponent implements OnInit {
     this.doctor = this._sessionStorage.doctor;
     this.user = this._localStorage.user;
     this.baby = this._sessionStorage.baby;
-    this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
+    //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
 
 
     this._activeRoute.params.subscribe((params: Params) => {
@@ -233,7 +233,7 @@ export class Asq3QuestionComponent implements OnInit {
       this.currentAnswer = this.currentAnswers[0];
     }
 
-    console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
+    //console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
     if (this.pageType != 0) {
       let that = this;
       this.scoreArr.map(function (item: any, index: any) {
@@ -245,7 +245,7 @@ export class Asq3QuestionComponent implements OnInit {
           that.gaoArr.push(item);
         }
       })
-      console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr);
+      //console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr);
     }
   }
 
@@ -284,39 +284,6 @@ export class Asq3QuestionComponent implements OnInit {
     return date;
   }
 
-  birthToAge(birthday: any, completeday: any) {
-    console.log("birthday：", birthday)
-    if (birthday) {
-      let birth = birthday.split('-');
-      let complete = completeday.split('-');
-      // 新建日期对象
-      let date = new Date();
-      // 今天日期，数组，同 birthday
-      let today = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
-      // 分别计算年月日差值
-      let age = complete.map((val: any, index: any) => {
-        return Number(val) - Number(birth[index]);
-      })
-      // 当天数为负数时，月减 1，天数加上月总天数
-      if (age[2] < 0) {
-        // 简单获取上个月总天数的方法，不会错
-        let lastMonth = new Date(today[0], today[1], 0)
-        age[1]--
-        age[2] += lastMonth.getDate()
-      }
-      // 当月数为负数时，年减 1，月数加上 12
-      if (age[1] < 0) {
-        age[0]--
-        age[1] += 12
-      }
-      let thisAge = (Number(age[0]) > 0 ? (age[0] + '岁') : '') + (Number(age[1]) > 0 ? (age[1] + '月') : '') + (Number(age[2]) > 0 ? (age[2] + '天') : '')
-      return thisAge;
-
-    } else {
-      return '';
-    }
-  }
-
   radioClick(e: Event) {
 
     let l = Number((e.target as HTMLInputElement).getAttribute('l')) - 1;
@@ -326,20 +293,13 @@ export class Asq3QuestionComponent implements OnInit {
 
     this.currentAnswer.answer[xu] = v;
 
-    //console.log(xu, v, this.currentAnswer.answer.length, this.currentAnswer.answer, '---after');
-    /*this.currentAnswer.map(function(item:any,index:any){
-      console.log('map1',index,item);
-      if(item == undefined){
-        console.log('map2',index,item);
-      }
-    })*/
     if (Object.keys(this.currentAnswer.answer).length == l) {
       this.currentAnswer.nextStatus = true;
       this.currentAnswers[this.currentPage] = this.currentAnswer;
-      console.log('currentAnswers:', this.currentAnswers);
+      //console.log('currentAnswers:', this.currentAnswers);
     }
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
-    console.log('intQuestions:', this.intQuestions);
+    //console.log('intQuestions:', this.intQuestions);
 
     //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
   }
@@ -378,7 +338,6 @@ export class Asq3QuestionComponent implements OnInit {
     thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
-    console.log('indexFa', indexFa);
     if (thisScore <= this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
@@ -438,6 +397,8 @@ export class Asq3QuestionComponent implements OnInit {
     model.QuestMonth = String(this.questMonth);//2月份
     model.QuestResult = this.currentAnswers;// 答题结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
+
+    console.log('model',model);
 
     let res = await this._business.create(model);
     if (res) {
