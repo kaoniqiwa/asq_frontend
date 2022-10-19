@@ -341,7 +341,7 @@ export class Asq3QuestionComponent implements OnInit {
     if (thisScore <= this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
-    } else if (thisScore > this.dividingArr[indexFa].min && thisScore < this.dividingArr[indexFa].max) {
+    } else if (thisScore > this.dividingArr[indexFa].min && thisScore <= this.dividingArr[indexFa].max) {
       thisScoreObj.jiezhi = "接近界值";
       this.jieArr.push(thisScoreObj);
     } else {

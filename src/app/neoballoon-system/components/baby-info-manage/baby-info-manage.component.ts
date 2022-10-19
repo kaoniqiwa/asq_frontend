@@ -29,6 +29,9 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
   ]
 })
 export class BabyInfoManageComponent implements OnInit, AfterViewInit {
+Number(arg0: string) {
+throw new Error('Method not implemented.');
+}
   // member id
   mid = "";
 
@@ -67,7 +70,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   editMemberInfo = false;
   // 问卷人信息
   memberGroup = this._fb.group({
-    name: ['', Validators.required],
+    name: [''],
     relation: [MemberRelation.None, Validators.required],
     province: [''],
     city: [''],
@@ -83,8 +86,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     motherDegree: [EducateDegree.None],
     fatherDegree: [EducateDegree.None],
     otherDegree: [EducateDegree.None],
-    motherBirth: [this.transformDate(this.today)],
-    fatherBirth: [this.transformDate(this.today)],
+    motherBirth: [''],
+    fatherBirth: [''],
   })
 
   // 宝宝信息
@@ -212,7 +215,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       identityInfo: [''],
       identityType: [IdentityType.Child],
       gender: ['', Validators.required],
-      birthday: [this.transformDate(this.today)],
+      birthday: ['',Validators.required],
       surveyTime: [this.transformDate(this.today)],
       premature: ['否'],
       prematrueweek: '0',
@@ -259,8 +262,16 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     }
   }
   changeBirthday(date: Date, group: FormGroup) {
+    
+    //let monthl = Number(this.rectify(this.transformDate(date),group.getRawValue().surveyTime,0,0).split('月')[0]);
+    //console.log('changeBirthday',this.transformDate(date),group.getRawValue().surveyTime);
+    let currentPremature = '否';
+    if((+this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday,this.babyGroupArr[this.currentIndex].getRawValue().surveyTime,0,0).split('月')[0] > 24)){
+      currentPremature = '否';
+    }
     group.patchValue({
-      birthday: this.transformDate(date)
+      birthday: this.transformDate(date),
+      premature:currentPremature
     })
   }
   changeBabyInfo(group: FormGroup) {
@@ -305,10 +316,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   }
   async onSubmit() {
-    console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().premature);
-    console.log(this.memberGroup);
+    console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().birthday);
+    //console.log(this.memberGroup);
+    console.log('onSubmit',this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday,this.babyGroupArr[this.currentIndex].getRawValue().surveyTime,this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek,this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
+
 
     if (this._checkForm()) {
+      console.log('通过')
       if (this.mid) {
         console.log('老用户');
 
@@ -444,7 +458,6 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             babyModel.IsMulti = rawValue.bornCondition.isMulti;
             babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
 
-
             let babyRes = await this._business.addBaby(babyModel);
             console.log('添加 baby ', babyRes);
 
@@ -519,13 +532,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       let birthDay = age[2];
 
       let lmonth = birthMonth-month;
-      let lday = birthDay - leftweek*WEEK_UNIT - aday;
+      let lday = birthDay - halfmoth*15 -leftweek*WEEK_UNIT - aday;
       if(lday<0){
         lmonth--;
         lday = lday+30;
       }
       
-      return lmonth+'月'+lday+'日';
+      return lmonth+'月'+lday+'天';
 
     } else {
       return '';
@@ -545,8 +558,6 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this.province = this.member.Province ?? "";
       this.city = this.member.City ?? "";
       this.county = this.member.County ?? "";
-
-
 
       this.memberGroup.patchValue({
         name: this.member.Name,
@@ -611,7 +622,16 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     console.log(this.memberGroup.get('phone')!.errors)
     for (let i = 0; i < this.babyGroupArr.length; i++) {
       let control = this.babyGroupArr[i];
-      // console.log(control)
+      let rectifyage = +this.rectify(control.getRawValue().birthday,control.getRawValue().surveyTime,control.getRawValue().prematrueweek,control.getRawValue().prematrueday).split('月')[0];
+      if(rectifyage<1){
+        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
+        return false;
+      }
+      if(rectifyage>66){
+        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过大，没有适龄的问卷');
+        return false;
+      }
+
       if (control.invalid) {
         if (control.get('name')!.invalid) {
           this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 请输入宝宝姓名');
@@ -621,6 +641,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 请选择宝宝性别');
           return false;
         }
+        if (control.get('birthday')!.invalid) {
+          this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 请选择宝宝出生日期');
+          return false;
+        }
+        
       }
     }
     if (this.memberGroup.invalid) {

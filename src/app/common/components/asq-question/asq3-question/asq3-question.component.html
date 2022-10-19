@@ -89,7 +89,7 @@
     </div>
   </ng-container>
   <div class="resBox res1" *ngIf="this.pageType==2">
-    <img src="/assets/img/ASQ3.png" alt="">
+    <img src="assets/img/ASQ3.png" alt="">
     <p>尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
     <p class="p_indent">感谢你为宝宝完成了ASQ-3问卷！</p>
 
@@ -165,12 +165,12 @@
   <div class="screenBox" *ngIf="this.pageType==3">
     <div class="gameBox">
       <div class="resInfo">
-        <!-- <img src="/assets/img/ASQ3.png" alt="" height="80%"><div class="testLogo"><p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span></div> -->
+        <!-- <img src="assets/img/ASQ3.png" alt="" height="80%"><div class="testLogo"><p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span></div> -->
         <table>
           <tbody>
             <tr>
               <td class="asqtd3">
-                <img src="/assets/img/ASQ3.png" alt="">
+                <img src="assets/img/ASQ3.png" alt="">
               </td>
               <td>
                 <div class="testLogo">
@@ -189,7 +189,7 @@
         <ul>
 
           <ng-container *ngFor="let game of gamesArr;">
-            <li> <img src="/assets/img/{{game.function}}.png" alt="">
+            <li> <img src="assets/img/{{game.function}}.png" alt="">
               <p>{{game.standard.split('$')[0]}}</p> <span>{{game.standard.split('$')[1]}}</span>
             </li>
           </ng-container>
@@ -213,7 +213,7 @@
       <div class="recBox" *ngIf="gaoArr.length!=scoreArr.length">
         <ng-container *ngFor="let game of gamesArr; let i=index;">
           <div *ngIf="scoreArr[i].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+game.function}}">
-            <img src="/assets/img/{{game.function}}.png" alt="">
+            <img src="assets/img/{{game.function}}.png" alt="">
             <ul>
 
               <li *ngIf="game.backup1!=''"><i></i>
@@ -293,7 +293,7 @@
               <tbody>
                 <tr>
                   <td class="asqtd3">
-                    <img src="/assets/img/ASQ3.png" alt="">
+                    <img src="assets/img/ASQ3.png" alt="">
                   </td>
                   <td>
                     <div class="testLogo">

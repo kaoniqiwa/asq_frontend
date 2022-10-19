@@ -131,7 +131,7 @@
               >
               <div class="col-sm-3">
                 <input
-                  type="text"
+                  type="date"
                   DateTimePicker
                   [format]="dateFormat"
                   (change)="changeBirthday($event, babyGroup)"
@@ -145,7 +145,7 @@
               >
               <div class="col-sm-3">
                 <input
-                  type="text"
+                  type="date"
                   readonly
                   DateTimePicker
                   [format]="dateFormat"
@@ -154,7 +154,7 @@
               </div>
             </div>
 
-            <div class="form-group" style="align-items: flex-start">
+            <div class="form-group" style="align-items: flex-start" *ngIf="!(+rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[0] > 24)">
               <label class="control-label col-sm-2">
                 <div><span>*</span>是否早产:</div>
                 <div>（提前3周以上出生）</div>
@@ -320,7 +320,7 @@
         class="green-title large-title underline-title"
         style="margin-bottom: 10px; justify-content: space-between"
       >
-        <div class="left-wrapper">问卷人信息</div>
+        <div class="left-wrapper">完成问卷人信息</div>
         <div class="right-wrapper" *ngIf="member">
           <button class="hw-normal-btn green-btn" (click)="changeMemberInfo()">
             {{ editMemberInfo ? "正在修改" : "修改信息" }}
@@ -331,7 +331,7 @@
       <form [formGroup]="memberGroup">
         <div class="form-wrapper" style="margin-top: 25px">
           <div class="form-group">
-            <label class="control-label col-sm-2"> <span>*</span> 姓名:</label>
+            <label class="control-label col-sm-2"> 姓名:</label>
             <div class="col-sm-3">
               <input class="" type="text" formControlName="name" />
             </div>

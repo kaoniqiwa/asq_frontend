@@ -200,6 +200,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       }
 
     }
+    this.swiper.swiperRef.slideTo(this.currentMonthIndex);
     console.log('this.currentMonthIndex',this.currentMonthIndex)
   }
 
