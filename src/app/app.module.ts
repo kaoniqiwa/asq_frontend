@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HowellModule } from './common/howell.module';
 import { LoginComponent } from './login/login/login.component';
+import { Asq3printComponent } from './print/asq3print/asq3print.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +23,7 @@ registerLocaleData(zh, 'zh-CN');
     AppComponent,
     LoginComponent,
     LicenseComponent,
+    Asq3printComponent,
   ],
   imports: [
     BrowserModule,

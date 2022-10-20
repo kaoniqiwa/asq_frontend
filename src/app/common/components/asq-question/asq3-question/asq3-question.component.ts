@@ -12,6 +12,7 @@ import { GetDividingParams } from 'src/app/network/request/games/dividing.params
 import { GetGamesParams } from 'src/app/network/request/games/games.params';
 import { GetQuestionParams } from 'src/app/network/request/question/question.params';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
+import printJS from 'print-js'
 
 import questions from "./data.json";
 
@@ -108,6 +109,7 @@ export class Asq3QuestionComponent implements OnInit {
         "prevStatus": true
     }
 ]; */
+  zonghe:any = {};
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
   title: any = '';
@@ -163,6 +165,7 @@ export class Asq3QuestionComponent implements OnInit {
   user: any = null;
   baby: any = null;
   age: any = null;
+  question:any = null;
 
 
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
@@ -217,13 +220,14 @@ export class Asq3QuestionComponent implements OnInit {
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
         this.intQuestions[i].answer = this.currentAnswers[i].answer;
+        this.intQuestions[i].result = this.currentAnswers[i].result;
       }
       this.setCurrentAnswers();
       //console.log('intQuestions:', this.intQuestions);
       //return
     } else {
       for (let i = 0; i < this.intQuestions.length; i++) {
-        this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true };
+        this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true ,'result': []};
         //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
         if (i == 0) {
           this.currentAnswers[i].prevStatus = false;
@@ -304,7 +308,7 @@ export class Asq3QuestionComponent implements OnInit {
       //console.log('currentAnswers:', this.currentAnswers);
     }
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
-    //console.log('intQuestions:', this.intQuestions);
+    //console.log('intQuestions:', this.intQuestions,this.currentAnswers);
 
     //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
   }
@@ -329,7 +333,7 @@ export class Asq3QuestionComponent implements OnInit {
     }
   }
 
-  getScore(arr: any, indexFa: any) {//界值状态转化
+  getScore(arr: any, indexFa: any ,rearr: any,) {//界值状态转化
     let thisScore = 0;
     let thisScoreObj: any = {};
     let that = this;
@@ -340,6 +344,7 @@ export class Asq3QuestionComponent implements OnInit {
         thisScore += that.setThisScore(2);
       }
     })
+    thisScoreObj.result = rearr;
     thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
@@ -385,8 +390,11 @@ export class Asq3QuestionComponent implements OnInit {
     let that = this;
     that.currentAnswers.map(function (item: any, index: any) {
       if ((index + 1) != that.currentAnswers.length) {
-
-        that.scoreArr.push(that.getScore(item.answer, index));
+        that.scoreArr.push(that.getScore(item.answer, index,item.result));
+      }else{
+        that.zonghe.question = that.intQuestions[index].question;
+        that.zonghe.answer = item.answer;
+        that.zonghe.result = item.result;
       }
     });
   }
@@ -400,7 +408,8 @@ export class Asq3QuestionComponent implements OnInit {
     model.Bid = this.bid;// 宝宝ID；
     model.QuestType = this.questType;// asq3答卷
     model.QuestMonth = String(this.questMonth);//2月份
-    model.QuestResult = this.currentAnswers;// 答题结果
+    model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
+    model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
     model.Source = this._sessionStorage.source;
 
@@ -409,8 +418,9 @@ export class Asq3QuestionComponent implements OnInit {
     let res = await this._business.create(model);
     if (res) {
       this.toastrService.success('提交成功');
+      this.question = res;
       this.pageType = 2;
-      console.log('res:', res, 'this.pageType', this.pageType);
+      console.log('all:',this.user,this.baby,this.doctor,this.question);
     }
   }
 
@@ -436,6 +446,10 @@ export class Asq3QuestionComponent implements OnInit {
       console.log('getDividing_res:', that.dividingArr);
       this.init();
     }
+  }
+
+  printModel(str:any) {
+    
   }
 
 }

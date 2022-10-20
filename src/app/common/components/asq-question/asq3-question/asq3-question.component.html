@@ -55,7 +55,7 @@
               </tr>
               <tr *ngIf="i != 0 && j == k - 1">
                 <td colspan="4">
-                  <textarea class="last_textarea" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
+                  <textarea class="last_textarea" [(ngModel)]="currentAnswer.result && currentAnswer.result[i-1]" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
                 </td>
               </tr>
             </ng-container>
@@ -69,7 +69,7 @@
             [class.btn-default1]="this.currentAnswer.nextStatus" (click)="nextQuestions($event)">
             继续
           </button>
-          <button *ngIf=" (this.currentPage + 1) == this.allPages" class="btnNext btn-default1" (click)="submit()">
+          <button *ngIf=" (this.currentPage + 1) == this.allPages" class="btnNext" [class.btn-default1]="this.currentAnswer.nextStatus" (click)="submit()">
             提交信息
           </button>
         </div>
@@ -88,7 +88,7 @@
       </span>
     </div>
   </ng-container>
-  <div class="resBox res1" *ngIf="this.pageType==2">
+  <div class="resBox res1" *ngIf="this.pageType==2" id="print2">
     <img src="assets/img/ASQ3.png" alt="">
     <p>尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
     <p class="p_indent">感谢你为宝宝完成了ASQ-3问卷！</p>
@@ -162,7 +162,7 @@
       译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
     </div>
   </div>
-  <div class="screenBox" *ngIf="this.pageType==3">
+  <div class="screenBox" *ngIf="this.pageType==3" id="print3">
     <div class="gameBox">
       <div class="resInfo">
         <!-- <img src="assets/img/ASQ3.png" alt="" height="80%"><div class="testLogo"><p><span class="month"></span>个月ASQ-3游戏活动</p><span class="desc"></span></div> -->
@@ -276,7 +276,7 @@
     </div>
     <div style="text-align: center;">
       <button class="btn-default1 btnAdvice" (click)="next()">下一步</button>
-      <button class="btn-default1 btnPrint">打印</button>
+      <a target="_blank" routerLink="/asq3print" [queryParams]="{uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
       <button class="btn-default1 complete" style="display: none;">完成</button>
     </div>
     <div class="bottom">
@@ -284,7 +284,7 @@
     </div>
   </div>
 
-  <div class="screenBox" *ngIf="this.pageType==4">
+  <div class="screenBox" *ngIf="this.pageType==4" id="print4">
     <div class="resultBox">
       <div class="resCon">
         <div>
@@ -362,33 +362,10 @@
           </div>
           <div class="resQues">
             <h2>2.综合问题记录如下</h2>
-            <!--zong-->
-            <ng-container *ngFor="let item of intQuestions[5].question; let i = index; let l = count">
-              <tr *ngIf="i != 0" class="model queNum1">
-                <td>
-                  <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
-                </td>
-                <td>
-                  <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
-                    attr.xu="{{ i - 1 }}" value="1" [(ngModel)]="intQuestions[5].answer && intQuestions[5].answer[i-1]" />
-                </td>
-                <td>
-                  <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
-                    attr.xu="{{ i - 1 }}" value="3" [(ngModel)]="intQuestions[5].answer && intQuestions[5].answer[i-1]" />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4">
-                  <textarea class="last_textarea" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
-                </td>
-              </tr>
-            </ng-container>
-            <!--zongend-->
+            
             <table class="tabQues">
               <tbody>
                 <ng-container *ngFor="let l = count; let in of counter(math.ceil((intQuestions[5].question.length-1)/2)); let i = index; ">
-                  <!-- {{intQuestions[5].question[2*i+1][1]}}
-                  {{intQuestions[5].question[2*i+2][1]}} -->
                   <tr class="filing">
                     <td>{{intQuestions[5].question[2*i+1][0]}}. {{intQuestions[5].question[2*i+1][1]}}</td>
 
@@ -405,140 +382,19 @@
                   </tr>
   
                   <tr>
-                    <td colspan="3"><textarea class="filing0" name="" cols="30" rows="10" maxlength="30"
-                        disabled="disabled"></textarea></td>
+                    <td colspan="3">
+                      <textarea class="filing0" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+1-1]" cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
+                      </td>
                     <ng-container *ngIf="!((i == l - 1) && (intQuestions[5].question.length-1)%2 == 1)">
-                      <td colspan="3"><textarea class="filing1" name="" cols="30" rows="10" maxlength="30"
-                        disabled="disabled"></textarea></td>
+                      <td colspan="3">
+                        <textarea class="filing1" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+2-1]" cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
+                      </td>
                     </ng-container>
                   </tr>
                 </ng-container>
 
-                <!-- <tr class="filing">
-                  <td>1. 宝宝对称地运动双手和双腿吗？如果勾选“否”，请说明：</td>
-                  <td><input type="radio" name="rdo0" value="1" data-m="n" disabled="disabled">是</td>
-                  <td class="fontStyle"><input type="radio" name="rdo0" value="2" data-m="n" disabled="disabled"
-                      checked="checked">否</td>
-                  <td>2. 当您扶宝宝站立时，他 /她的双脚大多数时间是平放在所踩物体的表面上吗？如果勾选“否”，请说明：</td>
-                  <td><input type="radio" name="rdo1" value="1" data-m="n" disabled="disabled">是</td>
-                  <td class="fontStyle"><input type="radio" name="rdo1" value="2" data-m="n" disabled="disabled"
-                      checked="checked">否</td>
-                </tr>
-
-                <tr>
-                  <td colspan="3"><textarea class="filing0" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing1" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>3. 您是否担心宝宝太安静、不像其他／她宝宝那样发出声音？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo2" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo2" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>4. 宝宝父母的任一方有儿童时期耳聋或听力障碍家族史吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo3" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo3" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing2" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing3" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>5. 您担心宝宝的视力吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo4" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo4" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>6. 宝宝最近几个月生过什么病吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo5" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo5" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing4" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing5" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>7. 您对宝宝的行为有什么担忧吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo6" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo6" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>8. 宝宝有什么情况令您感到担心吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo7" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo7" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing6" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing7" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr> -->
               </tbody>
             </table>
-            <!-- <table class="tabQues">
-              <tbody>
-
-                <tr class="filing">
-                  <td>1. 宝宝对称地运动双手和双腿吗？如果勾选“否”，请说明：</td>
-                  <td><input type="radio" name="rdo0" value="1" data-m="n" disabled="disabled">是</td>
-                  <td class="fontStyle"><input type="radio" name="rdo0" value="2" data-m="n" disabled="disabled"
-                      checked="checked">否</td>
-                  <td>2. 当您扶宝宝站立时，他 /她的双脚大多数时间是平放在所踩物体的表面上吗？如果勾选“否”，请说明：</td>
-                  <td><input type="radio" name="rdo1" value="1" data-m="n" disabled="disabled">是</td>
-                  <td class="fontStyle"><input type="radio" name="rdo1" value="2" data-m="n" disabled="disabled"
-                      checked="checked">否</td>
-                </tr>
-
-                <tr>
-                  <td colspan="3"><textarea class="filing0" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing1" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>3. 您是否担心宝宝太安静、不像其他／她宝宝那样发出声音？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo2" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo2" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>4. 宝宝父母的任一方有儿童时期耳聋或听力障碍家族史吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo3" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo3" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing2" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing3" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>5. 您担心宝宝的视力吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo4" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo4" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>6. 宝宝最近几个月生过什么病吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo5" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo5" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing4" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing5" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-                <tr class="filing">
-                  <td>7. 您对宝宝的行为有什么担忧吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo6" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo6" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                  <td>8. 宝宝有什么情况令您感到担心吗？如果勾选“是”，请说明：</td>
-                  <td class="fontStyle"><input type="radio" name="rdo7" value="1" data-m="y" disabled="disabled">是</td>
-                  <td><input type="radio" name="rdo7" value="2" data-m="y" disabled="disabled" checked="checked">否</td>
-                </tr>
-                <tr>
-                  <td colspan="3"><textarea class="filing6" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                  <td colspan="3"><textarea class="filing7" name="" cols="30" rows="10" maxlength="30"
-                      disabled="disabled"></textarea></td>
-                </tr>
-              </tbody>
-            </table> -->
           </div>
           <div class="resExplain">
             <h2>3.ASQ-3分数的解释和建议</h2>

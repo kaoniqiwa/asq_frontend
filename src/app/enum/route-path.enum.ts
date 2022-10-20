@@ -1,4 +1,5 @@
 export enum RoutePath {
   login = 'login',
-  neoballoon = "neoballoon"
+  neoballoon = "neoballoon",
+  asq3print = "asq3print"
 }

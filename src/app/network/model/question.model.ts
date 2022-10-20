@@ -5,8 +5,9 @@ export class Question {
   Bid!: string;
   QuestType!: QuestType;
   QuestMonth!: string;
-  QuestResult!: Array<any>;
+  QuestResult!: string;
   QuestScore!: string;
+  ZongHe?:string;
   Source!:string;
   CreateTime?: string;
   UpdateTime?: string;
