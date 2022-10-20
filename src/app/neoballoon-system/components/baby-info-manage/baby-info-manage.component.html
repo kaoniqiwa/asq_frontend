@@ -129,7 +129,7 @@
               <label class="control-label col-sm-2">
                 <span>*</span> 出生日期:</label
               >
-              <div class="col-sm-3">
+              <div class="col-sm-5">
                 <input
                   type="date"
                   DateTimePicker
@@ -137,6 +137,16 @@
                   (change)="changeBirthday($event, babyGroup)"
                   formControlName="birthday"
                 />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 出生日期2:</label
+              >
+              <div class="col-sm-5">
+                <app-date-picker
+                  (pickerChange)="pickerChange($event, babyGroup)"
+                ></app-date-picker>
               </div>
             </div>
             <div class="form-group">
@@ -153,8 +163,32 @@
                 />
               </div>
             </div>
+            <div class="form-group">
+              <label class="control-label col-sm-2">
+                <span>*</span> 筛查时间2:</label
+              >
+              <div class="col-sm-5">
+                <app-date-picker
+                  [disabled]="true"
+                  (pickerChange)="pickerChange($event, babyGroup)"
+                ></app-date-picker>
+              </div>
+            </div>
 
-            <div class="form-group" style="align-items: flex-start" *ngIf="!(+rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[0] > 24)">
+            <div
+              class="form-group"
+              style="align-items: flex-start"
+              *ngIf="
+                !(
+                  +rectify(
+                    babyGroupArr[currentIndex].getRawValue().birthday,
+                    babyGroupArr[currentIndex].getRawValue().surveyTime,
+                    0,
+                    0
+                  ).split('月')[0] > 24
+                )
+              "
+            >
               <label class="control-label col-sm-2">
                 <div><span>*</span>是否早产:</div>
                 <div>（提前3周以上出生）</div>
@@ -177,7 +211,10 @@
                 </label>
               </div>
             </div>
-            <div class="form-group" *ngIf="babyGroupArr[currentIndex].getRawValue().premature == '是'">
+            <div
+              class="form-group"
+              *ngIf="babyGroupArr[currentIndex].getRawValue().premature == '是'"
+            >
               <label class="control-label col-sm-2">
                 <div><span>*</span>若早产，请填写孕周:</div>
               </label>
@@ -202,7 +239,7 @@
                   <option value="21">21周</option>
                   <option value="20">20周</option>
                   <option value="19">19周</option>
-              </select>
+                </select>
               </div>
               <div class="col-sm-2">
                 <select formControlName="prematrueday">
@@ -214,11 +251,10 @@
                   <option value="2">2天</option>
                   <option value="1">1天</option>
                   <option value="0">0天</option>
-                </select> 
+                </select>
               </div>
-              
             </div>
-            
+
             <div class="form-group">
               <label class="control-label col-sm-2">
                 <div>出生时体重:</div>

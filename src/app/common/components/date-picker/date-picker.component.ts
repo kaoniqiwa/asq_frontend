@@ -9,10 +9,12 @@ export class DatePickerComponent implements OnInit {
   // 当前时间
   today = new Date();
 
+  @Input() disabled = false;
+  
   // 年月日提示文字
-  @Input() titleYear = "";
-  @Input() titleMonth = "";
-  @Input() titleDay = "";
+  @Input() titleYear = "年";
+  @Input() titleMonth = "月";
+  @Input() titleDay = "日";
 
   // 年份范围
   @Input() startYear = 1900;

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
+import { DatePickerModel } from 'src/app/common/components/date-picker/date-picker.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
@@ -29,9 +30,9 @@ import { BabyInfoManageBusiness } from './baby-info-manage.business';
   ]
 })
 export class BabyInfoManageComponent implements OnInit, AfterViewInit {
-Number(arg0: string) {
-throw new Error('Method not implemented.');
-}
+  Number(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   // member id
   mid = "";
 
@@ -215,7 +216,7 @@ throw new Error('Method not implemented.');
       identityInfo: [''],
       identityType: [IdentityType.Child],
       gender: ['', Validators.required],
-      birthday: ['',Validators.required],
+      birthday: ['', Validators.required],
       surveyTime: [this.transformDate(this.today)],
       premature: ['否'],
       prematrueweek: '0',
@@ -261,17 +262,20 @@ throw new Error('Method not implemented.');
 
     }
   }
+  pickerChange(date: DatePickerModel, group: FormGroup) {
+    console.log('pickerChange', date)
+  }
   changeBirthday(date: Date, group: FormGroup) {
-    
+
     //let monthl = Number(this.rectify(this.transformDate(date),group.getRawValue().surveyTime,0,0).split('月')[0]);
     //console.log('changeBirthday',this.transformDate(date),group.getRawValue().surveyTime);
     let currentPremature = '否';
-    if((+this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday,this.babyGroupArr[this.currentIndex].getRawValue().surveyTime,0,0).split('月')[0] > 24)){
+    if ((+this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, 0, 0).split('月')[0] > 24)) {
       currentPremature = '否';
     }
     group.patchValue({
       birthday: this.transformDate(date),
-      premature:currentPremature
+      premature: currentPremature
     })
   }
   changeBabyInfo(group: FormGroup) {
@@ -318,7 +322,7 @@ throw new Error('Method not implemented.');
   async onSubmit() {
     console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().birthday);
     //console.log(this.memberGroup);
-    console.log('onSubmit',this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday,this.babyGroupArr[this.currentIndex].getRawValue().surveyTime,this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek,this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
+    console.log('onSubmit', this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek, this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
 
 
     if (this._checkForm()) {
@@ -372,8 +376,8 @@ throw new Error('Method not implemented.');
               babyModel.Premature = rawValue.premature;
               babyModel.Prematrueweek = rawValue.prematrueweek;
               babyModel.Prematrueday = rawValue.prematrueday;
-              console.log('rectify',this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday),rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
-              babyModel.Rectifyage = this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
+              console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+              babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
               babyModel.IsShun = rawValue.bornCondition.isShun;
               babyModel.IdentityInfo = rawValue.identityInfo;
               babyModel.IdentityType = rawValue.identityType;
@@ -448,8 +452,8 @@ throw new Error('Method not implemented.');
             babyModel.Premature = rawValue.premature;
             babyModel.Prematrueweek = rawValue.prematrueweek;
             babyModel.Prematrueday = rawValue.prematrueday;
-            console.log('rectify',this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday),rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
-            babyModel.Rectifyage = this.rectify(rawValue.birthday,rawValue.surveyTime,rawValue.prematrueweek,rawValue.prematrueday);
+            console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+            babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
             babyModel.IsShun = rawValue.bornCondition.isShun;
             babyModel.IdentityInfo = rawValue.identityInfo;
             babyModel.IdentityType = rawValue.identityType;
@@ -485,7 +489,7 @@ throw new Error('Method not implemented.');
   goBack() {
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
   }
-  rectify(birthday:any,surveyTime:any,week:any,day:any) {
+  rectify(birthday: any, surveyTime: any, week: any, day: any) {
 
     const MAX_WEEK = 40;
     const MAX_DAY = 0;
@@ -497,15 +501,15 @@ throw new Error('Method not implemented.');
     let halfmoth = 0;
     let leftweek = 0;
 
-    if(week != 0 ){
-      aweek = MAX_WEEK-week;
-      if(day>0){
+    if (week != 0) {
+      aweek = MAX_WEEK - week;
+      if (day > 0) {
         aweek--;
-        aday = WEEK_UNIT-day;
+        aday = WEEK_UNIT - day;
       }
-      month = Math.trunc(aweek/4);
-      halfmoth = Math.trunc((aweek%4)/2);
-      leftweek = (aweek%4)%2;
+      month = Math.trunc(aweek / 4);
+      halfmoth = Math.trunc((aweek % 4) / 2);
+      leftweek = (aweek % 4) % 2;
     }
 
     if (birthday) {
@@ -531,14 +535,14 @@ throw new Error('Method not implemented.');
       let birthMonth = (Number(age[0]) * 12 + Number(age[1]));
       let birthDay = age[2];
 
-      let lmonth = birthMonth-month;
-      let lday = birthDay - halfmoth*15 -leftweek*WEEK_UNIT - aday;
-      if(lday<0){
+      let lmonth = birthMonth - month;
+      let lday = birthDay - halfmoth * 15 - leftweek * WEEK_UNIT - aday;
+      if (lday < 0) {
         lmonth--;
-        lday = lday+30;
+        lday = lday + 30;
       }
-      
-      return lmonth+'月'+lday+'天';
+
+      return lmonth + '月' + lday + '天';
 
     } else {
       return '';
@@ -594,7 +598,7 @@ throw new Error('Method not implemented.');
             premature: baby.Premature,
             prematrueweek: baby.Prematrueweek,
             prematrueday: baby.Prematrueday,
-            rectifyage: this.rectify(baby.Birthday,baby.SurveyTime,baby.Prematrueweek,baby.Prematrueday),
+            rectifyage: this.rectify(baby.Birthday, baby.SurveyTime, baby.Prematrueweek, baby.Prematrueday),
             weight: baby.Weight,
             bornCondition: {
               isShun: baby.IsShun,
@@ -622,12 +626,12 @@ throw new Error('Method not implemented.');
     console.log(this.memberGroup.get('phone')!.errors)
     for (let i = 0; i < this.babyGroupArr.length; i++) {
       let control = this.babyGroupArr[i];
-      let rectifyage = +this.rectify(control.getRawValue().birthday,control.getRawValue().surveyTime,control.getRawValue().prematrueweek,control.getRawValue().prematrueday).split('月')[0];
-      if(rectifyage<1){
+      let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematrueweek, control.getRawValue().prematrueday).split('月')[0];
+      if (rectifyage < 1) {
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
         return false;
       }
-      if(rectifyage>66){
+      if (rectifyage > 66) {
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过大，没有适龄的问卷');
         return false;
       }
@@ -645,7 +649,7 @@ throw new Error('Method not implemented.');
           this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 请选择宝宝出生日期');
           return false;
         }
-        
+
       }
     }
     if (this.memberGroup.invalid) {

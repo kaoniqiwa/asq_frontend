@@ -1,22 +1,35 @@
-<select #yearEle [(ngModel)]="year" (change)="changeHandler()">
+<select
+  #yearEle
+  [(ngModel)]="year"
+  (change)="changeHandler()"
+  [disabled]="disabled"
+>
   <ng-template ngFor [ngForOf]="yearSource" let-year>
     <option [ngValue]="year">{{ year }}</option>
   </ng-template>
 </select>
 {{ titleYear }}
 
-<select #monthEle [(ngModel)]="month" (change)="changeHandler()">
+<select
+  #monthEle
+  [(ngModel)]="month"
+  (change)="changeHandler()"
+  [disabled]="disabled"
+>
   <ng-template ngFor [ngForOf]="monthSource" let-month>
     <option [ngValue]="month">{{ month }}</option>
   </ng-template>
 </select>
 {{ titleMonth }}
 
-<select #dateEle [(ngModel)]="date" (change)="changeHandler()">
+<select
+  #dateEle
+  [(ngModel)]="date"
+  (change)="changeHandler()"
+  [disabled]="disabled"
+>
   <ng-template ngFor [ngForOf]="dateSource" let-date>
     <option [ngValue]="date">{{ date }}</option>
   </ng-template>
 </select>
 {{ titleDay }}
-
-{{ year }}--{{ month }}--{{ date }}
