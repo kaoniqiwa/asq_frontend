@@ -102,7 +102,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   // 最大宝宝数
   maxLength = 5;
-
+  source = 0;
 
   get Phone() {
     return this.memberGroup.get('phone') as FormControl;
@@ -113,8 +113,10 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   constructor(private _business: BabyInfoManageBusiness, private _fb: FormBuilder, private _router: Router, private _toastrService: ToastrService, private _activeRoute: ActivatedRoute, private _sessionStorage: SessionStorageService) {
     this._activeRoute.queryParams.subscribe((params) => {
+      this.source = params['source'];
       this.mid = params['mid'];
-      // console.log('member id', this.mid);
+      this._sessionStorage.source =  params['source'];
+      console.log('source_after',this._sessionStorage.source);
     })
   }
 

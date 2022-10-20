@@ -17,6 +17,10 @@ export class AuthorizeBoxComponent implements OnInit {
 
   navigateToBabyInfo() {
     if (this.agree)
-      this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+      this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"],{
+        queryParams: {
+          source: 1,
+        }
+      })
   }
 }

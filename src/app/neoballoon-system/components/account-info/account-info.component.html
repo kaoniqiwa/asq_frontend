@@ -1,5 +1,5 @@
 <div class="account-info">
-  <div class="normal-title gray-title">用户信息</div>
+  <div class="normal-title gray-title user-name">{{user?.Name}}</div>
   <div class="wrapper">
     <div class="account">
       <div class="large-title green-title center-title">{{ doctor?.Name }}</div>
@@ -10,37 +10,37 @@
         <div class="info-wrapper">
           <div class="info-left">
             <div class="gray">剩余</div>
-            <div class="num-left">46/</div>
+            <div class="num-left">{{user?.AsqLeft}}/</div>
           </div>
           <div class="info-right">
             <div class="gray">总共</div>
-            <div class="num-right">1324</div>
+            <div class="num-right">{{user?.AsqTotal}}</div>
           </div>
         </div>
       </div>
       <div class="info-item">
-        <div class="info-head">ASQ-3问卷</div>
+        <div class="info-head">ASQ-SE问卷</div>
         <div class="info-wrapper">
           <div class="info-left">
             <div class="gray">剩余</div>
-            <div class="num-left">46/</div>
+            <div class="num-left">{{user?.AsqSeLeft}}/</div>
           </div>
           <div class="info-right">
             <div class="gray">总共</div>
-            <div class="num-right">1324</div>
+            <div class="num-right">{{user?.AsqSeTotal}}</div>
           </div>
         </div>
       </div>
       <div class="info-item">
-        <div class="info-head">ASQ-3问卷</div>
+        <div class="info-head">ASQ-SE2问卷</div>
         <div class="info-wrapper">
           <div class="info-left">
             <div class="gray">剩余</div>
-            <div class="num-left">46/</div>
+            <div class="num-left">{{user?.AsqSe2Left}}/</div>
           </div>
           <div class="info-right">
             <div class="gray">总共</div>
-            <div class="num-right">1324</div>
+            <div class="num-right">{{user?.AsqSe2Total}}</div>
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { DigestResponse } from 'src/app/network/auth/digest-response.class';
 import { Baby } from 'src/app/network/model/baby.model';
 import { Doctor } from 'src/app/network/model/doctor.model';
 import { Member } from 'src/app/network/model/member.model';
+import { Company } from 'src/app/network/model/company.model';
 
 
 import monthWorkBook from "src/assets/files/asq_month.xlsx";
@@ -33,7 +34,13 @@ export class SessionStorageService {
 
   monthWorkBook = monthWorkBook;
 
-
+  set source(source) {
+    sessionStorage.setItem('source', JSON.stringify(source));
+  }
+  get source() {
+    let source = sessionStorage.getItem('source');
+    return source ? JSON.parse(source) : null;
+  }
 
   private _doctor: Doctor | null = null;
   set doctor(doctor: Doctor | null) {
@@ -44,16 +51,21 @@ export class SessionStorageService {
     return doctor ? JSON.parse(doctor) : null;
   }
 
-
+  private _user: Company | null = null;
+  set user(user: Company | null) {
+    sessionStorage.setItem('doctor', JSON.stringify(user));
+  }
+  get user() {
+    let user = sessionStorage.getItem('doctor');
+    return user ? JSON.parse(user) : null;
+  }
 
   private _baby: Baby | null = null;
   set baby(baby: Baby | null) {
-    sessionStorage.setItem('baby', JSON.stringify(baby));
-
+    this._baby = baby
   }
   get baby() {
-    let baby = sessionStorage.getItem('baby');
-    return baby ? JSON.parse(baby) : null;
+    return this._baby;
   }
 
   private _member: Member | null = null;

@@ -7,6 +7,7 @@ export class Question {
   QuestMonth!: string;
   QuestResult!: Array<any>;
   QuestScore!: string;
+  Source!:string;
   CreateTime?: string;
   UpdateTime?: string;
   Flow?: string;

@@ -30,6 +30,7 @@ export class Asq3QuestionComponent implements OnInit {
 
   //@Input() mounthNum: NumberSymbol = 0;
   //@Input() thisAnswers: any = [];
+  math = Math;
   thisAnswers: any = [];
   /* thisAnswers:any = [
     {
@@ -249,6 +250,10 @@ export class Asq3QuestionComponent implements OnInit {
     }
   }
 
+  counter(i: number) {
+    return new Array(i);
+  }
+
   checkDetil() {
     this.pageType = 3;
   }
@@ -397,6 +402,7 @@ export class Asq3QuestionComponent implements OnInit {
     model.QuestMonth = String(this.questMonth);//2月份
     model.QuestResult = this.currentAnswers;// 答题结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
+    model.Source = this._sessionStorage.source;
 
     console.log('model',model);
 

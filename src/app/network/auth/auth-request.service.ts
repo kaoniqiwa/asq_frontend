@@ -25,7 +25,7 @@ export class AuthorizationService implements CanActivate {
   private _config: AxiosRequestConfig = { headers: {} };
 
   constructor(
-    private _sessionStorageService: SessionStorageService,
+    private _sessionStorage: SessionStorageService,
     private _localStorage: LocalStorageService,
     private _cookieService: CookieService,
     private _router: Router,
@@ -56,7 +56,7 @@ export class AuthorizationService implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
-    let challenge = this._sessionStorageService.challenge;
+    let challenge = this._sessionStorage.challenge;
     let user = this._localStorage.user;
     let holdCookie = this._cookieService.check('username');
     // console.log(userResource);
@@ -99,7 +99,7 @@ export class AuthorizationService implements CanActivate {
           )
         }
 
-        this._sessionStorageService.challenge = challenge;
+        this._sessionStorage.challenge = challenge;
         return axios(this._config).then((res: AxiosResponse<{ Data: User }>) => {
           let result = plainToClass(User, res.data.Data)
           this._storeUserInfo(result, password,);
@@ -201,7 +201,7 @@ export class AuthorizationService implements CanActivate {
     return authHeaders;
   }
   public generateHttpHeader(method: string, uri: string) {
-    let chanllenge = this._sessionStorageService.challenge;
+    let chanllenge = this._sessionStorage.challenge;
     // console.log(chanllenge);
     const authHeader = this._generateChallengeHeader(chanllenge, method, uri);
     return new HttpHeaders({

@@ -49,7 +49,8 @@ export class BabyInMemberComponent implements OnInit {
           this.member = res.Data[0];
           this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
             queryParams: {
-              mid: this.member.Id
+              mid: this.member.Id,
+              source: 1
             }
           })
         } else {
