@@ -207,15 +207,15 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   gotoQuest(e: Event) {
     e.stopPropagation();
     if (this.currentBaby) {
-      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.currentBaby.Id], {
+      this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
         queryParams: {
           pageType: PageType.dati,
           questType: this.currentType,
-          questMonth: this.currentMonthIndex
+          questMonth: this.currentMonthIndex,
+          bid:this.currentBaby.Id
         }
       })
     }
-
   }
   ngOnDestroy(): void {
     console.log('destroy');

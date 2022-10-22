@@ -9,6 +9,7 @@ import { DatePickerComponent } from "./date-picker/date-picker.component";
 import { ImageBoxComponent } from "./image-box/image-box.component";
 import { ManualDownloadComponent } from "./manual-download/manual-download.component";
 import { PaginatorComponent } from "./paginator/paginator.component";
+import { PointerBoxComponent } from "./pointer-box/pointer-box.component";
 import { QuickBoxComponent } from "./quick-box/quick-box.component";
 import { SimpleSearchComponent } from "./simple-search/simple-search.component";
 import { SystemUsageComponent } from "./system-usage/system-usage.component";
@@ -31,5 +32,6 @@ export const CUSTOM_COMPONENTS = [
   Asq3QuestionComponent,
   BabyInMemberComponent,
   ConfirmDialogComponent,
-  DatePickerComponent
+  DatePickerComponent,
+  PointerBoxComponent
 ]

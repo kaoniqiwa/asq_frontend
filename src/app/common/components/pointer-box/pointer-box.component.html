@@ -1,0 +1,18 @@
+<div class="asideBox" [hidden]="!getfloat">
+  <div class="confirmBox" [hidden]="!(showStatus==1)">
+    <img src="assets/img/close.png" alt="" class="btnClose" (click)="onSubmit(3)">
+    <p>
+      <span class="babyData">宝宝出生日期为：{{birthDay}}</span>
+      <span>请确认宝宝出生日期准确，提交问卷之后将不能修改！</span>
+    </p>
+    <!-- <hr> -->
+    <button class="btn-default1 btnsure" (click)="onSubmit(2)">确认</button>
+    <button class="btn-unclick btncancel" (click)="onSubmit(3)">取消</button>
+  </div>
+  <!-- 新增、修改或更新宝宝和家长信息时 的确认浮层 -->
+  <div class="promptBox" [hidden]="!(showStatus==2)">
+    <p>请勿在筛查过程中退出，<br>否则会丢失填写内容！</p>
+    <button class="btn-default btnPrompt" (click)="onSubmit(4)">确认</button>
+  </div>
+
+</div>

@@ -125,7 +125,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="control-label col-sm-2">
                 <span>*</span> 出生日期:</label
               >
@@ -138,18 +138,22 @@
                   formControlName="birthday"
                 />
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label class="control-label col-sm-2">
-                <span>*</span> 出生日期2:</label
+                <span>*</span> 出生日期:</label
               >
               <div class="col-sm-5">
                 <app-date-picker
+                [disabled]="mid!=undefined?true:!true"
+                [year]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[0]"
+                [month]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[1]"
+                [date]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[2]"
                   (pickerChange)="pickerChange($event, babyGroup)"
                 ></app-date-picker>
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="control-label col-sm-2">
                 <span>*</span> 筛查时间:</label
               >
@@ -162,15 +166,18 @@
                   formControlName="surveyTime"
                 />
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label class="control-label col-sm-2">
-                <span>*</span> 筛查时间2:</label
+                <span>*</span> 筛查时间:</label
               >
               <div class="col-sm-5">
                 <app-date-picker
-                  [disabled]="true"
-                  (pickerChange)="pickerChange($event, babyGroup)"
+                  [disabled]="mid!=undefined?true:!true"
+                  [year]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[0]"
+                  [month]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[1]"
+                  [date]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[2]"
+                  (pickerChange)="pickerChange2($event, babyGroup)"
                 ></app-date-picker>
               </div>
             </div>
@@ -557,9 +564,12 @@
     <button
       class="hw-normal-btn green-btn"
       style="margin: 20px auto"
-      (click)="onSubmit()"
+      (click)="onSubmitFloat(1)"
     >
       开始答题
     </button>
   </div>
+  <toast-window [hidden]="!float">
+    <pointer-box [getfloat]="float" (getparent)="onSubmitFloat($event)" #Pointer></pointer-box>
+  </toast-window>
 </div>

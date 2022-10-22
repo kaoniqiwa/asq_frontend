@@ -12,6 +12,7 @@ import { SurveyManageComponent } from "./components/survey-manage/survey-manage.
 import { BabyInfoManageComponent } from "./components/baby-info-manage/baby-info-manage.component";
 import { NeoballoonService } from "./neoballoon.service";
 import { Asq3QuestionComponent } from "../common/components/asq-question/asq3-question/asq3-question.component";
+import { Asq3EntryComponent } from "../common/components/asq-question/asq-entry/asq-entry.component";
 
 
 const routes: Routes = [
@@ -78,6 +79,12 @@ const routes: Routes = [
       {
         path: "asq3-question/:bid",
         component: Asq3QuestionComponent,
+        canActivate: [NeoballoonService]
+
+      },
+      {
+        path: "asq-entry/:bid",
+        component:Asq3EntryComponent,
         canActivate: [NeoballoonService]
 
       }

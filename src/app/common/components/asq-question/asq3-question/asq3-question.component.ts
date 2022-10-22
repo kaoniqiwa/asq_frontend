@@ -175,16 +175,11 @@ export class Asq3QuestionComponent implements OnInit {
     this.baby = this._sessionStorage.baby;
     //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
 
-
-    this._activeRoute.params.subscribe((params: Params) => {
-      this.bid = params['bid'];
-    })
-
     this._activeRoute.queryParams.subscribe(params => {
       this.pageType = params['pageType'];
       this.questType = params['questType'];
       this.questMonth = params['questMonth'];
-
+      this.bid = params['bid'];
     })
     console.log('constructor', this._localStorage.user, this.doctor, this.monthWorkBook, this.baby, this.age, this.questMonth);
 

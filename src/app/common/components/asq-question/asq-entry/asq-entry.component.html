@@ -7,8 +7,8 @@
     </div>
     <div class="badge-title">
       <div>
-        <span class="st-span"> <strong>2</strong> 个月问卷 </span>
-        <span class="m-span">适用于1个月0天至2个月30天宝宝</span>
+        <span class="st-span"> <strong>{{mouthArr[questMonth]}}</strong> 个月问卷 </span>
+        <span class="m-span">适用于{{monthWorkBook[0].data[questMonth][1]}}<br>至{{monthWorkBook[0].data[questMonth][2]}}{{monthWorkBook[0].data[questMonth][3]}}</span>
       </div>
       <div style="display: flex; align-items: flex-end">
         <img src="assets/img/ASQ3.png" alt="" />
@@ -28,7 +28,7 @@
   </div>
   <div class="notice">
     <h4>
-      注意事项 （逐一阅读，并点击“ <img src="assets/img/chk.png" alt="" />”）
+      注意事项 （逐一阅读，并点击“ <img src="assets/img/mycheck.png" alt="" />”）
     </h4>
     <ul class="chk-list">
       <li>
@@ -60,6 +60,6 @@
     试一次以上。如有可能，把测试安排在孩子愿意合作时。如果您知道孩子会做，但他/她拒绝做，请勾选“是”。
   </div>
   <div style="text-align: center">
-    <button class="btn-default1 btn-red btn-answer">开始筛查</button>
+    <button class="btn-default1 btn-red btn-answer" (click)="gotoQuest($event)">开始筛查</button>
   </div>
 </div>

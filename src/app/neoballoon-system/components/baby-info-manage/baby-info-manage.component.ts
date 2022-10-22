@@ -1,10 +1,11 @@
-import { formatDate } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { formatDate, getLocaleDateFormat } from '@angular/common';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DatePickerModel } from 'src/app/common/components/date-picker/date-picker.component';
+import { PointerBoxComponent } from 'src/app/common/components/pointer-box/pointer-box.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
@@ -56,7 +57,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   dialogModelExist = new ConfirmDialogModel('', '已存在该用户,是否进入筛查?');
   showConfirm = false;
   showExist = false;
-
+  //呼出浮层,false为不显示，true位显示
+  float = false;
 
   dateFormat: string = 'yyyy-MM-dd';
   today = new Date();
@@ -103,6 +105,10 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   // 最大宝宝数
   maxLength = 5;
   source = 0;
+  memberResId = '';
+
+  @ViewChild('Pointer', { static: false })
+  public Pointer!: PointerBoxComponent;
 
   get Phone() {
     return this.memberGroup.get('phone') as FormControl;
@@ -116,7 +122,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this.source = params['source'];
       this.mid = params['mid'];
       this._sessionStorage.source =  params['source'];
-      console.log('source_after',this._sessionStorage.source);
+      console.log('source_after',this.mid);
     })
   }
 
@@ -142,6 +148,9 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
 
   }
+
+
+  
   ngAfterViewInit(): void {
     // console.log('view init');
     // $('#target').distpicker({
@@ -212,6 +221,19 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this._toastrService.warning('请依次删除')
     }
   }
+  getYmd(date:any,str:any){
+    let thisDate = date;
+    console.log('getYmd',thisDate);
+    //if(birthday == '')return 0;
+    if(str == 'Y'){
+      return +thisDate.split('-')[0];
+    }else if(str == 'M'){
+      return +thisDate.split('-')[1];
+    }else{
+      return +thisDate.split('-')[2];
+    }
+   
+  }
   newBabyGroup() {
     return this._fb.group({
       name: ["", Validators.required],
@@ -265,12 +287,28 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     }
   }
   pickerChange(date: DatePickerModel, group: FormGroup) {
-    console.log('pickerChange', date)
+    let currentPremature = '否';
+    if ((+this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, 0, 0).split('月')[0] > 24)) {
+      currentPremature = '否';
+    }
+
+    let birthday = date.year+"-"+ date.month+"-"+date.date;
+    group.patchValue({
+      birthday: birthday,
+      premature: currentPremature
+    })
+    //console.log('pickerChange', date ,group);
+  }
+  pickerChange2(date: DatePickerModel, group: FormGroup) {
+    
+    let surveyTime = date.year+"-"+ date.month+"-"+date.date;
+    group.patchValue({
+      surveyTime: surveyTime,
+    })
+    //console.log('pickerChange2', date ,group);
   }
   changeBirthday(date: Date, group: FormGroup) {
 
-    //let monthl = Number(this.rectify(this.transformDate(date),group.getRawValue().surveyTime,0,0).split('月')[0]);
-    //console.log('changeBirthday',this.transformDate(date),group.getRawValue().surveyTime);
     let currentPremature = '否';
     if ((+this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, 0, 0).split('月')[0] > 24)) {
       currentPremature = '否';
@@ -321,14 +359,37 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     })
 
   }
+  onSubmitFloat(e:any){
+    console.log(e,'onSubmitFloat');
+    if(e==1){
+      if (this._checkForm()) {
+        console.log('通过')
+        this.Pointer.setBirthDay(this.babyGroupArr[this.currentIndex].getRawValue().birthday);
+        this.Pointer.setShow(1);
+        this.float = true;
+      }
+    }else if(e==2){
+      this.Pointer.setShow(2);
+      this.float = true;
+      this.onSubmit();
+    }else if(e==3){
+      this.Pointer.setShow(0);
+      this.float = false;
+    }else if(e==4){
+      this.Pointer.setShow(0);
+      this.float = false;
+      this.navigateToSurveyManage(this.memberResId);
+    }
+  }
+
   async onSubmit() {
-    console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().birthday);
+    //console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().birthday);
     //console.log(this.memberGroup);
-    console.log('onSubmit', this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek, this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
+    //console.log('onSubmit', this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek, this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
 
 
-    if (this._checkForm()) {
-      console.log('通过')
+    //if (this._checkForm()) {
+      //console.log('通过')
       if (this.mid) {
         console.log('老用户');
 
@@ -408,6 +469,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             if (existMember.length) {
               this.existMember = existMember[0];
               this._toastrService.error('该问卷人已存在,请重新填写手机号');
+              this.Pointer.setShow(0);
+              this.float = false;
               // this.showExist = true;
               return;
             }
@@ -470,21 +533,20 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           }
 
           this._toastrService.success('提交成功');
-          this.navigateToSurveyManage(memberRes.Id);
+          this.memberResId = memberRes.Id;
 
 
 
-        }
-        else {
+        }else {
           this._toastrService.error('请先选择医生');
           this._router.navigate(["/neoballoon/neoballoon-manage/account"])
         }
       }
 
-    }
-
+    //}
 
   }
+
   navigateToSurveyManage(mid: string) {
     this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid])
   }
@@ -504,6 +566,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     let leftweek = 0;
 
     if (week != 0) {
+      console.log('矫正');
       aweek = MAX_WEEK - week;
       if (day > 0) {
         aweek--;
@@ -524,10 +587,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       })
       // 当天数为负数时，月减 1，天数加上月总天数
       if (age[2] < 0) {
-        // 简单获取上个月总天数的方法，不会错
-        let lastMonth = new Date(survey[0], survey[1], 0)
         age[1]--
-        age[2] += lastMonth.getDate()
+        age[2] += 30
       }
       // 当月数为负数时，年减 1，月数加上 12
       if (age[1] < 0) {
@@ -628,15 +689,6 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     console.log(this.memberGroup.get('phone')!.errors)
     for (let i = 0; i < this.babyGroupArr.length; i++) {
       let control = this.babyGroupArr[i];
-      let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematrueweek, control.getRawValue().prematrueday).split('月')[0];
-      if (rectifyage < 1) {
-        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
-        return false;
-      }
-      if (rectifyage > 66) {
-        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过大，没有适龄的问卷');
-        return false;
-      }
 
       if (control.invalid) {
         if (control.get('name')!.invalid) {
@@ -652,6 +704,16 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           return false;
         }
 
+      }
+      
+      let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematrueweek, control.getRawValue().prematrueday).split('月')[0];
+      if (rectifyage < 1) {
+        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
+        return false;
+      }
+      if (rectifyage > 66) {
+        this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过大，没有适龄的问卷');
+        return false;
       }
     }
     if (this.memberGroup.invalid) {
