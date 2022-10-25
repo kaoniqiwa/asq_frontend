@@ -34,12 +34,13 @@ export class SessionStorageService {
 
   monthWorkBook = monthWorkBook;
 
-  set source(source) {
+  private _source: any | null = null;
+  set source(source:any) {
     sessionStorage.setItem('source', JSON.stringify(source));
   }
   get source() {
     let source = sessionStorage.getItem('source');
-    return source ? JSON.parse(source) : null;
+    return source ? source : null;
   }
 
   private _doctor: Doctor | null = null;

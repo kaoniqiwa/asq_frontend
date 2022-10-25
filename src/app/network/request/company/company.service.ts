@@ -38,6 +38,9 @@ export class CompanyRequestService {
   get(id: string) {
     return this.type.get(CompanyUrl.get(id));
   }
+  getUser(id: string) {
+    return this.type.get(CompanyUrl.get(id));
+  }
   delete(params: GetCompanyParams = new GetCompanyParams()) {
     params.Flow = 'deleteCompany';
     return this.type.post(CompanyUrl.delete(), params)

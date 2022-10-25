@@ -19,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: RoutePath.mlogin,
-    component: MloginComponent
+    component: MloginComponent,
+    canActivate: [AuthorizationService],
   },
   {
     path: RoutePath.asq3print,

@@ -14,6 +14,7 @@ import { User } from "../model/user.model";
 import { UserUrl } from "../url/user.url";
 import { LocalStorageService } from "src/app/common/service/local-storage.service";
 import { BaseASQUrl } from "../url/base.url";
+import { RoutePath } from 'src/app/enum/route-path.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -58,14 +59,66 @@ export class AuthorizationService implements CanActivate {
     let holdCookie = this._cookieService.check('username');
     this.source = this._sessionStorage.source;
     console.log('this.source_canActivate', this.source);
+
+    let url: string = state.url;
+    if (url) {
+      try {
+        console.log('this.source_canActivate3', this.source);
+        let result = await this.login(url);
+        if (result instanceof User) {
+          console.log('this.source_canActivate4', this.source);
+          return true;
+        }
+      } catch (error) {
+        console.log('this.source_canActivate5', this.source);
+        return this._router.parseUrl('/login');
+      }
+    }
+
+    console.log('this.source_canActivate2', this.source);
+
+    /* let url: string = state.url;
+    if (url) {
+      try {
+        let result = await this.login(url);
+        
+      } catch (error) {
+        return this._router.parseUrl('/login');
+      }
+    } */
+
     if ((challenge && user && user.Id && holdCookie && this.source == 1) || this.source == 2 || this.source == 3) {
       return true;
     }
 
+    //return false;
+
     return this._router.parseUrl('/login');
   }
-  login(username: string, password: string): Promise<User | AxiosResponse<any> | null> {
-    return this.loginByUsername(username.trim(), password.trim())
+
+  login(username: string): Promise<User | AxiosResponse<any> | null>
+  login(username: string, password: string): Promise<User | AxiosResponse<any> | null>
+  login(username: string, password?: string): Promise<User | AxiosResponse<any> | null> {
+    if (password) {
+      return this.loginByUsername(username.trim(), password.trim())
+    }else {
+      return this.loginByUrl(username);
+    }
+  }
+  loginByUrl(url: string): Promise<AxiosResponse<any> | User | null> {
+    console.log('loginByUrl1',url);
+
+    //let a = new URL(url);
+    //console.log('loginByUrl',url);
+    //let hash = a.hash;
+    let params:any = new URLSearchParams('#'+url);
+    console.log('loginByUrl2',params.get('username'),base64decode(params.get('username')));
+    let username = base64decode(decodeURIComponent(params.get('username')));
+    let password = base64decode(decodeURIComponent(params.get('password')));
+    console.log('loginByUrl3',username,password);
+
+    return  this.login(username,password);
+
   }
   async loginByUsername(username: string, password: string) {
     // return axios.get('/api/login.php')
@@ -109,6 +162,7 @@ export class AuthorizationService implements CanActivate {
       return null;
     });
   }
+  
   private _storeUserInfo(
     user: User,
     password: string,

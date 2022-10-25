@@ -43,7 +43,7 @@ export class MloginComponent implements OnInit {
 
   async ngOnInit() {
     this.user = await this._business.getUser(this.uid);
-    this.doctor = await this._business.getDoctor(this.did);
+    //this.doctor = await this._business.getDoctor(this.did);
     console.log('ngOnInit',this.user);
     
   }
