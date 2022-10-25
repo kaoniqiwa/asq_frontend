@@ -24,7 +24,8 @@ export class AccountComponent implements OnInit {
 
 
   constructor(private _localStorage: LocalStorageService, private _sessionStorage: SessionStorageService, private _g: GlobalStorageService, private _business: AccountBusiness, private _router: Router) {
-    this.user = this._localStorage.user;
+    //this.user = this._localStorage.user;
+    this.user = this._sessionStorage.user;
   }
 
   async ngOnInit() {

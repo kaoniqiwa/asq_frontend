@@ -14,6 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LicenseComponent } from './login/license/license.component';
 import { CommonModule, HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import zh from "@angular/common/locales/zh";
+import { RouteReuseStrategy } from "@angular/router";
+import { ReuseService } from "./route-reuse.service";
+import { MloginComponent } from './mlogin/mlogin.component';
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -24,6 +27,7 @@ registerLocaleData(zh, 'zh-CN');
     LoginComponent,
     LicenseComponent,
     Asq3printComponent,
+    MloginComponent,
   ],
   imports: [
     BrowserModule,

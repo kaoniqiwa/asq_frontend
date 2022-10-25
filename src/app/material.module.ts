@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { QRCodeModule } from 'angular2-qrcode';
 import {
   MatNativeDateModule,
   MatOptionModule,
@@ -97,6 +98,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    QRCodeModule,
   ],
 })
 export class MaterialModule { }

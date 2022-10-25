@@ -36,7 +36,10 @@ export class QuestionRequestService {
   }
   getQuestion(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'getQuestion';
-    return this.type.post(QuestionUrl.get(), params);
+    return this.type.post(QuestionUrl.getQ(), params);
+  }
+  get(id:string) {
+    return this.type.get(QuestionUrl.get(id) );
   }
   getGames(params:GetGamesParams = new GetGamesParams()) {
     params.Flow = 'getGames';

@@ -276,7 +276,7 @@
     </div>
     <div style="text-align: center;">
       <button class="btn-default1 btnAdvice" (click)="next()">下一步</button>
-      <a target="_blank" routerLink="/asq3print" [queryParams]="{uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
+      <a target="_blank" routerLink="/asq3print" [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
       <button class="btn-default1 complete" style="display: none;">完成</button>
     </div>
     <div class="bottom">
@@ -404,7 +404,7 @@
           </div>
 
           <button class="btn-default1 btnAdvice" style="display: none;">下一步</button>
-          <button class="btn-default1 btnPrint">打印</button>
+          <a target="_blank" routerLink="/asq3print" [queryParams]="{type:2,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
           <button class="btn-default1 complete">完成</button>
           <div class="bottom">
             译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进

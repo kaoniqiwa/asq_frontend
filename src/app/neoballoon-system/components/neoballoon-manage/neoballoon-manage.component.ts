@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
 @Component({
   selector: 'app-neoballoon-manage',
@@ -7,9 +8,10 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./neoballoon-manage.component.less']
 })
 export class NeoballoonManageComponent implements OnInit {
-
-  constructor(private _title: Title,) {
-    this._title.setTitle('ASQ儿童发育筛查系统')
+  source = 1;
+  constructor(private _title: Title,private _sessionStorage: SessionStorageService) {
+    this._title.setTitle('ASQ儿童发育筛查系统');
+    this.source = this._sessionStorage.source;
   }
 
   ngOnInit(): void {

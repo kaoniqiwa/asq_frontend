@@ -11,8 +11,11 @@ export class QuestionUrl {
   static list() {
     return `${this.basic}.php`;
   }
-  static get() {
-    return `${this.basic}.php?`;
+  static get(id:string) {
+    return `${this.basic}.php?Id=${id}`;
+  }
+  static getQ() {
+    return `${this.basic}.php`;
   }
   static delete() {
     return `${this.basic}.php`;

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoutePath } from './enum/route-path.enum';
 import { LoginComponent } from './login/login/login.component';
 import { Asq3printComponent } from './print/asq3print/asq3print.component';
+import { MloginComponent } from './mlogin/mlogin.component';
 import { AuthorizationService } from './network/auth/auth-request.service';
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: RoutePath.login,
     component: LoginComponent
+  },
+  {
+    path: RoutePath.mlogin,
+    component: MloginComponent
   },
   {
     path: RoutePath.asq3print,

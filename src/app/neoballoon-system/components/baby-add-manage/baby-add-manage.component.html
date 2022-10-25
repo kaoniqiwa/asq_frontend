@@ -1,11 +1,11 @@
-<div class="baby-add-manage vertical-layout">
+<div class="baby-add-manage vertical-layout" *ngIf="!selectScan">
   <toast-window *ngIf="showAuthorize" (closeEvent)="closeAuthorize()">
     <authorize-box></authorize-box>
   </toast-window>
 
   <toast-window *ngIf="showOldMember" (closeEvent)="closeOld()">
-    <baby-in-member></baby-in-member
-  ></toast-window>
+    <baby-in-member></baby-in-member>
+  </toast-window>
 
   <toast-window *ngIf="showQuick" (closeEvent)="closeQuick()">
     <quick-box></quick-box>
@@ -45,10 +45,11 @@
       <div class="item">
         <div class="title">扫码筛查</div>
         <div>
-          <select [(ngModel)]="selectScan" (ngModelChange)="changeScan()">
-            <option value="">ASQ-3</option>
-            <option value="">ASQ:SE</option>
-            <option value="">ASQ:SE-2及其联结</option>
+          <select [(ngModel)]="selectScan" (ngModelChange)="changeScan($event)">
+            <option value="" disabled>请选择</option>
+            <option value="ASQ-3">ASQ-3</option>
+            <option value="ASQ:SE">ASQ:SE</option>
+            <option value="ASQ:SE-2">ASQ:SE-2及其联结</option>
           </select>
         </div>
       </div>
@@ -71,4 +72,40 @@
   <div class="quickClick" (click)="showQuickHandler()">
     快速了解三种筛查方式 >
   </div>
+</div>
+<div class="main" *ngIf="selectScan">
+  <h2 class="sub-header">生成二维码 <span class="phone4"></span></h2>
+  <div class="process qrcode-process">
+    <span style="width:20px;"></span><span style="width:50px;"></span>
+    <ul>
+      <li class="li2">
+        <i class="finished"></i>
+        <b>选择筛查模式</b>
+      </li>
+      <!-- <li>
+              <i class="finished"></i>
+              <b>填写家长信息生成二维码</b>
+          </li> -->
+      <li class="current li2" >
+        <i class="current">2</i>
+        <b class="current">扫描二维码获得问卷</b>
+      </li>
+    </ul>
+    <span style="width:50px;border-bottom: 5px solid #34bb45;"></span><span
+      style="width:20px;border-bottom: 5px solid #34bb45;"></span>
+  </div>
+  <div style="text-align:center;">
+    <!-- 		<button class="btn btn-default btnDirect">直接答题</button> -->
+    <!--   		<button class="btn btn-default btnScan">生成二维码</button> -->
+    <!-- 	<button class="btn btn-default nowBtnScan">生成二维码</button> -->
+    <input type="hidden" value="14" class="doctorid">
+    <input type="hidden" value="33" class="did"><br>
+    <div class="qrcodeBox">
+      <qr-code [value]="qrcodeUrl" [level]="'Q'" [size]="300"></qr-code>
+    </div>
+    <p style="font-size:18px;">扫一扫<br>获取您的问卷</p>
+    <p>(亲爱的用户，您已不需要输入验证码，该步骤已置于家长手机端，请您放心使用!)</p>
+    <button class="btnRefresh">刷新</button>
+  </div>
+
 </div>

@@ -53,10 +53,10 @@ export class SessionStorageService {
 
   private _user: Company | null = null;
   set user(user: Company | null) {
-    sessionStorage.setItem('doctor', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
   get user() {
-    let user = sessionStorage.getItem('doctor');
+    let user = sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
@@ -70,10 +70,13 @@ export class SessionStorageService {
 
   private _member: Member | null = null;
   set member(member: Member | null) {
-    this._member = member
+    //this._member = member
+    sessionStorage.setItem('member', JSON.stringify(member));
   }
   get member() {
-    return this._member;
+    let member = sessionStorage.getItem('member');
+    return member ? JSON.parse(member) : null;
+    //return this._member;
   }
 
   set challenge(challenge: DigestResponse) {

@@ -23,13 +23,9 @@ export class AuthorizationService implements CanActivate {
   private _password: string = '';
   private _nc: number = 0;
   private _config: AxiosRequestConfig = { headers: {} };
+  source: any = 1;
 
-  constructor(
-    private _sessionStorage: SessionStorageService,
-    private _localStorage: LocalStorageService,
-    private _cookieService: CookieService,
-    private _router: Router,
-  ) {
+  constructor(private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _cookieService: CookieService, private _router: Router,) {
     if (this._cookieService.check('username')) {
       let username = this._cookieService.get('username');
       username = atob(username);
@@ -57,10 +53,12 @@ export class AuthorizationService implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorage.challenge;
-    let user = this._localStorage.user;
+    //let user = this._localStorage.user;
+    let user = this._sessionStorage.user;
     let holdCookie = this._cookieService.check('username');
-    // console.log(userResource);
-    if (challenge && user && user.Id && holdCookie) {
+    this.source = this._sessionStorage.source;
+    console.log('this.source_canActivate', this.source);
+    if ((challenge && user && user.Id && holdCookie && this.source == 1) || this.source == 2 || this.source == 3) {
       return true;
     }
 
@@ -71,6 +69,7 @@ export class AuthorizationService implements CanActivate {
   }
   async loginByUsername(username: string, password: string) {
     // return axios.get('/api/login.php')
+    
     this._username = username;
     this._password = password;
     this._config.url = `${BaseASQUrl}/front_end.login.php`
@@ -145,7 +144,7 @@ export class AuthorizationService implements CanActivate {
     );
     this._cookieService.set('password', passWord, options);
 
-    this._localStorage.user = user;
+    this._sessionStorage.user = user;
   }
 
 

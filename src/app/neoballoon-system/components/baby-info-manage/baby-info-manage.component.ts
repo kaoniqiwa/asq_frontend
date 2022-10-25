@@ -122,7 +122,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this.source = params['source'];
       this.mid = params['mid'];
       this._sessionStorage.source =  params['source'];
-      console.log('source_after',this.mid);
+      console.log('source_after',this.source);
     })
   }
 

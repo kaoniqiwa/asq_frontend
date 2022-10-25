@@ -22,7 +22,7 @@
 
   <div class="vertical-header">
     <div style="width: 100%">
-      <button class="hw-small-btn gray-btn" (click)="goBack()">
+      <button class="hw-small-btn gray-btn" (click)="goBack()" *ngIf="source==1">
         <img src="assets/img/back.png" alt="" />返回
       </button>
       <p class="chart-title">
@@ -31,7 +31,7 @@
       </p>
     </div>
   </div>
-  <div class="vertical-main">
+  <div class="vertical-main hidescroll">
     <div class="addr-btns">
       <div
         class="addr-item"
@@ -89,7 +89,8 @@
               <div class="col-sm-3">
                 <input type="text" formControlName="identityInfo" />
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-2 form-group-ma" *ngIf="source!=1"></div>
+              <div class="col-sm-2 form-group-ma setselect">
                 <select formControlName="identityType">
                   <option value="儿童身份证">儿童身份证</option>
                   <option value="父亲身份证">父亲身份证</option>
@@ -99,7 +100,7 @@
                   <option value="诊疗卡号">其他</option>
                 </select>
               </div>
-              <label class="control-label col-sm-2" style="text-align: left">
+              <label class="control-label col-sm-2 form-group-ma" style="text-align: left">
                 (选填)
               </label>
             </div>
@@ -264,8 +265,7 @@
 
             <div class="form-group">
               <label class="control-label col-sm-2">
-                <div>出生时体重:</div>
-                <div>（注：1斤=500克）</div>
+                <div>出生时体重:<br>(注:1斤=500克)</div>
               </label>
               <div class="col-sm-3">
                 <input
@@ -378,10 +378,10 @@
             <div class="col-sm-3">
               <input class="" type="text" formControlName="name" />
             </div>
-            <label class="control-label col-sm-2"
+            <label class="control-label col-sm-2 form-group-ma"
               ><span>*</span>您是宝宝的:
             </label>
-            <div class="col-sm-2">
+            <div class="col-sm-2 form-group-ma setselect">
               <select formControlName="relation">
                 <option value="" disabled>请选择</option>
                 <option value="父亲">父亲</option>
@@ -396,7 +396,7 @@
           </div>
           <div class="form-group" data-toggle="distpicker" id="target">
             <label class="control-label col-sm-2">省:</label>
-            <div class="col-sm-2">
+            <div class="col-sm-2 setselect1">
               <select
                 #provinceRef
                 formControlName="province"
@@ -404,15 +404,15 @@
               ></select>
             </div>
             <label class="control-label">市:</label>
-            <div class="col-sm-2">
+            <div class="col-sm-2 setselect1">
               <select
                 #cityRef
                 formControlName="city"
                 (change)="changeCity(cityRef.value)"
               ></select>
             </div>
-            <label class="control-label">地区(县):</label>
-            <div class="col-sm-2">
+            <label class="control-label form-group-ma col-sm-2">地区(县):</label>
+            <div class="col-sm-2 form-group-ma setselect1">
               <select
                 #countyRef
                 formControlName="county"

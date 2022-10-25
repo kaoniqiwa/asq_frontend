@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
+import { BabyAddManageBusiness } from './baby-add-manage.business';
 
 @Component({
   selector: 'app-baby-add-manage',
   templateUrl: './baby-add-manage.component.html',
-  styleUrls: ['./baby-add-manage.component.less']
+  styleUrls: ['./baby-add-manage.component.less'],
+  providers: [
+    BabyAddManageBusiness
+  ]
 })
+
 export class BabyAddManageComponent implements OnInit {
 
   // 新用户同意协议
@@ -18,10 +25,32 @@ export class BabyAddManageComponent implements OnInit {
   selectUser = "";
   selectScan = "";
   selectMessage = "";
+  user:any = null;
+  doctor:any = null;
+  qrcodeUrl = '';
 
-  constructor() { }
+  constructor(private _sessionStorage: SessionStorageService,private _business: BabyAddManageBusiness ,private _router: Router) {
+    this.user = this._sessionStorage.user;
+    this.doctor = this._sessionStorage.doctor;
+    console.log('app-baby-add-manage',this._sessionStorage.user,this._sessionStorage.doctor);
+  }
 
   ngOnInit(): void {
+    //this.getUuid();
+  }
+
+  async getUuid(){
+    let params:any = {};
+    params.Uid = this.user.Id;
+    params.Did = this.doctor.Id;
+
+    let qrcode:any = await this._business.getUuid(params);
+    let this_href = window.location.href.split('#')[0];
+    console.log('href',window.location.href);
+    console.log('this._router.url',this._router.url);
+    console.log('qrcode',qrcode);
+    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Id+'&did='+this.doctor.Id+'&uuid='+qrcode;
+    console.log('qrcodeUrl',this.qrcodeUrl);
   }
 
 
@@ -32,8 +61,11 @@ export class BabyAddManageComponent implements OnInit {
       this.showOldMember = true;
     }
   }
-  changeScan() {
-
+  changeScan(e:Event) {
+    console.log('changeScan',this.selectScan);
+    if(this.selectScan == 'ASQ-3'){
+      this.getUuid();
+    }
   }
   showQuickHandler() {
     this.showQuick = true;

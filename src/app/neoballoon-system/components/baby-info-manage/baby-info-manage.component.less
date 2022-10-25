@@ -1,23 +1,24 @@
 .baby-info-manage {
+
   .chart-title {
-    font-size: 14px;
+    //font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .baby-box,
   .member-box {
-    width: 90%;
+    width: 96%;
     margin: 0 auto;
     box-shadow: 0 0 10px #dadddd;
-    padding: 5px 20px 30px 20px;
+    padding: 5px 2vw 30px 2vw;
     margin-bottom: 30px;
   }
 
   .large-title {
     i {
       color: red;
-      font-size: 14px;
+      //font-size: 14px;
       padding-left: 20px;
       font-style: normal;
     }
@@ -96,12 +97,49 @@ textarea {
   display: flex;
   justify-content: space-between;
 
-  div:nth-child(2) {
-    flex-basis: 40%;
+  div{
+    width: 50%;
   }
 }
 
 .exist-prompt {
   width: 300px;
   height: 200px;
+}
+.delflex{
+  display:block;
+}
+select{
+  border-radius: 5px;
+  border: solid 1px #dadddd;
+}
+
+@media screen and (max-width: 860px) {
+  .chart-title {
+    margin: 4vw 0;
+  }
+  .left-wrapper{
+    font-size: 16px;
+  }
+  .large-title {
+    i {
+      font-size: 12px;
+    }
+  }
+  .form-group-ma{
+    margin-top: 15px;
+  }
+  .setselect{
+    width: 40%;
+  }
+  .setselect1{
+    width: 30%;
+  }
+  .hidescroll{
+    scrollbar-width: none; /* firefox */
+   -ms-overflow-style: none; /* IE 10+ */
+  }
+  .hidescroll::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
 }

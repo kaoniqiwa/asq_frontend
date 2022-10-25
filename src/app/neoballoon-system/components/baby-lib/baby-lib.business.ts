@@ -41,14 +41,14 @@ export class BabyManageBusiness {
       searchInfo.Mids = members.map(member => member.Id);
 
       let { Data: babys } = await this._listBaby(searchInfo.Mids, searchInfo.Name)
-      console.log(babys)
+      //console.log(babys)
 
       if (babys.length) {
         searchInfo.Bids = babys.map(baby => baby.Id)
 
         let { Data: questions, Page } = await this._listQuestion(searchInfo.Bids, searchInfo.QuestType, searchInfo.QuestMonth);
 
-        console.log(questions)
+        //console.log(questions)
         res.Page = Page
 
         for (let i = 0; i < questions.length; i++) {
@@ -57,7 +57,7 @@ export class BabyManageBusiness {
           let question = questions[i];
           let babyId = question.Bid;
           let baby = babys.find(baby => baby.Id == babyId)
-          console.log(baby)
+          //console.log(baby)
           if (baby) {
             model.Id = baby.Id;
             model.Name = baby.Name;

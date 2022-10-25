@@ -1,9 +1,11 @@
 <div class="neoballoon-manage vertical-layout">
-  <div class="neoballoon-manage-header vertical-header">
-    <app-header-nav></app-header-nav>
+  <div class="neoballoon-manage-header vertical-header" *ngIf="source ==1">
+    <app-header-nav ></app-header-nav>
   </div>
   <div class="neoballoon-manage-body vertical-main" style="flex-direction: row">
-    <div class="side-nav"><app-side-nav></app-side-nav></div>
+    <div class="side-nav" *ngIf="source ==1">
+      <app-side-nav></app-side-nav>
+    </div>
     <div class="side-nav-main">
       <router-outlet></router-outlet>
     </div>

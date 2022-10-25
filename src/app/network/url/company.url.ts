@@ -23,4 +23,7 @@ export class CompanyUrl {
   static export() {
     return `${this.basic}.php`;
   }
+  static getUuid() {
+    return `${this.basic}.php`;
+  }
 }

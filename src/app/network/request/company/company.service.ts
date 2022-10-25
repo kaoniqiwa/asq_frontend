@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { SessionStorageService } from "src/app/common/service/session-storage.service";
 import { Company } from "../../model/company.model";
 import { CompanyUrl } from "../../url/company.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
@@ -13,9 +14,17 @@ export class CompanyRequestService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Company>;
 
-  constructor(_http: HowellAuthHttpService) {
+  constructor(_http: HowellAuthHttpService,private _sessionStorage: SessionStorageService) {
+    //if(this._sessionStorage.source != 1)return;
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Company);
+    
+    
+  }
+
+  getUuid(params:any){
+    params.Flow = 'getUuid';
+    return this.type.post(CompanyUrl.getUuid(), params)
   }
 
   list(params: GetCompanyParams = new GetCompanyParams()) {

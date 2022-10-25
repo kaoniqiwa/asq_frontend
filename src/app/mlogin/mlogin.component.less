@@ -1,0 +1,1204 @@
+ /* ---------------------------------------- css base 基础部分---------------------------------------- */
+* {margin:0;padding:0; border:0; word-break:break-word; font-family:'苹方','微软雅黑','黑体','Helvetica', 'arial', 'sans-serif'; background-size:100% 100%; -webkit-mask-size: 100% 100%; -webkit-tap-highlight-color: rgba(0,0,0,0); font-size: 0.24rem; line-height: 1; }
+
+::ng-deep html,body{ width:100%; height:100%;}
+table{border-collapse:collapse;border-spacing:0;}
+th,tr,td,h1,h2,h3,h4,h5,h6,i,b,em{font-style:normal;font-weight:normal;}
+ol,ul,li {list-style-type:none; display:block;}
+select,input,img{vertical-align:middle;border:none;outline:none;}
+textarea {resize: none;} /*webkit核心中textare取消拖动调整大小*/
+textarea:focus {outline: none;} /*textarea聚焦时默认边框颜色不变*/
+select,input[type=text],input[type=tel],input[type=password],input[type=number],textarea{ -webkit-appearance:none; border:none; border-radius:0; background-color:transparent;}
+input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#555;}/* input 标签placeholder文字的颜色*/
+video{ background-color:#000;}
+input[type="radio"]{ -webkit-appearance: none;  background:url(src/assets/img/rdo.png) no-repeat 50%;  height: 20px; width: 20px;}
+input[type="radio"]:checked { background:url(src/assets/img/rdo_chked.png) no-repeat 50%;  }
+a{ text-decoration:none; display:inline-block;}
+a>img{ width:100%;}
+.clearFix {display: block;}
+.clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+.fl,.flt{float:left;display:inline;}
+.fr,.frt{float:right;display:inline;}
+.noPointer{pointer-events:none;}/* 禁止触摸互动事件 */
+.noCallout{-webkit-touch-callout: none;}/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
+.noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
+.gpuOpen{will-change:transform,opacity;}
+.gpuClose{will-change:auto;}
+.smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
+.txtShadow{text-shadow: 0.02rem 0 0 #fff, -0.02rem 0 0 #fff, 0 0.02rem 0 #000, 0 -0.02rem 0 #000; }
+
+::ng-deep body{overflow: hidden;}
+/* css media */
+html{font-size:50px;}
+/* 竖屏 */
+@media screen and (width:320px){html{font-size: 42.667px;}}
+@media screen and (width:360px){html{font-size: 48px;}}
+@media screen and (width:375px){html{font-size: 50px;}}
+@media screen and (width:412px){html{font-size: 54.933px;}}
+@media screen and (width:414px){html{font-size: 55.2px;}}
+@media screen and (width:540px){html{font-size: 72px;}}
+/* 横屏 */
+@media screen and (width:480px){html{font-size: 35.982px;}}
+@media screen and (width:568px){html{font-size: 42.579px;}}
+@media screen and (width:598px){html{font-size: 44.827px;}}
+@media screen and (width:640px){html{font-size: 47.976px;}}
+@media screen and (width:667px){html{font-size: 50px;}}
+@media screen and (width:684px){html{font-size: 51.274px;}}
+@media screen and (width:732px){html{font-size: 54.872px;}}
+@media screen and (width:736px){html{font-size: 55.172px;}}
+@media screen and (width:1136px){html{font-size: 85.157px;}}
+
+/* ---------------------------------------- css common 公共部分 ---------------------------------------- */
+
+/* load浮层 */
+aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
+aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; -webkit-transform:scale(0.46); -webkit-transform-origin: 50% 50%;}
+aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
+aside.loadBox>span i:nth-child(1){ -webkit-transform:translate(0.6rem, 0) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
+aside.loadBox>span i:nth-child(2){ -webkit-transform:translate(0.5196rem, 0.3rem) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
+aside.loadBox>span i:nth-child(3){ -webkit-transform:translate(0.3rem, 0.5196rem) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}
+aside.loadBox>span i:nth-child(4){ -webkit-transform:translate(0, 0.6rem) rotate(90deg); -webkit-animation:loadCircle 2.4s 0.6s linear infinite;}
+aside.loadBox>span i:nth-child(5){ -webkit-transform:translate(-0.3rem, 0.5196rem) rotate(120deg); -webkit-animation:loadCircle 2.4s 0.8s linear infinite;}
+aside.loadBox>span i:nth-child(6){ -webkit-transform:translate(-0.5196rem, 0.3rem) rotate(150deg); -webkit-animation:loadCircle 2.4s 1.0s linear infinite;}
+aside.loadBox>span i:nth-child(7){ -webkit-transform:translate(-0.6rem, 0) rotate(180deg); -webkit-animation:loadCircle 2.4s 1.2s linear infinite;}
+aside.loadBox>span i:nth-child(8){ -webkit-transform:translate(-0.5196rem, -0.3rem) rotate(210deg); -webkit-animation:loadCircle 2.4s 1.4s linear infinite;}
+aside.loadBox>span i:nth-child(9){ -webkit-transform:translate(-0.3rem, -0.5196rem) rotate(240deg); -webkit-animation:loadCircle 2.4s 1.6s linear infinite;}
+aside.loadBox>span i:nth-child(10){ -webkit-transform:translate(0, -0.6rem) rotate(270deg); -webkit-animation:loadCircle 2.4s 1.8s linear infinite;}
+aside.loadBox>span i:nth-child(11){ -webkit-transform:translate(0.3rem, -0.5196rem) rotate(300deg); -webkit-animation:loadCircle 2.4s 2.0s linear infinite;}
+aside.loadBox>span i:nth-child(12){ -webkit-transform:translate(0.5196rem, -0.3rem) rotate(330deg); -webkit-animation:loadCircle 2.4s 2.2s linear infinite;}
+aside.loadBox>b{ display:block; position:absolute; left:0; top:50%; width:100%; height:0.4rem; line-height:0.4rem; margin-left:-0.1rem; margin-top:-0.34rem; text-align:center; font-size:0.2rem; color:rgba(255,255,255,0.7);}
+@-webkit-keyframes loadCircle{0%{opacity:1}8.3%{opacity:0}50%{opacity:1}100%{opacity:1}}
+
+/* png sprite loading */
+/* .ui-loading-black {width:40px;height:40px;display:block;background-image:url(src/assets/img/loading_black.png);-webkit-background-size:auto 40px;-webkit-animation:am-loading-black 1s steps(12) infinite; -webkit-transform: scale(0.5);}
+.ui-loading-white {width:40px;height:40px;display:block;background-image:url(src/assets/img/loading_white.png);-webkit-background-size:auto 40px;-webkit-animation:am-loading-white 1s steps(12) infinite; -webkit-transform: scale(0.5);} */
+@-webkit-keyframes am-loading-black {
+	from {background-position:0 0}
+	to {background-position:-480px 0}
+}
+@-webkit-keyframes am-loading-white {
+	from {background-position:0 0}
+	to {background-position:-480px 0}
+}
+
+/* 取代系统alert的警告提示弹窗 */
+aside.alertBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
+aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:85%; -webkit-transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.07rem; padding-top: 0.46rem;}
+aside.alertBox>div>p.text{font-size:0.3rem; line-height: 1.4; color:#888; padding: 0 0.46rem 0; margin-bottom: 0.46rem; text-align:center; }
+aside.alertBox>div>p.btn{ text-align: center; border-top: 1px solid #D5D5D6; position: relative; }
+aside.alertBox>div>p.btn a{ color:#0BB20C; font-size:0.4rem; line-height: 1rem;display: block;}
+aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
+
+/* 视频 */
+aside.videoBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:#000; z-index:996; display:none;}
+aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0;}
+/* aside.videoBox>a.close{ position:absolute; right:0.46rem; top:0.46rem; width:0.7rem; height:0.7rem; background-image: url(src/assets/img/close_video.png);} */
+
+/* 照片文件选择框*/
+#fileBox{ position:absolute; left:0; top:0; width:1px; height:1px; overflow:hidden; visibility: hidden;}
+
+/* 电子罗盘数据面板 */
+#compassPanel{ position:absolute; right:0; top:0; width:40%; background-color:rgba(0,0,0,0.5); z-index: 99; display:none;}
+#compassPanel h3{color:#fff; background-color:rgba(255,255,255,0.2); padding:0.1rem 0.2rem; margin-bottom:0.1rem; font-size: 0.28rem;}
+#compassPanel p{ color:#fff; font-size:0.22rem; margin-bottom:0.1rem; margin-left:0.2rem;}
+
+/* 测试版本提示信息 */
+#signBar{position:absolute; top:0; left:0; width:100%; background-color:rgba(0,0,0,0.7); box-shadow:0 0.02rem 0.1rem #888; padding:0.1rem 0; text-align:center; pointer-events:none; z-index:99;}
+#signBar>span{font-size:0.37rem; text-shadow:0 0 0.02rem #000; color:rgba(255,255,255,0.9);}
+
+/* 分享浮层 */
+aside.shareBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:997; display:none;}
+aside.shareBox>img{ width:100%;}
+
+/* 背景音乐按钮 */
+a.bgmBtn{ position: absolute; right: 0.24rem; top: 0.24rem; width: 0.58rem; height: 0.58rem;}
+/* a.bgmPlay{ background-image: url(src/assets/img/bgm_on.png);}
+a.bgmStop{ background-image: url(src/assets/img/bgm_off.png);} */
+
+/* 初始化标签*/
+body{ background-color:#000; color:#fff;}
+/*body{background-image: url("../img/publics/bg_modile.png")}*/
+a,a:visited{ color:#000;}
+article{ width:100%; height: 100%; overflow: hidden; position:relative; }
+
+
+.header{background: rgba(0,0,0,1);height: 0.65rem;font-size: 0; line-height: 0.65rem; }
+.header .logo{display: inline-block;width: 1.47rem;vertical-align: middle;margin: 0 0.36rem;}
+.header span{display: inline-block;vertical-align: middle;color: #fff; border-left: 1px solid #fff; padding-left: 0.48rem;}
+
+
+.gif{padding: 0.5rem;background:#fff ;}
+.gif img{width: 100%;}
+
+/* .gateBox{position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: url(src/assets/img/float.jpg) no-repeat center;background-size: cover;display: none;} */
+.gateBox .gate{ position: absolute; top: 50%;left: 10%;width: 80%;height: 1rem;margin-top: -0.5rem;}
+.gateBox .gate > p{color: #c61026;font-size: 0.26rem;line-height: 0.4rem;text-align: center;padding-bottom: 0.2rem;}
+.gateBox .gate > p > span{font-size: 0.32rem;}
+.gateBox .gate > span{display: inline-block; width: 1rem;height: 1rem;border-radius: 0.5rem;background-color: #c61026;text-align: center;line-height: 1rem;font-size: 0.4rem;margin: 0 0.5rem;}
+
+.logo {
+    float: left;
+    /* margin-top: 7%; */
+    /* margin-left: 4%; */
+    margin: 7% 0 5% 4%;
+    width: 11.1rem;
+    height: 3.6rem;
+}
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (device-width:360px), screen and (device-width:412px){
+
+	article{ overflow: auto; }
+
+}
+
+ /* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
+ article {
+    width: 100%;
+    height: 100%;
+    background: url("src/assets/img/bg_mobile.png") no-repeat;
+    background-size: 100% 100%;
+    overflow: auto;
+}
+
+.container {
+    height: auto;
+    overflow: auto;
+}
+.logo {
+    float: left;
+    /* margin-top: 7%; */
+    /* margin-left: 4%; */
+    margin: 7% 0 5% 4%;
+    width: 3.1rem;
+    height: 1.0rem;
+}
+.forbid{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+    position: absolute;
+    top: 0;
+}
+.mainBox {
+    width: 25.2rem;
+    height: auto;
+    min-height: 30.6rem;
+    margin: auto;
+    position: relative;
+    margin: 1% auto 10% auto;
+    border: solid 1px #dbdddd;
+    border-radius: 0.72rem;
+    box-shadow: 0 0 0.36rem #cecfcf;
+    background-color: #ffffff;
+    
+
+}
+
+.mainBox_bg {
+   
+    background: url("src/assets/img/index.png") no-repeat #FFFFFF 0 0.3rem;
+    background-size: 100% auto;
+    
+}
+
+.nav-page {
+    float: left;
+    padding: 1.08rem;
+    color: black
+}
+
+.nav-page li span {
+    display: inline-block;
+    padding-left: .36rem;
+    padding-right: .36rem;
+    font-family: "宋体";
+    color: #b5b9bd;
+    font-weight: bolder;
+}
+
+.side_right {
+    float: right;
+    padding: .72rem;
+    background-color: transparent;
+}
+
+.side_right select {
+    -webkit-appearance: none;
+    background: url(src/assets/img/baby.png) no-repeat 7% 50%;
+    background-size: .34rem;
+    width: 5.04rem;
+    height: 1.8rem;
+    border-radius: .9rem;
+    background-color: #37bd46;
+    color: #ffffff;
+    border: none;
+    padding-left: 30%;
+    outline: none;
+}
+
+.side_right .btnBaby {
+    width: 5.04rem;
+    height: 1.8rem;
+    border-radius: .9rem;
+    background-color: #37bd46;
+    color: #ffffff;
+    border: none;
+}
+
+.side_right .btnBaby li {
+    line-height: 1.8rem;
+}
+
+.side_right .btnAddBaby {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: .9rem;
+    background-color: #37bd46;
+    vertical-align: middle;
+    color: #ffffff;
+    font-family: "宋体";
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.menulist {
+    width: 90%;
+    position: absolute;
+    top: 66%;
+    left: 5%;
+}
+
+.menulist li {
+    text-align: center;
+    color: #262626;
+    height: 100%;
+    cursor: pointer;
+    width: 33.33%;
+    float: left;
+}
+
+.menulist li p {
+    font-size: 1rem;
+    margin: 0.43rem;
+}
+
+.menulist li span {
+    display: block;
+    width: 70%;
+    margin: auto;
+    font-size: 10px;
+}
+
+.menulist li:nth-child(1) p {
+    color: #11bbcc;
+}
+
+.menulist li:nth-child(2) p {
+    color: #5677bc;
+}
+
+.menulist li:nth-child(3) p {
+    color: #f8b142;
+}
+
+.menulist li i {
+    width: 4.68rem;
+    height: 4.68rem;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.menulist li:nth-child(1) i {
+    background-image: url(src/assets/img/icon_01.png);
+}
+
+.menulist li:nth-child(2) i {
+    background-image: url(src/assets/img/icon_02.png);
+}
+
+.menulist li:nth-child(3) i {
+    background-image: url(src/assets/img/icon_03.png);
+}
+
+.btnStart {
+    width: 6.48rem;
+    height: 1.8rem;
+    position: absolute;
+    /*top: 45%;*/
+    top: 47.5%;
+    left: 7%;
+    border-radius: 17px;
+    background-color: #fa6839;
+    color: #ffffff;
+}
+
+/*企业扫二维码*/
+.qrCode {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: black;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    //display: none;
+}
+
+.phoneyz {
+    width: 75%;
+    min-height: 15.48rem;
+    background: white;
+    border: 1px solid #e1e2e1;
+    position: absolute;
+    /*top: 25%;*/
+    top: 50%;
+    left: 12.5%;
+    /*display: none;*/
+    border-radius: 5% 5%;
+    margin-top: -7.74rem;
+}
+.phoneyz h1{
+    text-align: center;
+    font-size: 1.72rem;
+    padding: 2.16rem 0 1.08rem 0;
+}
+.phoneyz .phimg{
+    width: 100%;
+    overflow: hidden;
+}
+.phoneyz div .btnClose{
+    float: right;
+    margin-right: 2%;
+    cursor: pointer;
+}
+.phoneyz .regPhone, .phoneyz .regCode {
+    border: 1px solid gainsboro;
+    margin: auto;
+    margin-top: 1.08rem;
+    margin-left: 2.88rem;
+    width: 14.4rem;
+    height: 2.16rem;
+}
+ .phoneyz .regCode {
+    border: 1px solid gainsboro;
+    margin: auto;
+    margin-top: .1rem;
+    margin-left: .8rem;
+    width: 14.4rem;
+    height: 2.16rem;
+}
+.phoneyz .ybtn .unCode{
+    position: absolute;
+    top: .93rem;
+    width: 7.92rem;
+    border: solid 1px #36bd46;
+    padding: 2px;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #36bd46;
+    font-size: 0.72rem;
+}
+.phoneyz .btnYz {
+    margin-top: .1rem;
+    width: 100%;
+    text-align: center;
+    padding: 1.08rem 0 1.08rem 0;
+    border-top:1px solid #e1e2e1;
+}
+
+.phoneyz .btn-default {
+    /*width: 3rem;*/
+    width: 14.4rem;
+    height: 2.16rem;
+    border-radius: 17px;
+    color: #ffffff;
+    background-color: #36bd46;
+    border: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+.phoneyz .tips{
+    margin-left: 2.88rem;
+    line-height: 1.8rem;
+    font-size: .79rem;
+    color: red;
+}
+.phoneyz .phone-box{
+	width: 90%;
+	margin: auto;
+}
+.phoneyz .phone-box tr td{
+	padding-top: 1.08rem;
+}
+.phoneyz .phone-box tr td:first-child{
+	width: 25%;
+	text-align: right;
+}
+.phoneyz .phone-box tr td:last-child{
+	width: 70%;
+	position: relative;
+}
+.phoneyz .phone-box input{
+	border: 1px solid gainsboro;
+	margin: auto;
+	padding-left: 5%;
+	/* margin-left: .8rem; */
+	width: 95%;
+	height: 2.16rem;	
+}
+.phoneyz .phone-box .getCode{
+	position: absolute;
+	top: 1.62rem;
+	right: .36rem;
+	/* width: 90px; */
+	border: solid 1px #36bd46;
+	/* padding: 2px; */
+	padding: 2px;
+	background-color: transparent;
+	border-radius: 5px;
+	color: #36bd46;
+	font-size: .72rem;
+}
+/*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android）----------------------*/
+@media screen and (device-width: 360px) and (max-device-height: 610px), screen and (device-width: 412px) and (max-device-height: 700px) and (-webkit-min-device-pixel-ratio: 3.5), screen and (device-width: 540px) and (device-height: 780px) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
+@media screen and (device-width: 320px) and (device-height: 480px), screen and (device-width: 540px) and (device-height: 702px) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (device-width: 360px), screen and (device-width: 412px) and (-webkit-min-device-pixel-ratio: 3.5) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone6） ----------------------------------------*/
+@media screen and (device-width: 375px) and (device-height: 667px), screen and (device-width: 540px) and (device-height: 868px) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone6 plus） -----------------------------------*/
+@media screen and (device-width: 414px) and (device-height: 736px) and (-webkit-min-device-pixel-ratio: 3), screen and (device-width: 540px) and (device-height: 876px) {
+
+}
+
+/*----css 内容部分（登录、注册-）---*/
+.container {
+    width: 100%;
+    //height: 100%;
+    /*background: url("src/assets/img/bg_modile.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
+    /*overflow-y: auto;*/
+    -webkit-overflow-scrolling:touch;
+}
+
+.logo {
+    float: left;
+    /*margin-top: 7%;*/
+    /*margin-left: 4%;*/
+    margin: 7% 0 5% 4%;
+    width: 11.1rem;
+    height: 3.6rem;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.navs {
+    float: right;
+    margin-top: 10%;
+    margin-right: .86rem;
+	color: #36bd46;
+	font-size: .24rem;
+	font-weight: bold;
+    /* width: .7rem; */
+    /* height: .7rem; */
+}
+.navs>img {
+    transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+	width:1.08rem;
+}
+/*登录注册*/
+.navbox {
+    width: 100%;
+    height: 100%;
+    /*min-height: 15rem;*/
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    display: none;
+}
+
+.navbox .nav_right .login,
+.navbox .nav_right .register,
+.navbox .nav_right .loginOut {
+    width: 1.4rem;
+    height: .64rem;
+    line-height: .64rem;
+    text-align: center;
+    border-radius: 30px 30px;
+    border: 1px solid #39bd47;
+}
+
+.navbox .nav_right span {
+    margin: .61rem 0 .3rem 0;
+    display: block;
+    font-size: .36rem;
+    text-align: center;
+}
+
+.nav_right{
+    text-align: center;
+}
+.navbox  .fname{
+    /*margin: .61rem 0 .3rem 0;*/
+    /*display: block;*/
+    font-size: .36rem;
+    text-align: center;
+    display: inline-block;
+    margin: .61rem auto .3rem auto;
+    /*border: 1px solid red;*/
+}
+
+.navbox .nav_right .loginOut {
+    margin: 0 auto;
+}
+
+.login {
+    float: left;
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+}
+
+.register {
+    float: right;
+    margin-top: 1.5rem;
+    margin-right: 2rem;
+}
+
+.navbox .nav_right .login a,
+.navbox .nav_right .register a,
+.navbox .nav_right .loginOut a {
+    color: #39bd47;
+    font-size: .3185rem;
+}
+
+.navbox .nav_choice {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.nav_choice a {
+    display: block;
+}
+
+.ybtn {
+    position: relative;
+}
+
+.btnCode {
+    position: absolute;
+    top: 16.5%;
+    right: 14%;
+    /*width: 90px;*/
+    border: solid 1px #36bd46;
+    /*padding: 2px;*/
+    padding: 2px;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #36bd46;
+    font-size: .2rem;
+}
+
+.unCode {
+    border: solid 1px #dadddd;
+    color: #dadddd;
+}
+
+.btnReg {
+    margin-bottom: 20px;
+}
+
+/*相同特性*/
+.navbox .nav_choice .home, .navbox .nav_choice .lineFind, .navbox .nav_choice .health,
+.navbox .nav_choice .babyFood, .navbox .nav_choice .babyKonws, .navbox .nav_choice .babyInfo {
+    margin-top: .5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    color: white;
+    text-align: center;
+    font-size: .24rem;
+    overflow: auto;
+
+}
+
+.navbox .nav_choice .home {
+    float: left;
+    /*margin: .8rem 0 0 1rem;*/
+    margin: .7rem 0 0 1rem;
+    background: #f66232;
+}
+
+.navbox .nav_choice .lineFind {
+    float: right;
+    /*margin: .8rem 1rem 0 0;*/
+    margin: .7rem 1rem 0 0;
+    background: #37bd46;
+}
+
+.navbox .nav_choice .health {
+    float: left;
+    margin-left: 1rem;
+    background: #13bed0;
+}
+
+.navbox .nav_choice .babyFood {
+    float: right;
+    margin-right: 1rem;
+    background: #597bc0;
+}
+
+.navbox .nav_choice .babyKonws {
+    float: left;
+    margin-left: 1rem;
+    background: #fdb648;
+}
+
+.navbox .nav_choice .babyInfo {
+    float: right;
+    margin-right: 1rem;
+    background: #fd7894;
+}
+
+.navbox .nav_choice .home div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -1px;
+}
+
+.navbox .nav_choice .lineFind div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -2px;
+    background-position-y: -27px;
+}
+
+.navbox .nav_choice .health div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -2px;
+    background-position-y: -65px;
+}
+
+.navbox .nav_choice .babyFood div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -2px;
+    background-position-y: -92px;
+}
+
+.navbox .nav_choice .babyKonws div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -2px;
+    background-position-y: -120px;
+}
+
+.navbox .nav_choice .babyInfo div {
+    margin: 20px auto 13px auto;
+    width: 28px;
+    height: 28px;
+    //background: url("src/assets/img/icon_nav.png") no-repeat;
+    background-size: 40px;
+    background-position-x: -2px;
+    background-position-y: -150px;
+}
+
+.navbox .nav_close {
+    margin: .5rem auto;
+    width: .8rem;
+    height: .8rem;
+    //background: url("src/assets/img/nav_close.png") no-repeat;
+    background-size: .8rem .8rem;
+}
+
+.loginRegBox,.authorize {
+    width: 100%;
+    height: 100%;
+    /*border: 1px solid red;*/
+    /*background: rgba(0, 0, 0, 0.8);*/
+    background: rgba(0,0,0,0.6);
+    color: black;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    //display: none;
+}
+
+.loginRegBox input[type="text"], .loginRegBox input[type="password"] {
+    width: 4rem;
+    height: 30px;
+    margin: 0 5px;
+    padding-left: 10px;
+    border: 1px solid #dde2df;
+}
+
+.loginRegBox .personInfo {
+    /*border: 1px solid red;*/
+    /*margin-top: 30%;*/
+}
+
+.loginRegBox hr {
+    border: none;
+    border-bottom: solid 1px #dadddd;
+    margin-top: .4rem;
+}
+
+.btn-default,.loginExpBox .btnLoginNext {
+    /*width: 200px;*/
+    width: 12.96rem;
+    height:2.37rem;
+    border-radius: 17px;
+    color: #ffffff;
+    background-color: #36bd46;
+    border: none;
+    margin-top: 1.44rem;
+    margin-bottom: 5px;
+}
+.btn-unclick {
+    width: 4rem;
+    height: 34px;
+    border-radius: 17px;
+    color: white;
+    background: #36bd46;
+    border: solid 1px #b5b9bd;
+    margin-top: .26rem;
+    margin-bottom: 15px;
+    font-size: .28rem;
+}
+
+.loginRegBox .btnClose{
+    margin-left: 84%;
+    cursor: pointer;
+}
+
+.loginRegBox p {
+    text-align: left;
+}
+
+.loginRegBox p i {
+    font-family: '宋体';
+    font-weight: bolder;
+    font-size: 16px;
+    color: #36bd46;
+    padding: 10px 10px 15px 15px;
+}
+
+.loginRegBox a {
+    color: #36bd46;
+}
+
+.loginBox {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    width: 75%;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #ffffff;
+    /*display: none;*/
+}
+
+.loginBox .tips {
+    display: block;
+    width: 250px;
+    color: red;
+    text-align: left;
+    float: left;
+    margin: 1px 0 1px 15%;
+    display: none;
+}
+
+.link {
+    margin: 30px 10px 0 15px;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.loginRegBox .arrow_l {
+    vertical-align: middle;
+    padding-top: 2px;
+    /*padding-bottom: 16px;*/
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -moz-transform: rotate(90deg); /* Firefox */
+    -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
+    -o-transform: rotate(90deg); /* Opera */
+}
+
+.loginRegBox .arrow_d {
+    vertical-align: middle;
+    /*padding-top: 2px;*/
+    margin-top: -5px;
+    width: 16px;
+    height: 16px;
+}
+
+.loginRegBox h1 {
+    font-size: .48rem;
+    padding-bottom: 30px;
+}
+
+.account {
+    width: 4rem;
+    border: solid 1px #dadddd;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 10px 15px;
+    display: none;
+}
+
+.account p {
+    font-size: .22rem;
+}
+
+/*家庭版终端用户许可协议解释说明*/
+.loginExpBox{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    width: 90%;
+    text-align:center;
+    border-radius: 10px;
+    background-color: #ffffff;
+    /* display: none; */
+}
+.loginExpBox .btnClose{
+    margin-left: 86%;
+    cursor: pointer;
+}
+.loginExpBox p{
+    width: 80%;
+    margin: auto;
+    /*padding: 0 0 20px 0;*/
+    padding: 1.08rem 0 1.08rem 0;
+    text-align: center;
+    font-size: .48rem;
+    /* margin-bottom: 10px; */
+    color: black;
+}
+.loginExpBox span{
+    display: block;
+    width: 88%;
+    height: 15.12rem;
+    line-height: 1.51rem;
+    overflow-y: auto;
+    margin: 1.08rem auto 0 auto;
+    padding: 0 3%;
+    text-align: left;
+    color: black;
+    font-size: .86rem;
+}
+.loginExpBox hr {
+    border: none;
+    border-bottom: solid 1px #dadddd;
+    margin-top: 0;
+}
+.loginExpBox .input{
+    /*width: 84%;*/
+    margin: .86rem auto ;
+}
+.input input[type="checkbox"] {
+     width: 1.26rem;
+     height: 1.26rem;
+     -webkit-appearance: none;
+     vertical-align: middle;
+     background:url(src/assets/img/mycheck.png) no-repeat center;
+     background-size: 1.26rem 1.26rem;
+ }
+
+.input input[type="checkbox"]:checked {
+    background:url(src/assets/img/mychecked.png) no-repeat;
+    background-size: 1.26rem 1.26rem;
+}
+.input label{
+    font-size: .86rem;
+}
+
+.input span{
+    font-size: .86rem;
+    display: inline-block;
+    width: inherit;
+    height: inherit;
+    line-height: .86rem;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    color: black;
+    vertical-align: middle;
+}
+
+.loginExpBox .btnLoginNext{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    width: 12.24rem;
+    height: 2.34rem;
+    line-height: 2.34rem;
+    border-radius: 1.26rem;
+    /* background: #e7e9e8; */
+}
+/*扫码筛查和短信筛查筛查授权同意书*/
+.authorizeBox{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    width: 90%;
+    text-align:center;
+    border-radius: 10px;
+    background-color: #ffffff;
+    /* display: none; */
+}
+.authorizeBox .btnClose{
+    margin-left: 86%;
+    cursor: pointer;
+}
+.authorizeBox h3{
+    width: 80%;
+    margin: auto;
+    /*padding: 0 0 20px 0;*/
+    padding: .72rem 0;
+    text-align: center;
+    font-size: 1.72rem;
+    /* margin-bottom: 10px; */
+    color: black;
+}
+.authorizeBox p{
+    display: block;
+    width: 88%;
+    line-height: 1.51rem;
+    overflow-y: auto;
+    margin: 1.08rem auto 0 auto;
+    padding: 0 3%;
+    text-align: left;
+    color: black;
+    font-size: .24rem;
+}
+.authorizeBox .bold{
+	font-weight: bold;
+}
+.authorizeBox .underline{
+	font-weight: bold;
+	text-decoration: underline;
+    font-style: italic;
+}
+.authorizeBox hr {
+    border: none;
+    border-bottom: solid 1px #dadddd;
+    margin-top: 1.08rem;
+}
+.authorizeBox .input{
+    /*width: 84%;*/
+    margin: .9rem auto ;
+}
+.input input[type="checkbox"] {
+     width: 1.26rem;
+     height: 1.26rem;
+     -webkit-appearance: none;
+     vertical-align: middle;
+     background:url(src/assets/img/mycheck.png) no-repeat center;
+     background-size: 1.26rem 1.26rem;
+ }
+
+.input input[type="checkbox"]:checked {
+    background:url(src/assets/img/mychecked.png) no-repeat;
+    background-size: 1.26rem 1.26rem;
+}
+.input label{
+    font-size: .86rem;
+}
+.authorizeBox .btnAddNext{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    width: 12.24rem;
+    height: 2.34rem;
+    line-height: 2.34rem;
+    border-radius: 1.26rem;
+    background: #e7e9e8;
+}
+footer{
+    /*position: absolute;*/
+    /*bottom: 5px;*/
+    text-align: center;
+    width: 100%;
+    padding-top: 30px;
+}
+footer a{
+    color: #fff!important;
+}
+.footer{
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    width: 100%;
+    padding-top: 0;
+}
+
+/*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android）----------------------*/
+@media screen and (device-width: 360px) and (max-device-height: 610px), screen and (device-width: 412px) and (max-device-height: 700px) and (-webkit-min-device-pixel-ratio: 3.5), screen and (device-width: 540px) and (device-height: 780px) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
+@media screen and (device-width: 320px) and (device-height: 480px), screen and (device-width: 540px) and (device-height: 702px) {
+
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone5） ----------------------------------------------*/
+@media screen and (device-width: 320px) and (device-height: 568px) {
+    .loginBox {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%,-50%);
+        width: 75%;
+        height:6.7rem;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #ffffff;
+        /*border: 1px solid red;*/
+        /*display: none;*/
+    }
+    .loginBox.regBox {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%,-50%);
+        width: 75%;
+        height:6.95rem;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #ffffff;
+        /*display: none;*/
+    }
+    .loginBox.forgetBox {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%,-50%);
+        width: 75%;
+        height:6.95rem;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #ffffff;
+        /*border: 1px solid red;*/
+        /*display: none;*/
+    }
+}
+
+
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (device-width: 360px), screen and (device-width: 412px) and (-webkit-min-device-pixel-ratio: 3.5) {
+
+}
+
+
+/*---------------------------------------- css media 适配部分（针对iphone6） ----------------------------------------*/
+@media screen and (device-width: 375px) and (device-height: 667px), screen and (device-width: 540px) and (device-height: 868px) {
+    /*.loginBox {*/
+        /*margin: 18% auto;*/
+        /*width: 75%;*/
+        /*height:6.1rem;*/
+        /*text-align: center;*/
+        /*border-radius: 10px;*/
+        /*background-color: #ffffff;*/
+    /*}*/
+}
+
+/*---------------------------------------- css media 适配部分（针对iphone6 plus） -----------------------------------*/
+@media screen and (device-width: 414px) and (device-height: 736px) and (-webkit-min-device-pixel-ratio: 3), screen and (device-width: 540px) and (device-height: 876px) {
+
+}
+
+
+.introBox {
+    /*border: 1px solid red;*/
+}
+
+.introBox .asq3， .introBox .asqse， .introBox .asqse2{
+    width: 100%;
+}
+.introBox .asqse2{
+    display: none;
+}
+.introBox .asq3 div,.introBox .asqse div,.introBox .asqse2 div {
+    width: 100%;
+    text-align: center;
+    padding: 2.88rem 0 1.8rem 0;
+}
+.introBox .asq3 div img{
+    width: 11.52rem;
+}
+.introBox .asqse div img{
+    width: 11.7rem;
+}
+.introBox .asqse2 div img{
+    width: 11.5rem;
+}
+.introBox .asq3 p,.introBox .asqse p,.introBox .asqse2 p{
+    text-indent: 1.65rem;
+    padding: 0 1.98rem;
+    line-height: 1.44rem;
+    font-size: .82rem;
+}
+.introBox hr{
+    margin-top: 1.08rem;
+}
+.introBox .asqse，.introBox .asqse2{
+    margin-top: 1.08rem;
+}
+hr {
+    border-bottom: solid 1px #d6d6d6;
+    clear: both;
+}
+.btnShow{
+    background: #36bd46 !important;
+}

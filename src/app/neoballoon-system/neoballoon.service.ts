@@ -9,13 +9,14 @@ import { SessionStorageService } from "../common/service/session-storage.service
   providedIn: "root"
 })
 export class NeoballoonService implements CanActivate {
-  constructor(private sessionStorage: SessionStorageService, private _toastrService: ToastrService, private _router: Router,
+  constructor(private _sessionStorage: SessionStorageService, private _toastrService: ToastrService, private _router: Router,
   ) {
 
   }
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let doctor = this.sessionStorage.doctor
-    if (doctor) {
+    let doctor = this._sessionStorage.doctor;
+    let source = this._sessionStorage.source;
+    if (doctor || source == 2 || source == 3) {
       return true;
     }
     this._toastrService.warning('请选择子账号')
