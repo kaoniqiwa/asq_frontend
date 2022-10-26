@@ -106,6 +106,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
   source = 0;
   memberResId = '';
+  thisMember:any = null;
 
   @ViewChild('Pointer', { static: false })
   public Pointer!: PointerBoxComponent;
@@ -410,7 +411,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           this.member.MotherBirth = this.memberGroup.value.motherBirth ?? "";
           this.member.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
-          this._business.updateMember(this.member);
+          this.thisMember = this._business.updateMember(this.member);
 
 
           if (this.babyInMember) {
@@ -418,8 +419,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
               let baby = this.babyInMember[i];
               let babyGroup = this.babyGroupArr[i]
               baby.Name = babyGroup.value.name;
-
               this._business.updateBaby(baby);
+              
             }
           }
           if (this.babyGroupToBeAdd) {
@@ -500,7 +501,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
 
-          let memberRes = await this._business.addMember(memberModel);
+          this.thisMember = await this._business.addMember(memberModel);
 
 
           for (let i = 0; i < this.babyGroupArr.length; i++) {
@@ -509,7 +510,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
             let babyModel = new Baby();
             babyModel.Id = "";
-            babyModel.Mid = memberRes.Id;
+            babyModel.Mid = this.thisMember.Id;
             babyModel.Name = rawValue.name;
             babyModel.Gender = rawValue.gender;
             babyModel.Birthday = rawValue.birthday;
@@ -533,7 +534,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           }
 
           this._toastrService.success('提交成功');
-          this.memberResId = memberRes.Id;
+          this.memberResId = this.thisMember.Id;
 
 
 
@@ -541,7 +542,10 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           this._toastrService.error('请先选择医生');
           this._router.navigate(["/neoballoon/neoballoon-manage/account"])
         }
+
       }
+
+      this._sessionStorage.member = this.thisMember;
 
     //}
 

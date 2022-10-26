@@ -37,7 +37,7 @@
         <div class="content">{{ surveyBtn.content }}</div>
       </div>
     </div>
-    <div class="swiper-container vertical-main" style="min-height: 500px">
+    <div class="swiper-container vertical-main" style="min-height: 400px">
       <swiper [config]="config">
         <ng-template
           swiperSlide
@@ -67,7 +67,7 @@
                 <br />
                 该做此套问卷啦
               </div>
-              <div class="hw-small-btn start-btn" (click)="gotoQuest($event)">
+              <div class="hw-small-btn start-btn" (click)="gotoEntry($event)">
                 立即筛查
               </div>
               <div class="birthday">您的宝宝<span>{{currentBaby?.Rectifyage}}</span>啦</div>

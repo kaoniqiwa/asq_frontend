@@ -38,13 +38,15 @@ export class MloginComponent implements OnInit {
       this.did = params['did'];
       this.uuid = params['uuid'];
     })
-    console.log('mlogin',this.uid,this.did,this.uuid);
+    console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid);
   }
 
   async ngOnInit() {
     this.user = await this._business.getUser(this.uid);
-    //this.doctor = await this._business.getDoctor(this.did);
-    console.log('ngOnInit',this.user);
+    this._sessionStorage.user = this.user;
+    this.doctor = await this._business.getDoctor(this.did);
+    this._sessionStorage.doctor = this.doctor;
+    console.log('ngOnInit',this.user,this.doctor);
     
   }
 
@@ -71,7 +73,7 @@ export class MloginComponent implements OnInit {
       
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
         queryParams: {
-          source: this._sessionStorage.source,
+          source: Number(this._sessionStorage.source.replace('"', "").replace('"', "")),
         }
       })
     }else{

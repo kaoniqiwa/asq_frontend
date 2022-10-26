@@ -163,6 +163,7 @@ export class Asq3QuestionComponent implements OnInit {
   monthWorkBook: any = [];
   doctor: any = null;
   user: any = null;
+  member:any = null;
   baby: any = null;
   age: any = null;
   question:any = null;
@@ -171,7 +172,8 @@ export class Asq3QuestionComponent implements OnInit {
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
     this.monthWorkBook = this._sessionStorage.monthWorkBook;
     this.doctor = this._sessionStorage.doctor;
-    this.user = this._localStorage.user;
+    this.user = this._sessionStorage.user;
+    this.member = this._sessionStorage.member;
     this.baby = this._sessionStorage.baby;
     //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
 
@@ -181,14 +183,14 @@ export class Asq3QuestionComponent implements OnInit {
       this.questMonth = params['questMonth'];
       this.bid = params['bid'];
     })
-    console.log('constructor', this._localStorage.user, this.doctor, this.monthWorkBook, this.baby, this.age, this.questMonth);
+    console.log('constructor', this.user, this.doctor, this.member, this.baby, this.questMonth);
 
 
 
 
   }
 
-  async ngOnInit() {//thisAnswers
+  async ngOnInit() {
 
     this.currentQuestionsObject = this.babyQuestions[this.questMonth];
     this.title = this.currentQuestionsObject.name;
@@ -219,7 +221,7 @@ export class Asq3QuestionComponent implements OnInit {
       }
       this.setCurrentAnswers();
       //console.log('intQuestions:', this.intQuestions);
-      //return
+
     } else {
       for (let i = 0; i < this.intQuestions.length; i++) {
         this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true ,'result': []};
@@ -328,7 +330,7 @@ export class Asq3QuestionComponent implements OnInit {
     }
   }
 
-  getScore(arr: any, indexFa: any ,rearr: any,) {//界值状态转化
+  getScore(arr: any, indexFa: any ,rearr: any,ns: any,ps: any,) {//界值状态转化
     let thisScore = 0;
     let thisScoreObj: any = {};
     let that = this;
@@ -339,6 +341,8 @@ export class Asq3QuestionComponent implements OnInit {
         thisScore += that.setThisScore(2);
       }
     })
+    thisScoreObj.nextStatus = ns;
+    thisScoreObj.prevStatus = ps;
     thisScoreObj.result = rearr;
     thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
@@ -385,7 +389,7 @@ export class Asq3QuestionComponent implements OnInit {
     let that = this;
     that.currentAnswers.map(function (item: any, index: any) {
       if ((index + 1) != that.currentAnswers.length) {
-        that.scoreArr.push(that.getScore(item.answer, index,item.result));
+        that.scoreArr.push(that.getScore(item.answer, index,item.result,item.nextStatus,item.prevStatus));
       }else{
         that.zonghe.question = that.intQuestions[index].question;
         that.zonghe.answer = item.answer;
@@ -400,14 +404,17 @@ export class Asq3QuestionComponent implements OnInit {
 
     let model = new Question();
     model.Id = "";
+    model.Cid = this.user.Id;
+    model.Did = this.doctor.Id;
+    model.Mid = this.member.Id;
     model.Bid = this.bid;// 宝宝ID；
     model.QuestType = this.questType;// asq3答卷
     model.QuestMonth = String(this.questMonth);//2月份
-    model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
+    //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
     model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
-    model.Source = this._sessionStorage.source;
-
+    model.Source = Number(this._sessionStorage.source.replace('"', "").replace('"', ""));
+    model.SurveyTime = this.baby.SurveyTime;
     console.log('model',model);
 
     let res = await this._business.create(model);

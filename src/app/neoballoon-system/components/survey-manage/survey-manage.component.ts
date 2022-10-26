@@ -82,13 +82,16 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   currentBaby: Baby | null = null;
 
   config: SwiperOptions = {
-    slidesPerView: 8,
+    slidesPerView: window.innerWidth<860?3:8,
     navigation: {}
   }
 
   @ViewChild(SwiperComponent) swiper!: SwiperComponent;
 
   constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
+
+    
+    //console.log('constructor', this._sessionStorage.user, this._sessionStorage.doctor, this._sessionStorage.member );
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.mid = params['mid'];
@@ -204,7 +207,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     console.log('this.currentMonthIndex',this.currentMonthIndex)
   }
 
-  gotoQuest(e: Event) {
+  gotoEntry(e: Event) {
     e.stopPropagation();
     if (this.currentBaby) {
       this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
@@ -217,7 +220,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       })
     }
   }
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     console.log('destroy');
   }
   goBack() {

@@ -15,6 +15,7 @@ import { UserUrl } from "../url/user.url";
 import { LocalStorageService } from "src/app/common/service/local-storage.service";
 import { BaseASQUrl } from "../url/base.url";
 import { RoutePath } from 'src/app/enum/route-path.enum';
+import { interval } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class AuthorizationService implements CanActivate {
   private _password: string = '';
   private _nc: number = 0;
   private _config: AxiosRequestConfig = { headers: {} };
-  source: any = 1;
+  source = 1;
 
   constructor(private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _cookieService: CookieService, private _router: Router,) {
     if (this._cookieService.check('username')) {
@@ -57,41 +58,47 @@ export class AuthorizationService implements CanActivate {
     //let user = this._localStorage.user;
     let user = this._sessionStorage.user;
     let holdCookie = this._cookieService.check('username');
-    this.source = this._sessionStorage.source;
-    console.log('this.source_canActivate', this.source);
+    this.source = Number(this._sessionStorage.source.replace('"', "").replace('"', ""));
+    console.log('this.source_canActivate',this.source);
 
     let url: string = state.url;
-    if (url) {
+    if (url && url.indexOf('username') != -1) {
       try {
-        console.log('this.source_canActivate3', this.source);
         let result = await this.login(url);
         if (result instanceof User) {
-          console.log('this.source_canActivate4', this.source);
           return true;
         }
       } catch (error) {
-        console.log('this.source_canActivate5', this.source);
-        return this._router.parseUrl('/login');
+        return this._router.parseUrl('/mlogin');
+      }
+    }else{
+      if (challenge && user && user.Id && holdCookie) {
+        return true;
       }
     }
 
-    console.log('this.source_canActivate2', this.source);
 
-    /* let url: string = state.url;
-    if (url) {
-      try {
-        let result = await this.login(url);
-        
-      } catch (error) {
-        return this._router.parseUrl('/login');
+
+    /* if(this.source){
+      console.log('this.source_canActivate2',  Number(this.source));
+      if ((challenge && user && user.Id && holdCookie && Number(this.source) == 1) || Number(this.source) == 2 || Number(this.source) == 3) {
+        console.log('this.source_canActivate3', +this.source);
+        return true;
+      }
+    }else{
+      console.log('移动端登录');
+      let url: string = state.url;
+      if (url) {
+        try {
+          let result = await this.login(url);
+          if (result instanceof User) {
+            return true;
+          }
+        } catch (error) {
+          return this._router.parseUrl('/mlogin');
+        }
       }
     } */
-
-    if ((challenge && user && user.Id && holdCookie && this.source == 1) || this.source == 2 || this.source == 3) {
-      return true;
-    }
-
-    //return false;
 
     return this._router.parseUrl('/login');
   }
@@ -107,15 +114,9 @@ export class AuthorizationService implements CanActivate {
   }
   loginByUrl(url: string): Promise<AxiosResponse<any> | User | null> {
     console.log('loginByUrl1',url);
-
-    //let a = new URL(url);
-    //console.log('loginByUrl',url);
-    //let hash = a.hash;
     let params:any = new URLSearchParams('#'+url);
-    console.log('loginByUrl2',params.get('username'),base64decode(params.get('username')));
     let username = base64decode(decodeURIComponent(params.get('username')));
     let password = base64decode(decodeURIComponent(params.get('password')));
-    console.log('loginByUrl3',username,password);
 
     return  this.login(username,password);
 
