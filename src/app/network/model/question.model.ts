@@ -12,7 +12,7 @@ export class Question {
   QuestScore!: string;
   ZongHe?:string;
   Source!:any;
-  SurveyTime?: string;
+  SurveyTime!: string;
   CreateTime?: string;
   UpdateTime?: string;
   Flow?: string;

@@ -11,7 +11,7 @@ export class NeoballoonManageComponent implements OnInit {
   source = 1;
   constructor(private _title: Title,private _sessionStorage: SessionStorageService) {
     this._title.setTitle('ASQ儿童发育筛查系统');
-    this.source = Number(this._sessionStorage.source.replace('"', "").replace('"', ""));
+    this.source = this._sessionStorage.source;
   }
 
   ngOnInit(): void {

@@ -28,6 +28,10 @@ export class MloginComponent implements OnInit {
   uuid:any = '';
   user: any = null;
   doctor: any = null;
+  phone:any = '';
+  code:any = 0;
+  setCode:any = '';
+  lastNum:any = '获取验证码';
 
 
 
@@ -48,9 +52,49 @@ export class MloginComponent implements OnInit {
     this._sessionStorage.doctor = this.doctor;
     console.log('ngOnInit',this.user,this.doctor);
     
+
+    
   }
 
-  phoneSubmit(){
+  async sendSms(){
+    if(this.lastNum != '获取验证码')return;
+    console.log('this.phone',this.phone);
+    if(!this.check_phone(String(this.phone))){
+      this._toastrService.warning('请输入有效的手机号码！');
+    }else{
+      let params:any = {};
+      params.phone = this.phone;
+      let res:any = await this._business.sendSms(params);
+      console.log('ngOnInit2',res);
+      if(res.content.Message == 'OK'){
+        this.code = res.code;
+      }
+      this.setTime();
+      console.log('ngOnInit2',res,this.code);
+    }
+    
+    
+  }
+
+  setTime(){
+    let t = 30;
+    let that = this;
+    that.lastNum = t;
+    let thisinterval = setInterval(function(){
+      t--;
+      that.lastNum = t;
+      if(t<=0){
+        that.lastNum = '获取验证码';
+        clearInterval(thisinterval);
+      }
+    },1000)
+  }
+
+  phoneSubmit():any{
+    console.log('phoneSubmit',this.setCode,this.code);
+    if(this.setCode != this.code){
+      return this._toastrService.error('验证码错误！');
+    }
     this.phoneStatus = false;
     this.screenStatus = true;
   }
@@ -69,16 +113,17 @@ export class MloginComponent implements OnInit {
 
   goToInfo(e:Event){
     e.stopPropagation();
-    if(this.readed){
+    
+    /* if(this.readed){
       
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
         queryParams: {
-          source: Number(this._sessionStorage.source.replace('"', "").replace('"', "")),
+          source: this._sessionStorage.source,
         }
       })
     }else{
       this._toastrService.warning('请阅读并勾选注意事项。');
-    }
+    } */
   }
 
   setDate(str: string) {
@@ -96,6 +141,25 @@ export class MloginComponent implements OnInit {
       return 0;
     }
   }
+
+  check_phone(mobile:any){
+    console.log('mobile.length',mobile.length);
+      
+    if(mobile.length!=11) 
+    { 
+      console.log('222');
+        return false; 
+    }
+    
+    var myreg = /^(((1[3-9][0-9]{1}))+\d{8})$/; 
+    if(!myreg.test(mobile)) 
+    { 
+        console.log('333');
+        return false; 
+    }
+    
+    return true;
+}
 
   counter(i: number) {
     return new Array(i);

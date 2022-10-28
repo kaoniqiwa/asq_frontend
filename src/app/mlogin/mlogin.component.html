@@ -50,11 +50,11 @@
                 <tbody>
                     <tr>
                         <td>手机号码：</td>
-                        <td><input type="number" class="regPhone" maxlength="11"></td>
+                        <td><input type="number" class="regPhone" maxlength="11" [(ngModel)]="phone"></td>
                     </tr>
                     <tr>
                         <td>验证码：</td>
-                        <td><input type="number" class="regCode"><button class="getCode">获取验证码</button></td>
+                        <td><input type="number" class="regCode" maxlength="6" [(ngModel)]="setCode"><button class="getCode" (click)="sendSms()">{{lastNum}}</button></td>
                     </tr>
                 </tbody>
             </table>

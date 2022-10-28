@@ -36,11 +36,11 @@ export class SessionStorageService {
 
   private _source: any | null = null;
   set source(source:any) {
-    sessionStorage.setItem('source', JSON.stringify(source));
+    sessionStorage.setItem('source', source);
   }
   get source() {
     let source = sessionStorage.getItem('source');
-    return source ? source : null;
+    return source;
   }
 
   private _doctor: Doctor | null = null;
@@ -71,13 +71,11 @@ export class SessionStorageService {
 
   private _member: Member | null = null;
   set member(member: Member | null) {
-    //this._member = member
     sessionStorage.setItem('member', JSON.stringify(member));
   }
   get member() {
     let member = sessionStorage.getItem('member');
     return member ? JSON.parse(member) : null;
-    //return this._member;
   }
 
   set challenge(challenge: DigestResponse) {

@@ -38,7 +38,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   mid = "";
 
   // 根据mid查询到的 member信息
-  member: Member | null = null;
+  member: any = null;
   existMember: Member | null = null;
 
   // 当前member下已经有的baby
@@ -106,7 +106,6 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
   source = 0;
   memberResId = '';
-  thisMember:any = null;
 
   @ViewChild('Pointer', { static: false })
   public Pointer!: PointerBoxComponent;
@@ -130,9 +129,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     if (this.mid) {
       this.member = await this._business.getMember(this.mid);
-
+      let that = this;
       let { Data: babys } = await this._business.listBaby([this.mid]);
-      console.log(babys)
+      
+      babys.map(function(item:any,index:any){
+        item.SurveyTime = that.transformDate(that.today);
+      })
+      console.log('ngOnInit',babys,this.member);
       this.babyInMember = babys;
 
     } else {
@@ -198,7 +201,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   addBabyGroup() {
     if (this.babyGroupArr.length < this.maxLength) {
       let newGroup = this.newBabyGroup();
-      newGroup.get('surveyTime')?.disable();
+      //newGroup.get('birthday')?.enable();
+      //newGroup.get('surveyTime')?.disable();
       this.babyGroupToBeAdd.push(newGroup);
       this.babyGroupArr.push(newGroup);
 
@@ -237,6 +241,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
   newBabyGroup() {
     return this._fb.group({
+      id:'',
       name: ["", Validators.required],
       identityInfo: [''],
       identityType: [IdentityType.Child],
@@ -411,8 +416,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           this.member.MotherBirth = this.memberGroup.value.motherBirth ?? "";
           this.member.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
-          this.thisMember = this._business.updateMember(this.member);
-
+          this.member = await this._business.getMember(this.mid);
+          console.log('this.member',this.member);
 
           if (this.babyInMember) {
             for (let i = 0; i < this.babyInMember.length; i++) {
@@ -501,7 +506,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
 
-          this.thisMember = await this._business.addMember(memberModel);
+          this.member = await this._business.addMember(memberModel);
 
 
           for (let i = 0; i < this.babyGroupArr.length; i++) {
@@ -510,7 +515,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
             let babyModel = new Baby();
             babyModel.Id = "";
-            babyModel.Mid = this.thisMember.Id;
+            babyModel.Mid = this.member.Id;
             babyModel.Name = rawValue.name;
             babyModel.Gender = rawValue.gender;
             babyModel.Birthday = rawValue.birthday;
@@ -534,7 +539,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           }
 
           this._toastrService.success('提交成功');
-          this.memberResId = this.thisMember.Id;
+          this.memberResId = this.member.Id;
 
 
 
@@ -545,7 +550,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
       }
 
-      this._sessionStorage.member = this.thisMember;
+      this._sessionStorage.member = this.member;
+      console.log('member',this._sessionStorage.member);
 
     //}
 
@@ -656,10 +662,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           let info = this.newBabyGroup();
           info.disable();
           info.patchValue({
+            id:baby.Id,
             name: baby.Name,
             gender: baby.Gender,
             birthday: this.transformDate(baby.Birthday),
-            surveyTime: this.transformDate(baby.SurveyTime),
+            surveyTime: baby.SurveyTime,
             identityType: baby.IdentityType,
             identityInfo: baby.IdentityInfo,
             premature: baby.Premature,
@@ -753,6 +760,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
 
 interface IBaby {
+  id:string,
   name: string;
   identityInfo: string;
   identityType: IdentityType;

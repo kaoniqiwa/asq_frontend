@@ -146,7 +146,7 @@
               >
               <div class="col-sm-5">
                 <app-date-picker
-                [disabled]="mid!=undefined?true:!true"
+                [disabled]="babyGroupArr[currentIndex].getRawValue().id!=''?true:!true"
                 [year]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[0]"
                 [month]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[1]"
                 [date]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[2]"
@@ -174,7 +174,6 @@
               >
               <div class="col-sm-5">
                 <app-date-picker
-                  [disabled]="mid!=undefined?true:!true"
                   [year]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[0]"
                   [month]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[1]"
                   [date]="+babyGroupArr[currentIndex].getRawValue().surveyTime.split('-')[2]"

@@ -413,7 +413,7 @@ export class Asq3QuestionComponent implements OnInit {
     //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
     model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
-    model.Source = Number(this._sessionStorage.source.replace('"', "").replace('"', ""));
+    model.Source = this._sessionStorage.source;
     model.SurveyTime = this.baby.SurveyTime;
     console.log('model',model);
 

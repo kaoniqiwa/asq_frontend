@@ -33,9 +33,13 @@ export class QuestionRequestService {
   list(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'listQuestion';
     return this.type.paged(QuestionUrl.list(), params)
-  }
+  }//getQuestionByBaby
   getQuestion(params: GetQuestionParams = new GetQuestionParams()) {
     params.Flow = 'getQuestion';
+    return this.type.post(QuestionUrl.getQ(), params);
+  }
+  getQuestionByBaby(params: GetQuestionParams = new GetQuestionParams()) {
+    params.Flow = 'getQuestionByBaby';
     return this.type.post(QuestionUrl.getQ(), params);
   }
   get(id:string) {

@@ -48,30 +48,59 @@
             <p>{{ month[0] | trimoffset }}</p>
             月
             <ng-container *ngIf="currentMonthIndex != i">
-              <span class="status">未开始</span>
-              <div class="appendix">
-                适用于
-                <br />
-                {{ month[1] }}
-                <br />
-                |
-                <br />
-                {{ month[2] }}{{ month[3] }}
-              </div>
+              <ng-container *ngIf="!checkScreen(i)">
+                <span class="status">未开始</span>
+                <div class="appendix">
+                  适用于
+                  <br />
+                  {{ month[1] }}
+                  <br />
+                  |
+                  <br />
+                  {{ month[2] }}{{ month[3] }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="checkScreen(i)">
+                <span class="status active">已完成</span>
+                <div class="appendix">
+                  适用于
+                  <br />
+                  {{ month[1] }}
+                  <br />
+                  |
+                  <br />
+                  {{ month[2] }}{{ month[3] }}
+                </div>
+              </ng-container>
+              
             </ng-container>
 
             <ng-container *ngIf="currentMonthIndex == i">
-              <span class="status active">可筛查</span>
-              <div class="appendix active">
-                您的宝宝
-                <br />
-                该做此套问卷啦
-              </div>
-              <div class="hw-small-btn start-btn" (click)="gotoEntry($event)">
-                立即筛查
-              </div>
+              <ng-container *ngIf="!checkScreen(i)">
+                <span class="status active">可筛查</span>
+                <div class="appendix active">
+                  您的宝宝
+                  <br />
+                  该做此套问卷啦
+                </div>
+                <div class="hw-small-btn start-btn" (click)="gotoEntry($event)">
+                  立即筛查
+                </div>
+                
+              </ng-container>
+              <ng-container *ngIf="checkScreen(i)">
+                <span class="status active">已完成</span>
+                <div class="appendix active">
+                  您的宝宝
+                  <br />
+                  已完成此套问卷啦
+                </div>
+                <div class="hw-small-btn refresh-btn" (click)="gotoEntry($event)">
+                  <img src="assets/img/refresh.png" />重复筛查
+                </div>
+                
+              </ng-container>
               <div class="birthday">您的宝宝<span>{{currentBaby?.Rectifyage}}</span>啦</div>
-              
             </ng-container>
           </div>
         </ng-template>

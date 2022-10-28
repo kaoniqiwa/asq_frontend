@@ -4,6 +4,7 @@ import { QuestionRequestService } from "src/app/network/request/question/questio
 import { CompanyRequestService } from "src/app/network/request/company/company.service";
 import { DoctorRequestService } from "src/app/network/request/doctor/doctor.service";
 import { GetGamesParams } from "src/app/network/request/games/games.params";
+import { param } from "jquery";
 
 @Injectable()
 export class MloginBusiness {
@@ -11,6 +12,10 @@ export class MloginBusiness {
 
   getUser(id: string) {
     return this._userRequest.get(id)
+  }
+
+  sendSms(params:any) {
+    return this._userRequest.sendSms(params);
   }
 
   getDoctor(id: string) {

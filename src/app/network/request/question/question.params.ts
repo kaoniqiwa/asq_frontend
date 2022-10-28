@@ -7,5 +7,6 @@ export class GetQuestionParams {
   Bids?: string[];
   QuestType?: QuestType;
   QuestMonth?: string;
+  SurveyTime?:string;
   Flow!: string;
 }

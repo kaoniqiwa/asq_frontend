@@ -4,22 +4,7 @@ import { Baby } from 'src/app/network/model/baby.model';
 
 import Swiper, { A11y, Navigation, Pagination, Scrollbar, SwiperOptions } from 'swiper';
 import { SurveyManageBusiness } from './survey-manage.business';
-
-
-// import monthWorkBook from "src/assets/files/asq_month.xlsx";
-
-
-
-// monthWorkBook.forEach((sheet: ASQMonthFilter) => {
-//   // 去掉标题
-//   sheet.data.shift();
-
-//   // 去掉列名
-//   sheet.data.shift();
-
-// })
-
-// console.log(monthWorkBook);
+import { GetQuestionParams } from "src/app/network/request/question/question.params";
 
 import SurveyBtns from "src/assets/json/survey-manage.json";
 
@@ -38,7 +23,7 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
 Swiper.use([
-  Navigation, Pagination, Scrollbar, A11y
+  Navigation, Pagination, Scrollbar
 ])
 
 
@@ -76,10 +61,12 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   // 当前问卷，哪个年龄段
   currentMonthIndex = -1;
 
+  monthed:any = [];
 
+  questions:any = [];
   babys: Baby[] = [];
 
-  currentBaby: Baby | null = null;
+  currentBaby: any = null;
 
   config: SwiperOptions = {
     slidesPerView: window.innerWidth<860?3:8,
@@ -90,8 +77,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
 
+
     
-    //console.log('constructor', this._sessionStorage.user, this._sessionStorage.doctor, this._sessionStorage.member );
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.mid = params['mid'];
@@ -148,9 +135,6 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
 
-
-
-
     let { Data: babys } = await this._business.listBaby(this.mid);
     this.babys = babys;
     // console.log('babys', this.babys)
@@ -161,9 +145,27 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     }
 
-    // this.checkRange();
+    this.getQuestions()
 
+  }
 
+  async getQuestions(){
+    console.log('ngOnInit', this.currentBaby.Id);
+    let params = new GetQuestionParams();
+    params.Bids = [this.currentBaby.Id];
+    this.questions = await this._business.getQuestionByBaby(params);
+    console.log('this.questions', this.questions);
+  }
+
+  checkScreen(num:any){
+    if(this.questions.length <= 0)return false;
+    for(var i=0; i<this.questions.length; i++){
+      if( this.questions[i].QuestMonth == num && this.questions[i].QuestType == this.currentType){
+        //console.log(i);
+        return true;
+      }
+    }
+    return false
   }
 
   clickSurveyBtn(model: SurveyBtnModel) {
@@ -181,7 +183,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     this.currentBaby = baby;
     this.checkRange();
     this._sessionStorage.baby = baby;
-    this._globalStorage.baby = baby;
+    this.getQuestions();
   }
   checkRange() {
     if (this.currentBaby) {

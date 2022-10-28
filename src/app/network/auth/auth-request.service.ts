@@ -58,7 +58,7 @@ export class AuthorizationService implements CanActivate {
     //let user = this._localStorage.user;
     let user = this._sessionStorage.user;
     let holdCookie = this._cookieService.check('username');
-    this.source = Number(this._sessionStorage.source.replace('"', "").replace('"', ""));
+    this.source = this._sessionStorage.source;
     console.log('this.source_canActivate',this.source);
 
     let url: string = state.url;

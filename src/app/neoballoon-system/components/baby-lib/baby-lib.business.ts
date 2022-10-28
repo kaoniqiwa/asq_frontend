@@ -16,11 +16,15 @@ import { BabyLibConverter } from "./baby-lib.converter";
 @Injectable()
 export class BabyManageBusiness {
 
+  asq3mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  mouthArr:any = [];
+
   constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _converter: BabyLibConverter) {
 
   }
   async init(searchInfo: BabyLibSearchInfo) {
 
+    this.mouthArr = this.asq3mouthArr;
 
     let models: BabyLibModel[] = [];
     let page: Page = {
@@ -62,8 +66,9 @@ export class BabyManageBusiness {
             model.Id = baby.Id;
             model.Name = baby.Name;
             model.Birthday = formatDate(baby.Birthday, 'yyyy-MM-dd', 'en');
-            model.SurveyTime = formatDate(baby.SurveyTime, 'yyyy-MM-dd', 'en');
+            model.SurveyTime = formatDate(question.SurveyTime, 'yyyy-MM-dd', 'en');
             model.FileId = question.Id;
+            model.QuestMonth = this.mouthArr[question.QuestMonth];
             let member = members.find(member => member.Id == baby!.Mid)
             if (member) {
               model.Member = member;

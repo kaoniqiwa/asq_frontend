@@ -54,7 +54,13 @@ export class BabyInMemberComponent implements OnInit {
             }
           })
         } else {
-          this._toastrService.error('未查询到该用户')
+          this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
+            queryParams: {
+              mid: '',
+              source: 1
+            }
+          })
+          this._toastrService.error('未查询到该用户，请填入基本信息')
         }
       } else {
         this._toastrService.error('请先选择医生');

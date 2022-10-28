@@ -38,6 +38,10 @@ export class CompanyRequestService {
   get(id: string) {
     return this.type.get(CompanyUrl.get(id));
   }
+  sendSms(params:any) {
+    params.Flow = 'sendSms';
+    return this.type.post(CompanyUrl.sendSms(),params);
+  }
   getUser(id: string) {
     return this.type.get(CompanyUrl.get(id));
   }

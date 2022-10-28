@@ -9,6 +9,17 @@
     vertical-align: sub;
   }
 }
+@media (max-width: 768px) {
+  .control-label {
+    margin-bottom: 0;
+    padding-top: 7px;
+    text-align: right;
+  }
+  .control-label span {
+    color: #fc4b6c;
+    vertical-align: sub;
+  }
+}
 @media (min-width: 768px) {
   .form-group-lg .control-label {
     padding-top: 14.3px;

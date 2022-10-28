@@ -20,6 +20,7 @@ export class BabyLibModel {
   Birthday!: string;
   Member!: Member;
   SurveyTime!: string;
+  QuestMonth?:string;
   // ParentName!: string;
   // CreateTime!: string;
   // Status!: string;
