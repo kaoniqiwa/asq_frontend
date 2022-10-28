@@ -59,7 +59,7 @@ export class AuthorizationService implements CanActivate {
     let user = this._sessionStorage.user;
     let holdCookie = this._cookieService.check('username');
     this.source = this._sessionStorage.source;
-    console.log('this.source_canActivate',this.source);
+    console.log('this.source_canActivate', this.source);
 
     let url: string = state.url;
     if (url && url.indexOf('username') != -1) {
@@ -71,7 +71,7 @@ export class AuthorizationService implements CanActivate {
       } catch (error) {
         return this._router.parseUrl('/mlogin');
       }
-    }else{
+    } else {
       if (challenge && user && user.Id && holdCookie) {
         return true;
       }
@@ -108,22 +108,22 @@ export class AuthorizationService implements CanActivate {
   login(username: string, password?: string): Promise<User | AxiosResponse<any> | null> {
     if (password) {
       return this.loginByUsername(username.trim(), password.trim())
-    }else {
+    } else {
       return this.loginByUrl(username);
     }
   }
   loginByUrl(url: string): Promise<AxiosResponse<any> | User | null> {
-    console.log('loginByUrl1',url);
-    let params:any = new URLSearchParams('#'+url);
+    console.log('loginByUrl1', url);
+    let params: any = new URLSearchParams('#' + url);
     let username = base64decode(decodeURIComponent(params.get('username')));
     let password = base64decode(decodeURIComponent(params.get('password')));
 
-    return  this.login(username,password);
+    return this.login(username, password);
 
   }
   async loginByUsername(username: string, password: string) {
     // return axios.get('/api/login.php')
-    
+
     this._username = username;
     this._password = password;
     this._config.url = `${BaseASQUrl}/front_end.login.php`
@@ -163,7 +163,7 @@ export class AuthorizationService implements CanActivate {
       return null;
     });
   }
-  
+
   private _storeUserInfo(
     user: User,
     password: string,
@@ -227,6 +227,7 @@ export class AuthorizationService implements CanActivate {
     method: string,
     uri: string
   ) {
+    if (!challenge) return "";
     const realm = challenge.realm;
     const nonce = challenge.nonce;
 
