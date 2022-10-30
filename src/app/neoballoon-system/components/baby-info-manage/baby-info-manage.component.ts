@@ -71,7 +71,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   county = "请选择";
 
   mphone = '';
-  
+
   editMemberInfo = false;
   // 问卷人信息
   memberGroup = this._fb.group({
@@ -91,10 +91,29 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     motherDegree: [EducateDegree.None],
     fatherDegree: [EducateDegree.None],
     otherDegree: [EducateDegree.None],
-    motherBirth: [''],
+    motherBirth: ['2022-10-01'],
     fatherBirth: [''],
   })
 
+  getMotherBirth() {
+    if (this.memberGroup.value.motherBirth) {
+
+      let arr = this.memberGroup.value.motherBirth.split("-")
+      return {
+        year: +arr[0],
+        month: +arr[1],
+        date: +arr[2]
+      }
+
+    } else {
+
+      return {
+        year: 2022,
+        month: 10,
+        date: 2
+      }
+    }
+  }
   // 宝宝信息
   babyGroupArr: Array<FormGroup> = [];
 
@@ -108,7 +127,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
   source = 0;
   memberResId = '';
-  
+
 
   @ViewChild('Pointer', { static: false })
   public Pointer!: PointerBoxComponent;
@@ -124,8 +143,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     this._activeRoute.queryParams.subscribe((params) => {
       this.source = params['source'];
       this.mid = params['mid'];
-      
-      if(params['phone']){
+
+      if (params['phone']) {
         this.mphone = params['phone'];
         this.memberGroup.patchValue({
           phone: this.mphone,
@@ -133,8 +152,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         this.Phone.disable();
       }
 
-      this._sessionStorage.source =  params['source'];
-      console.log('source_after',this.source,this.mphone);
+      this._sessionStorage.source = params['source'];
+      console.log('source_after', this.source, this.mphone);
     })
   }
 
@@ -143,11 +162,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this.member = await this._business.getMember(this.mid);
       let that = this;
       let { Data: babys } = await this._business.listBaby([this.mid]);
-      
-      babys.map(function(item:any,index:any){
+
+      babys.map(function (item: any, index: any) {
         item.SurveyTime = that.transformDate(that.today);
       })
-      console.log('ngOnInit',babys,this.member);
+      console.log('ngOnInit', babys, this.member);
       this.babyInMember = babys;
 
     } else {
@@ -166,7 +185,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+
   ngAfterViewInit(): void {
     // console.log('view init');
     // $('#target').distpicker({
@@ -238,22 +257,22 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this._toastrService.warning('请依次删除')
     }
   }
-  getYmd(date:any,str:any){
+  getYmd(date: any, str: any) {
     let thisDate = date;
-    console.log('getYmd',thisDate);
+    console.log('getYmd', thisDate);
     //if(birthday == '')return 0;
-    if(str == 'Y'){
+    if (str == 'Y') {
       return +thisDate.split('-')[0];
-    }else if(str == 'M'){
+    } else if (str == 'M') {
       return +thisDate.split('-')[1];
-    }else{
+    } else {
       return +thisDate.split('-')[2];
     }
-   
+
   }
   newBabyGroup() {
     return this._fb.group({
-      id:'',
+      id: '',
       name: ["", Validators.required],
       identityInfo: [''],
       identityType: [IdentityType.Child],
@@ -310,7 +329,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       currentPremature = '否';
     }
 
-    let birthday = date.year+"-"+ date.month+"-"+date.date;
+    let birthday = date.year + "-" + date.month + "-" + date.date;
     group.patchValue({
       birthday: birthday,
       premature: currentPremature
@@ -318,16 +337,16 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     //console.log('pickerChange', date ,group);
   }
   pickerChange2(date: DatePickerModel, group: FormGroup) {
-    
-    let surveyTime = date.year+"-"+ date.month+"-"+date.date;
+
+    let surveyTime = date.year + "-" + date.month + "-" + date.date;
     group.patchValue({
       surveyTime: surveyTime,
     })
   }
 
   pickerChange3(date: DatePickerModel, group: FormGroup) {
-    
-    let surveyTime = date.year+"-"+ date.month+"-"+date.date;
+
+    let surveyTime = date.year + "-" + date.month + "-" + date.date;
     group.patchValue({
       surveyTime: surveyTime,
     })
@@ -384,23 +403,23 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     })
 
   }
-  onSubmitFloat(e:any){
-    console.log(e,'onSubmitFloat');
-    if(e==1){
+  onSubmitFloat(e: any) {
+    console.log(e, 'onSubmitFloat');
+    if (e == 1) {
       if (this._checkForm()) {
         console.log('通过')
         this.Pointer.setBirthDay(this.babyGroupArr[this.currentIndex].getRawValue().birthday);
         this.Pointer.setShow(1);
         this.float = true;
       }
-    }else if(e==2){
+    } else if (e == 2) {
       this.Pointer.setShow(2);
       this.float = true;
       this.onSubmit();
-    }else if(e==3){
+    } else if (e == 3) {
       this.Pointer.setShow(0);
       this.float = false;
-    }else if(e==4){
+    } else if (e == 4) {
       this.Pointer.setShow(0);
       this.float = false;
       this.navigateToSurveyManage(this.memberResId);
@@ -414,123 +433,45 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
 
     //if (this._checkForm()) {
-      //console.log('通过')
-      if (this.mid) {
-        console.log('老用户');
+    //console.log('通过')
+    if (this.mid) {
+      console.log('老用户');
 
-        if (this.member) {
-          this.member.Name = this.memberGroup.value.name ?? "";
-          this.member.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
-          this.member.Province = this.province;
-          this.member.City = this.city
-          this.member.County = this.county;
-          this.member.Email = this.memberGroup.value.email ?? "";
-          this.member.PostCode = this.memberGroup.value.postCode ?? "";
-          this.member.Address = this.memberGroup.value.address ?? "";
-          this.member.MotherJob = this.memberGroup.value.motherJob ?? "";
-          this.member.FatherJob = this.memberGroup.value.fatherJob ?? "";
-          this.member.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
-          this.member.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
-          this.member.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
-          this.member.MotherBirth = this.memberGroup.value.motherBirth ?? "";
-          this.member.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
+      if (this.member) {
+        this.member.Name = this.memberGroup.value.name ?? "";
+        this.member.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
+        this.member.Province = this.province;
+        this.member.City = this.city
+        this.member.County = this.county;
+        this.member.Email = this.memberGroup.value.email ?? "";
+        this.member.PostCode = this.memberGroup.value.postCode ?? "";
+        this.member.Address = this.memberGroup.value.address ?? "";
+        this.member.MotherJob = this.memberGroup.value.motherJob ?? "";
+        this.member.FatherJob = this.memberGroup.value.fatherJob ?? "";
+        this.member.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
+        this.member.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
+        this.member.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
+        this.member.MotherBirth = this.memberGroup.value.motherBirth ?? "";
+        this.member.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
-          this.member = await this._business.getMember(this.mid);
-          console.log('this.member',this.member);
+        this.member = await this._business.getMember(this.mid);
+        console.log('this.member', this.member);
 
-          if (this.babyInMember) {
-            for (let i = 0; i < this.babyInMember.length; i++) {
-              let baby = this.babyInMember[i];
-              let babyGroup = this.babyGroupArr[i]
-              baby.Name = babyGroup.value.name;
-              this._business.updateBaby(baby);
-              
-            }
+        if (this.babyInMember) {
+          for (let i = 0; i < this.babyInMember.length; i++) {
+            let baby = this.babyInMember[i];
+            let babyGroup = this.babyGroupArr[i]
+            baby.Name = babyGroup.value.name;
+            this._business.updateBaby(baby);
+
           }
-          if (this.babyGroupToBeAdd) {
-            for (let i = 0; i < this.babyGroupToBeAdd.length; i++) {
-              let babyGroup = this.babyGroupToBeAdd[i];
-
-              let rawValue = babyGroup.getRawValue();
-
-
-              let babyModel = new Baby();
-              babyModel.Id = "";
-              babyModel.Mid = this.member.Id;
-              babyModel.Name = rawValue.name;
-              babyModel.Gender = rawValue.gender;
-              babyModel.Birthday = rawValue.birthday;
-              babyModel.SurveyTime = rawValue.surveyTime;
-              babyModel.Premature = rawValue.premature;
-              babyModel.Prematrueweek = rawValue.prematrueweek;
-              babyModel.Prematrueday = rawValue.prematrueday;
-              console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
-              babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
-              babyModel.IsShun = rawValue.bornCondition.isShun;
-              babyModel.IdentityInfo = rawValue.identityInfo;
-              babyModel.IdentityType = rawValue.identityType;
-              babyModel.Weight = rawValue.weight;
-              babyModel.IsChanqian = rawValue.bornCondition.isChanqian;
-              babyModel.IsMulti = rawValue.bornCondition.isMulti;
-              babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
-
-              let babyRes = await this._business.addBaby(babyModel);
-            }
-          }
-          this._toastrService.success('提交成功');
-          this.navigateToSurveyManage(this.member.Id);
-
-
         }
+        if (this.babyGroupToBeAdd) {
+          for (let i = 0; i < this.babyGroupToBeAdd.length; i++) {
+            let babyGroup = this.babyGroupToBeAdd[i];
 
-      } else {
-        console.log('新用户');
-        let doctor = this._sessionStorage.doctor;
-        if (doctor) {
-          let phone = this.memberGroup.value.phone;
-          if (phone) {
-            let { Data: existMember } = await this._business.listMember([phone])
-            console.log(existMember)
-            if (existMember.length) {
-              this.existMember = existMember[0];
-              this._toastrService.error('该问卷人已存在,请重新填写手机号');
-              this.Pointer.setShow(0);
-              this.float = false;
-              // this.showExist = true;
-              return;
-            }
-          }
-
-
-          let memberModel = new Member();
-          memberModel.Id = '';
-          memberModel.Did = doctor.Id;
-          memberModel.Name = this.memberGroup.value.name ?? '';
-          memberModel.Phone = this.memberGroup.value.phone ?? "";
-          memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
-          memberModel.Province = this.memberGroup.value.province ?? "";
-          memberModel.City = this.memberGroup.value.city ?? "";
-          memberModel.County = this.memberGroup.value.county ?? "";
-          memberModel.Email = this.memberGroup.value.email ?? "";
-          memberModel.IsHelp = this.memberGroup.value.isHelp ?? "";
-          memberModel.HelpInfo = this.memberGroup.value.helpInfo ?? "";
-          memberModel.PostCode = this.memberGroup.value.postCode ?? "";
-          memberModel.Address = this.memberGroup.value.address ?? "";
-          memberModel.MotherJob = this.memberGroup.value.motherJob ?? "";
-          memberModel.FatherJob = this.memberGroup.value.fatherJob ?? "";
-          memberModel.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
-          memberModel.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
-          memberModel.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
-          memberModel.MotherBirth = this.memberGroup.value.motherBirth ?? "";
-          memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
-
-
-          this.member = await this._business.addMember(memberModel);
-
-
-          for (let i = 0; i < this.babyGroupArr.length; i++) {
-            let babyGroup = this.babyGroupArr[i];
             let rawValue = babyGroup.getRawValue();
+
 
             let babyModel = new Baby();
             babyModel.Id = "";
@@ -553,31 +494,109 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
 
             let babyRes = await this._business.addBaby(babyModel);
-            console.log('添加 baby ', babyRes);
-
           }
-
-          this._toastrService.success('提交成功');
-          this.memberResId = this.member.Id;
-
-
-
-        }else {
-          this._toastrService.error('请先选择医生');
-          this._router.navigate(["/neoballoon/neoballoon-manage/account"])
         }
+        this._toastrService.success('提交成功');
+        this.navigateToSurveyManage(this.member.Id);
+
 
       }
 
-      this._sessionStorage.member = this.member;
-      console.log('member',this._sessionStorage.member);
+    } else {
+      console.log('新用户');
+      let doctor = this._sessionStorage.doctor;
+      if (doctor) {
+        let phone = this.memberGroup.value.phone;
+        if (phone) {
+          let { Data: existMember } = await this._business.listMember([phone])
+          console.log(existMember)
+          if (existMember.length) {
+            this.existMember = existMember[0];
+            this._toastrService.error('该问卷人已存在,请重新填写手机号');
+            this.Pointer.setShow(0);
+            this.float = false;
+            // this.showExist = true;
+            return;
+          }
+        }
+
+
+        let memberModel = new Member();
+        memberModel.Id = '';
+        memberModel.Did = doctor.Id;
+        memberModel.Name = this.memberGroup.value.name ?? '';
+        memberModel.Phone = this.memberGroup.value.phone ?? "";
+        memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
+        memberModel.Province = this.memberGroup.value.province ?? "";
+        memberModel.City = this.memberGroup.value.city ?? "";
+        memberModel.County = this.memberGroup.value.county ?? "";
+        memberModel.Email = this.memberGroup.value.email ?? "";
+        memberModel.IsHelp = this.memberGroup.value.isHelp ?? "";
+        memberModel.HelpInfo = this.memberGroup.value.helpInfo ?? "";
+        memberModel.PostCode = this.memberGroup.value.postCode ?? "";
+        memberModel.Address = this.memberGroup.value.address ?? "";
+        memberModel.MotherJob = this.memberGroup.value.motherJob ?? "";
+        memberModel.FatherJob = this.memberGroup.value.fatherJob ?? "";
+        memberModel.MotherDegree = this.memberGroup.value.motherDegree ?? EducateDegree.None
+        memberModel.FatherDegree = this.memberGroup.value.fatherDegree ?? EducateDegree.None
+        memberModel.OtherDegree = this.memberGroup.value.otherDegree ?? EducateDegree.None
+        memberModel.MotherBirth = this.memberGroup.value.motherBirth ?? "";
+        memberModel.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
+
+
+        this.member = await this._business.addMember(memberModel);
+
+
+        for (let i = 0; i < this.babyGroupArr.length; i++) {
+          let babyGroup = this.babyGroupArr[i];
+          let rawValue = babyGroup.getRawValue();
+
+          let babyModel = new Baby();
+          babyModel.Id = "";
+          babyModel.Mid = this.member.Id;
+          babyModel.Name = rawValue.name;
+          babyModel.Gender = rawValue.gender;
+          babyModel.Birthday = rawValue.birthday;
+          babyModel.SurveyTime = rawValue.surveyTime;
+          babyModel.Premature = rawValue.premature;
+          babyModel.Prematrueweek = rawValue.prematrueweek;
+          babyModel.Prematrueday = rawValue.prematrueday;
+          console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+          babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+          babyModel.IsShun = rawValue.bornCondition.isShun;
+          babyModel.IdentityInfo = rawValue.identityInfo;
+          babyModel.IdentityType = rawValue.identityType;
+          babyModel.Weight = rawValue.weight;
+          babyModel.IsChanqian = rawValue.bornCondition.isChanqian;
+          babyModel.IsMulti = rawValue.bornCondition.isMulti;
+          babyModel.OtherAbnormal = rawValue.bornCondition.abnormal;
+
+          let babyRes = await this._business.addBaby(babyModel);
+          console.log('添加 baby ', babyRes);
+
+        }
+
+        this._toastrService.success('提交成功');
+        this.memberResId = this.member.Id;
+
+
+
+      } else {
+        this._toastrService.error('请先选择医生');
+        this._router.navigate(["/neoballoon/neoballoon-manage/account"])
+      }
+
+    }
+
+    this._sessionStorage.member = this.member;
+    console.log('member', this._sessionStorage.member);
 
     //}
 
   }
 
   navigateToSurveyManage(mid: string) {
-    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid],{
+    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid], {
       queryParams: {
         currentIndex: this.currentIndex,
       }
@@ -652,6 +671,9 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   private _updateForm() {
 
 
+    this.memberGroup.patchValue({
+      motherBirth: '2021-09-19'
+    })
     if (this.member) {
       this.memberGroup.disable();
 
@@ -685,7 +707,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           let info = this.newBabyGroup();
           info.disable();
           info.patchValue({
-            id:baby.Id,
+            id: baby.Id,
             name: baby.Name,
             gender: baby.Gender,
             birthday: this.transformDate(baby.Birthday),
@@ -739,7 +761,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         }
 
       }
-      
+
       let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematrueweek, control.getRawValue().prematrueday).split('月')[0];
       if (rectifyage < 1) {
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
@@ -783,7 +805,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
 
 interface IBaby {
-  id:string,
+  id: string,
   name: string;
   identityInfo: string;
   identityType: IdentityType;
