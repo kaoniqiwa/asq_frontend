@@ -323,7 +323,14 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     group.patchValue({
       surveyTime: surveyTime,
     })
-    //console.log('pickerChange2', date ,group);
+  }
+
+  pickerChange3(date: DatePickerModel, group: FormGroup) {
+    
+    let surveyTime = date.year+"-"+ date.month+"-"+date.date;
+    group.patchValue({
+      surveyTime: surveyTime,
+    })
   }
   changeBirthday(date: Date, group: FormGroup) {
 
