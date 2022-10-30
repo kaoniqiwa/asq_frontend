@@ -52,6 +52,15 @@ export class SessionStorageService {
     return doctor ? JSON.parse(doctor) : null;
   }
 
+  private _doctors: Doctor[] | null = null;
+  set doctors(doctors: Doctor[] | null) {
+    sessionStorage.setItem('doctors', JSON.stringify(doctors));
+  }
+  get doctors() {
+    let doctors = sessionStorage.getItem('doctors');
+    return doctors ? JSON.parse(doctors) : null;
+  }
+
   private _user: Company | null = null;
   set user(user: Company | null) {
     sessionStorage.setItem('user', JSON.stringify(user));
@@ -63,10 +72,11 @@ export class SessionStorageService {
 
   private _baby: Baby | null = null;
   set baby(baby: Baby | null) {
-    this._baby = baby
+    sessionStorage.setItem('baby', JSON.stringify(baby));
   }
   get baby() {
-    return this._baby;
+    let baby = sessionStorage.getItem('baby');
+    return baby ? JSON.parse(baby) : null;
   }
 
   private _member: Member | null = null;

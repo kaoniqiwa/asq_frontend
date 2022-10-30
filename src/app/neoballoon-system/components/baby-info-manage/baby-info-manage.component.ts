@@ -70,6 +70,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   city = "请选择";
   county = "请选择";
 
+  mphone = '';
+  
   editMemberInfo = false;
   // 问卷人信息
   memberGroup = this._fb.group({
@@ -106,6 +108,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
   source = 0;
   memberResId = '';
+  
 
   @ViewChild('Pointer', { static: false })
   public Pointer!: PointerBoxComponent;
@@ -121,8 +124,17 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     this._activeRoute.queryParams.subscribe((params) => {
       this.source = params['source'];
       this.mid = params['mid'];
+      
+      if(params['phone']){
+        this.mphone = params['phone'];
+        this.memberGroup.patchValue({
+          phone: this.mphone,
+        })
+        this.Phone.disable();
+      }
+
       this._sessionStorage.source =  params['source'];
-      console.log('source_after',this.source);
+      console.log('source_after',this.source,this.mphone);
     })
   }
 
@@ -558,7 +570,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
 
   navigateToSurveyManage(mid: string) {
-    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid])
+    this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid],{
+      queryParams: {
+        currentIndex: this.currentIndex,
+      }
+    })
   }
   goBack() {
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])

@@ -32,6 +32,7 @@ export class AccountComponent implements OnInit {
     if (this.user) {
       let { Data: doctors } = await this._business.listDoctors([this.user.Id]);
       this.doctors = doctors;
+      this._sessionStorage.doctors = doctors;
     }
   }
   selectAccount(doctor: Doctor) {

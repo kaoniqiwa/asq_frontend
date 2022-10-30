@@ -15,12 +15,12 @@ export class AccountInfoComponent implements OnInit {
   doctor: Doctor | null = null;
   user: User | null = null;
 
-  constructor(private sessionStorage: SessionStorageService,private localStorage:LocalStorageService) { }
+  constructor(private _sessionStorage: SessionStorageService,private localStorage:LocalStorageService) { }
 
   ngOnInit(): void {
     // console.log(this._globalStorage.doctor)
-    this.doctor = this.sessionStorage.doctor;
-    this.user = this.localStorage.user;
+    this.doctor = this._sessionStorage.doctor;
+    this.user = this._sessionStorage.user;
     console.log('this.user',this.user)
   }
 

@@ -227,7 +227,8 @@ export class AuthorizationService implements CanActivate {
     method: string,
     uri: string
   ) {
-    if (!challenge) return "";
+    if(this._router.url.indexOf('asq3print') != -1)return'';
+    //if (!challenge) return "";
     const realm = challenge.realm;
     const nonce = challenge.nonce;
 

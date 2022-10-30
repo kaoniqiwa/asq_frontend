@@ -26,6 +26,10 @@ export class QuestionRequestService {
     this.gamesType = this.basic.type(Games);
   }
 
+  changeStatus(params:any){
+    params.Flow = 'changeStatus';
+    return this.type.post(QuestionUrl.create(), params);
+  }
   create(model: Question) {
     model.Flow = 'addQuestion';
     return this.type.post(QuestionUrl.create(), model);

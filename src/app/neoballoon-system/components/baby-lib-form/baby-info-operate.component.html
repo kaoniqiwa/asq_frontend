@@ -5,9 +5,9 @@
         <div class="hw-form-group">
           <div class="title">问卷年龄</div>
           <div class="content questAge">
-            <select class="">
+            <select name="age" class="" [(ngModel)]="searchInfo.QuestMonth">
               <option value="" disabled>请选择</option>
-              <option *ngFor="let age of AGE_DATE" [value]="age">
+              <option *ngFor="let age of AGE_DATE; let i= index;" [value]="i">
                 {{ age }}
               </option>
             </select>
@@ -31,8 +31,8 @@
               readonly
               DateTimePicker
               [format]="dateFormat"
-              [date]="searchInfo.BeginTime"
-              (change)="changeBegin($event)"
+              [date]="searchInfo.EndTime"
+              (change)="changeEnd($event)"
               class="hw-form-control hw-form-input"
             />
           </div>
@@ -41,9 +41,10 @@
           <div class="title">医生姓名</div>
           <div class="content questDoc">
             <ul>
-              <li>示教1</li>
-              <li>示教2</li>
-              <li>示教3</li>
+              <ng-container *ngFor="let item of doctors; let i = index;">
+                <li [class.active]="item.Status" [attr.Index]="i"  (click)="chooseDoctor($event)">{{item.Name}}</li>
+              </ng-container>
+              
             </ul>
           </div>
         </div>
@@ -51,8 +52,8 @@
           <div class="title">状态</div>
           <div class="content">
             <ul>
-              <li>已归档</li>
-              <li>未归档</li>
+              <li [class.active]="searchInfo.Status == 1" [attr.Index]="1" (click)="chooseStatus($event)">已完成</li>
+              <li [class.active]="searchInfo.Status == 0" [attr.Index]="0" (click)="chooseStatus($event)">未归档</li>
             </ul>
           </div>
         </div>
@@ -61,8 +62,8 @@
   </div>
   <div class="popped-footer">
     <div class="popped-footer-item">
-      <button class="hw-normal-btn green-btn">完成</button>
-      <button class="hw-normal-btn reverse-green-btn">重置</button>
+      <button class="hw-normal-btn reverse-green-btn" (click)="reSet()">重置</button>
+      <button class="hw-normal-btn green-btn" (click)="onSubmit()">完成</button>
     </div>
   </div>
 </div>

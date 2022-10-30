@@ -10,7 +10,7 @@ import { GetMemberParams } from "src/app/network/request/member/member.params";
 import { MemberRequestService } from "src/app/network/request/member/member.service";
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
 import { QuestionRequestService } from "src/app/network/request/question/question.service";
-import { BabyLibModel, BabyLibSearchInfo } from "src/app/view-model/baby-lib.model";
+import { BabyLibModel, BabyLibSearchInfo, QuestionLibModel, QuestionLibSearchInfo } from "src/app/view-model/baby-lib.model";
 import { BabyLibConverter } from "./baby-lib.converter";
 
 @Injectable()
@@ -21,12 +21,13 @@ export class BabyManageBusiness {
 
   constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _converter: BabyLibConverter) {
 
-  }
-  async init(searchInfo: BabyLibSearchInfo) {
-
     this.mouthArr = this.asq3mouthArr;
 
-    let models: BabyLibModel[] = [];
+  }
+
+  async init(searchInfo: QuestionLibSearchInfo) {
+
+    let models: QuestionLibModel[] = [];
     let page: Page = {
       PageIndex: 0,
       PageSize: 0,
@@ -38,56 +39,38 @@ export class BabyManageBusiness {
       Data: models,
       Page: page
     }
+    //console.log('questions1',searchInfo.Uid, searchInfo.Did, searchInfo.QuestType, searchInfo.QuestMonth,searchInfo.PageIndex,searchInfo.PageSize);
+    //let { Data: questions, Page } = await this._listQuestion(searchInfo.Uid, searchInfo.Dids, searchInfo.QuestType, searchInfo.QuestMonth,searchInfo.PageIndex,searchInfo.PageSize,searchInfo.Name);
+    let { Data: questions, Page } = await this._questionRequest.list(searchInfo);
+    res.Page = Page;
+    //console.log('questions2',questions);
+    for (let i = 0; i < questions.length; i++) {
+      let model = new QuestionLibModel();
 
-    let { Data: members } = await this._listMember(searchInfo.Dids);
-
-    if (members.length) {
-      searchInfo.Mids = members.map(member => member.Id);
-
-      let { Data: babys } = await this._listBaby(searchInfo.Mids, searchInfo.Name)
-      //console.log(babys)
-
-      if (babys.length) {
-        searchInfo.Bids = babys.map(baby => baby.Id)
-
-        let { Data: questions, Page } = await this._listQuestion(searchInfo.Bids, searchInfo.QuestType, searchInfo.QuestMonth);
-
-        //console.log(questions)
-        res.Page = Page
-
-        for (let i = 0; i < questions.length; i++) {
-          let model = new BabyLibModel();
-
-          let question = questions[i];
-          let babyId = question.Bid;
-          let baby = babys.find(baby => baby.Id == babyId)
-          //console.log(baby)
-          if (baby) {
-            model.Id = baby.Id;
-            model.Name = baby.Name;
-            model.Birthday = formatDate(baby.Birthday, 'yyyy-MM-dd', 'en');
-            model.SurveyTime = formatDate(question.SurveyTime, 'yyyy-MM-dd', 'en');
-            model.FileId = question.Id;
-            model.QuestMonth = this.mouthArr[question.QuestMonth];
-            let member = members.find(member => member.Id == baby!.Mid)
-            if (member) {
-              model.Member = member;
-            }
-            res.Data.push(model)
-          }
-        }
+      let question:any = questions[i];
+      if (question) {
+        model.Id = question.Id;
+        model.Uid = question.Cid;
+        model.Did = question.Did;
+        model.Bid = question.Bid;
+        model.Name = question.Name;
+        model.Mname = question.Mname;
+        model.Status = question.Status;
+        model.Birthday = formatDate(question.Birthday, 'yyyy-MM-dd', 'en');
+        model.SurveyTime = formatDate(question.SurveyTime, 'yyyy-MM-dd', 'en');
+        model.QuestMonth = this.mouthArr[question.QuestMonth];
+        res.Data.push(model)
       }
-
-
     }
-
-
-
-
 
     return res;
   }
 
+  async changeStatus(params:any) {
+    return await this._questionRequest.changeStatus(params);
+  }
+
+  
   private _listMember(dids: string[]) {
     let params = new GetMemberParams();
     params.Dids = dids
@@ -102,9 +85,13 @@ export class BabyManageBusiness {
     return this._babyRequest.list(params);
 
   }
-  private _listQuestion(bids: string[], questType: QuestType, questMonth = "0") {
+  private _listQuestion(Uid: string, Dids: [], questType: QuestType, questMonth = "0",PageIndex:number,PageSize:number,Name:string) {
     let params: GetQuestionParams = new GetQuestionParams();
-    params.Bids = bids;
+    params.Dids = Dids;
+    params.Uid = Uid;
+    params.Name = Name;
+    params.PageIndex = PageIndex;
+    params.PageSize = PageSize;
     params.QuestType = questType;
     params.QuestMonth = questMonth;
     return this._questionRequest.list(params);

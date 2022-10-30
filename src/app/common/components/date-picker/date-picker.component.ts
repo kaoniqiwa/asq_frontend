@@ -87,7 +87,7 @@ export class DatePickerComponent implements OnInit {
     for (let i = this.startYear; i <= this.endYear; i++) {
       this.yearSource.push(i);
     }
-
+    this.yearSource.reverse();
     for (let i = 1; i <= 12; i++) {
       this.monthSource.push(i);
     }

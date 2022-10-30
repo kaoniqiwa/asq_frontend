@@ -74,7 +74,10 @@ export class Asq3printComponent implements OnInit {
     })
 
     console.log('asq3print',this.user,this.doctor,this.baby,this.question,this.gaoArr.length,this.scoreArr.length);
-    //window.print();
+    let thistimeout = setTimeout(function(){
+      window.print();
+    },500)
+    
   }
 
   setDate(str: string) {

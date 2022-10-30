@@ -184,10 +184,6 @@ export class Asq3QuestionComponent implements OnInit {
       this.bid = params['bid'];
     })
     console.log('constructor', this.user, this.doctor, this.member, this.baby, this.questMonth);
-
-
-
-
   }
 
   async ngOnInit() {

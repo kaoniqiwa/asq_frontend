@@ -67,6 +67,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   babys: Baby[] = [];
 
   currentBaby: any = null;
+  currentIndex:any = 0;
 
   config: SwiperOptions = {
     slidesPerView: window.innerWidth<860?3:8,
@@ -78,7 +79,10 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
 
 
-    
+    this._activeRoute.queryParams.subscribe((params) => {
+      this.currentIndex = params['currentIndex'];
+      
+    })
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.mid = params['mid'];
@@ -141,7 +145,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     if (this.babys.length) {
       // this.currentBaby = this.babys[0];
-      this.changeBaby(this.babys[0]);
+      this.changeBaby(this.babys[this.currentIndex]);
 
     }
 
@@ -179,10 +183,10 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     // }
   }
   changeBaby(baby: Baby) {
-    console.log('baby',baby);
+    console.log('changeBaby',baby);
     this.currentBaby = baby;
-    this.checkRange();
     this._sessionStorage.baby = baby;
+    this.checkRange();
     this.getQuestions();
   }
   checkRange() {

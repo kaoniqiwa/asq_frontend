@@ -1,26 +1,26 @@
 <div class="baby-info vertical-layout">
   <app-account-info></app-account-info>
   <toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
-    <baby-info-operate></baby-info-operate>
+    <baby-info-operate  (searchCondition)="searchCondition($event)" (closeEvent)="closeEvent()"></baby-info-operate>
   </toast-window>
   <div class="vertical-header">
     <div class="green-title large-title underline-title">宝宝库</div>
     <div class="operate-bar">
       <div class="left-wrapper">
         <div class="select-file">
-          <span [class.active]="fileType == 'personal'">个人档案</span> /
-          <span [class.active]="fileType == 'total'">全部档案</span>
+          <span [class.active]="fileType == 'personal'" (click)="chooseFather(0)">个人档案</span> /
+          <span [class.active]="fileType == 'total'" (click)="chooseFather(1)">全部档案</span>
         </div>
       </div>
       <div class="right-wrapper">
         <div class="search-wrapper">
-          <app-simple-search></app-simple-search>
+          <app-simple-search (searchEvent)="searchEvent($event)"></app-simple-search>
         </div>
-        <button class="hw-small-btn gray-btn" (click)="addBabyHandler()">
+        <button class="hw-small-btn gray-btn padding1" (click)="addBabyHandler()">
           添加宝宝
           <i class="howell-icon-plus2" style="font-size: 17px"></i>
         </button>
-        <button class="hw-small-btn gray-btn" (click)="filterHandler()">
+        <button class="hw-small-btn gray-btn padding1" (click)="filterHandler()">
           筛选<i class="mdi mdi-filter-outline"></i>
         </button>
         <div class="select-wrapper" [class.expand]="true">
@@ -75,104 +75,26 @@
           <col style="width: 10%" />
         </colgroup>
         <tbody>
-          <ng-container *ngFor="let data of dataSource; let e = even">
+          <ng-container *ngFor="let data of dataSource; let e = even;let i=index;">
             <tr>
               <td>{{ data.Name }}</td>
               <td>{{ data.Birthday }}</td>
-              <td>{{ data.Member.Name }}</td>
+              <td>{{ data.Mname }}</td>
               <td>{{ data.QuestMonth }}</td>
               <td>{{ data.SurveyTime }}</td>
-              <td><a>未归档</a></td>
+              <td><div class="status" [attr.Index]="i" [attr.Status]="data.Status" [attr.Qid]="data.Id" [ngClass]="{'color1': data.Status!=1}" (click)="changeStatus($event)">{{data.Status!=1?'未归档':'已完成'}}</div></td>
               <!-- <td>{{ data.FileId }}</td> -->
               <td>
-                <select>
-                  <option value="0">家长报告</option>
+                <select #report [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" (change)="chooseReport($event,+report.value)">
+                  <option value="">请选择</option>
+                  <option value="0" (click)="test(0)">家长报告</option>
                   <option value="1">打印全部</option>
                 </select>
               </td>
               <td>了解更多</td>
             </tr>
           </ng-container>
-          <!-- <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr>
-          <tr>
-            <td>王辰欣</td>
-            <td>2019-10-26</td>
-            <td>戴倩</td>
-            <td>2022-09-08 16:56:26</td>
-            <td>未归档</td>
-            <td>E20220908165626418228</td>
-            <td><a tabindex>打印</a></td>
-            <td>了解更多</td>
-          </tr> -->
+          
         </tbody>
       </table>
     </div>

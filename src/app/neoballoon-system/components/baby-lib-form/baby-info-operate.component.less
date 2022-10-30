@@ -25,13 +25,15 @@
 
 ul {
   li {
-    height: 30px;
+    min-width: 20%;
+    height: 2.5rem;
     background-color: #f2f6f2;
     cursor: pointer;
     margin: 0 10px;
-    display: flex;
-    align-items: center;
-    padding: 0 25px;
+    text-align: center;
+    line-height: 2.5rem;;
+    float: left;
+    //padding: 0 25px;
 
     &.active {
       color: #34bb45;
@@ -47,7 +49,7 @@ ul {
   cursor: pointer;
   width: 90px;
   height: 35px;
-  background-color: #eaf8ec;
+  background-color: #f2f6f2;
   margin: 0 5px;
   display: flex;
   align-items: center;
@@ -60,4 +62,15 @@ ul {
     background-color: #34bb45;
     color: white;
   }
+}
+.hw-form-group{
+  width: 100%;
+  float: left;
+  padding: 0.6rem 0;
+  .title{
+    margin-bottom: 0.4rem;
+  }
+}
+.hw-normal-btn{
+  margin-right: 2rem;
 }
