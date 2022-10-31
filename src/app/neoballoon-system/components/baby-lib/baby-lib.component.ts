@@ -41,8 +41,6 @@ export class BabyLibComponent implements OnInit {
 
   // Paginator
   page: Page | null = null;
-  pageIndex = 1;
-  pageSize = 9;
   user:any = null;
   doctor:any = null;
 
@@ -159,11 +157,15 @@ export class BabyLibComponent implements OnInit {
     console.log('test',num);
   }
 
-  pageEvent(pageInfo: PageEvent) {
-    // if (this.pageIndex == pageInfo.pageIndex + 1) return;
-    // this.pageIndex = pageInfo.pageIndex + 1;
-    // this._init();
-    console.log(pageInfo)
+  async pageEvent(pageInfo: PageEvent) {
+    
+    if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
+    this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
+    let res = await this._business.init(this.searchInfo);
+    this.page = res.Page;
+    this.dataSource = res.Data;
+
+    //console.log('pageEvent',pageInfo,this.searchInfo);
   }
   closeEvent() {
     this.showToast = false;
