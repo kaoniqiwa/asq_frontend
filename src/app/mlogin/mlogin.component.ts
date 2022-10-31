@@ -29,7 +29,8 @@ export class MloginComponent implements OnInit {
   user: any = null;
   doctor: any = null;
   phone:any = '';
-  code:any = 0;
+  member:any = null;
+  code:any = 123456;
   setCode:any = '';
   lastNum:any = '获取验证码';
 
@@ -92,9 +93,12 @@ export class MloginComponent implements OnInit {
 
   phoneSubmit():any{
     console.log('phoneSubmit',this.setCode,this.code);
+    /* if(!this.check_phone(String(this.phone))){
+      return this._toastrService.warning('请输入有效的手机号码！');
+    }
     if(this.setCode != this.code){
       return this._toastrService.error('验证码错误！');
-    }
+    } */
     this.phoneStatus = false;
     this.screenStatus = true;
   }
@@ -111,19 +115,40 @@ export class MloginComponent implements OnInit {
     this.helpStatus = false;
   }
 
-  goToInfo(e:Event){
+  async goToInfo(e:Event){
     e.stopPropagation();
     
-    /* if(this.readed){
+    if(this.readed){
+
+      let res = await this._business.getMember(this.doctor.Id, this.phone);
+      if (res.Data.length) {
+        this.member = res.Data[0];
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
+          queryParams: {
+            mid: this.member.Id,
+            source: this._sessionStorage.source
+          }
+        })
+      } else {
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
+          queryParams: {
+            mid: '',
+            phone:this.phone,
+            source: this._sessionStorage.source
+          }
+        })
+        this._toastrService.error('未查询到该用户，请填入基本信息')
+      }
       
-      this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
+      /* this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
         queryParams: {
+          phone:this.phone,
           source: this._sessionStorage.source,
         }
-      })
+      }) */
     }else{
       this._toastrService.warning('请阅读并勾选注意事项。');
-    } */
+    }
   }
 
   setDate(str: string) {

@@ -91,7 +91,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     motherDegree: [EducateDegree.None],
     fatherDegree: [EducateDegree.None],
     otherDegree: [EducateDegree.None],
-    motherBirth: ['2022-10-01'],
+    motherBirth: [''],
     fatherBirth: [''],
   })
 
@@ -108,9 +108,28 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     } else {
 
       return {
-        year: 2022,
-        month: 10,
-        date: 2
+        year: 0,
+        month: 0,
+        date: 0
+      }
+    }
+  }
+  getFatherBirth() {
+    if (this.memberGroup.value.fatherBirth) {
+
+      let arr = this.memberGroup.value.fatherBirth.split("-")
+      return {
+        year: +arr[0],
+        month: +arr[1],
+        date: +arr[2]
+      }
+
+    } else {
+
+      return {
+        year: 0,
+        month: 0,
+        date: 0
       }
     }
   }
@@ -127,6 +146,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   maxLength = 5;
   source = 0;
   memberResId = '';
+  memberChange = false;
 
 
   @ViewChild('Pointer', { static: false })
@@ -173,15 +193,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       this.addBabyGroup();
     }
     this._updateForm();
-
-    // this.province = "辽宁省";
-    // this.city = "大连市";
-
-    // this.county = "中山区"
-
-
-
-
+    
   }
 
 
@@ -290,7 +302,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         isMulti: "",
         abnormal: ''
       }),
-      editBabyInfo: false
+      editBabyInfo: true
     })
   }
   async dialogMsgEvent(status: DialogEnum) {
@@ -344,11 +356,18 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     })
   }
 
-  pickerChange3(date: DatePickerModel, group: FormGroup) {
+  pickerChange3(date: any, group: FormGroup) {
 
-    let surveyTime = date.year + "-" + date.month + "-" + date.date;
+    let motherBirth = date.year + "-" + date.month + "-" + date.date;
     group.patchValue({
-      surveyTime: surveyTime,
+      motherBirth: motherBirth,
+    })
+  }
+  pickerChange4(date: any, group: FormGroup) {
+
+    let fatherBirth = date.year + "-" + date.month + "-" + date.date;
+    group.patchValue({
+      fatherBirth: fatherBirth,
     })
   }
   changeBirthday(date: Date, group: FormGroup) {
@@ -384,10 +403,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     if (this.editMemberInfo) {
 
       this.memberGroup.enable();
-
+      this.memberChange = false;
       this.Phone.disable();
     } else {
       this.memberGroup.disable();
+      this.memberChange = true;
 
     }
 
@@ -454,7 +474,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         this.member.MotherBirth = this.memberGroup.value.motherBirth ?? "";
         this.member.FatherBirth = this.memberGroup.value.fatherBirth ?? "";
 
-        this.member = await this._business.getMember(this.mid);
+        this.member = await this._business.updateMember(this.member);
         console.log('this.member', this.member);
 
         if (this.babyInMember) {
@@ -671,12 +691,12 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   private _updateForm() {
 
 
-    this.memberGroup.patchValue({
+    /* this.memberGroup.patchValue({
       motherBirth: '2021-09-19'
-    })
+    }) */
     if (this.member) {
       this.memberGroup.disable();
-
+      this.memberChange = true;
       this.province = this.member.Province ?? "";
       this.city = this.member.City ?? "";
       this.county = this.member.County ?? "";

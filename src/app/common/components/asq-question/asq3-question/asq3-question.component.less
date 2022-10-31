@@ -383,10 +383,13 @@ float:left;
 }
 .tabQues tr td {
   font-size: 16px;
+  width: 6%;
+  text-align: center;
 }
 .tabQues tr td:first-child {
   text-align: left;
   width: 78%;
+  text-align:left;
 }
 .tabQues tr td span:nth-child(2) {
   max-width: 95%;
@@ -2174,4 +2177,45 @@ tr {
 
 td span {
   margin: 0;
+}
+
+@media screen and (max-width: 860px) {
+  .tabQues{
+
+  }
+  .tabQues tr{
+    width: 100%;
+    
+  }
+  .tabQues tr td{
+    width: 100%;
+    text-align:left;
+    font-size: 1.1rem;
+  }
+  .tabQues tr td:first-child {
+    width: 100%;
+    text-align:left;
+  }
+  .tabQues tr td span:nth-child(2) {
+    max-width: 90%;
+    display: inline-block;
+    line-height: 2.1rem;
+    float: left;
+  }
+  .quesBox {
+    width: 100%;
+    margin: auto;
+    margin-left: 0.5rem;
+    padding-right: 1rem;
+  }
+  .span_gai{
+    float: none !important;
+    margin-left: 0.4rem !important;
+  }
+  .td_gai{
+    width: 25% !important;
+  }
+  .quesBox h1{
+    font-size: 40px;
+  }
 }

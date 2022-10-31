@@ -14,7 +14,59 @@
           这些选项是什么意思
           <img src="assets/img/arrow.png" alt="" />
         </p>
-        <table class="tabQues">
+        <table class="tabQues" *ngIf="source != 1">
+          <tbody>
+            <!-- <tr class="line" *ngIf="j == k - 1">
+              <td></td>
+              <td>是</td>
+              <td>否</td>
+              <td>帮助</td>
+            </tr>
+            <tr class="line" *ngIf="j != k - 1">
+              <td></td>
+              <td>是2222</td>
+              <td>有时是</td>
+              <td>否</td>
+              <td>帮助</td>
+            </tr> -->
+            <ng-container *ngFor="let item of intQuetion.question; let i = index; let l = count">
+              <tr *ngIf="i != 0" class="model queNum1">
+                <td colspan="4" >
+                  <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
+                </td>
+              </tr>
+              <tr *ngIf="i != 0" class="model queNum1">
+                <td class="td_gai">
+                  <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
+                    attr.xu="{{ i - 1 }}" value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
+                  <span class="span_gai">是</span>
+                </td>
+                <ng-container *ngIf="!(i != 0 && j == k - 1)">
+                  <td class="td_gai">
+                    <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
+                      attr.xu="{{ i - 1 }}" value="2" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
+                    <span class="span_gai">有时是</span>
+                  </td>
+                </ng-container>
+                <td class="td_gai">
+                  <input type="radio" [name]="'rdo' + i" (click)="radioClick($event)" attr.l="{{ l }}"
+                    attr.xu="{{ i - 1 }}" value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
+                  <span class="span_gai">否</span>
+                </td>
+                <td class="td_gai">
+                  <img src="assets/img/icon_audio.png" alt="" class="signal" data-url="2-1" data-type="2" /><audio
+                    src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-1.mp3" preload="none"></audio>
+                </td>
+              </tr>
+              <tr *ngIf="i != 0 && j == k - 1">
+                <td colspan="4">
+                  <textarea class="last_textarea" [(ngModel)]="currentAnswer.result && currentAnswer.result[i-1]" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <table class="tabQues" *ngIf="source == 1">
           <tbody>
             <tr class="line" *ngIf="j == k - 1">
               <td></td>
@@ -275,8 +327,8 @@
       </div>
     </div>
     <div style="text-align: center;">
-      <button class="btn-default1 btnAdvice" (click)="next()">下一步</button>
-      <a target="_blank" routerLink="/asq3print" [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
+      <button class="btn-default1 btnAdvice" (click)="next()" *ngIf="source==1">下一步</button>
+      <a target="_blank" routerLink="/asq3print" [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a>
       <button class="btn-default1 complete" style="display: none;">完成</button>
     </div>
     <div class="bottom">
@@ -404,7 +456,7 @@
           </div>
 
           <button class="btn-default1 btnAdvice" style="display: none;">下一步</button>
-          <a target="_blank" routerLink="/asq3print" [queryParams]="{type:2,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint">打印</button></a>
+          <a target="_blank" routerLink="/asq3print" [queryParams]="{type:2,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a>
           <button class="btn-default1 complete">完成</button>
           <div class="bottom">
             译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进

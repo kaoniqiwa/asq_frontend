@@ -2,7 +2,7 @@ select {
   width: 100px;
   border-radius: 5px;
   border: solid 1px #dadddd;
-  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 @media screen and (max-width: 860px) {

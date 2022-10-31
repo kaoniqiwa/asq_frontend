@@ -167,6 +167,7 @@ export class Asq3QuestionComponent implements OnInit {
   baby: any = null;
   age: any = null;
   question:any = null;
+  source:any = '';
 
 
   constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
@@ -175,6 +176,7 @@ export class Asq3QuestionComponent implements OnInit {
     this.user = this._sessionStorage.user;
     this.member = this._sessionStorage.member;
     this.baby = this._sessionStorage.baby;
+    this.source = this._sessionStorage.source;
     //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
 
     this._activeRoute.queryParams.subscribe(params => {
@@ -409,7 +411,7 @@ export class Asq3QuestionComponent implements OnInit {
     //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
     model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
     model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
-    model.Source = this._sessionStorage.source;
+    model.Source = this.source;
     model.SurveyTime = this.baby.SurveyTime;
     console.log('model',model);
 
@@ -418,7 +420,7 @@ export class Asq3QuestionComponent implements OnInit {
       this.toastrService.success('提交成功');
       this.question = res;
       this.pageType = 2;
-      console.log('all:',this.user,this.baby,this.doctor,this.question);
+      //console.log('all:',this.user,this.baby,this.doctor,this.question);
     }
   }
 

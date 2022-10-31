@@ -17,7 +17,7 @@ export class DatePickerComponent implements OnInit {
   @Input() titleDay = "日";
 
   // 年份范围
-  @Input() startYear = 2010;
+  @Input() startYear = 1960;
   @Input() endYear = this.today.getFullYear();
 
 

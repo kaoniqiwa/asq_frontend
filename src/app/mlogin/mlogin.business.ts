@@ -5,10 +5,12 @@ import { CompanyRequestService } from "src/app/network/request/company/company.s
 import { DoctorRequestService } from "src/app/network/request/doctor/doctor.service";
 import { GetGamesParams } from "src/app/network/request/games/games.params";
 import { param } from "jquery";
+import { GetMemberParams } from "../network/request/member/member.params";
+import { MemberRequestService } from "../network/request/member/member.service";
 
 @Injectable()
 export class MloginBusiness {
-  constructor(private _userRequest: CompanyRequestService,private _doctorRequest: DoctorRequestService,private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService) { }
+  constructor(private _userRequest: CompanyRequestService,private _memberRequest: MemberRequestService,private _doctorRequest: DoctorRequestService,private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService) { }
 
   getUser(id: string) {
     return this._userRequest.get(id)
@@ -34,6 +36,15 @@ export class MloginBusiness {
     let params = new GetGamesParams();
     params.TestId = testId;
     return this._questionRequest.getGames(params);
+  }
+  getMember(did: string, phone: string) {
+
+    let params = new GetMemberParams();
+    params.Phones = [phone];
+    params.Dids = [did]
+
+    return this._memberRequest.list(params);
+
   }
   
 }

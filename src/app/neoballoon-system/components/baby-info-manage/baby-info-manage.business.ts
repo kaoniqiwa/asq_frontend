@@ -26,7 +26,7 @@ export class BabyInfoManageBusiness {
     return this._memberRequest.get(id)
   }
   updateMember(member: Member) {
-    this._memberRequest.update(member);
+    return this._memberRequest.update(member);
   }
   updateBaby(baby: Baby) {
     this._babyRequest.update(baby);
