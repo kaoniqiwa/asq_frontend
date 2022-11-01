@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import Conf from 'src/assets/json/side-nav.json'
 
 
@@ -14,11 +15,12 @@ export class SideNavComponent implements OnInit {
   side = '';
 
   constructor(private _router: Router) {
+
     this._router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
-        // http://localhost:9200/neoballoon/neoballoon-manage/baby-info
-        let reg = /(?<=\/neoballoon\/neoballoon-manage\/)(?<side>[\w-]*)(?=\/?)$/;
+        let reg = /(\/neoballoon\/neoballoon-manage\/)(?<side>[\w-]*)(\/?)$/;
         let mode = e.urlAfterRedirects.match(reg);
+        console.log(mode)
         if (mode && mode.groups) {
           this.side = mode.groups['side']
         }
