@@ -16,7 +16,7 @@ import { BabyLibConverter } from "./baby-lib.converter";
 @Injectable()
 export class BabyManageBusiness {
 
-  asq3mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  asq3mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54, 60];
   mouthArr:any = [];
 
   constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _converter: BabyLibConverter) {
