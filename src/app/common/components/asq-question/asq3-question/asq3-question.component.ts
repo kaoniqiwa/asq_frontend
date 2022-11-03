@@ -1,6 +1,6 @@
 import { NumberSymbol } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -161,16 +161,16 @@ export class Asq3QuestionComponent implements OnInit {
   jieArr: any = [];
   diArr: any = [];
   monthWorkBook: any = [];
-  doctor: any = null;
-  user: any = null;
-  member:any = null;
-  baby: any = null;
-  age: any = null;
-  question:any = null;
+  doctor: any = {};
+  user: any = {};
+  member:any = {};
+  baby: any = {};
+  age: any = {};
+  question:any = {};
   source:any = '';
 
 
-  constructor(private _business: ASQ3QuestionBusiness, private toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,) {
+  constructor(private _business: ASQ3QuestionBusiness, private _toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,private _router: Router) {
     this.monthWorkBook = this._sessionStorage.monthWorkBook;
     this.doctor = this._sessionStorage.doctor;
     this.user = this._sessionStorage.user;
@@ -378,7 +378,7 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getQuestion(model);
     if (res) {
-      this.toastrService.success('提交成功');
+      this._toastrService.success('提交成功');
       console.log('res:', res, 'this.pageType', this.pageType);
     }
   }
@@ -415,13 +415,24 @@ export class Asq3QuestionComponent implements OnInit {
     model.SurveyTime = this.baby.SurveyTime;
     console.log('model',model);
 
-    let res = await this._business.create(model);
-    if (res) {
-      this.toastrService.success('提交成功');
-      this.question = res;
-      this.pageType = 2;
-      //console.log('all:',this.user,this.baby,this.doctor,this.question);
+    let params:any = {};
+    params.uid = this.user.Id;
+    params.type = 'AsqLeft';
+    let updateLeft = await this._business.updateLeft(params);
+    console.log('updateLeft',updateLeft);
+    if(!updateLeft){
+      this._toastrService.error('剩余次数不足！');
+    }else{
+      let res = await this._business.create(model);
+      if (res) {
+        this._toastrService.success('提交成功');
+        this.question = res;
+        this.pageType = 2;
+        //console.log('all:',this.user,this.baby,this.doctor,this.question);
+      }
     }
+
+    
   }
 
   async getGames(TestId: any) {
@@ -429,7 +440,7 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getGames(TestId);
     if (res) {
-      //this.toastrService.success('返回成功');
+      //this._toastrService.success('返回成功');
       that.gamesArr = res;
       console.log('getGames_res:', that.gamesArr);
 
@@ -441,7 +452,7 @@ export class Asq3QuestionComponent implements OnInit {
 
     let res = await this._business.getDividing(TestId);
     if (res) {
-      //this.toastrService.success('返回成功');
+      //this._toastrService.success('返回成功');
       that.dividingArr = res;
       console.log('getDividing_res:', that.dividingArr);
       this.init();
@@ -450,6 +461,19 @@ export class Asq3QuestionComponent implements OnInit {
 
   printModel(str:any) {
     
+  }
+
+  gotoReport(e:Event){
+    
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-report"], {
+      queryParams: {
+        uid: this.user.Id,
+        did: this.doctor.Id,
+        mid: this.member.Id,
+        bid: this.baby.Id,
+        qid: this.question.Id
+      }
+    })
   }
 
 }

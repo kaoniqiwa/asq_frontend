@@ -42,7 +42,7 @@
         </div>
 
     </div>
-    <div class="qrCode" [hidden]="!phoneStatus">
+    <div class="qrCode" [hidden]="!phoneStatus" *ngIf="qrcodeStatus">
 
         <div class="phoneyz">
             <h1>用户验证</h1>
@@ -179,3 +179,7 @@
         </div>
     </div>
 </div>
+
+<!-- <div class="test">
+    {{testInfo}}
+</div> -->

@@ -1,9 +1,9 @@
 <div class="asq-test">
   <div>
     <div style="width: 100%; margin: 10px 0">
-      <button *ngIf="pageType>=2" (click)="gotoBack()" class="hw-small-btn gray-btn">
+      <!-- <button *ngIf="pageType>=2" (click)="gotoBack()" class="hw-small-btn gray-btn">
         <img src="assets/img/back.png" alt="" />返回
-      </button>
+      </button> -->
     </div>
   </div>
   <ng-container *ngIf="this.pageType==0||this.pageType==1">
@@ -208,7 +208,7 @@
     <p>祝好！</p>
     <div>
       <button class="btn-default1 btnDetail" (click)="checkDetil()">查看详情</button>
-      <button class="btn-default1 complete">完成</button>
+      <button class="btn-default1 complete" (click)="gotoReport($event)">完成</button>
     </div>
     <div class="bottom bottom1">
       译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进

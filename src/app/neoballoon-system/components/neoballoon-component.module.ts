@@ -7,10 +7,12 @@ import { MaterialModule } from 'src/app/material.module';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { AccountComponent } from './account/account.component';
 import { BabyAddManageComponent } from './baby-add-manage/baby-add-manage.component';
+import { BabyQrcodeManageComponent } from './baby-qrcode-manage/baby-qrcode-manage.component';
 import { BabyAgeComponent } from './baby-age/baby-age.component';
 import { BabyGameComponent } from './baby-game/baby-game.component';
 import { BabyLibFormComponent } from './baby-lib-form/baby-info-operate.component';
 import { BabyLibComponent } from './baby-lib/baby-lib.component';
+import { BabyReportComponent } from './baby-report/baby-report.component';
 import { BabySettingComponent } from './baby-setting/baby-setting.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { NeoballoonManageComponent } from './neoballoon-manage/neoballoon-manage.component';
@@ -33,7 +35,9 @@ import { SwiperModule } from 'swiper/angular';
     AccountComponent,
     AccountInfoComponent,
     BabyAddManageComponent,
+    BabyQrcodeManageComponent,
     BabyLibComponent,
+    BabyReportComponent,
     BabyLibFormComponent,
     SurveyLicenseComponent,
     SurveyManageComponent,

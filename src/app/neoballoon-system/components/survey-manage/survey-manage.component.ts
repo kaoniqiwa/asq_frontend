@@ -39,6 +39,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   monthWorkBook: any;
   mid: string = "";
+  user:any = null;
 
   // 保存年龄段表单信息
   sheetMap = new Map<string, Array<string>>();
@@ -54,6 +55,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   // 当前swiper内容
   currentSwiperMonth: Array<string> | null = null;
+  //asq3MouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54,60];
 
   // 计算后得到的年龄段
   timerDiff: TimerDiff | null = null;
@@ -130,6 +132,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     })
     if (currentBtn) {
       this.currentSwiperMonth = this.sheetMap.get(currentBtn.questType) ?? null;
+      console.log('currentSwiperMonth',this.currentSwiperMonth);
     }
 
 
@@ -138,6 +141,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+
+    this.user = this._sessionStorage.user;
 
     let { Data: babys } = await this._business.listBaby(this.mid);
     this.babys = babys;
@@ -157,6 +162,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     console.log('ngOnInit', this.currentBaby.Id);
     let params = new GetQuestionParams();
     params.Bids = [this.currentBaby.Id];
+    params.Uid = this.user.Id;
     this.questions = await this._business.getQuestionByBaby(params);
     console.log('this.questions', this.questions);
   }

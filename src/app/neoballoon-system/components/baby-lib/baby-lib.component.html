@@ -1,5 +1,5 @@
 <div class="baby-info vertical-layout">
-  <app-account-info></app-account-info>
+  <app-account-info [user]="user"></app-account-info>
   <toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
     <baby-info-operate  (searchCondition)="searchCondition($event)" (closeEvent)="closeEvent()"></baby-info-operate>
   </toast-window>
@@ -82,16 +82,16 @@
               <td>{{ data.Mname }}</td>
               <td>{{ data.QuestMonth }}</td>
               <td>{{ data.SurveyTime }}</td>
-              <td><div class="status" [attr.Index]="i" [attr.Status]="data.Status" [attr.Qid]="data.Id" [ngClass]="{'color1': data.Status!=1}" (click)="changeStatus($event)">{{data.Status!=1?'未归档':'已完成'}}</div></td>
+              <td><span class="status" [attr.Index]="i" [attr.Status]="data.Status" [attr.Qid]="data.Id" [ngClass]="{'color1': data.Status!=1}" (click)="changeStatus($event)">{{data.Status!=1?'未归档':'已完成'}}</span></td>
               <!-- <td>{{ data.FileId }}</td> -->
               <td>
                 <select #report [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" (change)="chooseReport($event,+report.value)">
                   <option value="">请选择</option>
-                  <option value="0" (click)="test(0)">家长报告</option>
+                  <option value="0">家长报告</option>
                   <option value="1">打印全部</option>
                 </select>
               </td>
-              <td>了解更多</td>
+              <td><span class="more" [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" [attr.Mid]="data.Mid" (click)="gotoReport($event)">了解更多<img src="assets/img/arrow_w.png" alt="" ></span></td>
             </tr>
           </ng-container>
           

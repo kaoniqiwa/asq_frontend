@@ -21,7 +21,10 @@ export class CompanyRequestService {
     
     
   }
-
+  updateLeft(params:any){
+    params.Flow = 'updateLeft';
+    return this.type.post(CompanyUrl.create(), params)
+  }
   getUuid(params:any){
     params.Flow = 'getUuid';
     return this.type.post(CompanyUrl.getUuid(), params)
@@ -37,6 +40,10 @@ export class CompanyRequestService {
   }
   get(id: string) {
     return this.type.get(CompanyUrl.get(id));
+  }
+  checkUuid(params:any) {
+    params.Flow = 'checkUuid';
+    return this.type.post(CompanyUrl.sendSms(),params);
   }
   sendSms(params:any) {
     params.Flow = 'sendSms';

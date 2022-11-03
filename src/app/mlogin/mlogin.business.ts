@@ -19,6 +19,9 @@ export class MloginBusiness {
   sendSms(params:any) {
     return this._userRequest.sendSms(params);
   }
+  checkUuid(params:any) {
+    return this._userRequest.checkUuid(params);
+  }
 
   getDoctor(id: string) {
     return this._doctorRequest.get(id)

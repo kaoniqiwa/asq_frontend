@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { HowellModule } from "../common/howell.module";
 import { AccountComponent } from "./components/account/account.component";
 import { BabyAddManageComponent } from "./components/baby-add-manage/baby-add-manage.component";
+import { BabyQrcodeManageComponent } from "./components/baby-qrcode-manage/baby-qrcode-manage.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabyLibComponent } from "./components/baby-lib/baby-lib.component";
@@ -13,6 +14,7 @@ import { BabyInfoManageComponent } from "./components/baby-info-manage/baby-info
 import { NeoballoonService } from "./neoballoon.service";
 import { Asq3QuestionComponent } from "../common/components/asq-question/asq3-question/asq3-question.component";
 import { Asq3EntryComponent } from "../common/components/asq-question/asq-entry/asq-entry.component";
+import { BabyReportComponent } from "./components/baby-report/baby-report.component";
 
 
 const routes: Routes = [
@@ -41,6 +43,12 @@ const routes: Routes = [
 
       },
       {
+        path: 'baby-qrcode-manage',
+        component: BabyQrcodeManageComponent,
+        canActivate: [NeoballoonService]
+
+      },
+      {
         path: "baby-info-manage",
         component: BabyInfoManageComponent,
         canActivate: [NeoballoonService]
@@ -49,6 +57,11 @@ const routes: Routes = [
       {
         path: 'baby-lib',
         component: BabyLibComponent,
+        canActivate: [NeoballoonService]
+      },
+      {
+        path: 'baby-report',
+        component: BabyReportComponent,
         canActivate: [NeoballoonService]
       },
       {

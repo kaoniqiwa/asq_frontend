@@ -11,8 +11,8 @@ textarea:focus {outline: none;} /*textarea聚焦时默认边框颜色不变*/
 select,input[type=text],input[type=tel],input[type=password],input[type=number],textarea{ -webkit-appearance:none; border:none; border-radius:0; background-color:transparent;}
 input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#555;}/* input 标签placeholder文字的颜色*/
 video{ background-color:#000;}
-input[type="radio"]{ -webkit-appearance: none;  background:url(src/assets/img/rdo.png) no-repeat 50%;  height: 20px; width: 20px;}
-input[type="radio"]:checked { background:url(src/assets/img/rdo_chked.png) no-repeat 50%;  }
+input[type="radio"]{ -webkit-appearance: none;  background:url(src/assets/img/rdo.png) no-repeat 50%;  height: 20px; width: 20px; border: none;}
+input[type="radio"]:checked { background:url(src/assets/img/rdo_chked.png) no-repeat 50%; border: none; }
 a{ text-decoration:none; display:inline-block;}
 a>img{ width:100%;}
 .clearFix {display: block;}
@@ -1211,3 +1211,14 @@ input[type="number"] {
     }
     -moz-appearance: textfield;
   }
+.test {
+    width: 100vw;
+    height: 50vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1.5rem;
+    color: red;
+    z-index: 100000000;
+
+}

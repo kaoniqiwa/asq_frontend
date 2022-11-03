@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { BabyManageBusiness as BabyInfoBusiness } from './baby-lib.business';
 import { PageEvent } from '@angular/material/paginator';
@@ -18,12 +18,8 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 })
 export class BabyLibComponent implements OnInit {
 
-
   dataSource: QuestionLibModel[] = [];
-
-
   questType: QuestType = QuestType.ASQ3;
-
   fileType = 'personal';
   searchInfo: QuestionLibSearchInfo = {
     Flow:'',
@@ -42,25 +38,31 @@ export class BabyLibComponent implements OnInit {
   // Paginator
   page: Page | null = null;
   user:any = null;
+  newUser:any = null;
   doctor:any = null;
 
 
   showToast = false;
 
   constructor(private _business: BabyInfoBusiness, private _router: Router, private _sessionStorage: SessionStorageService) { 
-
+    
   }
 
   async ngOnInit() {
+    
     this.user = this._sessionStorage.user;
     this.doctor = this._sessionStorage.doctor;
-
+    this.onUpdateUser();
     if (this.doctor && this.fileType == 'personal') {
-
       this.chooseFather(0);
-
     }
 
+  }
+
+  async onUpdateUser(){
+    this.newUser = await this._business.getUser(this.user.Id);
+    this.user = this._sessionStorage.user = this.newUser;
+    console.log('lib_ngOnInit_user',this.user);
   }
 
   async chooseFather(num:number){
@@ -76,10 +78,11 @@ export class BabyLibComponent implements OnInit {
     }
     
     let res = await this._business.init(this.searchInfo);
-    console.log('chooseFather',res);
+    
     this.searchInfo.Name = '';
     this.page = res.Page;
     this.dataSource = res.Data;
+    console.log('dataSource',this.dataSource);
   }
 
   chooseReport(e:Event,num:number){
@@ -88,11 +91,29 @@ export class BabyLibComponent implements OnInit {
     let thisBid = (e.target as HTMLInputElement).getAttribute('Bid');
     let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
     console.log('thisUid',thisUid);
+    let this_href = window.location.href.split('#')[0];
     if(num == 0){
-      window.open('/#/asq3print?type=1&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
+      window.open(this_href+'/#/asq3print?type=1&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
     }else{
-      window.open('/#/asq3print?type=2&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
+      window.open(this_href+'/#/asq3print?type=2&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
     }
+  }
+
+  gotoReport(e:Event){
+    let thisUid = (e.target as HTMLInputElement).getAttribute('Uid');
+    let thisDid = (e.target as HTMLInputElement).getAttribute('Did');
+    let thisMid = (e.target as HTMLInputElement).getAttribute('Mid');
+    let thisBid = (e.target as HTMLInputElement).getAttribute('Bid');
+    let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-report"], {
+      queryParams: {
+        uid: thisUid,
+        did: thisDid,
+        mid: thisMid,
+        bid: thisBid,
+        qid: thisQid
+      }
+    })
   }
 
   searchEvent(value:string){

@@ -49,6 +49,7 @@ export class QuestionLibModel {
   Uid?: any;
   Did?: any;
   Bid?: any;
+  Mid?: any;
   Status?:any;
   Name!: string;
   Birthday!: string;

@@ -1,0 +1,64 @@
+<div class="main">
+  <!-- <div class="back" onclick="history.back()"><img src="assets/img/back.png" alt="">返回</div> -->
+  <div class="fileBox">
+    <table class="tabInfo motherInfo">
+      
+      <tbody>
+        <tr>
+          <th>宝宝姓名</th>
+          <th>家长姓名</th>
+          <th>联系方式</th>
+          <th>地址</th>
+        </tr>
+        <tr>
+          <td class="babyname">{{baby.Name}}</td>
+          <td class="mothername">{{member.Name}}</td>
+          <td class="phone">{{member.Phone}}</td>
+          <td class="address">{{member.Province+member.City+member.County}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="report">
+    <div class="title">
+      <div class="name">ASQ-3</div>
+      <ul>
+        <li><span class="dot"></span>筛查报告</li>
+        <li><span class="dot"></span>亲子活动</li>
+        <li><span class="dot"></span>信息汇总</li>
+        <li><span class="dot"></span>问卷</li>
+      </ul>
+    </div>
+    <div class="swiper-container vertical-main" style="min-height: 400px">
+      <swiper [config]="config">
+        <ng-template swiperSlide class="red" *ngFor="let month of asq3MouthArr; let i = index">
+
+          <div class="item">
+            <div class="name">
+              <p>{{ month }}<span class="m">月</span></p>
+            </div>
+            <ng-container *ngIf="!checkScreen(i)">
+              <ul class="tag">
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="checkScreen(i)">
+              <ul class="tag">
+                <li><img src="assets/img/page01.png" alt=""></li>
+                <li><img src="assets/img/page02.png" alt=""></li>
+                <li><img src="assets/img/page03.png" alt=""></li>
+                <li><img src="assets/img/page04.png" alt=""></li>
+              </ul>
+            </ng-container>
+            
+          </div>
+
+        </ng-template>
+      </swiper>
+    </div>
+  </div>
+
+</div>

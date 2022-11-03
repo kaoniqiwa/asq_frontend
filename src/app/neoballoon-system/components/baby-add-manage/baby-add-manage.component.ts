@@ -25,9 +25,8 @@ export class BabyAddManageComponent implements OnInit {
   selectUser = "";
   selectScan = "";
   selectMessage = "";
-  user:any = null;
-  doctor:any = null;
-  qrcodeUrl = '';
+  user:any = {};
+  doctor:any = {};
 
   constructor(private _sessionStorage: SessionStorageService,private _business: BabyAddManageBusiness ,private _router: Router) {
     this.user = this._sessionStorage.user;
@@ -39,21 +38,6 @@ export class BabyAddManageComponent implements OnInit {
     //this.getUuid();
   }
 
-  async getUuid(){
-    let params:any = {};
-    params.Uid = this.user.Id;
-    params.Did = this.doctor.Id;
-
-    let qrcode:any = await this._business.getUuid(params);
-    let this_href = window.location.href.split('#')[0];
-    console.log('href',window.location.href);
-    console.log('this._router.url',this._router.url);
-    console.log('qrcode',qrcode);
-    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Id+'&did='+this.doctor.Id+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid;
-    console.log('qrcodeUrl',this.qrcodeUrl);
-  }
-
-
   changeUser() {
     if (this.selectUser == '0') {
       this.showAuthorize = true;
@@ -64,9 +48,15 @@ export class BabyAddManageComponent implements OnInit {
   changeScan(e:Event) {
     console.log('changeScan',this.selectScan);
     if(this.selectScan == 'ASQ-3'){
-      this.getUuid();
+      this._router.navigate(["/neoballoon/neoballoon-manage/baby-qrcode-manage"], {
+        queryParams: {
+          selectScan: this.selectScan,
+        }
+      })
+
     }
   }
+  
   showQuickHandler() {
     this.showQuick = true;
   }

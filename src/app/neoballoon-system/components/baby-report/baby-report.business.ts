@@ -12,19 +12,31 @@ import { MemberRequestService } from "src/app/network/request/member/member.serv
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
 import { QuestionRequestService } from "src/app/network/request/question/question.service";
 import { BabyLibModel, BabyLibSearchInfo, QuestionLibModel, QuestionLibSearchInfo } from "src/app/view-model/baby-lib.model";
-import { BabyLibConverter } from "./baby-lib.converter";
 
 @Injectable()
-export class BabyManageBusiness {
+export class BabyReportBusiness {
 
   asq3mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54, 60];
   mouthArr:any = [];
 
-  constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _converter: BabyLibConverter,private _userRequest: CompanyRequestService) {
+  constructor(private _babyRequest: BabyRequestService,private _MemberRequest: MemberRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService,private _userRequest: CompanyRequestService) {
 
-    this.mouthArr = this.asq3mouthArr;
+   
 
   }
+
+  getQuestionByBaby(params: GetQuestionParams) {
+    return this._questionRequest.getQuestionByBaby(params);
+  }
+
+  getBaby(id: string) {
+    return this._babyRequest.get(id)
+  }
+
+  getMember(id: string) {
+    return this._MemberRequest.get(id)
+  }
+  
 
   async init(searchInfo: QuestionLibSearchInfo) {
 
@@ -54,7 +66,6 @@ export class BabyManageBusiness {
         model.Uid = question.Cid;
         model.Did = question.Did;
         model.Bid = question.Bid;
-        model.Mid = question.Mid;
         model.Name = question.Name;
         model.Mname = question.Mname;
         model.Status = question.Status;

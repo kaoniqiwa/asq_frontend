@@ -174,10 +174,17 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
       this._sessionStorage.source = params['source'];
       console.log('source_after', this.source, this.mphone);
+      
     })
   }
 
   async ngOnInit() {
+    /* let params:any = {};
+    params.uid = '3b897c6b-53c0-415d-9080-cd530b769da1';
+    params.type = 'AsqLeft';
+    let updateLeft = await this._business.updateLeft(params);
+    console.log('updateLeft',updateLeft); */
+
     if (this.mid) {
       this.member = await this._business.getMember(this.mid);
       let that = this;
@@ -302,7 +309,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         isMulti: "",
         abnormal: ''
       }),
-      editBabyInfo: true
+      editBabyInfo: false
     })
   }
   async dialogMsgEvent(status: DialogEnum) {
@@ -726,11 +733,12 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           let baby = this.babyInMember[i];
           let info = this.newBabyGroup();
           info.disable();
+          //alert(baby.Birthday);
           info.patchValue({
             id: baby.Id,
             name: baby.Name,
             gender: baby.Gender,
-            birthday: this.transformDate(baby.Birthday),
+            birthday: this.transformDate(String(baby.Birthday).split(' ')[0]),
             surveyTime: baby.SurveyTime,
             identityType: baby.IdentityType,
             identityInfo: baby.IdentityInfo,

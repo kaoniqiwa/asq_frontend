@@ -17,7 +17,7 @@ import { Asq3PrintBusiness } from './asq3print.business';
 })
 export class Asq3printComponent implements OnInit {
   complete = false;
-  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54,60];
   type:any = 1;
   questMonth:any = 0;
   monthWorkBook: any = [];
@@ -36,6 +36,7 @@ export class Asq3printComponent implements OnInit {
   question: any = null;
   zongHe:any = {};
   math = Math;
+  pstatus = 1;
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: Asq3PrintBusiness, private _sessionStorage: SessionStorageService,) {
     this.monthWorkBook = this._sessionStorage.monthWorkBook;
     
@@ -45,6 +46,7 @@ export class Asq3printComponent implements OnInit {
       this.bid = params['bid'];
       this.qid = params['qid'];
       this.type = params['type'];
+      this.pstatus = params['pstatus']?params['pstatus']:this.pstatus;
     })
   }
 
@@ -73,10 +75,13 @@ export class Asq3printComponent implements OnInit {
       }
     })
 
-    console.log('asq3print',this.user,this.doctor,this.baby,this.question,this.gaoArr.length,this.scoreArr.length);
-    let thistimeout = setTimeout(function(){
-      window.print();
-    },500)
+    //console.log('asq3print',this.user,this.doctor,this.baby,this.question,this.gaoArr.length,this.scoreArr.length);
+    if(this.pstatus == 1){
+      let thistimeout = setTimeout(function(){
+        window.print();
+      },500)
+    }
+    
     
   }
 

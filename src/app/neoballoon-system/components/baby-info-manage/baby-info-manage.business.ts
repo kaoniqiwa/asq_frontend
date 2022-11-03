@@ -5,6 +5,7 @@ import { Member } from "src/app/network/model/member.model";
 import { Question } from "src/app/network/model/question.model";
 import { GetBabyParams } from "src/app/network/request/baby/baby.params";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
+import { CompanyRequestService } from "src/app/network/request/company/company.service";
 import { GetMemberParams } from "src/app/network/request/member/member.params";
 import { MemberRequestService } from "src/app/network/request/member/member.service";
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
@@ -12,8 +13,11 @@ import { QuestionRequestService } from "src/app/network/request/question/questio
 
 @Injectable()
 export class BabyInfoManageBusiness {
-  constructor(private _memberRequest: MemberRequestService, private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService) {
+  constructor(private _memberRequest: MemberRequestService, private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService,private _userRequest: CompanyRequestService) {
 
+  }
+  updateLeft(params:any) {
+    return this._userRequest.updateLeft(params);
   }
   addMember(member: Member) {
     return this._memberRequest.create(member)

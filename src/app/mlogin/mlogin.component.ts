@@ -33,7 +33,8 @@ export class MloginComponent implements OnInit {
   code:any = 123456;
   setCode:any = '';
   lastNum:any = '获取验证码';
-
+  testInfo:any = '调试结果';
+  qrcodeStatus:any = true;
 
 
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: MloginBusiness, private _sessionStorage: SessionStorageService,private _toastrService: ToastrService,private _router: Router) {
@@ -51,10 +52,19 @@ export class MloginComponent implements OnInit {
     this._sessionStorage.user = this.user;
     this.doctor = await this._business.getDoctor(this.did);
     this._sessionStorage.doctor = this.doctor;
-    console.log('ngOnInit',this.user,this.doctor);
-    
 
-    
+    let params:any = {};
+    params.Uuid = this.uuid;
+    let res:any = await this._business.checkUuid(params);
+    console.log('res',res);
+    if(!res){
+      this.qrcodeStatus = false;
+      alert('二维码已失效，请重新生成');
+      //console.log('隐藏');
+    }
+
+    console.log('ngOnInit',this.user,this.doctor);
+
   }
 
   async sendSms(){
@@ -93,12 +103,12 @@ export class MloginComponent implements OnInit {
 
   phoneSubmit():any{
     console.log('phoneSubmit',this.setCode,this.code);
-    /* if(!this.check_phone(String(this.phone))){
+    if(!this.check_phone(String(this.phone))){
       return this._toastrService.warning('请输入有效的手机号码！');
     }
     if(this.setCode != this.code){
       return this._toastrService.error('验证码错误！');
-    } */
+    }
     this.phoneStatus = false;
     this.screenStatus = true;
   }
@@ -121,8 +131,8 @@ export class MloginComponent implements OnInit {
     if(this.readed){
 
       let res = await this._business.getMember(this.doctor.Id, this.phone);
+      this.member = res.Data[0];
       if (res.Data.length) {
-        this.member = res.Data[0];
         this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
           queryParams: {
             mid: this.member.Id,

@@ -54,4 +54,11 @@ export class Asq3EntryComponent implements OnInit {
     
   }
 
+  goBack() {
+    console.log('asq-entry-goBack');
+    window.history.back();
+    //history.back();
+    //this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+  }
+
 }
