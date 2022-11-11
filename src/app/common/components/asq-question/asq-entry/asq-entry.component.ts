@@ -22,6 +22,7 @@ export class Asq3EntryComponent implements OnInit {
   check2 = false;
   check3 = false;
   check4 = false;
+  source:any = 1;
   
   constructor(private _sessionStorage: SessionStorageService,private _activeRoute: ActivatedRoute,private _router: Router ,private _toastrService: ToastrService,) { 
     this.monthWorkBook = this._sessionStorage.monthWorkBook;
@@ -31,6 +32,7 @@ export class Asq3EntryComponent implements OnInit {
       this.questMonth = params['questMonth'];
       this.bid = params['bid'];
     })
+    this.source = this._sessionStorage.source;
   }
 
   ngOnInit(): void {
@@ -38,18 +40,29 @@ export class Asq3EntryComponent implements OnInit {
 
   gotoQuest(e: Event) {
     e.stopPropagation();
-    if(this.check1 && this.check2 && this.check3 && this.check4){
-      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.bid], {
-        queryParams: {
-          pageType: this.pageType,
-          questType: this.questType,
-          questMonth: this.questMonth,
-          bid:this.bid
-        }
-      })
+    console.log('this._sessionStorage.questscore_gotoQuest',this._sessionStorage.questscore);
+    if(this._sessionStorage.questscore != null){
+      this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
+      if(this.source!=1){
+        this._router.navigate(["/mlogin"])
+      }else{
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
+      }
     }else{
-      this._toastrService.warning('请阅读并勾选注意事项。');
+      if(this.check1 && this.check2 && this.check3 && this.check4){
+        this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.bid], {
+          queryParams: {
+            pageType: this.pageType,
+            questType: this.questType,
+            questMonth: this.questMonth,
+            bid:this.bid
+          }
+        })
+      }else{
+        this._toastrService.warning('请阅读并勾选注意事项。');
+      }
     }
+    
    
     
   }

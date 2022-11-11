@@ -177,6 +177,9 @@ export class Asq3QuestionComponent implements OnInit {
     this.member = this._sessionStorage.member;
     this.baby = this._sessionStorage.baby;
     this.source = this._sessionStorage.source;
+
+    this.thisAnswers = this.scoreArr = this._sessionStorage.questscore || [];
+    this.zonghe = this._sessionStorage.zonghe || [];
     //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
 
     this._activeRoute.queryParams.subscribe(params => {
@@ -214,8 +217,15 @@ export class Asq3QuestionComponent implements OnInit {
 
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
-        this.intQuestions[i].answer = this.currentAnswers[i].answer;
-        this.intQuestions[i].result = this.currentAnswers[i].result;
+        if(this.currentAnswers[i]){
+          this.intQuestions[i].answer = this.currentAnswers[i].answer;
+          this.intQuestions[i].result = this.currentAnswers[i].result;
+        }
+        if(i==5){
+          this.intQuestions[i].answer = this.zonghe.answer;
+          this.intQuestions[i].result = this.zonghe.result;
+        }
+        
       }
       this.setCurrentAnswers();
       //console.log('intQuestions:', this.intQuestions);
@@ -309,6 +319,7 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   nextQuestions(e: Event) {
+    $("#asq-test").scrollTop(0);
     this.currentPage++;
     this.currentAnswer = this.currentAnswers[this.currentPage];
   }
@@ -398,39 +409,59 @@ export class Asq3QuestionComponent implements OnInit {
 
   async submit() {
 
-    this.setCurrentAnswers();
-
-    let model = new Question();
-    model.Id = "";
-    model.Cid = this.user.Id;
-    model.Did = this.doctor.Id;
-    model.Mid = this.member.Id;
-    model.Bid = this.bid;// 宝宝ID；
-    model.QuestType = this.questType;// asq3答卷
-    model.QuestMonth = String(this.questMonth);//2月份
-    //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
-    model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
-    model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
-    model.Source = this.source;
-    model.SurveyTime = this.baby.SurveyTime;
-    console.log('model',model);
-
-    let params:any = {};
-    params.uid = this.user.Id;
-    params.type = 'AsqLeft';
-    let updateLeft = await this._business.updateLeft(params);
-    console.log('updateLeft',updateLeft);
-    if(!updateLeft){
-      this._toastrService.error('剩余次数不足！');
+    console.log('this._sessionStorage.questscore_submit',this._sessionStorage.questscore);
+    if(this._sessionStorage.questscore != null){
+      this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
+      if(this.source!=1){
+        this._router.navigate(["/mlogin"])
+      }else{
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
+      }
+     
     }else{
-      let res = await this._business.create(model);
-      if (res) {
-        this._toastrService.success('提交成功');
-        this.question = res;
-        this.pageType = 2;
-        //console.log('all:',this.user,this.baby,this.doctor,this.question);
+      this.setCurrentAnswers();
+
+      let model = new Question();
+      model.Id = "";
+      model.Cid = this.user.Id;
+      model.Did = this.doctor.Id;
+      model.Mid = this.member.Id;
+      model.Bid = this.bid;// 宝宝ID；
+      model.QuestType = this.questType;// asq3答卷
+      model.QuestMonth = String(this.questMonth);//2月份
+      //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
+      model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
+      model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
+      model.Source = this.source;
+      model.SurveyTime = this.baby.SurveyTime;
+      console.log('model',model);
+
+      let params:any = {};
+      params.uid = this.user.Id;
+      params.type = 'AsqLeft';
+      let updateLeft = await this._business.updateLeft(params);
+      console.log('updateLeft',updateLeft);
+      if(!updateLeft){
+        this._toastrService.error('剩余次数不足！');
+      }else{
+        let res = await this._business.create(model);
+        if (res) {
+          this._toastrService.success('提交成功');
+          this._sessionStorage.questscore = this.scoreArr;
+          this._sessionStorage.zonghe = this.zonghe;
+          this.question = res;
+          this.pageType = 2;
+          //console.log('all:',this.user,this.baby,this.doctor,this.question);
+          if(this.source !=1){
+            let e:any = 1;
+            this.gotoReport(e);
+          }
+          
+        }
       }
     }
+
+    
 
     
   }

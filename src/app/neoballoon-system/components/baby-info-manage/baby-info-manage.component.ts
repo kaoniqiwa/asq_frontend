@@ -162,8 +162,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   constructor(private _business: BabyInfoManageBusiness, private _fb: FormBuilder, private _router: Router, private _toastrService: ToastrService, private _activeRoute: ActivatedRoute, private _sessionStorage: SessionStorageService) {
     this._activeRoute.queryParams.subscribe((params) => {
       this.source = params['source'];
-      this.mid = params['mid'];
-
+      
       if (params['phone']) {
         this.mphone = params['phone'];
         this.memberGroup.patchValue({
@@ -172,10 +171,20 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         this.Phone.disable();
       }
 
+      if(params['mid']){
+        this.mid = params['mid'];
+        this._sessionStorage.mid = params['mid'];
+      }else{
+        if(!params['phone']){
+          this.mid = this._sessionStorage.mid;
+        }
+      }
       this._sessionStorage.source = params['source'];
       console.log('source_after', this.source, this.mphone);
       
     })
+
+    //console.log('this.memberGroup.value.phone',this.memberGroup.value.phone);
   }
 
   async ngOnInit() {
@@ -203,6 +212,29 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     
   }
 
+  checkIsChanqian(e:Event){
+    let thisCheck = (e.target as HTMLInputElement).getAttribute('value');
+    let isChanqian = this.babyGroupArr[this.currentIndex].getRawValue().bornCondition.isChanqian;
+    if(thisCheck == isChanqian){
+      this.babyGroupArr[this.currentIndex].patchValue({
+        bornCondition: {
+              isChanqian: ''
+            }
+      });
+    }
+  }//checkIsMulti
+
+  checkIsMulti(e:Event){
+    let thisCheck = (e.target as HTMLInputElement).getAttribute('value');
+    let isMulti = this.babyGroupArr[this.currentIndex].getRawValue().bornCondition.isMulti;
+    if(thisCheck == isMulti){
+      this.babyGroupArr[this.currentIndex].patchValue({
+        bornCondition: {
+              isMulti: ''
+            }
+      });
+    }
+  }
 
 
   ngAfterViewInit(): void {
@@ -268,6 +300,10 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       }
       else {
         this.babyGroupArr.splice(index, 1);
+        if(this.babyGroupToBeAdd.length>0){
+          this.babyGroupToBeAdd.splice(this.babyGroupToBeAdd.length-1,1);
+        }
+        
         if (this.currentIndex == index) {
           this.currentIndex = index - 1
         }
@@ -306,10 +342,13 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       bornCondition: this._fb.group({
         isShun: '是',
         isChanqian: '',
-        isMulti: "",
+        isMulti: '',
         abnormal: ''
       }),
-      editBabyInfo: false
+      isAnswer:0,
+      editBabyInfo: false,
+      editBabyBirthday:0,
+      editBabysurveyTime:0
     })
   }
   async dialogMsgEvent(status: DialogEnum) {
@@ -390,6 +429,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
   changeBabyInfo(group: FormGroup) {
     let editBabyInfo = group.value.editBabyInfo;
+    let isAnswer = group.value.isAnswer;
     editBabyInfo = !editBabyInfo;
     group.patchValue({
       editBabyInfo
@@ -397,10 +437,27 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
     if (editBabyInfo) {
       group.enable();
-      group.get('birthday')?.disable();
-      group.get('surveyTime')?.disable();
+      if(isAnswer == 1){
+        group.get('prematrueweek')?.disable();
+        group.get('prematrueday')?.disable();
+        group.get('premature')?.disable();
+        group.patchValue({
+          editBabysurveyTime:0
+        })
+      }else{
+        group.patchValue({
+          editBabyBirthday:0,
+          editBabysurveyTime:0
+        })
+      }
+      //group.get('birthday')?.disable();
+      //group.get('surveyTime')?.disable();
     } else {
       group.disable();
+      group.patchValue({
+        editBabyBirthday:1,
+        editBabysurveyTime:1
+      })
 
     }
 
@@ -432,28 +489,40 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
   onSubmitFloat(e: any) {
     console.log(e, 'onSubmitFloat');
-    if (e == 1) {
-      if (this._checkForm()) {
-        console.log('通过')
-        this.Pointer.setBirthDay(this.babyGroupArr[this.currentIndex].getRawValue().birthday);
-        this.Pointer.setShow(1);
-        this.float = true;
+    console.log('this._sessionStorage.questscore_onSubmitFloat',this._sessionStorage.questscore);
+    if(this._sessionStorage.questscore != null){
+      this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
+      if(this.source!=1){
+        this._router.navigate(["/mlogin"])
+      }else{
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
       }
-    } else if (e == 2) {
-      this.Pointer.setShow(2);
-      this.float = true;
-      this.onSubmit();
-    } else if (e == 3) {
-      this.Pointer.setShow(0);
-      this.float = false;
-    } else if (e == 4) {
-      this.Pointer.setShow(0);
-      this.float = false;
-      this.navigateToSurveyManage(this.memberResId);
+    }else{
+      if (e == 1) {
+        if (this._checkForm()) {
+          console.log('通过')
+          this.Pointer.setBirthDay(this.babyGroupArr[this.currentIndex].getRawValue().birthday);
+          this.Pointer.setShow(1);
+          this.float = true;
+        }
+      } else if (e == 2) {
+        this.Pointer.setShow(2);
+        this.float = true;
+        this.onSubmit();
+      } else if (e == 3) {
+        this.Pointer.setShow(0);
+        this.float = false;
+      } else if (e == 4) {
+        this.Pointer.setShow(0);
+        this.float = false;
+        this.navigateToSurveyManage(this.memberResId);
+      }
     }
+    
   }
 
   async onSubmit() {
+    console.log('this.memberGroup.value.phone4',this.memberGroup.value.phone);
     //console.log(this.babyGroupArr, this.babyGroupArr[this.currentIndex].getRawValue().birthday);
     //console.log(this.memberGroup);
     //console.log('onSubmit', this.rectify(this.babyGroupArr[this.currentIndex].getRawValue().birthday, this.babyGroupArr[this.currentIndex].getRawValue().surveyTime, this.babyGroupArr[this.currentIndex].getRawValue().prematrueweek, this.babyGroupArr[this.currentIndex].getRawValue().prematrueday));
@@ -532,11 +601,12 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     } else {
       console.log('新用户');
       let doctor = this._sessionStorage.doctor;
+      console.log('doctor',doctor,this.memberGroup.value.phone);
       if (doctor) {
-        let phone = this.memberGroup.value.phone;
+        let phone = this.mphone;
         if (phone) {
           let { Data: existMember } = await this._business.listMember([phone])
-          console.log(existMember)
+          //console.log('existMember',existMember);
           if (existMember.length) {
             this.existMember = existMember[0];
             this._toastrService.error('该问卷人已存在,请重新填写手机号');
@@ -552,7 +622,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         memberModel.Id = '';
         memberModel.Did = doctor.Id;
         memberModel.Name = this.memberGroup.value.name ?? '';
-        memberModel.Phone = this.memberGroup.value.phone ?? "";
+        memberModel.Phone = this.mphone ?? "";
         memberModel.Relation = this.memberGroup.value.relation ?? MemberRelation.None;
         memberModel.Province = this.memberGroup.value.province ?? "";
         memberModel.City = this.memberGroup.value.city ?? "";
@@ -701,6 +771,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     /* this.memberGroup.patchValue({
       motherBirth: '2021-09-19'
     }) */
+    //console.log('this.memberGroup.value.phone2',this.memberGroup.value.phone);
     if (this.member) {
       this.memberGroup.disable();
       this.memberChange = true;
@@ -752,14 +823,21 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
               isChanqian: baby.IsChanqian,
               isMulti: baby.IsMulti,
               abnormal: baby.OtherAbnormal
-            }
+            },
+            isAnswer:baby.Isanswer,
+            editBabyBirthday:1,
+            editBabysurveyTime:1
 
           })
           this.babyGroupArr.push(info)
         }
       }
 
+      console.log('this.babyGroupArr',this.babyGroupArr);
+
     }
+
+    //console.log('this.memberGroup.value.phone3',this.memberGroup.value.phone);
 
 
     $('#target').distpicker({

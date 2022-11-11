@@ -70,6 +70,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   currentBaby: any = null;
   currentIndex:any = 0;
+  source:any = 1;
 
   config: SwiperOptions = {
     slidesPerView: window.innerWidth<860?3:8,
@@ -80,6 +81,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
 
+    this.source = this._sessionStorage.source;
 
     this._activeRoute.queryParams.subscribe((params) => {
       this.currentIndex = params['currentIndex'];
@@ -134,9 +136,6 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       this.currentSwiperMonth = this.sheetMap.get(currentBtn.questType) ?? null;
       console.log('currentSwiperMonth',this.currentSwiperMonth);
     }
-
-
-
 
   }
 
@@ -221,16 +220,27 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
   gotoEntry(e: Event) {
     e.stopPropagation();
-    if (this.currentBaby) {
-      this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
-        queryParams: {
-          pageType: PageType.dati,
-          questType: this.currentType,
-          questMonth: this.currentMonthIndex,
-          bid:this.currentBaby.Id
-        }
-      })
+    console.log('this._sessionStorage.questscore_gotoEntry',this._sessionStorage.questscore);
+    if(this._sessionStorage.questscore != null){
+      this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
+      if(this.source!=1){
+        this._router.navigate(["/mlogin"])
+      }else{
+        this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
+      }
+    }else{
+      if (this.currentBaby) {
+        this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
+          queryParams: {
+            pageType: PageType.dati,
+            questType: this.currentType,
+            questMonth: this.currentMonthIndex,
+            bid:this.currentBaby.Id
+          }
+        })
+      }
     }
+    
   }
   ngOnDestroy() {
     console.log('destroy');

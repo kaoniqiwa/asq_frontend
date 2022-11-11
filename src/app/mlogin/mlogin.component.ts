@@ -38,16 +38,31 @@ export class MloginComponent implements OnInit {
 
 
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: MloginBusiness, private _sessionStorage: SessionStorageService,private _toastrService: ToastrService,private _router: Router) {
-    this._sessionStorage.source = 2;
+    
     this._activeRoute.queryParams.subscribe(params => {
       this.uid = params['uid'];
       this.did = params['did'];
       this.uuid = params['uuid'];
+      this.phone = params['phone'];
     })
+    if(this.phone == undefined){
+      this._sessionStorage.source = 2;
+    }else{
+      this._sessionStorage.source = 3;
+      this.phoneStatus = false;
+      this.screenStatus = true;
+    }
     console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid);
   }
 
   async ngOnInit() {
+    if(this.uuid == undefined){
+      this.qrcodeStatus = false;
+      alert('链接已失效，请重新生成');
+      return
+      //console.log('隐藏');
+    }
+
     this.user = await this._business.getUser(this.uid);
     this._sessionStorage.user = this.user;
     this.doctor = await this._business.getDoctor(this.did);
@@ -59,7 +74,7 @@ export class MloginComponent implements OnInit {
     console.log('res',res);
     if(!res){
       this.qrcodeStatus = false;
-      alert('二维码已失效，请重新生成');
+      alert('链接已失效，请重新生成');
       //console.log('隐藏');
     }
 
@@ -83,8 +98,6 @@ export class MloginComponent implements OnInit {
       this.setTime();
       console.log('ngOnInit2',res,this.code);
     }
-    
-    
   }
 
   setTime(){
@@ -102,13 +115,13 @@ export class MloginComponent implements OnInit {
   }
 
   phoneSubmit():any{
-    console.log('phoneSubmit',this.setCode,this.code);
+    /* console.log('phoneSubmit',this.setCode,this.code);
     if(!this.check_phone(String(this.phone))){
       return this._toastrService.warning('请输入有效的手机号码！');
     }
     if(this.setCode != this.code){
       return this._toastrService.error('验证码错误！');
-    }
+    } */
     this.phoneStatus = false;
     this.screenStatus = true;
   }
@@ -127,9 +140,10 @@ export class MloginComponent implements OnInit {
 
   async goToInfo(e:Event){
     e.stopPropagation();
-    
-    if(this.readed){
+    this._sessionStorage.questscore = null;
+    console.log('this._sessionStorage.questscore_goToInfo',this._sessionStorage.questscore);
 
+    if(this.readed){
       let res = await this._business.getMember(this.doctor.Id, this.phone);
       this.member = res.Data[0];
       if (res.Data.length) {

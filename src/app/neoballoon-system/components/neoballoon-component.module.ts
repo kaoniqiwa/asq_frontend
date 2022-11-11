@@ -8,6 +8,7 @@ import { AccountInfoComponent } from './account-info/account-info.component';
 import { AccountComponent } from './account/account.component';
 import { BabyAddManageComponent } from './baby-add-manage/baby-add-manage.component';
 import { BabyQrcodeManageComponent } from './baby-qrcode-manage/baby-qrcode-manage.component';
+import { BabyMessageManageComponent } from './baby-message-manage/baby-message-manage.component';
 import { BabyAgeComponent } from './baby-age/baby-age.component';
 import { BabyGameComponent } from './baby-game/baby-game.component';
 import { BabyLibFormComponent } from './baby-lib-form/baby-info-operate.component';
@@ -36,6 +37,7 @@ import { SwiperModule } from 'swiper/angular';
     AccountInfoComponent,
     BabyAddManageComponent,
     BabyQrcodeManageComponent,
+    BabyMessageManageComponent,
     BabyLibComponent,
     BabyReportComponent,
     BabyLibFormComponent,

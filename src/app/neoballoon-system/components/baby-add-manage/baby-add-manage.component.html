@@ -1,6 +1,6 @@
 <div class="baby-add-manage vertical-layout" *ngIf="!selectScan">
-  <toast-window *ngIf="showAuthorize" (closeEvent)="closeAuthorize()">
-    <authorize-box></authorize-box>
+  <toast-window *ngIf="showAuthorize"  (closeEvent)="closeAuthorize()">
+    <authorize-box (gotoSearch)="gotoSearch()"></authorize-box>
   </toast-window>
 
   <toast-window *ngIf="showOldMember" (closeEvent)="closeOld()">
@@ -60,8 +60,9 @@
           <span class="hint">【使用前必读】</span>
         </div>
         <div>
-          <select [(ngModel)]="selectMessage">
-            <option value="">ASQ-3</option>
+          <select [(ngModel)]="selectMessage" (ngModelChange)="changeMessage($event)">
+            <option value="" disabled>请选择</option>
+            <option value="ASQ-3">ASQ-3</option>
             <!-- <option value="">ASQ:SE</option>
             <option value="">ASQ:SE-2及其联结</option> -->
           </select>

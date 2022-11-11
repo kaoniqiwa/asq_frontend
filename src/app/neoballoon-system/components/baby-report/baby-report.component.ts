@@ -12,6 +12,7 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import Swiper, { A11y, Navigation, Pagination, Scrollbar, SwiperOptions } from 'swiper';
 import { SwiperComponent } from 'swiper/angular';
 import { GetQuestionParams } from 'src/app/network/request/question/question.params';
+import { ToastrService } from 'ngx-toastr';
 
 Swiper.use([
   Navigation, Pagination, Scrollbar
@@ -49,8 +50,9 @@ export class BabyReportComponent implements OnInit {
 
   questions:any = [];
   newMonth:any = 0;
+  source:any = '';
 
-  constructor(private _business: BabyReportBusiness, private _router: Router, private _sessionStorage: SessionStorageService ,private _activeRoute: ActivatedRoute) { 
+  constructor(private _business: BabyReportBusiness, private _router: Router, private _sessionStorage: SessionStorageService ,private _activeRoute: ActivatedRoute,private _toastrService: ToastrService) { 
     this._activeRoute.queryParams.subscribe(params => {
       this.uid = params['uid'];
       this.did = params['did'];
@@ -61,7 +63,7 @@ export class BabyReportComponent implements OnInit {
   }
 
   async ngOnInit() {
-    
+    this.source = this._sessionStorage.source;
     this.user = this._sessionStorage.user;
     this.doctor = this._sessionStorage.doctor;
     if(this.bid){
@@ -70,6 +72,7 @@ export class BabyReportComponent implements OnInit {
     if(this.mid){
       this.member = await this._business.getMember(this.mid);
     }
+
 
     console.log('this.baby',this.baby);
     console.log('this.member',this.member);
@@ -96,6 +99,14 @@ export class BabyReportComponent implements OnInit {
       }
     }
     return false
+  }
+
+  showReport(num:any){
+    if(this.source!=1){
+      this._toastrService.warning('请至筛查处了解详情');
+    }else{
+      this._toastrService.success('敬请期待');
+    }
   }
 
 }

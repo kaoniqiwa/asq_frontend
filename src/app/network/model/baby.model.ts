@@ -19,6 +19,7 @@ export class Baby {
   IsChanqian?: string;
   IsMulti?: string;
   OtherAbnormal?: string;
+  Isanswer:any;
   CreateTime?: string;
   UpdateTime?: string;
   Flow?: string;

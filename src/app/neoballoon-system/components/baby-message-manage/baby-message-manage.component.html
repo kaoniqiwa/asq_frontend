@@ -1,0 +1,57 @@
+<div class="main">
+  <h2 class="sub-header">发送链接</h2>
+  <div class="process">
+    <span style="width:20px;"></span><span style="width:50px;"></span>
+    <ul>
+      <li>
+        <i class="finished"></i>
+        <b>选择答题模式</b>
+      </li>
+      <li [ngClass]="{'current':messageStep==1}">
+        <i>2</i>
+        <b >向手机号发送答题链接</b>
+      </li>
+      <li [ngClass]="{'current':messageStep==2}">
+        <i>3</i>
+        <b>打开链接开始答题</b>
+      </li>
+    </ul>
+    <span style="width:50px;"></span><span style="width:20px;"></span>
+  </div>
+  <div class="searchBox smBox" *ngIf="messageStep == 1">
+    <br>
+    <table>
+      <tbody>
+        <tr>
+            <td>手机号码：</td>
+            <td>
+              <form [formGroup]="myForm" class="hw-form">
+                <input class="mPhone" type="text" formControlName="phone" maxLength="11" />
+              </form>
+          </td>
+          
+        </tr>
+        <tr>
+          <td colspan="2"><button class="send btn-default1 btn-unclick" (click)="submit()">下一步</button></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align:center;"  *ngIf="messageStep == 2">
+    <div class="qrcodeBox1">
+      <p style="font-size:18px;">发送成功！<br>(短信发送可能存在一定延时，请耐心等候)</p>
+    </div>
+    <div class="bottom-msg">
+      <p>若使用短信筛查，请务必认真阅读以下说明：<br>
+        1.短信的发送依赖于电信/移动/联通的服务支持。根据规则，带有网站域名的短信可能存在<span
+          class="bold">1～5分钟的接收延迟</span>。故若家长在现场完成问卷，为了节省时间，建议不要使用“短信筛查”，而是使用“扫码筛查”。<br>
+        2.若当地手机信号正常，且家长手机超过5分钟没有显示收到短信，请按以下步骤操作：</p>
+      <p class="indent">1）在家长手机的广告信箱/垃圾信箱内查找短信。由于发送的短信带有网站域名，家长的手机有小概率对其进行拦截。</p>
+      <p class="indent">2）若广告信箱/垃圾信箱内没有找到短信，建议改使用其他筛查方式。由于发送的短信带有网站域名，部分管理较严格地区的<span
+          class="bold">电信/移动/联通会进行审核甚至直接拦截</span>，导致用户无法收到短信。该问题在技术上无法解决，故建议使用其他筛查方式。</p>
+      <p class="indent">3）若发现接连多个家长无法收到短信，建议在开展系统操作培训时建立的微信群“ASQ答疑群”内询问工作人员，我们会尽快为您解决问题。</p>
+    </div>
+  </div>
+
+</div>

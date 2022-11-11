@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AuthorizeBoxComponent implements OnInit {
 
+  @Output() gotoSearch = new EventEmitter();
+
   agree = true;
 
   constructor(private _router: Router) { }
@@ -16,11 +18,13 @@ export class AuthorizeBoxComponent implements OnInit {
   }
 
   navigateToBabyInfo() {
-    if (this.agree)
+    console.log('navigateToBabyInfo');
+    this.gotoSearch.emit();
+    /* if (this.agree)
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"],{
         queryParams: {
           source: 1,
         }
-      })
+      }) */
   }
 }

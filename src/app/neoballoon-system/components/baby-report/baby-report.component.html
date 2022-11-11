@@ -47,10 +47,10 @@
             </ng-container>
             <ng-container *ngIf="checkScreen(i)">
               <ul class="tag">
-                <li><img src="assets/img/page01.png" alt=""></li>
-                <li><img src="assets/img/page02.png" alt=""></li>
-                <li><img src="assets/img/page03.png" alt=""></li>
-                <li><img src="assets/img/page04.png" alt=""></li>
+                <li><img src="assets/img/page01.png" (click)="showReport(1)" alt=""></li>
+                <li><img src="assets/img/page02.png" (click)="showReport(2)" alt=""></li>
+                <li><img src="assets/img/page03.png" (click)="showReport(3)" alt=""></li>
+                <li><img src="assets/img/page04.png" (click)="showReport(4)" alt=""></li>
               </ul>
             </ng-container>
             

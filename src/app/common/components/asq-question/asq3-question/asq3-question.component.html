@@ -1,4 +1,4 @@
-<div class="asq-test">
+<div class="asq-test" id="asq-test">
   <div>
     <div style="width: 100%; margin: 10px 0">
       <!-- <button *ngIf="pageType>=2" (click)="gotoBack()" class="hw-small-btn gray-btn">
@@ -8,7 +8,7 @@
   </div>
   <ng-container *ngIf="this.pageType==0||this.pageType==1">
     <ng-container *ngFor="let intQuetion of intQuestions; let j = index; let k = count">
-      <div *ngIf="j == this.currentPage" class="quesBox">
+      <div *ngIf="j == this.currentPage" class="quesBox" >
         <h1>{{ intQuetion.question[0] }}</h1>
         <p>
           这些选项是什么意思
@@ -329,7 +329,7 @@
     <div style="text-align: center;">
       <button class="btn-default1 btnAdvice" (click)="next()" *ngIf="source==1">下一步</button>
       <a target="_blank" routerLink="/asq3print" [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a>
-      <button class="btn-default1 complete" style="display: none;">完成</button>
+      <button class="btn-default1 complete" style="display: none;" (click)="gotoReport($event)">完成</button>
     </div>
     <div class="bottom">
       译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
@@ -457,7 +457,7 @@
 
           <button class="btn-default1 btnAdvice" style="display: none;">下一步</button>
           <a target="_blank" routerLink="/asq3print" [queryParams]="{type:2,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}" ><button class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a>
-          <button class="btn-default1 complete">完成</button>
+          <button class="btn-default1 complete" (click)="gotoReport($event)">完成</button>
           <div class="bottom">
             译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
           </div>

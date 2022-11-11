@@ -43,6 +43,33 @@ export class SessionStorageService {
     return source;
   }
 
+  private _mid: any | null = null;
+  set mid(mid:any) {
+    sessionStorage.setItem('mid', mid);
+  }
+  get mid() {
+    let mid = sessionStorage.getItem('mid');
+    return mid;
+  }
+
+  private _questscore: any | null = null;
+  set questscore(questscore: any | null) {
+    sessionStorage.setItem('questscore', JSON.stringify(questscore));
+  }
+  get questscore() {
+    let questscore = sessionStorage.getItem('questscore');
+    return questscore ? JSON.parse(questscore) : null;
+  }
+
+  private _zonghe: any | null = null;
+  set zonghe(zonghe: any | null) {
+    sessionStorage.setItem('zonghe', JSON.stringify(zonghe));
+  }
+  get zonghe() {
+    let zonghe = sessionStorage.getItem('zonghe');
+    return zonghe ? JSON.parse(zonghe) : null;
+  }
+
   private _doctor: Doctor | null = null;
   set doctor(doctor: Doctor | null) {
     sessionStorage.setItem('doctor', JSON.stringify(doctor));

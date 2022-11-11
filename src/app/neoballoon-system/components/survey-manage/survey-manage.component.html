@@ -19,23 +19,26 @@
 
   <div class="vertical-main vertical-layout">
     <div class="wrapper vertical-header">
-      <div
+      <ng-container *ngFor="let surveyBtn of surveyBtns">
+        <div
         class="item"
         [class.active]="currentType == surveyBtn.questType"
-        *ngFor="let surveyBtn of surveyBtns"
         (click)="clickSurveyBtn(surveyBtn)"
+        *ngIf="!(source!=1 && currentType != surveyBtn.questType)"
       >
-        <div class="icon">
-          <ng-container *ngIf="currentType != surveyBtn.questType">
-            <img [src]="'assets/img/' + surveyBtn.normalIcon" alt="" />
-          </ng-container>
-          <ng-container *ngIf="currentType == surveyBtn.questType">
-            <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
-          </ng-container>
-          <span class="sub-icon">{{ surveyBtn.subIcon }}</span>
+          <div class="icon">
+            <ng-container *ngIf="currentType != surveyBtn.questType">
+              <img [src]="'assets/img/' + surveyBtn.normalIcon" alt="" />
+            </ng-container>
+            <ng-container *ngIf="currentType == surveyBtn.questType">
+              <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
+            </ng-container>
+            <span class="sub-icon">{{ surveyBtn.subIcon }}</span>
+          </div>
+          <div class="content">{{ surveyBtn.content }}</div>
         </div>
-        <div class="content">{{ surveyBtn.content }}</div>
-      </div>
+      </ng-container>
+      
     </div>
     <div class="swiper-container vertical-main" style="min-height: 400px">
       <swiper [config]="config">

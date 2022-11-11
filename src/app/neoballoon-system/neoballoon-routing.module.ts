@@ -4,6 +4,7 @@ import { HowellModule } from "../common/howell.module";
 import { AccountComponent } from "./components/account/account.component";
 import { BabyAddManageComponent } from "./components/baby-add-manage/baby-add-manage.component";
 import { BabyQrcodeManageComponent } from "./components/baby-qrcode-manage/baby-qrcode-manage.component";
+import { BabyMessageManageComponent } from "./components/baby-message-manage/baby-message-manage.component";
 import { BabyAgeComponent } from "./components/baby-age/baby-age.component";
 import { BabyGameComponent } from "./components/baby-game/baby-game.component";
 import { BabyLibComponent } from "./components/baby-lib/baby-lib.component";
@@ -45,6 +46,12 @@ const routes: Routes = [
       {
         path: 'baby-qrcode-manage',
         component: BabyQrcodeManageComponent,
+        canActivate: [NeoballoonService]
+
+      },
+      {
+        path: 'baby-message-manage',
+        component: BabyMessageManageComponent,
         canActivate: [NeoballoonService]
 
       },

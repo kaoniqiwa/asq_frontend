@@ -49,6 +49,10 @@ export class CompanyRequestService {
     params.Flow = 'sendSms';
     return this.type.post(CompanyUrl.sendSms(),params);
   }
+  sendUrl(params:any) {
+    params.Flow = 'sendUrl';
+    return this.type.post(CompanyUrl.sendSms(),params);
+  }
   getUser(id: string) {
     return this.type.get(CompanyUrl.get(id));
   }
