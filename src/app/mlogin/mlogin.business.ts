@@ -16,8 +16,16 @@ export class MloginBusiness {
     return this._userRequest.get(id)
   }
 
+  getUserBySeq(params:any) {
+
+    return this._userRequest.getUserBySeq(params);
+  }
+
   sendSms(params:any) {
     return this._userRequest.sendSms(params);
+  }
+  getStatus(params:any) {
+    return this._userRequest.getStatus(params);
   }
   checkUuid(params:any) {
     return this._userRequest.checkUuid(params);
@@ -25,6 +33,9 @@ export class MloginBusiness {
 
   getDoctor(id: string) {
     return this._doctorRequest.get(id)
+  }
+  getDoctorBySeq(params:any) {
+    return this._doctorRequest.getDoctorBySeq(params);
   }
 
   getBaby(id: string) {

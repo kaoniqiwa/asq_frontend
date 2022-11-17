@@ -76,7 +76,7 @@ export class BabyReportComponent implements OnInit {
 
     console.log('this.baby',this.baby);
     console.log('this.member',this.member);
-    this.QuestType = 'asq3';
+    this.QuestType = 'ASQ-3';
     this.getQuestions();
 
   }
@@ -87,25 +87,40 @@ export class BabyReportComponent implements OnInit {
     params.Uid = this.uid;
     params.QuestType = this.QuestType;
     this.questions = await this._business.getQuestionByBaby(params);
-    console.log('this.questions', this.questions);
+    //console.log('this.questions', this.questions);
     this.swiper.swiperRef.slideTo(this.questions[0] && this.questions[0].QuestMonth);
   }
 
   checkScreen(num:any){
+    let params:any = {};
     if(this.questions.length <= 0)return false;
     for(var i=0; i<this.questions.length; i++){
       if( this.questions[i].QuestMonth == num && this.questions[i].QuestType == this.QuestType){
-        return true;
+        params.Status = true;
+        params.Qid = this.questions[i].Id;
+        return params;
       }
     }
-    return false
+    params.status = false;
+    return params
   }
 
-  showReport(num:any){
+  showReport(e:Event,num:any,questMonth:any){
+    let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
     if(this.source!=1){
-      this._toastrService.warning('请至筛查处了解详情');
+      this._toastrService.warning('请至筛查提供处了解详情');
     }else{
-      this._toastrService.success('敬请期待');
+      //this._toastrService.success('敬请期待');
+      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.bid], {
+        queryParams: {
+          pageType: num,
+          questType: this.QuestType,
+          questMonth: questMonth,
+          model: 'report',
+          Qid: thisQid,
+          bid:this.bid
+        }
+      })
     }
   }
 

@@ -55,25 +55,26 @@ export class BabyMessageManageComponent implements OnInit {
     if (this._checkForm()) {
       if (this.doctor) {
         //this.messageStep = 2;
-        /* if(!this.sending){
+        if(!this.sending){
           this.sending = true;
           let phone = this.myForm.value.phone!;
           console.log('phone',phone);
           let params:any = {};//sendUrl($phone,$type,$uid,$did,$un,$pw,$sn);
           params.phone = phone;
           params.type = this.selectMessage;
-          params.uid = this.user.Id;
-          params.did = this.doctor.Id;
+          params.uid = this.user.Seq;
+          params.did = this.doctor.Seq;
           params.un = this.qrcode.Username;
           params.pw = this.qrcode.Password;
           params.sn = 'ASQ系统中文版';
+          params.name = this.user.Name;
           let res:any = await this._business.sendUrl(params);
           if(res.content.Message == 'OK'){
             this.messageStep = 2;
           }
         }else{
           this._toastrService.warning('发送中！，请稍等。');
-        } */
+        }
         
       } else {
         this._toastrService.error('请先选择医生');

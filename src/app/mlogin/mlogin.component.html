@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="navs" href="javascript:;" (click)="helpShow()">使用帮助 <img src="assets/img/arrow.png" alt=""></div>
-    <div class="container" [hidden]="true">
+    <div class="container" *ngIf="!qrcodeStatus">
 
         <br style="clear: both">
         <div class="mainBox mainBox_bg">

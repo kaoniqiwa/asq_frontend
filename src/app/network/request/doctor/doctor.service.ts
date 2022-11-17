@@ -34,6 +34,10 @@ export class DoctorRequestService {
   get(id: string) {
     return this.type.get(DoctorUrl.get(id));
   }
+  getDoctorBySeq(params:any){
+    params.Flow = 'getDoctorBySeq';
+    return this.type.post(DoctorUrl.create(), params)
+  }
 
   update(model: Doctor) {
     model.Flow = 'editDoctor';

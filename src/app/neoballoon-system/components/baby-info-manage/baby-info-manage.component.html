@@ -217,16 +217,17 @@
             <div
               class="form-group"
               style="align-items: flex-start"
-              *ngIf="
-                !(
-                  +rectify(
-                    babyGroupArr[currentIndex].getRawValue().birthday,
-                    babyGroupArr[currentIndex].getRawValue().surveyTime,
-                    0,
-                    0
-                  ).split('月')[0] > 24
-                )
-              "
+              [hidden]="
+              (
+                +rectify(
+                  babyGroupArr[currentIndex].getRawValue().birthday,
+                  babyGroupArr[currentIndex].getRawValue().surveyTime,
+                  0,
+                  0
+                ).split('月')[0] > 24
+              )
+            "
+              
             >
               <label class="control-label col-sm-2">
                 <div><span>*</span>是否早产:</div>
@@ -254,7 +255,8 @@
             </div>
             <div
               class="form-group"
-              *ngIf="babyGroupArr[currentIndex].getRawValue().premature == '是'"
+              [hidden]="!(babyGroupArr[currentIndex].getRawValue().premature == '是')"
+              
             >
               <label class="control-label col-sm-2">
                 <div><span>*</span>若早产，请填写孕周:</div>
@@ -263,7 +265,7 @@
                 <select 
                   [disabled]="babyGroupArr[currentIndex].getRawValue().isAnswer==1?true:!true"
                   formControlName="prematrueweek">
-                  <option value="" disabled>周</option>
+                  <option value="0" disabled>周</option>
                   <option value="36">36周</option>
                   <option value="35">35周</option>
                   <option value="34">34周</option>
@@ -288,7 +290,7 @@
                 <select
                   [disabled]="babyGroupArr[currentIndex].getRawValue().isAnswer==1?true:!true"
                   formControlName="prematrueday">
-                  <option value="" disabled>天</option>
+                  <option value="0" disabled>天</option>
                   <option value="6">6天</option>
                   <option value="5">5天</option>
                   <option value="4">4天</option>

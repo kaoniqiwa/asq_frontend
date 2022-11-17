@@ -6,12 +6,15 @@ import { BabyInMemberComponent } from "./baby-in-member/baby-in-member.component
 import { CommonTableComponent } from "./common-table/common-table.component";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { DatePickerComponent } from "./date-picker/date-picker.component";
+import { HelperBoxComponent } from "./helper-box/helper-box.component";
 import { ImageBoxComponent } from "./image-box/image-box.component";
 import { ManualDownloadComponent } from "./manual-download/manual-download.component";
+import { MutexBoxComponent } from "./mutex-box/mutex-box.component";
 import { PaginatorComponent } from "./paginator/paginator.component";
 import { PointerBoxComponent } from "./pointer-box/pointer-box.component";
 import { QuickBoxComponent } from "./quick-box/quick-box.component";
 import { SimpleSearchComponent } from "./simple-search/simple-search.component";
+import { SubmitBoxComponent } from "./submit-box/submit-box.component";
 import { SystemUsageComponent } from "./system-usage/system-usage.component";
 import { ToastWindowComponent } from "./toast-window/toast-window.component";
 import { UpdateBoxComponent } from "./update-box/update-box.component";
@@ -33,5 +36,8 @@ export const CUSTOM_COMPONENTS = [
   BabyInMemberComponent,
   ConfirmDialogComponent,
   DatePickerComponent,
-  PointerBoxComponent
+  PointerBoxComponent,
+  SubmitBoxComponent,
+  HelperBoxComponent,
+  MutexBoxComponent
 ]

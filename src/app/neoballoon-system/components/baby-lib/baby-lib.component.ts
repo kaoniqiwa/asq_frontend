@@ -82,7 +82,7 @@ export class BabyLibComponent implements OnInit {
     this.searchInfo.Name = '';
     this.page = res.Page;
     this.dataSource = res.Data;
-    console.log('dataSource',this.dataSource);
+    //console.log('dataSource',this.dataSource);
   }
 
   chooseReport(e:Event,num:number){
@@ -90,12 +90,15 @@ export class BabyLibComponent implements OnInit {
     let thisDid = (e.target as HTMLInputElement).getAttribute('Did');
     let thisBid = (e.target as HTMLInputElement).getAttribute('Bid');
     let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
-    console.log('thisUid',thisUid);
+    //console.log('thisUid',thisUid);
     let this_href = window.location.href.split('#')[0];
-    if(num == 0){
+    console.log('num',num);
+    if(num == 1){
       window.open(this_href+'/#/asq3print?type=1&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
-    }else{
+    }else if(num == 2){
       window.open(this_href+'/#/asq3print?type=2&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
+    }else{
+
     }
   }
 

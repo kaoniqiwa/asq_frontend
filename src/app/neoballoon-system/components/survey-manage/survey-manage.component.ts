@@ -246,7 +246,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     console.log('destroy');
   }
   goBack() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+    //this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+    window.history.back();
   }
 
 }

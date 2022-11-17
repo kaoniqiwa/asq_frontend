@@ -54,7 +54,7 @@ export class BabyQrcodeManageComponent implements OnInit {
     console.log('href',window.location.href);
     console.log('this._router.url',this._router.url);
     console.log('qrcode',qrcode);
-    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Id+'&did='+this.doctor.Id+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid;
+    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Seq+'&did='+this.doctor.Seq+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid+'&type='+this.selectScan;
     console.log('qrcodeUrl',this.qrcodeUrl);
     this.qrcodeShow = true;
     this.setTime();

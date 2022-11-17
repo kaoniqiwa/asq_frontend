@@ -86,9 +86,9 @@
               <!-- <td>{{ data.FileId }}</td> -->
               <td>
                 <select #report [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" (change)="chooseReport($event,+report.value)">
-                  <option value="">请选择</option>
-                  <option value="0">家长报告</option>
-                  <option value="1">打印全部</option>
+                  <option value="0">请选择</option>
+                  <option value="1">家长报告</option>
+                  <option value="2">打印全部</option>
                 </select>
               </td>
               <td><span class="more" [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" [attr.Mid]="data.Mid" (click)="gotoReport($event)">了解更多<img src="assets/img/arrow_w.png" alt="" ></span></td>

@@ -37,7 +37,7 @@
             <div class="name">
               <p>{{ month }}<span class="m">月</span></p>
             </div>
-            <ng-container *ngIf="!checkScreen(i)">
+            <ng-container *ngIf="!checkScreen(i).Status">
               <ul class="tag">
                 <li><img src="assets/img/page00.png" alt=""></li>
                 <li><img src="assets/img/page00.png" alt=""></li>
@@ -45,12 +45,12 @@
                 <li><img src="assets/img/page00.png" alt=""></li>
               </ul>
             </ng-container>
-            <ng-container *ngIf="checkScreen(i)">
+            <ng-container *ngIf="checkScreen(i).Status">
               <ul class="tag">
-                <li><img src="assets/img/page01.png" (click)="showReport(1)" alt=""></li>
-                <li><img src="assets/img/page02.png" (click)="showReport(2)" alt=""></li>
-                <li><img src="assets/img/page03.png" (click)="showReport(3)" alt=""></li>
-                <li><img src="assets/img/page04.png" (click)="showReport(4)" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page01.png" (click)="showReport($event,2,i)" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page02.png" (click)="showReport($event,3,i)" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page03.png" (click)="showReport($event,4,i)" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page04.png" (click)="showReport($event,1,i)" alt=""></li>
               </ul>
             </ng-container>
             

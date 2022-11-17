@@ -12,7 +12,14 @@ import { GetDividingParams } from 'src/app/network/request/games/dividing.params
 import { GetGamesParams } from 'src/app/network/request/games/games.params';
 import { GetQuestionParams } from 'src/app/network/request/question/question.params';
 import { ASQ3QuestionBusiness } from './asq3-question.business';
-import printJS from 'print-js'
+import printJS from 'print-js';
+
+/* let url:any = 'src/assets/imgaudio/ASQ-3-audio/2-1.mp3';
+import(${url}).then((res)=>{
+  console.log('OK');
+}).catch((e)=>{
+  console.log('error');
+}) */
 
 import questions from "./data.json";
 
@@ -31,90 +38,16 @@ export class Asq3QuestionComponent implements OnInit {
 
   //@Input() mounthNum: NumberSymbol = 0;
   //@Input() thisAnswers: any = [];
+  audio:any = new Audio();
   math = Math;
   thisAnswers: any = [];
-  /* thisAnswers:any = [
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": false
-    },
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": true
-    },
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": true
-    },
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": true
-    },
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": true
-    },
-    {
-        "answer": [
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3",
-            "3"
-        ],
-        "nextStatus": true,
-        "prevStatus": true
-    }
-]; */
+
   zonghe:any = {};
   babyQuestions: any = questions;
   currentQuestionsObject: any = { name: '', data: [[], [], []] };
   title: any = '';
-  currentQuestions: any = null;
-  intQuestions: any = null;
+  currentQuestions: any = [];
+  intQuestions: any = [];
   currentPage: any = 0;
   allPages: any = 0;
   currentAnswers: any = [];
@@ -123,33 +56,6 @@ export class Asq3QuestionComponent implements OnInit {
   mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
   gamesArr: any = [];
   dividingArr: any = [];
-  /* scoreArr:any = [
-    {
-        "score": 40,
-        "nengqu": "沟通",
-        "jiezhi": "高于界值"
-    },
-    {
-        "score": 30,
-        "nengqu": "粗大动作",
-        "jiezhi": "接近界值"
-    },
-    {
-        "score": 10,
-        "nengqu": "精细动作",
-        "jiezhi": "接近界值"
-    },
-    {
-        "score": 0,
-        "nengqu": "解决问题",
-        "jiezhi": "高于界值"
-    },
-    {
-        "score": 30,
-        "nengqu": "个人-社会",
-        "jiezhi": "低于界值"
-    }
-  ]; */
 
   pageType: PageType = PageType.dati;
   questType: QuestType = QuestType.ASQ3;
@@ -168,6 +74,17 @@ export class Asq3QuestionComponent implements OnInit {
   age: any = {};
   question:any = {};
   source:any = '';
+  qid:any = '';
+  model:any = '';
+
+  //呼出浮层,false为不显示，true位显示
+  float = false;
+  helperfloat = false;
+  mutexfloat = false;
+
+  //当前点击选择对象
+  currentXu:any = '';
+  otherArr:any = '';
 
 
   constructor(private _business: ASQ3QuestionBusiness, private _toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,private _router: Router) {
@@ -178,38 +95,85 @@ export class Asq3QuestionComponent implements OnInit {
     this.baby = this._sessionStorage.baby;
     this.source = this._sessionStorage.source;
 
-    this.thisAnswers = this.scoreArr = this._sessionStorage.questscore || [];
-    this.zonghe = this._sessionStorage.zonghe || [];
-    //this.age = this.birthToAge(this.baby.Birthday.split(' ')[0], this.baby.CreateTime.split(' ')[0]);
-
     this._activeRoute.queryParams.subscribe(params => {
       this.pageType = params['pageType'];
       this.questType = params['questType'];
       this.questMonth = params['questMonth'];
       this.bid = params['bid'];
+      this.qid = params['Qid'];
+      this.model = params['model'];
     })
+
+    console.log('this.model',this.model);
+
+    this.scoreArr = this._sessionStorage.questscore || [];
+    this.thisAnswers = this._sessionStorage.questscore || [];
+    this.zonghe = this._sessionStorage.zonghe || {};
+
     console.log('constructor', this.user, this.doctor, this.member, this.baby, this.questMonth);
   }
 
   async ngOnInit() {
 
+    
+
     this.currentQuestionsObject = this.babyQuestions[this.questMonth];
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;
-    console.log('currentQuestions:', this.currentQuestions);
+    //console.log('currentQuestions:', this.currentQuestions);
     this.intQuestions = this.setQuestions(this.currentQuestions);
     //console.log('intQuestions1:', this.intQuestions);
     this.allPages = this.intQuestions.length;
 
+    if(this.qid != undefined){
+      let res:any = await this._business.get(this.qid);
+      if (res) {
+        console.log('res',res);
+        this.question = res;
+        //console.log('scoreArr1',this.scoreArr,JSON.parse(res.QuestScore));
+        this.scoreArr = JSON.parse(res.QuestScore);
+        this.thisAnswers = JSON.parse(res.QuestScore);
+        this.zonghe = JSON.parse(res.ZongHe);
+        
+
+        //console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
+      }
+    }
+
     this.getGames(this.questMonth);
     this.getDividing(this.questMonth);
 
+  }
 
+  showHelper(e:Event){
+    //this.audio.stop();
+    /* let url:any = '/imgaudio/ASQ-3-audio/2-1.mp3';
+    import(`src/assets${url}`).then((res)=>{
+      console.log('OK');
+      this.audio.src = url.split('src/')[1];
+      this.audio.load();
+      this.audio.play();
+    }).catch((e)=>{
+      console.log('error');
+    }) */
+    /* this.audio.src = 'assets/imgaudio/ASQ-3-audio/2-1.mp3';
+    try{
+      console.log('OK');
+      this.audio.load();
+      this.audio.play();
+    }catch(e){
+      console.log('error');
+    } */
+    
 
   }
 
   init() {
     if (this.thisAnswers.length > 0) {
+      this.zonghe.nextStatus = true;
+      this.zonghe.prevStatus = true;
+      this.thisAnswers[5] = this.zonghe;
+
       this.currentAnswers = this.thisAnswers;
       this.currentAnswer = this.currentAnswers[0];
 
@@ -224,10 +188,12 @@ export class Asq3QuestionComponent implements OnInit {
         if(i==5){
           this.intQuestions[i].answer = this.zonghe.answer;
           this.intQuestions[i].result = this.zonghe.result;
+          
         }
         
       }
-      this.setCurrentAnswers();
+
+      //this.setCurrentAnswers();
       //console.log('intQuestions:', this.intQuestions);
 
     } else {
@@ -298,16 +264,85 @@ export class Asq3QuestionComponent implements OnInit {
     return date;
   }
 
+  checkInput(item:any,value:any):any{
+    let itemArr = item.split('、');
+    for(var i=0;i<itemArr.length;i++){
+      let this_v = 0;
+      if(itemArr[i] == '是'){
+        this_v = 1;
+      }else if(itemArr[i] == '有时是'){
+        this_v = 2;
+      }else{
+        this_v = 3;
+      }
+      if(this_v == value){
+        return true;
+      }
+    }
+    return false;
+  }
+
   radioClick(e: Event) {
 
-    let l = Number((e.target as HTMLInputElement).getAttribute('l')) - 1;
-    let xu = Number((e.target as HTMLInputElement).getAttribute('xu'));
-    let v = (e.target as HTMLInputElement).value;
+    let l = Number((e.target as HTMLInputElement).getAttribute('l')) - 1;//当前问题组的长度
+    //let i = Number((e.target as HTMLInputElement).getAttribute('i')) - 1;//当前问题的序号，0开始
+    let j = Number((e.target as HTMLInputElement).getAttribute('j'));//当前能区的序号，0开始
+    let k = Number((e.target as HTMLInputElement).getAttribute('k'));//所有能区的长度
+    
+    let mutexSelf:any = (e.target as HTMLInputElement).getAttribute('mutexSelf');
+    let mutexOther:any = (e.target as HTMLInputElement).getAttribute('mutexOther');
+    let xu = Number((e.target as HTMLInputElement).getAttribute('xu'));//当前问题的序号，0开始
+    let v:any = (e.target as HTMLInputElement).value;
+    
+    if(mutexSelf!=''){
+      console.log('mutexSelf',mutexSelf);
+      let mutexSelfArr:any = mutexSelf.split('、');
+      let mutexOtherArr:any = mutexOther.split('、');
+      
+      for(var x=0;x<mutexSelfArr.length;x++){
+        let this_v = 0;
+        if(mutexSelfArr[x] == '是'){
+          this_v = 1;
+        }else if(mutexSelfArr[x] == '有时是'){
+          this_v = 2;
+        }else{
+          this_v = 3;
+        }
+        if(this_v == v){
+          console.log('检测是否互斥');
+          for(var y=0;y<(mutexOtherArr.length/2);y++){
+            let other_v = 0;
+            if(mutexOtherArr[y*2+1] == '是'){
+              other_v = 1;
+            }else if(mutexOtherArr[y*2+1] == '有时是'){
+              other_v = 2;
+            }else{
+              other_v = 3;
+            }
+            if(this.currentAnswer.answer[mutexOtherArr[y*2]-1] != other_v){
+              console.log('弹框提示',this.currentAnswer.answer,xu);
+              this.mutexFloat(1);
+              this.currentXu = xu;
+              this.otherArr = mutexOtherArr;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+
     //console.log(xu,v,this.currentAnswer.answer.length,this.currentAnswer.answer,'---before');
 
     this.currentAnswer.answer[xu] = v;
-
-    if (Object.keys(this.currentAnswer.answer).length == l) {
+    let isNull = false;
+    for(var n=0;n<this.currentAnswer.answer.length;n++){
+      if(this.currentAnswer.answer[n] == null){
+        isNull = true;
+        break;
+      }
+    }
+    if (Object.keys(this.currentAnswer.answer).length == l && !isNull) {
       this.currentAnswer.nextStatus = true;
       this.currentAnswers[this.currentPage] = this.currentAnswer;
       //console.log('currentAnswers:', this.currentAnswers);
@@ -315,6 +350,7 @@ export class Asq3QuestionComponent implements OnInit {
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
     //console.log('intQuestions:', this.intQuestions,this.currentAnswers);
 
+    //console.log('radioClick',this.currentAnswer.answer);
     //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
   }
 
@@ -424,9 +460,12 @@ export class Asq3QuestionComponent implements OnInit {
       let model = new Question();
       model.Id = "";
       model.Cid = this.user.Id;
+      model.Cseq = this.user.Seq;
       model.Did = this.doctor.Id;
+      model.Dseq = this.doctor.Seq;
       model.Mid = this.member.Id;
       model.Bid = this.bid;// 宝宝ID；
+      model.Mphone = this.member.Phone;
       model.QuestType = this.questType;// asq3答卷
       model.QuestMonth = String(this.questMonth);//2月份
       //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
@@ -505,6 +544,54 @@ export class Asq3QuestionComponent implements OnInit {
         qid: this.question.Id
       }
     })
+  }
+  onSubmitFloat(e: any) {
+    console.log(e, 'onSubmitFloat');
+    if (e == 1) {
+      this.float = true;
+    } else if (e == 2) {
+      this.float = false;
+      this.submit();
+    } else if (e == 3) {
+      this.currentPage = 0;
+      this.currentAnswer = this.currentAnswers[this.currentPage];
+      this.float = false;
+    } else if (e == 4) {
+      this.currentPage = 0;
+      this.thisAnswers = [];
+      this.ngOnInit();
+      this.float = false;
+    }
+    
+  }
+
+  mutexFloat(e: any) {
+    //console.log(e, 'mutexfloat');
+    if (e == 1) {
+      this.mutexfloat = true;
+    } else if (e == 2) {
+      this.mutexfloat = false;
+      for(var y=0;y<(this.otherArr.length/2);y++){
+        let other_v = 0;
+        if(this.otherArr[y*2+1] == '是'){
+          other_v = 1;
+        }else if(this.otherArr[y*2+1] == '有时是'){
+          other_v = 2;
+        }else{
+          other_v = 3;
+        }
+        //console.log('index',this.otherArr[y*2]-1,other_v);
+        this.currentAnswer.answer[this.otherArr[y*2]-1] = String(other_v);
+        this.currentAnswers[this.currentPage] = this.currentAnswer;
+        this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
+        
+      }
+    } else if (e == 3) {
+      this.mutexfloat = false;
+      this.currentAnswer.answer[this.currentXu] = null;
+      this.currentAnswer.nextStatus = false;
+    }
+    
   }
 
 }

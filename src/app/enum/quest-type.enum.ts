@@ -1,5 +1,5 @@
 export enum QuestType {
-  ASQ3 = 'asq3',
-  ASQSE = "asqse",
-  ASQSE2 = "asqse2"
+  ASQ3 = 'ASQ-3',
+  ASQSE = "ASQ-SE",
+  ASQSE2 = "ASQ-SE2"
 }

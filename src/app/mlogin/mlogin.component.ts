@@ -35,16 +35,25 @@ export class MloginComponent implements OnInit {
   lastNum:any = '获取验证码';
   testInfo:any = '调试结果';
   qrcodeStatus:any = true;
-
+  source:any = 1;
+  type:any = '';
+  Useq:any = '';
+  Dseq:any = '';
 
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: MloginBusiness, private _sessionStorage: SessionStorageService,private _toastrService: ToastrService,private _router: Router) {
     
     this._activeRoute.queryParams.subscribe(params => {
-      this.uid = params['uid'];
-      this.did = params['did'];
+      this.Useq = params['uid'];
+      this.Dseq = params['did'];
       this.uuid = params['uuid'];
       this.phone = params['phone'];
+      this.type = params['type'];
     })
+    if(this.Useq == undefined || this.Dseq == undefined){
+      this.qrcodeStatus = false;
+      this.phoneStatus = false;
+      this.screenStatus = false;
+    }
     if(this.phone == undefined){
       this._sessionStorage.source = 2;
     }else{
@@ -52,31 +61,56 @@ export class MloginComponent implements OnInit {
       this.phoneStatus = false;
       this.screenStatus = true;
     }
-    console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid);
+    this.source = this._sessionStorage.source;
+    console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid,this.phone);
   }
 
   async ngOnInit() {
-    if(this.uuid == undefined){
-      this.qrcodeStatus = false;
-      alert('链接已失效，请重新生成');
-      return
-      //console.log('隐藏');
-    }
-
-    this.user = await this._business.getUser(this.uid);
+    let Uparams:any = {};
+    Uparams.Seq = this.Useq;
+    this.user = await this._business.getUserBySeq(Uparams);
     this._sessionStorage.user = this.user;
-    this.doctor = await this._business.getDoctor(this.did);
+    this.uid = this.user.Id;
+    let Dparams:any = {};
+    Dparams.Seq = this.Dseq;
+    this.doctor = await this._business.getDoctorBySeq(Dparams);
     this._sessionStorage.doctor = this.doctor;
+    this.did = this.doctor.Id;
 
-    let params:any = {};
-    params.Uuid = this.uuid;
-    let res:any = await this._business.checkUuid(params);
-    console.log('res',res);
-    if(!res){
-      this.qrcodeStatus = false;
-      alert('链接已失效，请重新生成');
-      //console.log('隐藏');
+    if(this.source == 2){
+      if(this.uuid == undefined){
+        this.qrcodeStatus = false;
+        alert('链接已失效，请重新生成');
+        return
+        //console.log('隐藏');
+      }
+
+      let params:any = {};
+      params.Uuid = this.uuid;
+      let res:any = await this._business.checkUuid(params);
+      console.log('res',res);
+      if(!res){
+        this.qrcodeStatus = false;
+        alert('链接已失效，请重新生成');
+        //console.log('隐藏');
+      }
+    }else if(this.source == 3){
+
+      let params:any = {};
+      params.uid = this.Useq;
+      params.did = this.Dseq;
+      params.phone = this.phone;
+      params.type = this.type;
+      let res:any = await this._business.getStatus(params);
+      console.log('res',res);
+      if(!res){
+        this.qrcodeStatus = false;
+        this.phoneStatus = false;
+        this.screenStatus = false;
+        alert('问卷已完成，链接失效。');
+      }
     }
+    
 
     console.log('ngOnInit',this.user,this.doctor);
 

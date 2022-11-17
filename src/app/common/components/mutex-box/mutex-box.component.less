@@ -1,0 +1,182 @@
+
+.asideBox{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  position: fixed;
+  top:0;
+}
+.asideBox input[type="text"],.asideBox input[type="password"]{
+  width: 45%;
+  height: 30px;
+  margin: 0 5px;
+  padding-left:10px;
+}
+.asideBox hr{
+  border: none;
+  border-bottom: solid 1px #dadddd;
+  margin-top: 10px;
+}
+.asideBox .btnClose{
+  margin-left: 90%;
+  cursor: pointer;
+}
+.asideBox p{
+  text-align: left;
+}
+.asideBox p i{
+  font-weight: bolder;
+  font-size: 16px;
+  color: #36bd46;
+  padding: 10px 10px 15px 15px;
+}
+.asideBox a{
+  color: #36bd46;
+}
+.asideBox h1{
+  font-size: 24px;
+  padding-bottom: 20px;
+}
+
+
+/*确认宝宝出生日期弹窗*/
+.confirmBox{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  width: 560px;
+  height: 160px;
+  margin-top: -80px;
+  margin-left: -280px;
+  text-align:center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: solid 1px #e7e9e8;
+  z-index: 99;
+  display: block !important;
+}
+.confirmBox .btnClose{
+  float: right;
+
+  margin-right:10px;
+}
+
+.confirmBox button{
+  margin: 10px 10px 0 10px;
+  width: 120px;
+}
+
+.confirmBox p{
+  text-align: center;
+  font-size: 14px;
+}
+.confirmBox i{
+  width: 70px;
+  height: 70px;
+  background: url(src/assets/img/upload.png) no-repeat center center;
+  background-size: 100% 100%;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.confirmBox span{
+  cursor: pointer;
+}
+
+
+/* ===============================4.4============================== */
+
+.promptBox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 360px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -180px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: solid 1px #e7e9e8;
+}
+.promptBox p{
+  padding: 35px;
+  font-size: 22px;
+  text-align: center;
+  margin:0;
+}
+.promptBox .btnPrompt.btn-default{
+  width: 120px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 8px;
+  /* font-size: 14px; */
+}
+.screeningdate{
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+}
+.scTips{
+font-size: 13px;
+margin-left: 10px;
+}
+.scTimes{
+margin-top: 5px;
+padding-left: 0!important;
+}
+
+
+@media (max-width: 1024px) {
+.babyBox, .familyBox{
+  width:96%;
+}
+.familyBox input[type="text"]{
+  width:200px;
+}
+#city_1 .must{
+  padding-left:5px;
+}
+.familyBox table select{
+  width:98px;
+}
+}
+
+.btn-default,.btn-default1{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.btnRefresh{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.btn-unclick{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #333;
+  background-color: transparent;
+  border: solid 1px #b5b9bd;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}

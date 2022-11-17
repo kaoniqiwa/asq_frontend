@@ -556,8 +556,34 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         if (this.babyInMember) {
           for (let i = 0; i < this.babyInMember.length; i++) {
             let baby = this.babyInMember[i];
-            let babyGroup = this.babyGroupArr[i]
+            let babyGroup = this.babyGroupArr[i];
+            /* babyGroup.patchValue({
+              editBabyInfo: false,
+            }) */
+            if(babyGroup.value.editBabyInfo){
+              this.changeBabyInfo(babyGroup);
+            }
+            
+
+            console.log('老用户babyGroup',babyGroup);
+            
             baby.Name = babyGroup.value.name;
+            baby.Gender = babyGroup.value.gender;
+            baby.Birthday = babyGroup.value.birthday;
+            baby.SurveyTime = babyGroup.value.surveyTime;
+            baby.Premature = babyGroup.value.premature;
+            baby.Prematrueweek = babyGroup.value.prematrueweek;
+            baby.Prematrueday = babyGroup.value.prematrueday;
+            console.log('rectify', this.rectify(babyGroup.value.birthday, babyGroup.value.surveyTime, babyGroup.value.prematrueweek, babyGroup.value.prematrueday), babyGroup.value.birthday, babyGroup.value.surveyTime, babyGroup.value.prematrueweek, babyGroup.value.prematrueday);
+            baby.Rectifyage = this.rectify(babyGroup.value.birthday, babyGroup.value.surveyTime, babyGroup.value.prematrueweek, babyGroup.value.prematrueday);
+            baby.IsShun = babyGroup.value.bornCondition.isShun;
+            baby.IdentityInfo = babyGroup.value.identityInfo;
+            baby.IdentityType = babyGroup.value.identityType;
+            baby.Weight = babyGroup.value.weight;
+            baby.IsChanqian = babyGroup.value.bornCondition.isChanqian;
+            baby.IsMulti = babyGroup.value.bornCondition.isMulti;
+            baby.OtherAbnormal = babyGroup.value.bornCondition.abnormal;
+
             this._business.updateBaby(baby);
 
           }
@@ -579,7 +605,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
             babyModel.Premature = rawValue.premature;
             babyModel.Prematrueweek = rawValue.prematrueweek;
             babyModel.Prematrueday = rawValue.prematrueday;
-            console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+            //console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
             babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
             babyModel.IsShun = rawValue.bornCondition.isShun;
             babyModel.IdentityInfo = rawValue.identityInfo;
@@ -658,7 +684,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
           babyModel.Premature = rawValue.premature;
           babyModel.Prematrueweek = rawValue.prematrueweek;
           babyModel.Prematrueday = rawValue.prematrueday;
-          console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
+          //console.log('rectify', this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday), rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
           babyModel.Rectifyage = this.rectify(rawValue.birthday, rawValue.surveyTime, rawValue.prematrueweek, rawValue.prematrueday);
           babyModel.IsShun = rawValue.bornCondition.isShun;
           babyModel.IdentityInfo = rawValue.identityInfo;

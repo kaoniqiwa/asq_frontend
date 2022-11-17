@@ -20,6 +20,9 @@ export class ASQ3QuestionBusiness {
   getQuestion(params: GetQuestionParams) {
     return this._questionRequest.getQuestion(params);
   }
+  get(id:string) {
+    return this._questionRequest.get(id);
+  }
   
   getGames(testId:string) {
     let params = new GetGamesParams();

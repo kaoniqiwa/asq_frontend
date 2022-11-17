@@ -1,0 +1,12 @@
+<div class="asideBox">
+  <div class="confirmBox" [hidden]="!(showStatus==1)">
+    <img src="assets/img/close.png" alt="" class="btnClose" (click)="onSubmit(3)">
+    <p><i></i></p>
+    <p>您是否决定要提交本次筛查信息</p>
+    <button class="btn-default1 btnsure" (click)="onSubmit(2)">确认提交</button>
+    <button class="btn-unclick btncancel" (click)="onSubmit(3)">检查信息</button>
+    <hr>
+    <span  (click)="onSubmit(4)">粉碎本次筛查</span>
+  </div>
+  
+</div>

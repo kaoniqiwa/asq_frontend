@@ -41,12 +41,20 @@ export class CompanyRequestService {
   get(id: string) {
     return this.type.get(CompanyUrl.get(id));
   }
+  getUserBySeq(params:any) {
+    params.Flow = 'getUserBySeq';
+    return this.type.post(CompanyUrl.create(),params);
+  }
   checkUuid(params:any) {
     params.Flow = 'checkUuid';
     return this.type.post(CompanyUrl.sendSms(),params);
   }
   sendSms(params:any) {
     params.Flow = 'sendSms';
+    return this.type.post(CompanyUrl.sendSms(),params);
+  }
+  getStatus(params:any) {
+    params.Flow = 'getStatus';
     return this.type.post(CompanyUrl.sendSms(),params);
   }
   sendUrl(params:any) {
