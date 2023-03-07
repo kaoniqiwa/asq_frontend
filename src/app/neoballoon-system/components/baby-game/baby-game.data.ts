@@ -16,7 +16,6 @@ export const ASQ3_DATA: BabyGameModel[] = [
     index: 2,
     imageBaseUrl: "assets/img/game/img/12_",
     imageAppendix: "png",
-
     operation: '-1'
   },
 
@@ -103,7 +102,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 13,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -111,7 +110,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 14,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
 
@@ -120,7 +119,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 15,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -128,7 +127,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 16,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -136,7 +135,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 17,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -144,7 +143,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 18,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -152,7 +151,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 19,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -160,7 +159,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 20,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
-
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
   {
@@ -168,6 +167,7 @@ export const ASQ_SE2_DATA: BabyGameModel[] = [
     index: 21,
     imageBaseUrl: "assets/img/game/img/9_",
     imageAppendix: "jpg",
+    imageBaseUrl2: "assets/img/game/img/",
     operation: '-1'
   },
 ]

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoutePath } from './enum/route-path.enum';
 import { LoginComponent } from './login/login/login.component';
 import { Asq3printComponent } from './print/asq3print/asq3print.component';
+import { Asqse2printComponent } from './print/asqse2print/asqse2print.component';
 import { MloginComponent } from './mlogin/mlogin.component';
 import { AuthorizationService } from './network/auth/auth-request.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: RoutePath.asq3print,
     component: Asq3printComponent
+  },
+  {
+    path: RoutePath.asqse2print,
+    component: Asqse2printComponent
   },
   {
     path: RoutePath.neoballoon,

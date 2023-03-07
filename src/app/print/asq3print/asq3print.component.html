@@ -1,74 +1,98 @@
 <div class="container" *ngIf="complete">
+    <div class="container2">
 
-    <!--初步结果 -->
-    <div class="resBox res1" id="printBox" style="page-break-after:always">
-        <div class="resInfo">
-            <img src="assets/img/ASQ3.png" alt="" height="80%">
-            <div class="testLogo">
-                <p class="oneReport">ASQ-3筛查报告</p>
+        <div class="default"></div>
+        <!--初步结果 -->
+        <div class="resBox res1" id="printBox" style="page-break-after:always">
+            <div class="resInfo">
+                <img src="assets/img/ASQ3.png" alt="" height="80%">
+                <div class="testLogo">
+                    <p class="oneReport">ASQ-3筛查报告</p>
+                </div>
             </div>
-        </div>
-        <table class="testInfo">
-            <tbody>
-                <tr>
-                    <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
-                    <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
-                </tr>
-                <tr>
-                    <td class="identity">问卷编号：<span class="babyid">E20221016160729154595</span></td>
-                    <td>完成问卷日期：<span class="overtime">{{setDate(baby.SurveyTime.split(' ')[0])}}</span></td>
-                </tr>
-                <tr>
-                    <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
-                    <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
-                            ')[0])}}</span></td>
-                </tr>
-                <tr>
-                    <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
-                    <td>完成问卷年龄：<span class="babyAge">{{baby.Rectifyage}}<span
-                                *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
-                </tr>
-                <tr>
-                    <td class="early"></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="resExplain1">
-            <p>ASQ-3分数的解释和建议：</p>
-            <p>如果<span class="baby">孩子</span>某能区得分<span><b>高于界值</b></span>，说明此能区目前发育正常；</p>
-            <p>如果<span class="baby">孩子</span>某能区得分<span><b>接近界值</b></span>，建议给予游戏活动并发育监测；</p>
-            <p>如果<span class="baby">孩子</span>某能区得分<span><b>低于界值</b></span>，建议由专业人员进一步发育评估。</p>
-        </div>
+            <table class="testInfo">
+                <tbody>
+                    <tr>
+                        <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                        <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="identity">问卷编号：<span class="babyid">{{question.Id}}</span></td>
+                        <td>完成问卷日期：<span class="overtime">{{setDate(baby.SurveyTime.split(' ')[0])}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
+                        <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                                ')[0])}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                        <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                                    *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td class="early"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="resExplain1">
+                <p>ASQ-3分数的解释和建议：</p>
+                <p>如果<span class="baby">孩子</span>某能区得分<span><b>高于界值</b></span>，说明此能区目前发育正常；</p>
+                <p>如果<span class="baby">孩子</span>某能区得分<span><b>接近界值</b></span>，建议给予游戏活动并发育监测；</p>
+                <p>如果<span class="baby">孩子</span>某能区得分<span><b>低于界值</b></span>，建议由专业人员进一步发育评估。</p>
+            </div>
 
-        <p class="respect">尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
-        <p class="p_indent">感谢你为<em class="baby">孩子</em>完成了ASQ-3问卷！</p>
+            <p class="respect">尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
+            <p class="p_indent">感谢你为<em class="baby">孩子</em>完成了ASQ-3问卷！</p>
 
-        <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0" style="display: block;">
-            宝宝的ASQ-3得分<i>高于界值</i>，说明宝宝目前的发育是正常的。由于儿童发育是动态的，所以请继续关注宝宝的发育进展，建议<i
-                class="gaoMonth month">2～4</i>个月后再次使用ASQ-3进行评估。
-        </p>
-        <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0" style="display: block;">
-            基于宝宝的评估结果，我们设计了亲子游戏活动（见“亲子游戏活动”），这些活动旨在提供加强父母与宝宝的互动、利用一切可利用的机会进行游戏的点子，以促进宝宝的发育。</p>
+            <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0" style="display: block;">
+                宝宝的ASQ-3得分<i>高于界值</i>，说明宝宝目前的发育是正常的。由于儿童发育是动态的，所以请继续关注宝宝的发育进展，建议<i
+                    class="gaoMonth month">2～4</i>个月后再次使用ASQ-3进行评估。
+            </p>
+            <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0" style="display: block;">
+                基于宝宝的评估结果，我们设计了亲子游戏活动（见“亲子游戏活动”），这些活动旨在提供加强父母与宝宝的互动、利用一切可利用的机会进行游戏的点子，以促进宝宝的发育。</p>
 
-        <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">宝宝的ASQ-3得分在
-            <span class="jielist">
-                <ng-container *ngFor="let item of jieArr; let i=index">
-                    "{{item.nengqu}}"
-                    <ng-container *ngIf="(i+1)!=jieArr.length">
-                        ,
-                    </ng-container>
-                </ng-container>
-            </span>
-            能区<i>接近界值</i>，说明宝宝的发育不够理想，需要密切监测，建议<i class="month">1-3</i>个月再次使用ASQ-3进行评估。
-        </p>
-        <!-- 				<ul class="jielist"></ul> -->
-        <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">
-            基于宝宝的评估结果，我们为你设计了亲子游戏活动的点子（见“亲子游戏活动”）。希望你利用一切可利用的机会与宝宝进行游戏活动，以促进宝宝的发育。</p>
-
-        <p class="di1" *ngIf="this.diArr.length!=0 && this.jieArr.length==0">宝宝的ASQ-3得分在
-            <span class="dilist">
+            <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">宝宝的ASQ-3得分在
                 <span class="jielist">
+                    <ng-container *ngFor="let item of jieArr; let i=index">
+                        "{{item.nengqu}}"
+                        <ng-container *ngIf="(i+1)!=jieArr.length">
+                            ,
+                        </ng-container>
+                    </ng-container>
+                </span>
+                能区<i>接近界值</i>，说明宝宝的发育不够理想，需要密切监测，建议<i class="month">1-3</i>个月再次使用ASQ-3进行评估。
+            </p>
+            <!-- 				<ul class="jielist"></ul> -->
+            <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">
+                基于宝宝的评估结果，我们为你设计了亲子游戏活动的点子（见“亲子游戏活动”）。希望你利用一切可利用的机会与宝宝进行游戏活动，以促进宝宝的发育。</p>
+
+            <p class="di1" *ngIf="this.diArr.length!=0 && this.jieArr.length==0">宝宝的ASQ-3得分在
+                <span class="dilist">
+                    <span class="jielist">
+                        <ng-container *ngFor="let item of diArr; let i=index">
+                            "{{item.nengqu}}"
+                            <ng-container *ngIf="(i+1)!=jieArr.length">
+                                ,
+                            </ng-container>
+                        </ng-container>
+                    </span>
+                </span>
+                能区<i>低于界值</i>，建议至儿童保健科或儿科就诊，进行进一步发育评估或/和临床评估。
+            </p>
+            <!-- 				<ul class="dilist"></ul> -->
+            <p class="di2" *ngIf="this.diArr.length!=0 && this.jieArr.length!=0">宝宝的ASQ-3得分在
+                <span class="jielist">
+                    <ng-container *ngFor="let item of jieArr; let i=index">
+                        "{{item.nengqu}}"
+                        <ng-container *ngIf="(i+1)!=jieArr.length">
+                            ,
+                        </ng-container>
+                    </ng-container>
+                </span>
+                能区<i>接近界值</i>，在
+                <span class="dilist">
                     <ng-container *ngFor="let item of diArr; let i=index">
                         "{{item.nengqu}}"
                         <ng-container *ngIf="(i+1)!=jieArr.length">
@@ -76,59 +100,38 @@
                         </ng-container>
                     </ng-container>
                 </span>
-            </span>
-            能区<i>低于界值</i>，建议至儿童保健科或儿科就诊，进行进一步发育评估或/和临床评估。
-        </p>
-        <!-- 				<ul class="dilist"></ul> -->
-        <p class="di2" *ngIf="this.diArr.length!=0 && this.jieArr.length!=0">宝宝的ASQ-3得分在
-            <span class="jielist">
-                <ng-container *ngFor="let item of jieArr; let i=index">
-                    "{{item.nengqu}}"
-                    <ng-container *ngIf="(i+1)!=jieArr.length">
-                        ,
-                    </ng-container>
-                </ng-container>
-            </span>
-            能区<i>接近界值</i>，在
-            <span class="dilist">
-                <ng-container *ngFor="let item of diArr; let i=index">
-                    "{{item.nengqu}}"
-                    <ng-container *ngIf="(i+1)!=jieArr.length">
-                        ,
-                    </ng-container>
-                </ng-container>
-            </span>
-            能区<i>低于界值</i>，建议至儿童保健科或儿科就诊，进行进一步发育评估或/和临床评估。
-        </p>
+                能区<i>低于界值</i>，建议至儿童保健科或儿科就诊，进行进一步发育评估或/和临床评估。
+            </p>
 
-        <p class="di" *ngIf="this.diArr.length!=0">
-            此外，请注意宝宝是否存在没有机会或未曾练习题目涉及的技能等影响宝宝表现的情况，若存在，请练习题目所涉及的技能并积极从事我们提供的游戏活动（见“亲子游戏活动”），建议1-2个月再次使用ASQ-3进行评估。</p>
+            <p class="di" *ngIf="this.diArr.length!=0">
+                此外，请注意宝宝是否存在没有机会或未曾练习题目涉及的技能等影响宝宝表现的情况，若存在，请练习题目所涉及的技能并积极从事我们提供的游戏活动（见“亲子游戏活动”），建议1-2个月再次使用ASQ-3进行评估。
+            </p>
 
-        <p class="p_indent">ASQ-3是对5岁半以内儿童神经心理发育的评估量表，关注儿童发育的重要能区，可以帮助你了解宝宝的长处以及哪些技能需要训练，帮助你作为父母和宝宝共同成长。</p>
-        <p>祝好！</p>
+            <p class="p_indent">ASQ-3是对5岁半以内儿童神经心理发育的评估量表，关注儿童发育的重要能区，可以帮助你了解宝宝的长处以及哪些技能需要训练，帮助你作为父母和宝宝共同成长。</p>
+            <p>祝好！</p>
 
-        <div class="writeBox">
-            <p>签字：<span></span></p>
-            <p>日期：<span></span></p>
-        </div>
-        <div class="bottom bottom1 bottonExp">
-            译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
-        </div>
-    </div>
-
-    <!--游戏结果 -->
-    <div id="printBox2" class="gameBox" style="page-break-after:always">
-        <div class="titleBox">
-            <img src="assets/img/ASQ3.png" alt="" height="80%">
-            <div class="testBox">
-                <p>亲子游戏活动</p>
+            <div class="writeBox">
+                <p>签字：<span></span></p>
+                <p>日期：<span></span></p>
+            </div>
+            <div class="bottom bottom1 bottonExp">
+                译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
             </div>
         </div>
-        <p class="accord">根据筛查结果提供如下游戏活动。这些游戏是促进<span
-                class="baby">孩子</span>能力的发育/发展的点子或方法，你可以根据家庭的文化习俗以及可用的生活物件对这些游戏进行修改。请你利用一切可以利用的机会与<span
-                class="baby">孩子</span>一起玩游戏。</p>
 
-        <!-- <div class="gameList">
+        <!--游戏结果 -->
+        <div id="printBox2" class="gameBox" style="page-break-after:always">
+            <div class="titleBox">
+                <img src="assets/img/ASQ3.png" alt="" height="80%">
+                <div class="testBox">
+                    <p>亲子游戏活动</p>
+                </div>
+            </div>
+            <p class="accord">根据筛查结果提供如下游戏活动。这些游戏是促进<span
+                    class="baby">孩子</span>能力的发育/发展的点子或方法，你可以根据家庭的文化习俗以及可用的生活物件对这些游戏进行修改。请你利用一切可以利用的机会与<span
+                    class="baby">孩子</span>一起玩游戏。</p>
+
+            <!-- <div class="gameList">
             <ul>
                 <li> <img src="assets/img/1.png" alt="">
                     <p>唱歌跳舞</p> <span>与孩子一起唱“运动歌”，例如“小白兔”等，伴随着歌词和节奏做相应的动作。孩子会逐渐参与到这些活动中
@@ -150,229 +153,194 @@
             </ul>
         </div> -->
 
-        <div class="gameList">
-            <ul>
+            <div class="gameList">
+                <ul>
 
-                <ng-container *ngFor="let game of gamesArr;">
-                    <li> <img src="assets/img/{{game.function}}.png" alt="">
-                        <p>{{game.standard.split('$')[0]}}</p> <span>{{game.standard.split('$')[1]}}</span>
-                    </li>
-                </ng-container>
-            </ul>
-        </div>
-
-        <p class="according" *ngIf="gaoArr.length!=scoreArr.length">
-            根据
-            <span class="baby">宝宝</span>的筛查结果，推荐如下点子／方法以促进<span class="ergoregion">
-                <ng-container *ngFor="let score of scoreArr; let i=index;">
-                    <ng-container *ngIf="score.jiezhi!='高于界值'">
-                        “<span>{{score.nengqu}}</span>”
-                        <ng-container *ngIf="i!=scoreArr.length-1">
-                            、
-                        </ng-container>
+                    <ng-container *ngFor="let game of gamesArr[0]; let i=index;">
+                        <li> <img src="assets/img/{{i+1}}.png" alt="">
+                            <p>{{game.split('$')[0]}}</p> <span>{{game.split('$')[1]}}</span>
+                        </li>
                     </ng-container>
+                </ul>
+            </div>
 
-                </ng-container>
-
-            </span>的发育／发展。
-        </p>
-
-        <div class="recBox" *ngIf="gaoArr.length!=scoreArr.length">
-            <ng-container *ngFor="let game of gamesArr; let i=index;">
-                <div *ngIf="scoreArr[i].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+game.function}}">
-                    <img src="assets/img/{{game.function}}.png" alt="">
-                    <ul>
-
-                        <li *ngIf="game.backup1!=''"><i></i>
-                            <div>
-                                <p>{{game.backup1.split('$')[0]}}</p> <span>{{game.backup1.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup2!=''"><i></i>
-                            <div>
-                                <p>{{game.backup2.split('$')[0]}}</p> <span>{{game.backup2.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup3!=''"><i></i>
-                            <div>
-                                <p>{{game.backup3.split('$')[0]}}</p> <span>{{game.backup3.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup3!=''"><i></i>
-                            <div>
-                                <p>{{game.backup4.split('$')[0]}}</p> <span>{{game.backup4.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup5!=''"><i></i>
-                            <div>
-                                <p>{{game.backup5.split('$')[0]}}</p> <span>{{game.backup5.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup6!=''"><i></i>
-                            <div>
-                                <p>{{game.backup6.split('$')[0]}}</p> <span>{{game.backup6.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup7!=''"><i></i>
-                            <div>
-                                <p>{{game.backup7.split('$')[0]}}</p> <span>{{game.backup7.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup8!=''">
-                            <div>
-                                <p>{{game.backup8.split('$')[0]}}</p> <span>{{game.backup8.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup9!=''"><i></i>
-                            <div>
-                                <p>{{game.backup9.split('$')[0]}}</p> <span>{{game.backup9.split('$')[1]}}</span>
-                            </div>
-                        </li>
-                        <li *ngIf="game.backup10!=''"><i></i>
-                            <div>
-                                <p>{{game.backup10.split('$')[0]}}</p> <span>{{game.backup10.split('$')[1]}}</span>
-                            </div>
-                        </li>
-
-                    </ul>
-                    <br style="clear:both;">
-                </div>
-            </ng-container>
-
-        </div>
-
-        <div class="bottom">
-            译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
-        </div>
-    </div>
-
-    <!--详细结果 -->
-    <div class="printBox" id="printBox1" *ngIf="type==2">
-        <div class="resInfo">
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="asqtd3">
-                            <img src="assets/img/ASQ3.png" alt="">
-                        </td>
-                        <td>
-                            <div class="testLogo">
-                                <p><span class="month">{{mouthArr[questMonth]}}</span>个月ASQ-3信息汇总</p>
-                                <span
-                                    class="desc">适用于{{monthWorkBook[0].data[questMonth][1]}}<br>至{{monthWorkBook[0].data[questMonth][2]}}{{monthWorkBook[0].data[questMonth][3]}}</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <table class="testInfo">
-            <tbody>
-                <tr>
-                    <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
-                    <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
-                </tr>
-                <tr>
-                    <td class="identity">问卷编号：<span class="babyid">E20221016160729154595</span></td>
-                    <td>完成问卷日期：<span class="overtime">{{setDate(question.SurveyTime.split(' ')[0])}}</span></td>
-                </tr>
-                <tr>
-                    <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
-                    <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
-                            ')[0])}}</span></td>
-                </tr>
-                <tr>
-                    <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
-                    <td>完成问卷年龄：<span class="babyAge">{{baby.Rectifyage}}<span
-                                *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
-                </tr>
-                <tr>
-                    <td class="early"></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="resRecord">
-            <h2>1.信息汇总于下表</h2>
-            <table class="tabRecord">
-                <tbody>
-
-                    <tr>
-                        <th>能区</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>6</th>
-                        <th>合计</th>
-                        <th>结果</th>
-                    </tr>
-
-                    <ng-container *ngFor="let score of scoreArr;">
-                        <tr>
-                            <td>{{score.nengqu}}</td>
-                            <ng-container *ngFor="let answer of score.answer;">
-                                <td>{{setThisScore(answer)}}</td>
+            <p class="according" *ngIf="gaoArr.length!=scoreArr.length">
+                根据
+                <span class="baby">宝宝</span>的筛查结果，推荐如下点子／方法以促进<span class="ergoregion">
+                    <ng-container *ngFor="let score of fgaoArr; let i=index; let l = count">
+                        <ng-container *ngIf="score.jiezhi!='高于界值'">
+                            “<span>{{score.nengqu}}</span>”
+                            <ng-container *ngIf="i!=fgaoArr.length-1">
+                                、
                             </ng-container>
-                            <td>{{score.score}}</td>
-                            <td>{{score.jiezhi}}</td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-            <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
-        </div>
-        <div class="resQues">
-            <h2>2.综合问题记录如下</h2>
-            
-            <table class="tabQues">
-              <tbody>
-                <ng-container *ngFor="let l = count; let in of counter(math.ceil((zongHe.question.length-1)/2)); let i = index; ">
-                  <tr class="filing">
-                    <td>{{zongHe.question[2*i+1][0]}}. {{zongHe.question[2*i+1][1]}}</td>
+                        </ng-container>
 
-                    <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1"  disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1-1]">是</td>
-                    <td class="fontStyle"><input type="radio" [name]="'rdo' + (2*i+2)" value="3" disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1-1]">否</td>
+                    </ng-container>
 
-                    <ng-container *ngIf="!((i == l - 1) && (zongHe.question.length-1)%2 == 1)">
-                      <td>{{zongHe.question[2*i+2][0]}}. {{zongHe.question[2*i+2][1]}}</td>
-                      <td><input type="radio" [name]="'rdo' +(2*i+2)" value="1" disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+2-1]">是</td>
-                      <td class="fontStyle"><input type="radio" [name]="'rdo' +(2*i+2)" value="3" disabled="disabled"
-                        [(ngModel)]="zongHe.answer && zongHe.answer[2*i+2-1]">否</td>
-                    </ng-container>
-                    
-                  </tr>
-  
-                  <tr>
-                    <td colspan="3">
-                      <textarea class="filing0" name="" [(ngModel)]="zongHe.result && zongHe.result[2*i+1-1]" cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
-                      </td>
-                    <ng-container *ngIf="!((i == l - 1) && (zongHe.question.length-1)%2 == 1)">
-                      <td colspan="3">
-                        <textarea class="filing1" name="" [(ngModel)]="zongHe.result && zongHe.result[2*i+2-1]" cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
-                      </td>
-                    </ng-container>
-                  </tr>
+                </span>的发育／发展。
+            </p>
+
+            <div class="recBox" *ngIf="gaoArr.length!=scoreArr.length">
+                <ng-container *ngFor="let game of gamesArr; let i=index;">
+                    <div *ngIf="i != 0 && scoreArr[i-1].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+i}}">
+                        <img src="assets/img/{{i}}.png" alt="">
+                        <ul>
+                            <li *ngFor="let item of game;"><i></i>
+                                <div>
+                                    <p>{{item.split('$')[0]}}</p> <span>{{item.split('$')[1]}}</span>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <br style="clear:both;">
+                    </div>
                 </ng-container>
 
-              </tbody>
-            </table>
-          </div>
-        <div class="resExplain">
-            <h2>3.ASQ-3分数的解释和建议</h2>
-            <p>如果<span class="baby">孩子</span>某能区得分<span>高于界值</span>，说明此能区目前发育正常；</p>
-            <p>如果<span class="baby">孩子</span>某能区得分<span>接近界值</span>，建议给予游戏活动并发育监测；</p>
-            <p>如果<span class="baby">孩子</span>某能区得分<span>低于界值</span>，建议由专业人员进一步发育评估。</p>
-        </div>
-        <div class="bottom bottom2">
-            译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
-        </div>
-        <!-- <div class="copy">
-<span>
-  译自《年龄与发育进程问卷（第3版）》，作者简 · 斯夸尔斯等，2009年布鲁克斯出版有限公司版权所有© <br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
-</span>
-</div> -->
-    </div>
+            </div>
 
+            <div class="bottom">
+                译自《年龄与发育进程问卷使用指南》，作者Squires，Twombly，Bricker和Potter，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+            </div>
+        </div>
+
+        <!--详细结果 -->
+        <div class="printBox" id="printBox1" *ngIf="type==2">
+            <!-- <div class="resInfo">
+                <img src="assets/img/ASQ3.png" alt="" height="80%">
+                <div class="testLogo">
+                    <p class="oneReport">ASQ-3筛查报告</p>
+                </div>
+            </div> -->
+            <div class="resInfo">
+                <img src="assets/img/ASQ3.png" alt="" height="80%">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="asqtd3">
+                                <!-- <img src="assets/img/ASQ3.png" alt=""> -->
+                            </td>
+                            <td>
+                                <div class="testLogo">
+                                    <p><span class="month">{{mouthArr[questMonth]}}</span>个月ASQ-3信息汇总</p>
+                                    <span
+                                        class="desc">适用于{{monthWorkBook[0].data[questMonth][1]}}<br>至{{monthWorkBook[0].data[questMonth][2]}}{{monthWorkBook[0].data[questMonth][3]}}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="testInfo">
+                <tbody>
+                    <tr>
+                        <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                        <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="identity">问卷编号：<span class="babyid">{{question.Id}}</span></td>
+                        <td>完成问卷日期：<span class="overtime">{{setDate(question.SurveyTime.split(' ')[0])}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
+                        <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                                ')[0])}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                        <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                                    *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                    </tr>
+                    <tr>
+                        <td class="early"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="resRecord">
+                <h2>1.信息汇总于下表</h2>
+                <table class="tabRecord">
+                    <tbody>
+
+                        <tr>
+                            <th>能区</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>合计</th>
+                            <th>结果</th>
+                        </tr>
+
+                        <ng-container *ngFor="let score of scoreArr;">
+                            <tr>
+                                <td>{{score.nengqu}}</td>
+                                <ng-container *ngFor="let answer of score.answer;">
+                                    <td>{{setThisScore(answer)}}</td>
+                                </ng-container>
+                                <td>{{score.score}}</td>
+                                <td>{{score.jiezhi}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
+            </div>
+            <div class="resQues">
+                <h2>2.综合问题记录如下</h2>
+
+                <table class="tabQues">
+                    <tbody>
+                        <ng-container
+                            *ngFor="let l = count; let in of counter(math.ceil((zongHe.question.length-1)/2)); let i = index; ">
+                            <tr class="filing">
+                                <td>{{zongHe.question[2*i+1][0]}}. {{zongHe.question[2*i+1][1]}}</td>
+
+                                <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1" disabled="disabled"
+                                        [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1-1]">是</td>
+                                <td class="fontStyle"><input type="radio" [name]="'rdo' + (2*i+2)" value="3"
+                                        disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1-1]">否</td>
+
+                                <ng-container *ngIf="!((i == l - 1) && (zongHe.question.length-1)%2 == 1)">
+                                    <td>{{zongHe.question[2*i+2][0]}}. {{zongHe.question[2*i+2][1]}}</td>
+                                    <td><input type="radio" [name]="'rdo' +(2*i+2)" value="1" disabled="disabled"
+                                            [(ngModel)]="zongHe.answer && zongHe.answer[2*i+2-1]">是</td>
+                                    <td class="fontStyle"><input type="radio" [name]="'rdo' +(2*i+2)" value="3"
+                                            disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+2-1]">否
+                                    </td>
+                                </ng-container>
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <textarea class="filing0" name=""
+                                        [(ngModel)]="zongHe.result && zongHe.result[2*i+1-1]" cols="30" rows="10"
+                                        maxlength="30" disabled="disabled"></textarea>
+                                </td>
+                                <ng-container *ngIf="!((i == l - 1) && (zongHe.question.length-1)%2 == 1)">
+                                    <td colspan="3">
+                                        <textarea class="filing1" name=""
+                                            [(ngModel)]="zongHe.result && zongHe.result[2*i+2-1]" cols="30" rows="10"
+                                            maxlength="30" disabled="disabled"></textarea>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="resExplain">
+                <h2>3.ASQ-3分数的解释和建议</h2>
+                <p>如果<span class="baby">孩子</span>某能区得分<span>高于界值</span>，说明此能区目前发育正常；</p>
+                <p>如果<span class="baby">孩子</span>某能区得分<span>接近界值</span>，建议给予游戏活动并发育监测；</p>
+                <p>如果<span class="baby">孩子</span>某能区得分<span>低于界值</span>，建议由专业人员进一步发育评估。</p>
+            </div>
+            <div class="bottom bottom2">
+                译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+            </div>
+        </div>
+    </div>
 </div>

@@ -24,6 +24,7 @@ export class Asq3printComponent implements OnInit {
   diArr:any = [];
   jieArr:any = [];
   gaoArr:any = [];
+  fgaoArr: any = [];
   scoreArr:any = [];
   gamesArr:any = [];
   uid:any = '';
@@ -56,7 +57,9 @@ export class Asq3printComponent implements OnInit {
     this.doctor = await this._business.getDoctor(this.did);
     this.baby = await this._business.getBaby(this.bid);
     this.question = await this._business.getQuestion(this.qid);
-    this.gamesArr = await this._business.getGames(this.question.QuestMonth);
+    this.gamesArr = await this._business.getGames(this.mouthArr[this.question.QuestMonth]);
+
+    console.log('gamesArr',this.gamesArr,this.question.QuestMonth);
 
     let that = this;
     this.complete = true;
@@ -73,13 +76,16 @@ export class Asq3printComponent implements OnInit {
       } else {
         that.gaoArr.push(item);
       }
+      if (item.jiezhi != '高于界值') {
+        that.fgaoArr.push(item);
+      }
     })
 
     //console.log('asq3print',this.user,this.doctor,this.baby,this.question,this.gaoArr.length,this.scoreArr.length);
     if(this.pstatus == 1){
       let thistimeout = setTimeout(function(){
         window.print();
-      },500)
+      },2000)
     }
     
     

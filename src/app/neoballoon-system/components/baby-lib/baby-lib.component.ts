@@ -19,7 +19,7 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 export class BabyLibComponent implements OnInit {
 
   dataSource: QuestionLibModel[] = [];
-  questType: QuestType = QuestType.ASQ3;
+  questType: any = QuestType.ASQ3;
   fileType = 'personal';
   searchInfo: QuestionLibSearchInfo = {
     Flow:'',
@@ -43,6 +43,8 @@ export class BabyLibComponent implements OnInit {
 
 
   showToast = false;
+  showSe2Print = false;
+  thisE:any;
 
   constructor(private _business: BabyInfoBusiness, private _router: Router, private _sessionStorage: SessionStorageService) { 
     
@@ -66,6 +68,7 @@ export class BabyLibComponent implements OnInit {
   }
 
   async chooseFather(num:number){
+    //this.searchInfo.QuestType = this.questType;
     this.searchInfo.Uid = this.user.Id;
     if(num == 0){
       this.fileType = 'personal';
@@ -82,24 +85,36 @@ export class BabyLibComponent implements OnInit {
     this.searchInfo.Name = '';
     this.page = res.Page;
     this.dataSource = res.Data;
-    //console.log('dataSource',this.dataSource);
+    console.log('dataSource',this.dataSource);
   }
 
-  chooseReport(e:Event,num:number){
+  changeModel(e:Event){
+    //this.questType = 
+    this.searchInfo.QuestType = this.questType;
+    console.log('searchInfo',this.searchInfo,this.questType);
+    this.chooseFather(1);
+  }
+
+  chooseReport(e:Event,num:number,type:any){
+    if(num == 0)return
     let thisUid = (e.target as HTMLInputElement).getAttribute('Uid');
     let thisDid = (e.target as HTMLInputElement).getAttribute('Did');
     let thisBid = (e.target as HTMLInputElement).getAttribute('Bid');
     let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
-    //console.log('thisUid',thisUid);
+    console.log('type',type);
     let this_href = window.location.href.split('#')[0];
     console.log('num',num);
-    if(num == 1){
-      window.open(this_href+'/#/asq3print?type=1&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
-    }else if(num == 2){
-      window.open(this_href+'/#/asq3print?type=2&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
-    }else{
-
+    if(type == 'ASQ-3'){
+      window.open(this_href+'/#/asq3print?type='+num+'&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
+    }else if(type == 'ASQ:SE-2'){
+      window.open(this_href+'/#/asqse2print?type='+num+'&uid='+thisUid+'&did='+thisDid+'&bid='+thisBid+'&qid='+thisQid,'_blank')
     }
+    
+  }
+
+  chooseReport2(num:any){
+    console.log('num',num);
+    this.chooseReport(this.thisE,num,'ASQ:SE-2');
   }
 
   gotoReport(e:Event){
@@ -194,8 +209,15 @@ export class BabyLibComponent implements OnInit {
   closeEvent() {
     this.showToast = false;
   }
+  closeEvent2() {
+    this.showSe2Print = false;
+  }
   filterHandler() {
     this.showToast = !this.showToast;
+  }
+  filterHandler2(e:Event) {
+    this.thisE = e;
+    this.showSe2Print = !this.showSe2Print;
   }
   addBabyHandler() {
     this._router.navigateByUrl('/neoballoon/neoballoon-manage/baby-add-manage')

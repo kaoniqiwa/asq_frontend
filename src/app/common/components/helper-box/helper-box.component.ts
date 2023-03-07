@@ -9,12 +9,15 @@ import { Router } from '@angular/router';
 export class HelperBoxComponent implements OnInit {
 
   @Input() helperfloat:any;
-  @Input() audio:any;
+  @Input() helperAudio:any;
+  @Input() helperImg:any;
+  @Input() helperQuestion:any;
+  @Input() helperAudioStatus:any;
   @Output() getparent = new EventEmitter<string>();
   
   showStatus = 0;
 
-  onSubmit(str:any) {
+  onHelper(str:any) {
     this.getparent.emit(str);
   }
 
@@ -29,6 +32,14 @@ export class HelperBoxComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log('this.getfloat',this.getfloat);
+  }
+
+  changeAudio(){
+    if(this.helperAudioStatus){
+      this.helperAudio.pause();
+    }else{
+      this.helperAudio.play();
+    }
   }
 
   

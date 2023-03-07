@@ -36,6 +36,9 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   }
   // member id
   mid = "";
+  Am:any = '0';
+  At:any = '0';
+  type:any = 'ASQ-3';
 
   // 根据mid查询到的 member信息
   member: any = null;
@@ -62,7 +65,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   dateFormat: string = 'yyyy-MM-dd';
   today = new Date();
-
+  
   transformDate = (date: Date | string) => {
     return formatDate(date, this.dateFormat, 'en')
   }
@@ -162,6 +165,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   constructor(private _business: BabyInfoManageBusiness, private _fb: FormBuilder, private _router: Router, private _toastrService: ToastrService, private _activeRoute: ActivatedRoute, private _sessionStorage: SessionStorageService) {
     this._activeRoute.queryParams.subscribe((params) => {
       this.source = params['source'];
+      this.type = params['type'];
       
       if (params['phone']) {
         this.mphone = params['phone'];
@@ -171,15 +175,22 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
         this.Phone.disable();
       }
 
+      console.log('this._sessionStorage.mid_info',this._sessionStorage.mid);
+
       if(params['mid']){
         this.mid = params['mid'];
         this._sessionStorage.mid = params['mid'];
+        this._sessionStorage.source = params['source'];
+        this._sessionStorage.Am = params['Am'];
+        this._sessionStorage.At = params['At'];
       }else{
-        if(!params['phone']){
+        if(!params['phone'] || this._sessionStorage.mid != ''){
           this.mid = this._sessionStorage.mid;
+          this.source = this._sessionStorage.source;
+          this.Am = this._sessionStorage.Am;
+          this.At = this._sessionStorage.At;
         }
       }
-      this._sessionStorage.source = params['source'];
       console.log('source_after', this.source, this.mphone);
       
     })
@@ -200,9 +211,11 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       let { Data: babys } = await this._business.listBaby([this.mid]);
 
       babys.map(function (item: any, index: any) {
-        item.SurveyTime = that.transformDate(that.today);
+        
+        item.SurveyTime = formatDate(that.today, 'yyyy-MM-dd HH:mm:ss', 'en')
+        //console.log('xxxxx',that.today,item.SurveyTime);
       })
-      console.log('ngOnInit', babys, this.member);
+      //console.log('ngOnInit', babys, this.member);
       this.babyInMember = babys;
 
     } else {
@@ -333,7 +346,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       identityType: [IdentityType.Child],
       gender: ['', Validators.required],
       birthday: ['', Validators.required],
-      surveyTime: [this.transformDate(this.today)],
+      surveyTime: [formatDate(this.today, 'yyyy-MM-dd HH:mm:ss', 'en')],
       premature: ['否'],
       prematrueweek: '0',
       prematrueday: '0',
@@ -490,6 +503,12 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   onSubmitFloat(e: any) {
     console.log(e, 'onSubmitFloat');
     console.log('this._sessionStorage.questscore_onSubmitFloat',this._sessionStorage.questscore);
+
+    if(this.babyGroupArr.length<=0){
+      this._toastrService.error('请添加宝宝');
+      return
+    }
+    
     if(this._sessionStorage.questscore != null){
       this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
       if(this.source!=1){
@@ -721,6 +740,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
   navigateToSurveyManage(mid: string) {
     this._router.navigate(["/neoballoon/neoballoon-manage/survey-manage", mid], {
       queryParams: {
+        type:this.type,
         currentIndex: this.currentIndex,
       }
     })
@@ -729,6 +749,8 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-add-manage"])
   }
   rectify(birthday: any, surveyTime: any, week: any, day: any) {
+
+    let st = formatDate(surveyTime, 'yyyy-MM-dd', 'en')
 
     const MAX_WEEK = 40;
     const MAX_DAY = 0;
@@ -754,7 +776,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
     if (birthday) {
       let birth = birthday.split('-');
-      let survey = surveyTime.split('-');
+      let survey = st.split('-');
 
       // 分别计算年月日差值
       let age = survey.map((val: any, index: any) => {

@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HowellModule } from './common/howell.module';
 import { LoginComponent } from './login/login/login.component';
 import { Asq3printComponent } from './print/asq3print/asq3print.component';
+import { Asqse2printComponent } from './print/asqse2print/asqse2print.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service'
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +28,7 @@ registerLocaleData(zh, 'zh-CN');
     LoginComponent,
     LicenseComponent,
     Asq3printComponent,
+    Asqse2printComponent,
     MloginComponent,
   ],
   imports: [

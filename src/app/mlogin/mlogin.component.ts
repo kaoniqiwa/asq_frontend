@@ -37,8 +37,11 @@ export class MloginComponent implements OnInit {
   qrcodeStatus:any = true;
   source:any = 1;
   type:any = '';
+  seq:any = '';
   Useq:any = '';
   Dseq:any = '';
+  Am:any = '0';
+  At:any = '0';
 
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: MloginBusiness, private _sessionStorage: SessionStorageService,private _toastrService: ToastrService,private _router: Router) {
     
@@ -47,7 +50,10 @@ export class MloginComponent implements OnInit {
       this.Dseq = params['did'];
       this.uuid = params['uuid'];
       this.phone = params['phone'];
-      this.type = params['type'];
+      this.type = decodeURIComponent(params['type']);
+      this.seq = params['seq'];
+      this.Am = params['Am'];
+      this.At = params['At'];
     })
     if(this.Useq == undefined || this.Dseq == undefined){
       this.qrcodeStatus = false;
@@ -61,6 +67,10 @@ export class MloginComponent implements OnInit {
       this.phoneStatus = false;
       this.screenStatus = true;
     }
+    this._sessionStorage.uuid = this.uuid;
+    this._sessionStorage.seq = this.seq;
+    this._sessionStorage.Am = this.Am;
+    this._sessionStorage.At = this.At;
     this.source = this._sessionStorage.source;
     console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid,this.phone);
   }
@@ -101,6 +111,7 @@ export class MloginComponent implements OnInit {
       params.did = this.Dseq;
       params.phone = this.phone;
       params.type = this.type;
+      params.seq = this.seq;
       let res:any = await this._business.getStatus(params);
       console.log('res',res);
       if(!res){
@@ -149,13 +160,13 @@ export class MloginComponent implements OnInit {
   }
 
   phoneSubmit():any{
-    /* console.log('phoneSubmit',this.setCode,this.code);
+    //console.log('phoneSubmit',this.setCode,this.code);
     if(!this.check_phone(String(this.phone))){
       return this._toastrService.warning('请输入有效的手机号码！');
     }
     if(this.setCode != this.code){
       return this._toastrService.error('验证码错误！');
-    } */
+    }
     this.phoneStatus = false;
     this.screenStatus = true;
   }
@@ -183,16 +194,22 @@ export class MloginComponent implements OnInit {
       if (res.Data.length) {
         this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
           queryParams: {
+            type:this.type,
             mid: this.member.Id,
-            source: this._sessionStorage.source
+            source: this._sessionStorage.source,
+            Am:this.Am,
+            At:this.At
           }
         })
       } else {
         this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
           queryParams: {
+            type:this.type,
             mid: '',
             phone:this.phone,
-            source: this._sessionStorage.source
+            source: this._sessionStorage.source,
+            Am:this.Am,
+            At:this.At
           }
         })
         this._toastrService.error('未查询到该用户，请填入基本信息')
@@ -242,7 +259,7 @@ export class MloginComponent implements OnInit {
     }
     
     return true;
-}
+  }
 
   counter(i: number) {
     return new Array(i);

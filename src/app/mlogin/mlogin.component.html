@@ -75,7 +75,7 @@
             </ul>
             <hr>
             <div class="introBox">
-                <div class="asq3">
+                <div class="asq3" *ngIf="type=='ASQ-3'">
                     <div class="asq3Img">
                         <img src="assets/img/ASQ3.png" alt="">
                     </div>
@@ -87,8 +87,8 @@
                         <button class="btn-default startAsq3" (click)="screenSubmit()">开始筛查</button>
                     </div>
                 </div>
-                <hr style="display: none;">
-                <div class="asqse" style="display: none;">
+                
+                <div class="asqse" *ngIf="type=='ASQ-SE'">
                     <div>
                         <img src="assets/img/ASQSE.png" alt="">
                     </div>
@@ -96,11 +96,11 @@
                     <p>ASQ:SE将3-66个月儿童分为8个月龄组，相应有8份问卷。对于3-66个月儿童，任何时间都可以开始使用ASQ:SE进行评估。建议每年使用一次或听从医生建议。</p>
                     <p>ASQ:SE从自我调控、依从性、沟通、适应功能、自主性、情感和人际互动七个维度关注儿童的行为发育。</p>
                     <div>
-                        <button class="btn-default startAsqse">开始筛查</button>
+                        <button class="btn-default startAsqse" (click)="screenSubmit()">开始筛查</button>
                     </div>
                 </div>
-                <hr style="display: none;">
-                <div class="asqse2" style="display: none;">
+                
+                <div class="asqse2" *ngIf="type=='ASQ:SE-2'">
                     <div>
                         <img src="assets/img/ASQSE2.png" alt="">
                     </div>
@@ -108,7 +108,7 @@
                     <p>ASQ:SE-2将1-72个月儿童分为9个月龄组，相应有9份问卷。对于1-72个月儿童，任何时间都可以开始使用ASQ:SE-2进行评估。建议每半年至一年使用一次或听从医生建议。</p>
                     <p>ASQ:SE-2从自我调控、依从性、沟通、适应功能、自主性、情感和人际互动七个行为能区关注儿童的行为发育。</p>
                     <div>
-                        <button class="btn-default startAsqse2">开始问卷</button>
+                        <button class="btn-default startAsqse2" (click)="screenSubmit()">开始问卷</button>
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
 
     </div>
     <footer class="footer">
-        <a href="http://www.miitbeian.gov.cn" class="html-attribute-value html-external-link" target="_blank"
+        <a href="https://beian.miit.gov.cn" class="html-attribute-value html-external-link" target="_blank"
             rel="nofollow">沪ICP备16044991号-1</a>
     </footer>
 </article>
@@ -214,7 +214,7 @@
                 <p>
                     四、联系信息<br />
                     我们设立了专门的个人信息保护团队/负责人，如果您对本授权书或个人信息保护相关事宜有任何疑问、投诉、建议或者需要撤回针对您和儿童的个人信息处理的授权和同意的，您可以通过以下任意方式与我们联系：<br />
-                    (1) 通过网址<a href="http://www.neoballoon.com/">http://www.neoballoon.com/</a>与我们联系；<br />
+                    (1) 通过网址<a href="https://asq.neoballoon.com">https://asq.neoballoon.com</a>与我们联系；<br />
                     (2) 将您的问题发送至邮箱sales@neoballoon.com，联系人：王若水；<br />
                     (3)
                     寄到如下地址上海市闵行区闵虹路166弄中庚环球创意中心T2-1609，联系人：王若水。<br />

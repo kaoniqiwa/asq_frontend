@@ -71,6 +71,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   currentBaby: any = null;
   currentIndex:any = 0;
   source:any = 1;
+  type:any = 'ASQ-3';
 
   config: SwiperOptions = {
     slidesPerView: window.innerWidth<860?3:8,
@@ -82,14 +83,21 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   constructor(private _business: SurveyManageBusiness, private _localStorage: LocalStorageService, private _globalStorage: GlobalStorageService, private _sessionStorage: SessionStorageService, private _router: Router, private _activeRoute: ActivatedRoute, private _toastrService: ToastrService) {
 
     this.source = this._sessionStorage.source;
+    
 
     this._activeRoute.queryParams.subscribe((params) => {
       this.currentIndex = params['currentIndex'];
+      this.type = params['type'];
+
+      if(this.type == 'ASQ:SE-2'){
+        this.currentType = QuestType.ASQSE2;
+      }
       
     })
 
     this._activeRoute.params.subscribe((params: Params) => {
       this.mid = params['mid'];
+      this._sessionStorage.mid = params['mid'];
     })
 
 
@@ -153,7 +161,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     }
 
-    this.getQuestions()
+    
 
   }
 
@@ -163,7 +171,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     params.Bids = [this.currentBaby.Id];
     params.Uid = this.user.Id;
     this.questions = await this._business.getQuestionByBaby(params);
-    console.log('this.questions', this.questions);
+    //console.log('this.questions', this.questions);
   }
 
   checkScreen(num:any){
@@ -183,16 +191,19 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     this.checkRange();
 
-    // if (this.currentMonthIndex != -1) {
-    //   this.swiper.swiperRef.slideTo(this.currentMonthIndex)
-    // }
+    console.log('this.currentType',this.currentType,model.questType,this.sheetMap);
+
+    /* if (this.currentMonthIndex != -1) {
+       this.swiper.swiperRef.slideTo(this.currentMonthIndex)
+    } */
   }
   changeBaby(baby: Baby) {
     console.log('changeBaby',baby);
     this.currentBaby = baby;
     this._sessionStorage.baby = baby;
+    console.log('this._sessionStorage.baby',this._sessionStorage.baby);
     this.checkRange();
-    this.getQuestions();
+    //this.getQuestions();
   }
   checkRange() {
     if (this.currentBaby) {
@@ -214,12 +225,33 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       }
 
     }
-    this.swiper.swiperRef.slideTo(this.currentMonthIndex);
-    console.log('this.currentMonthIndex',this.currentMonthIndex)
+    this.getQuestions();
+    let that = this;
+    setTimeout(function(){
+      that.swiper.swiperRef.slideTo(that.currentMonthIndex);
+    },500)
+    //this.swiper.swiperRef.slideTo(this.currentMonthIndex);
+    //console.log('this.currentMonthIndex',this.currentMonthIndex,this.swiper.swiperRef)
   }
 
-  gotoEntry(e: Event) {
+  async gotoEntry(e: Event) {
     e.stopPropagation();
+
+    let params:any = {};
+    params.uid = this.user.Id;
+    
+    if(this.currentType == QuestType.ASQ3){
+      params.type = 'AsqLeft';
+    }else if(this.currentType == QuestType.ASQSE2){
+      params.type = 'AsqSe2Left';
+    }
+    let checkLeft = await this._business.checkLeft(params);
+    console.log('checkLeft',checkLeft);
+    if(!checkLeft){
+      this._toastrService.error('剩余次数不足！');
+      return
+    }
+
     console.log('this._sessionStorage.questscore_gotoEntry',this._sessionStorage.questscore);
     if(this._sessionStorage.questscore != null){
       this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
@@ -230,14 +262,27 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
       }
     }else{
       if (this.currentBaby) {
-        this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
-          queryParams: {
-            pageType: PageType.dati,
-            questType: this.currentType,
-            questMonth: this.currentMonthIndex,
-            bid:this.currentBaby.Id
-          }
-        })
+        if(this.currentType == QuestType.ASQ3){
+          this._router.navigate(["/neoballoon/neoballoon-manage/asq-entry", this.currentBaby.Id], {
+            queryParams: {
+              pageType: PageType.dati,
+              questType: this.currentType,
+              questMonth: this.currentMonthIndex,
+              bid:this.currentBaby.Id
+            }
+          })
+        }else if(this.currentType == QuestType.ASQSE2){
+          
+          this._router.navigate(["/neoballoon/neoballoon-manage/asqse2-question",  this.currentBaby.Id], {
+            queryParams: {
+              pageType: PageType.dati,
+              questType: this.currentType,
+              questMonth: this.currentMonthIndex,
+              bid:this.currentBaby.Id
+            }
+          })
+        }
+        
       }
     }
     
@@ -246,8 +291,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     console.log('destroy');
   }
   goBack() {
-    //this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
-    window.history.back();
+    this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+    //window.history.back();
   }
 
 }

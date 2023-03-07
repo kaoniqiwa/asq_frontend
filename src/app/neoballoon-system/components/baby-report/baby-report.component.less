@@ -19,12 +19,10 @@
 	color: #b5b9bd;
 }
 
-.tabInfo tr td { /*text-align: center;*/
+.tabInfo tr td {
 	font-size: 20px;
-	/*padding: 5px;*/
 	padding-top: 8px;
 	width: 14%;
-	/*padding-left: 20px;*/
 }
 
 .tabInfo tr td>span {
@@ -148,7 +146,9 @@
 	}
   }
 .report{
-	margin-top: 3rem;
+	float: left;
+	margin-top: 2rem;
+	padding-bottom: 2rem;
 	width: 100%;
 	.title{
 		width: 20%;
@@ -181,7 +181,14 @@
 	position: static;
 	padding: 0;
 }
+.title_name{
+	font-size: 20px;
+	color: #34bb45 !important;
+	font-weight: bolder;
+	line-height: 28px;
+}
 .name{
+	color: #000000;
 	height: 120px;
 	line-height: 120px;
 	.m{
@@ -211,5 +218,34 @@
 	}
 	.img{
 		cursor: pointer;
+	}
+}
+
+@media screen and (max-width: 860px) {
+	.tabInfo {
+		width: 100%;
+		margin: auto;
+	}
+	.tabInfo tr td {
+		font-size: 14px;
+		padding-top: 8px;
+		width: 50%;
+		text-align:left;
+	}
+	.tabInfo tr th {
+		font-size: 14px;
+		text-align:left;
+	}
+	.tabInfo tr{ /*text-align: center;*/
+		height: 30px;
+	}
+	.name{
+		color: #000000;
+		height: 120px;
+		line-height: 28px;
+		.m{
+			font-size: 14px;
+			color: #9c9d9c;
+		}
 	}
 }

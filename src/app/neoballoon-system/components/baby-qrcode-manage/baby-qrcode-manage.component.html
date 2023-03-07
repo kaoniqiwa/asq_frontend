@@ -25,12 +25,16 @@
     <!-- 	<button class="btn btn-default nowBtnScan">生成二维码</button> -->
     <input type="hidden" value="14" class="doctorid">
     <input type="hidden" value="33" class="did"><br>
+    <p class="green">{{selectScan}}</p>
     <div class="qrcodeBox">
       <qr-code *ngIf="qrcodeShow" [value]="qrcodeUrl" [level]="'Q'" [size]="300"></qr-code>
     </div>
+    <button *ngIf="lastNum!='刷新'" class="djs">{{lastNum}}</button>
     <p style="font-size:18px;">扫一扫<br>获取您的问卷</p>
-    <p>(亲爱的用户，您已不需要输入验证码，该步骤已置于家长手机端，请您放心使用!)</p>
-    <button class="btnRefresh" (click)="refresh()">{{lastNum}}</button>
+    <!-- <p>(亲爱的用户，您已不需要输入验证码，该步骤已置于家长手机端，请您放心使用!)</p> -->
+    <p class="red">新家长需要点击“刷新” </p>
+    
+    <button class="btnRefresh" (click)="getUuid()">刷新</button>
   </div>
 
 </div>

@@ -1,0 +1,240 @@
+
+.asideBox{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999999;
+  position: fixed;
+  top:0;
+  left: 0;
+}
+.asideBox input[type="text"],.asideBox input[type="password"]{
+  width: 45%;
+  height: 30px;
+  margin: 0 5px;
+  padding-left:10px;
+}
+.asideBox hr{
+  border: none;
+  border-bottom: solid 1px #dadddd;
+  margin-top: 10px;
+}
+
+.asideBox p{
+  text-align: left;
+}
+.asideBox p i{
+  font-weight: bolder;
+  font-size: 16px;
+  color: #36bd46;
+  padding: 10px 10px 15px 15px;
+}
+.asideBox a{
+  color: #36bd46;
+}
+.asideBox h1{
+  font-size: 24px;
+  padding-bottom: 20px;
+}
+
+
+/*SE2 打印弹窗*/
+.printBox{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  -webkit-transform: translate(-50%,-50%);
+  margin: 10% auto;
+  margin: inherit!important;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding-bottom: 30px;
+  text-align: center;
+}
+.printBox .btnClose{
+  margin-left:320px;
+}
+
+.printBox .print-border {
+  border: solid 1px #eeeeee;
+  border-radius: 5px;
+  padding: 10px 10px 0 10px;
+  margin-bottom: 10px;
+}
+
+.printBox input[type="checkbox"] {
+  -webkit-appearance: none;
+  background: url(src/assets/img/mycheck.png) no-repeat;
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.printBox input[type="checkbox"]:checked {
+  background:url(src/assets/img/mychecked.png) no-repeat;
+}
+
+.printBox input[type="radio"] {
+  -webkit-appearance: none;
+  background: url(src/assets/img/mycheck.png) no-repeat;
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+.printBox input[type="radio"]:checked {
+  background:url(src/assets/img/mychecked.png) no-repeat;
+}
+
+.asideBox p {
+  text-align: left;
+  margin: 0 0 10px;
+}
+.printBox>div {
+  width: 80%;
+  text-align: left;
+  margin: 40px auto 0px auto;
+}
+.printBox button{
+  margin: 10px auto 0 auto;
+  width: 120px;
+}
+.printBox .btnClose{
+  cursor: pointer;
+  float: right;
+  clear: both;
+}
+
+.printBox .img{
+  width: auto;
+  max-width: 100%;
+  max-height: 200px;
+}
+
+.printBox .p2{
+  text-align: right;
+  img{
+    margin-right: 10%;
+    cursor: pointer;
+  }
+}
+.printBox i{
+  width: 70px;
+  height: 70px;
+  background: url(src/assets/img/upload.png) no-repeat center center;
+  background-size: 100% 100%;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.printBox span{
+  cursor: pointer;
+}
+
+.printBox .btnsure{
+  margin-bottom: 30px;
+}
+
+
+/* ===============================4.4============================== */
+
+.promptBox{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 360px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -180px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: solid 1px #e7e9e8;
+}
+.promptBox p{
+  padding: 35px;
+  font-size: 22px;
+  text-align: center;
+  margin:0;
+}
+.promptBox .btnPrompt.btn-default{
+  width: 120px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 8px;
+  /* font-size: 14px; */
+}
+.screeningdate{
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+}
+.scTips{
+font-size: 13px;
+margin-left: 10px;
+}
+.scTimes{
+margin-top: 5px;
+padding-left: 0!important;
+}
+
+
+@media (max-width: 860px) {
+.babyBox, .familyBox{
+  width:96%;
+}
+.familyBox input[type="text"]{
+  width:200px;
+}
+#city_1 .must{
+  padding-left:5px;
+}
+.familyBox table select{
+  width:98px;
+}
+.confirmBox{
+  left: 5%;
+  width: 90%;
+}
+}
+
+.btn-default,.btn-default1{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.btnRefresh{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #ffffff;
+  background-color: #36bd46;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.btn-unclick{
+  width: 200px;
+  height: 34px;
+  border-radius: 17px;
+  color: #333;
+  background-color: transparent;
+  border: solid 1px #b5b9bd;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 860px) {
+  
+}

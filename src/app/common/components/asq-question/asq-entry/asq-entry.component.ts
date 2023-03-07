@@ -23,6 +23,9 @@ export class Asq3EntryComponent implements OnInit {
   check3 = false;
   check4 = false;
   source:any = 1;
+
+  helperTopAudio:any = new Audio();
+  helperTopAudioStatus:any = false;
   
   constructor(private _sessionStorage: SessionStorageService,private _activeRoute: ActivatedRoute,private _router: Router ,private _toastrService: ToastrService,) { 
     this.monthWorkBook = this._sessionStorage.monthWorkBook;
@@ -36,6 +39,28 @@ export class Asq3EntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var that = this;
+    this.helperTopAudio.addEventListener("playing", function(){
+      that.helperTopAudioStatus = true;
+    });
+    this.helperTopAudio.addEventListener("pause", function(){
+      that.helperTopAudioStatus = false;
+    });
+  }
+
+  ngOnDestroy():void{
+    this.helperTopAudio.pause();
+  }
+
+  helperPlay(e:Event){
+    if(!this.helperTopAudioStatus){
+      this.helperTopAudio.src = 'assets/imgaudio/ASQ-3-audio/start-2.mp3';
+      this.helperTopAudio.load();
+      this.helperTopAudio.play();
+    }else{
+      this.helperTopAudio.pause();
+    }
+    
   }
 
   gotoQuest(e: Event) {

@@ -30,6 +30,10 @@ export class QuestionRequestService {
     params.Flow = 'changeStatus';
     return this.type.post(QuestionUrl.create(), params);
   }
+  getQuestionsByMonth(params:any){
+    params.Flow = 'getQuestionsByMonth';
+    return this.type.post(QuestionUrl.create(), params);
+  }
   create(model: Question) {
     model.Flow = 'addQuestion';
     return this.type.post(QuestionUrl.create(), model);

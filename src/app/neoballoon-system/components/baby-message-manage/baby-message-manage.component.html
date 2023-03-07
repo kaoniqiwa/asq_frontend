@@ -19,6 +19,7 @@
     <span style="width:50px;"></span><span style="width:20px;"></span>
   </div>
   <div class="searchBox smBox" *ngIf="messageStep == 1">
+    <p class="green">{{selectMessage}}</p>
     <br>
     <table>
       <tbody>
@@ -32,13 +33,14 @@
           
         </tr>
         <tr>
-          <td colspan="2"><button class="send btn-default1 btn-unclick" (click)="submit()">下一步</button></td>
+          <td><button class="send btn-default1 btn-unclick" (click)="showFloat()">群发</button></td>
+          <td><button class="send btn-default1 btn-unclick" (click)="submit()">下一步</button></td>
         </tr>
 
       </tbody>
     </table>
   </div>
-  <div style="text-align:center;"  *ngIf="messageStep == 2">
+  <div style="text-align:center;" *ngIf="messageStep == 2">
     <div class="qrcodeBox1">
       <p style="font-size:18px;">发送成功！<br>(短信发送可能存在一定延时，请耐心等候)</p>
     </div>
@@ -54,4 +56,26 @@
     </div>
   </div>
 
+</div>
+<div class="asideBox" *ngIf="uploadFloat">
+  <div class="confirmBox">
+    
+    <div class="line">
+      <img src="assets/img/close.png" alt="" class="btnClose" (click)="showFloat()">
+    </div>
+    <p class="tishi">最大支持100个号码</p>
+    <p>可用手机号:</p>
+    <p class="scroll">{{phones_r}}</p>
+    <p>错误手机号:</p>
+    <p class="red scroll" >{{phones_w}}</p>
+    
+    <div class="upload">
+      <div class="btn-default2" >上传文件</div>
+      <input (change)="upload($event)" type="file" class='btn-default2 hide' id="fileUploader" name="fileUploader" accept=".xls, .xlsx" />
+    </div>
+
+    <button *ngIf="phones_r!=''" class="btn-default1 btnsure" (click)="showFloat()" >取消</button>
+    <button *ngIf="phones_r!=''" class="btn-default1 btnsure" >确认发送</button>
+  </div>
+  
 </div>

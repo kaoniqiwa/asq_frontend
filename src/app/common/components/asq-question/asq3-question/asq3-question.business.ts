@@ -20,8 +20,18 @@ export class ASQ3QuestionBusiness {
   getQuestion(params: GetQuestionParams) {
     return this._questionRequest.getQuestion(params);
   }
+  getQuestionsByMonth(params:any){
+    return this._questionRequest.getQuestionsByMonth(params);
+  }
   get(id:string) {
     return this._questionRequest.get(id);
+  }
+
+  getStatus(params:any) {
+    return this._userRequest.getStatus(params);
+  }
+  checkUuid(params:any) {
+    return this._userRequest.checkUuid(params);
   }
   
   getGames(testId:string) {
@@ -29,9 +39,10 @@ export class ASQ3QuestionBusiness {
     params.TestId = testId;
     return this._questionRequest.getGames(params);
   }
-  getDividing(testId:string) {
+  getDividing(testId:string,typeId:string) {
     let params = new GetDividingParams();
     params.TestId = testId;
+    params.TypeId = typeId;
     return this._questionRequest.getDividing(params);
   }
 }

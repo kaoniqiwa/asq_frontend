@@ -25,6 +25,10 @@ export class CompanyRequestService {
     params.Flow = 'updateLeft';
     return this.type.post(CompanyUrl.create(), params)
   }
+  checkLeft(params:any){
+    params.Flow = 'checkLeft';
+    return this.type.post(CompanyUrl.create(), params)
+  }
   getUuid(params:any){
     params.Flow = 'getUuid';
     return this.type.post(CompanyUrl.getUuid(), params)

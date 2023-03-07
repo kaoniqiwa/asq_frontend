@@ -15,7 +15,11 @@ export class Question {
   QuestScore!: string;
   ZongHe?:string;
   Source!:any;
+  Am!:any;
+  seq?:any;
+  uuid?:any;
   SurveyTime!: string;
+  Rectifyage?:string;
   CreateTime?: string;
   UpdateTime?: string;
   Flow?: string;

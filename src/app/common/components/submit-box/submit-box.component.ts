@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class SubmitBoxComponent implements OnInit {
 
   @Input() getfloat:any;
+  @Input() checkStatus:any = true;
   @Output() getparent = new EventEmitter<string>();
   
   showStatus = 0;

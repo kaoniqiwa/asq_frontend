@@ -28,6 +28,7 @@ export class BabyReportComponent implements OnInit {
 
   //currentSwiperMonth: Array<string> | null = null;
   asq3MouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54,60];
+  asqse2MouthArr: any = [2, 6, 12, 18, 24, 30, 36, 48, 60];
   
   config: SwiperOptions = {
     slidesPerView: window.innerWidth<860?3:6,
@@ -73,7 +74,9 @@ export class BabyReportComponent implements OnInit {
       this.member = await this._business.getMember(this.mid);
     }
 
-
+    this._sessionStorage.baby = this.baby;
+    this._sessionStorage.member = this.member;
+    
     console.log('this.baby',this.baby);
     console.log('this.member',this.member);
     this.QuestType = 'ASQ-3';
@@ -85,17 +88,17 @@ export class BabyReportComponent implements OnInit {
     let params = new GetQuestionParams();
     params.Bids = [this.bid];
     params.Uid = this.uid;
-    params.QuestType = this.QuestType;
+    //params.QuestType = this.QuestType;
     this.questions = await this._business.getQuestionByBaby(params);
     //console.log('this.questions', this.questions);
     this.swiper.swiperRef.slideTo(this.questions[0] && this.questions[0].QuestMonth);
   }
 
-  checkScreen(num:any){
+  checkScreen(num:any,type:any){
     let params:any = {};
     if(this.questions.length <= 0)return false;
     for(var i=0; i<this.questions.length; i++){
-      if( this.questions[i].QuestMonth == num && this.questions[i].QuestType == this.QuestType){
+      if( this.questions[i].QuestMonth == num && this.questions[i].QuestType == type){
         params.Status = true;
         params.Qid = this.questions[i].Id;
         return params;
@@ -105,22 +108,36 @@ export class BabyReportComponent implements OnInit {
     return params
   }
 
-  showReport(e:Event,num:any,questMonth:any){
+  showReport(e:Event,num:any,questMonth:any,type:any){
     let thisQid = (e.target as HTMLInputElement).getAttribute('Qid');
     if(this.source!=1){
       this._toastrService.warning('请至筛查提供处了解详情');
     }else{
       //this._toastrService.success('敬请期待');
-      this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.bid], {
-        queryParams: {
-          pageType: num,
-          questType: this.QuestType,
-          questMonth: questMonth,
-          model: 'report',
-          Qid: thisQid,
-          bid:this.bid
-        }
-      })
+      if(type == 'ASQ-3'){
+        this._router.navigate(["/neoballoon/neoballoon-manage/asq3-question", this.bid], {
+          queryParams: {
+            pageType: num,
+            questType: type,
+            questMonth: questMonth,
+            model: 'report',
+            Qid: thisQid,
+            bid:this.bid
+          }
+        })
+      }else if(type == 'ASQ:SE-2'){
+        this._router.navigate(["/neoballoon/neoballoon-manage/asqse2-question", this.bid], {
+          queryParams: {
+            pageType: num,
+            questType: type,
+            questMonth: questMonth,
+            model: 'report',
+            Qid: thisQid,
+            bid:this.bid
+          }
+        })
+      }
+      
     }
   }
 

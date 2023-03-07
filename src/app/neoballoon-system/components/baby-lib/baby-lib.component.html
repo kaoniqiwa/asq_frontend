@@ -24,11 +24,10 @@
           筛选<i class="mdi mdi-filter-outline"></i>
         </button>
         <div class="select-wrapper" [class.expand]="true">
-          <select>
-            <option value="" disabled>请选择</option>
-            <option value="1">ASQ-3</option>
-            <option value="2">ASQ:SE</option>
-            <option value="3">ASQ:SE-2及其联结</option>
+          <select [(ngModel)]="questType" (ngModelChange)="changeModel($event)">
+            <option value="ASQ-3">ASQ-3</option>
+            <option value="ASQ:SE">ASQ:SE</option>
+            <option value="ASQ:SE-2">ASQ:SE-2</option>
           </select>
         </div>
       </div>
@@ -76,6 +75,7 @@
         </colgroup>
         <tbody>
           <ng-container *ngFor="let data of dataSource; let e = even;let i=index;">
+            
             <tr>
               <td>{{ data.Name }}</td>
               <td>{{ data.Birthday }}</td>
@@ -85,11 +85,15 @@
               <td><span class="status" [attr.Index]="i" [attr.Status]="data.Status" [attr.Qid]="data.Id" [ngClass]="{'color1': data.Status!=1}" (click)="changeStatus($event)">{{data.Status!=1?'未归档':'已完成'}}</span></td>
               <!-- <td>{{ data.FileId }}</td> -->
               <td>
-                <select #report [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" (change)="chooseReport($event,+report.value)">
+                <select *ngIf="questType == 'ASQ-3'" #report [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" (change)="chooseReport($event,+report.value,data.QuestType)">
                   <option value="0">请选择</option>
                   <option value="1">家长报告</option>
-                  <option value="2">打印全部</option>
+                  <option value="2">全部报告</option>
+                  <option *ngIf="questType == 'ASQ:SE-2'" value="3">《ASQ:SE-2学习活动及其延伸》</option>
+                  <option *ngIf="questType == 'ASQ:SE-2'" value="4">家长报告 &《ASQ:SE-2学习活动及其延伸》</option>
+                  <option *ngIf="questType == 'ASQ:SE-2'" value="5">全部报告 &《ASQ:SE-2学习活动及其延伸》</option>
                 </select>
+                <a [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" class="aa" *ngIf="questType == 'ASQ:SE-2'" (click)="filterHandler2($event)">打印</a>
               </td>
               <td><span class="more" [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" [attr.Mid]="data.Mid" (click)="gotoReport($event)">了解更多<img src="assets/img/arrow_w.png" alt="" ></span></td>
             </tr>
@@ -117,4 +121,5 @@
       </app-paginator>
     </div>
   </div>
+  <print-se2 *ngIf="showSe2Print" (navigateEvent)="chooseReport2($event)" (closeEvent2)="closeEvent2()"></print-se2>
 </div>

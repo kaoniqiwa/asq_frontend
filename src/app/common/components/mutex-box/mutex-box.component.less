@@ -6,6 +6,7 @@
   z-index: 9999;
   position: fixed;
   top:0;
+  left: 0;
 }
 .asideBox input[type="text"],.asideBox input[type="password"]{
   width: 45%;
@@ -44,11 +45,9 @@
 .confirmBox{
   position: absolute;
   top:50%;
-  left: 50%;
-  width: 560px;
-  height: 160px;
-  margin-top: -80px;
-  margin-left: -280px;
+  left: 25%;
+  width: 50%;
+  height: auto;
   text-align:center;
   border-radius: 10px;
   background-color: #ffffff;
@@ -70,6 +69,7 @@
 .confirmBox p{
   text-align: center;
   font-size: 14px;
+  height: 30px;
 }
 .confirmBox i{
   width: 70px;
@@ -84,6 +84,11 @@
 .confirmBox span{
   cursor: pointer;
 }
+
+.confirmBox .btnsure{
+  margin-bottom: 30px;
+}
+
 
 
 /* ===============================4.4============================== */
@@ -133,7 +138,11 @@ padding-left: 0!important;
 }
 
 
-@media (max-width: 1024px) {
+@media (max-width: 864px) {
+.confirmBox{
+  left: 5%;
+  width: 90%;
+}
 .babyBox, .familyBox{
   width:96%;
 }
@@ -146,6 +155,9 @@ padding-left: 0!important;
 .familyBox table select{
   width:98px;
 }
+
+
+
 }
 
 .btn-default,.btn-default1{

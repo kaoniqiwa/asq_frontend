@@ -4,7 +4,7 @@
   </toast-window>
 
   <toast-window *ngIf="showOldMember" (closeEvent)="closeOld()">
-    <baby-in-member></baby-in-member>
+    <baby-in-member [Am]="Am" [At]="At"></baby-in-member>
   </toast-window>
 
   <toast-window *ngIf="showQuick" (closeEvent)="closeQuick()">
@@ -13,7 +13,54 @@
   <div class="vertical-header">
     <div class="title green-title large-title underline-title">添加宝宝</div>
   </div>
+  
   <div class="vertical-main">
+    <div class="form-group">
+      <label class="control-label col-sm-3">
+        <span>*</span> 问卷中的填空题是否必须填写：</label
+      >
+      <div class="col-sm-3">
+        <label
+          ><input
+            type="radio"
+            name="At"
+            value="1"
+            [(ngModel)]="At"
+          />必填</label
+        >&nbsp;&nbsp;&nbsp;
+        <label
+          ><input
+            type="radio"
+            name="At"
+            value="0"
+            [(ngModel)]="At"
+          />非必填</label
+        >
+      </div>
+    </div>
+    <!-- <div class="form-group">
+      <label class="control-label col-sm-3">
+        <span>*</span> 是否允许家长在手机上查看报告：</label
+      >
+      <div class="col-sm-3">
+        <label
+          ><input
+            type="radio"
+            name="Am"
+            value="1"
+            [(ngModel)]="Am"
+          />是</label
+        >&nbsp;&nbsp;&nbsp;
+        <label
+          ><input
+            type="radio"
+            name="Am"
+            value="0"
+            [(ngModel)]="Am"
+          />否</label
+        >
+      </div>
+    </div> -->
     <div class="process">
       <ul class="col-sm-10" style="margin: 0 auto">
         <li class="current">
@@ -48,6 +95,7 @@
           <select [(ngModel)]="selectScan" (ngModelChange)="changeScan($event)">
             <option value="" disabled>请选择</option>
             <option value="ASQ-3">ASQ-3</option>
+            <option value="ASQ:SE-2">ASQ:SE-2</option>
             <!-- <option value="ASQ:SE">ASQ:SE</option>
             <option value="ASQ:SE-2">ASQ:SE-2及其联结</option> -->
           </select>
@@ -63,6 +111,7 @@
           <select [(ngModel)]="selectMessage" (ngModelChange)="changeMessage($event)">
             <option value="" disabled>请选择</option>
             <option value="ASQ-3">ASQ-3</option>
+            <option value="ASQ:SE-2">ASQ:SE-2</option>
             <!-- <option value="">ASQ:SE</option>
             <option value="">ASQ:SE-2及其联结</option> -->
           </select>

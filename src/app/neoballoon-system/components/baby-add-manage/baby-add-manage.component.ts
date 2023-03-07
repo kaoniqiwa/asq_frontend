@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { BabyAddManageBusiness } from './baby-add-manage.business';
-//import asq3 from 'src/assets/files/ASQ-3.asq202211092.xlsx';
+//import asq3 from 'src/assets/files/ASQ-3-221130.xlsx';
 //console.log(JSON.stringify(asq3));
 @Component({
   selector: 'app-baby-add-manage',
@@ -30,6 +30,8 @@ export class BabyAddManageComponent implements OnInit {
   selectMessage = "";
   user:any = {};
   doctor:any = {};
+  Am:any = '0';
+  At:any = '0';
 
   constructor(private _sessionStorage: SessionStorageService,private _business: BabyAddManageBusiness ,private _router: Router) {
     this.user = this._sessionStorage.user;
@@ -61,23 +63,35 @@ export class BabyAddManageComponent implements OnInit {
     console.log('changeScan',this.selectScan);
     this._sessionStorage.questscore = null;
     console.log('this._sessionStorage.questscore_changeScan',this._sessionStorage.questscore);
-    if(this.selectScan == 'ASQ-3'){
+    if(this.selectScan == 'ASQ-3' || this.selectScan == 'ASQ:SE-2'){
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-qrcode-manage"], {
         queryParams: {
           selectScan: this.selectScan,
+          Am:this.Am,
+          At:this.At
         }
       })
 
-    }
+    }/* else if(this.selectScan == 'ASQ:SE-2'){
+      this._router.navigate(["/neoballoon/neoballoon-manage/baby-qrcode-manage"], {
+        queryParams: {
+          selectScan: this.selectScan,
+          Am:this.Am,
+          At:this.At
+        }
+      })
+    } */
   }
 
   changeMessage(e:Event){
     this._sessionStorage.questscore = null;
     console.log('this._sessionStorage.questscore_changeMessage',this._sessionStorage.questscore);
-    if(this.selectMessage == 'ASQ-3'){
+    if(this.selectMessage == 'ASQ-3' || this.selectMessage == 'ASQ:SE-2'){
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-message-manage"], {
         queryParams: {
           selectMessage: this.selectMessage,
+          Am:this.Am,
+          At:this.At
         }
       })
 

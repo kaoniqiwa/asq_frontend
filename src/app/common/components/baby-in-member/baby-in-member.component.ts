@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -19,6 +19,8 @@ import { BabyInMemberBusiness } from './baby-in-member.business';
 })
 export class BabyInMemberComponent implements OnInit {
 
+  @Input() Am:any;
+  @Input() At:any;
   @Output() closeEvent = new EventEmitter();
 
 
@@ -33,8 +35,8 @@ export class BabyInMemberComponent implements OnInit {
   doctor: Doctor | null = null;
 
 
-  constructor(private _business: BabyInMemberBusiness, private _fb: FormBuilder, private _toastrService: ToastrService, private _router: Router, private sessionStorage: SessionStorageService) {
-    this.doctor = this.sessionStorage.doctor;
+  constructor(private _business: BabyInMemberBusiness, private _fb: FormBuilder, private _toastrService: ToastrService, private _router: Router, private _sessionStorage: SessionStorageService) {
+    this.doctor = this._sessionStorage.doctor;
 
   }
 
@@ -47,18 +49,24 @@ export class BabyInMemberComponent implements OnInit {
         let res = await this._business.getMember(this.doctor.Id, phone);
         if (res.Data.length) {
           this.member = res.Data[0];
+          this._sessionStorage.mid = this.member.Id;
           this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
             queryParams: {
               mid: this.member.Id,
-              source: 1
+              source: 1,
+              Am:this.Am,
+              At:this.At
             }
           })
         } else {
+          this._sessionStorage.mid = '';
           this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
             queryParams: {
               mid: '',
               phone:phone,
-              source: 1
+              source: 1,
+              Am:this.Am,
+              At:this.At
             }
           })
           this._toastrService.error('未查询到该用户，请填入基本信息')

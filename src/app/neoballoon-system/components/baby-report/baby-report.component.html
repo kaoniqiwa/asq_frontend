@@ -3,7 +3,7 @@
   <div class="fileBox">
     <table class="tabInfo motherInfo">
       
-      <tbody>
+      <tbody *ngIf="source == 1">
         <tr>
           <th>宝宝姓名</th>
           <th>家长姓名</th>
@@ -17,11 +17,29 @@
           <td class="address">{{member.Province+member.City+member.County}}</td>
         </tr>
       </tbody>
+      <tbody *ngIf="source != 1">
+        <tr>
+          <th>宝宝姓名</th>
+          <td class="babyname">{{baby.Name}}</td>
+        </tr>
+        <tr>
+          <th>家长姓名</th>
+          <td class="mothername">{{member.Name}}</td>
+        </tr>
+        <tr>
+          <th>联系方式</th>
+          <td class="phone">{{member.Phone}}</td>
+        </tr>
+        <tr>
+          <th>地址</th>
+          <td class="address">{{member.Province+member.City+member.County}}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
   <div class="report">
     <div class="title">
-      <div class="name">ASQ-3</div>
+      <div class="name title_name">ASQ-3</div>
       <ul>
         <li><span class="dot"></span>筛查报告</li>
         <li><span class="dot"></span>亲子活动</li>
@@ -37,7 +55,7 @@
             <div class="name">
               <p>{{ month }}<span class="m">月</span></p>
             </div>
-            <ng-container *ngIf="!checkScreen(i).Status">
+            <ng-container *ngIf="!checkScreen(i,'ASQ-3').Status">
               <ul class="tag">
                 <li><img src="assets/img/page00.png" alt=""></li>
                 <li><img src="assets/img/page00.png" alt=""></li>
@@ -45,12 +63,54 @@
                 <li><img src="assets/img/page00.png" alt=""></li>
               </ul>
             </ng-container>
-            <ng-container *ngIf="checkScreen(i).Status">
+            <ng-container *ngIf="checkScreen(i,'ASQ-3').Status">
               <ul class="tag">
-                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page01.png" (click)="showReport($event,2,i)" alt=""></li>
-                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page02.png" (click)="showReport($event,3,i)" alt=""></li>
-                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page03.png" (click)="showReport($event,4,i)" alt=""></li>
-                <li><img class="img" [attr.Qid]="checkScreen(i).Qid" src="assets/img/page04.png" (click)="showReport($event,1,i)" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ-3').Qid" src="assets/img/page01.png" (click)="showReport($event,2,i,'ASQ-3')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ-3').Qid" src="assets/img/page02.png" (click)="showReport($event,3,i,'ASQ-3')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ-3').Qid" src="assets/img/page03.png" (click)="showReport($event,4,i,'ASQ-3')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ-3').Qid" src="assets/img/page04.png" (click)="showReport($event,1,i,'ASQ-3')" alt=""></li>
+              </ul>
+            </ng-container>
+            
+          </div>
+
+        </ng-template>
+      </swiper>
+    </div>
+  </div>
+
+  <div class="report">
+    <div class="title">
+      <div class="name title_name">ASQ:SE-2及其联结</div>
+      <ul>
+        <li><span class="dot"></span>筛查报告</li>
+        <li><span class="dot"></span>指南和活动</li>
+        <li><span class="dot"></span>信息汇总</li>
+        <li><span class="dot"></span>问卷</li>
+      </ul>
+    </div>
+    <div class="swiper-container vertical-main" style="min-height: 400px">
+      <swiper [config]="config">
+        <ng-template swiperSlide class="red" *ngFor="let month of asqse2MouthArr; let i = index">
+
+          <div class="item">
+            <div class="name">
+              <p>{{ month }}<span class="m">月</span></p>
+            </div>
+            <ng-container *ngIf="!checkScreen(i,'ASQ:SE-2').Status">
+              <ul class="tag">
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+                <li><img src="assets/img/page00.png" alt=""></li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="checkScreen(i,'ASQ:SE-2').Status">
+              <ul class="tag">
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ:SE-2').Qid" src="assets/img/page01.png" (click)="showReport($event,2,i,'ASQ:SE-2')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ:SE-2').Qid" src="assets/img/page02.png" (click)="showReport($event,3,i,'ASQ:SE-2')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ:SE-2').Qid" src="assets/img/page03.png" (click)="showReport($event,5,i,'ASQ:SE-2')" alt=""></li>
+                <li><img class="img" [attr.Qid]="checkScreen(i,'ASQ:SE-2').Qid" src="assets/img/page04.png" (click)="showReport($event,1,i,'ASQ:SE-2')" alt=""></li>
               </ul>
             </ng-container>
             

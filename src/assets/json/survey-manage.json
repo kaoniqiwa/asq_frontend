@@ -9,13 +9,13 @@
     "content": "年龄与发育进程问卷：社交——情绪",
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
-    "questType": "ASQ-SE"
+    "questType": "ASQ:SE"
   },
   {
     "content": "年龄与发育进程问卷：社会——情绪（第2版）",
     "normalIcon": "ASQ-SE_1.png",
     "activeIcon": "ASQ-SE_2.png",
-    "subIcon": "-2及其联结",
-    "questType": "ASQ-SE2"
+    "subIcon": "-2",
+    "questType": "ASQ:SE-2"
   }
 ]

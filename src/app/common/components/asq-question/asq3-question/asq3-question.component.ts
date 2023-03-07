@@ -38,7 +38,11 @@ export class Asq3QuestionComponent implements OnInit {
 
   //@Input() mounthNum: NumberSymbol = 0;
   //@Input() thisAnswers: any = [];
-  audio:any = new Audio();
+  helperAudio:any = new Audio();
+  helperImg:any = '';
+  helperQuestion:any = '';
+  helperAudioStatus:any = false;
+  helperNum:any = 0;
   math = Math;
   thisAnswers: any = [];
 
@@ -53,7 +57,7 @@ export class Asq3QuestionComponent implements OnInit {
   currentAnswers: any = [];
   currentAnswer: any = {};
   scoreArr: any = [];
-  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54 ,60];
   gamesArr: any = [];
   dividingArr: any = [];
 
@@ -62,10 +66,11 @@ export class Asq3QuestionComponent implements OnInit {
   questMonth: number = 0;
   bid: string = "";
 
-  nengQu = ['沟通', '粗大动作', '精细动作', '解决问题', '个人-社会'];
+  nengQu = ['沟通', '粗大动作', '精细动作', '解决问题', '个人-社会', '综合问题'];
   gaoArr: any = [];
   jieArr: any = [];
   diArr: any = [];
+  fgaoArr: any = [];
   monthWorkBook: any = [];
   doctor: any = {};
   user: any = {};
@@ -76,6 +81,9 @@ export class Asq3QuestionComponent implements OnInit {
   source:any = '';
   qid:any = '';
   model:any = '';
+  Am:any = '0';
+  At:any = '0';
+  currentT:any = [false,false,false,false,false,false];
 
   //呼出浮层,false为不显示，true位显示
   float = false;
@@ -84,7 +92,10 @@ export class Asq3QuestionComponent implements OnInit {
 
   //当前点击选择对象
   currentXu:any = '';
+  currentArr:any = '';
   otherArr:any = '';
+  showStr:any = '';
+  currentNengqu:any = '';
 
 
   constructor(private _business: ASQ3QuestionBusiness, private _toastrService: ToastrService, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _activeRoute: ActivatedRoute, private _globalStorage: GlobalStorageService,private _router: Router) {
@@ -94,6 +105,8 @@ export class Asq3QuestionComponent implements OnInit {
     this.member = this._sessionStorage.member;
     this.baby = this._sessionStorage.baby;
     this.source = this._sessionStorage.source;
+    this.Am = this._sessionStorage.Am;
+    this.At = this._sessionStorage.At;
 
     this._activeRoute.queryParams.subscribe(params => {
       this.pageType = params['pageType'];
@@ -102,7 +115,9 @@ export class Asq3QuestionComponent implements OnInit {
       this.bid = params['bid'];
       this.qid = params['Qid'];
       this.model = params['model'];
+      
     })
+    
 
     console.log('this.model',this.model);
 
@@ -115,20 +130,25 @@ export class Asq3QuestionComponent implements OnInit {
 
   async ngOnInit() {
 
-    
+    /* let params:any = {};
+    params.testid = this.mouthArr[this.questMonth];
+    let questions:any = await this._business.getQuestionsByMonth(params);
+    console.log('questions',questions); */
 
+    
+    let that = this;
     this.currentQuestionsObject = this.babyQuestions[this.questMonth];
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;
     //console.log('currentQuestions:', this.currentQuestions);
     this.intQuestions = this.setQuestions(this.currentQuestions);
-    //console.log('intQuestions1:', this.intQuestions);
+    console.log('intQuestions1:', this.intQuestions);
     this.allPages = this.intQuestions.length;
 
     if(this.qid != undefined){
       let res:any = await this._business.get(this.qid);
       if (res) {
-        console.log('res',res);
+        //console.log('res',res);
         this.question = res;
         //console.log('scoreArr1',this.scoreArr,JSON.parse(res.QuestScore));
         this.scoreArr = JSON.parse(res.QuestScore);
@@ -136,34 +156,60 @@ export class Asq3QuestionComponent implements OnInit {
         this.zonghe = JSON.parse(res.ZongHe);
         
 
-        //console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
+        console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
       }
     }
 
-    this.getGames(this.questMonth);
-    this.getDividing(this.questMonth);
+    this.getGames(this.mouthArr[this.questMonth]);
+    this.getDividing(this.mouthArr[this.questMonth],1);
+    this.currentNengqu =  this.intQuestions[this.currentPage].question[0][0];
+
+    //console.log('this.currentNengqu',this.currentNengqu);
+
+
+    this.helperAudio.addEventListener("playing", function(){
+      //console.log('helperAudio_playing');
+      that.helperAudioStatus = true;
+    });
+    this.helperAudio.addEventListener("pause", function(){
+      //console.log('helperAudio_pause');
+      that.helperAudioStatus = false;
+    });
 
   }
 
   showHelper(e:Event){
-    //this.audio.stop();
-    /* let url:any = '/imgaudio/ASQ-3-audio/2-1.mp3';
-    import(`src/assets${url}`).then((res)=>{
-      console.log('OK');
-      this.audio.src = url.split('src/')[1];
-      this.audio.load();
-      this.audio.play();
-    }).catch((e)=>{
-      console.log('error');
-    }) */
-    /* this.audio.src = 'assets/imgaudio/ASQ-3-audio/2-1.mp3';
-    try{
-      console.log('OK');
-      this.audio.load();
-      this.audio.play();
-    }catch(e){
-      console.log('error');
-    } */
+
+    let l = Number((e.target as HTMLInputElement).getAttribute('l')) - 1;//当前问题组的长度
+    let j = Number((e.target as HTMLInputElement).getAttribute('j'));//当前能区的序号，0开始
+    let k = Number((e.target as HTMLInputElement).getAttribute('k'));//所有能区的长度
+    let xu = Number((e.target as HTMLInputElement).getAttribute('xu'));//当前问题的序号，0开始
+
+    let model = Number((e.target as HTMLInputElement).getAttribute('model'));//1为音乐，2为音乐+图片
+    this.helperQuestion = (e.target as HTMLInputElement).getAttribute('question');//题目
+
+    let num = j*k+xu+1;
+    let img_url:any = 'ASQ-3-img/'+this.mouthArr[this.questMonth]+'-'+num+'.jpg';
+    if(model == 2){
+      this.helperImg = 'assets/imgaudio/'+img_url;
+      this.onHelperFloat(1);
+    }
+
+    if(this.helperNum == num){
+      if(this.helperAudioStatus){
+        this.helperAudio.pause();
+      }else{
+        this.helperAudio.play();
+      }
+      return;
+    }else{
+      this.helperNum = num;
+    }
+    
+    let audio_url:any = 'ASQ-3-audio/'+this.mouthArr[this.questMonth]+'-'+num+'.mp3';
+    this.helperAudio.src = 'assets/imgaudio/'+audio_url;
+    this.helperAudio.load();
+    this.helperAudio.play();
     
 
   }
@@ -194,7 +240,7 @@ export class Asq3QuestionComponent implements OnInit {
       }
 
       //this.setCurrentAnswers();
-      //console.log('intQuestions:', this.intQuestions);
+      console.log('intQuestions:', this.intQuestions);
 
     } else {
       for (let i = 0; i < this.intQuestions.length; i++) {
@@ -220,8 +266,13 @@ export class Asq3QuestionComponent implements OnInit {
         } else {
           that.gaoArr.push(item);
         }
+        if (item.jiezhi != '高于界值') {
+          that.fgaoArr.push(item);
+        }
+        
       })
-      //console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr);
+      
+      console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr,that.fgaoArr);
     }
   }
 
@@ -264,6 +315,20 @@ export class Asq3QuestionComponent implements OnInit {
     return date;
   }
 
+  checkRed(num:any,item:any,value:any):any{
+    if(this.At == '0'){
+      return false;
+    }else{
+      //console.log('this.currentAnswer.result[num-1]',this.currentAnswer.result && this.currentAnswer.result[num-1]);
+      if(this.checkInput(item,value) && (this.currentAnswer.result[num-1] == '' || this.currentAnswer.result[num-1] == undefined)){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    
+  }
+
   checkInput(item:any,value:any):any{
     let itemArr = item.split('、');
     for(var i=0;i<itemArr.length;i++){
@@ -295,10 +360,16 @@ export class Asq3QuestionComponent implements OnInit {
     let v:any = (e.target as HTMLInputElement).value;
     
     if(mutexSelf!=''){
-      console.log('mutexSelf',mutexSelf);
+      //console.log('mutexSelf',mutexSelf);
       let mutexSelfArr:any = mutexSelf.split('、');
       let mutexOtherArr:any = mutexOther.split('、');
-      
+      let currentStr = '';
+      for(var z=0;z<mutexSelfArr.length;z++){
+        currentStr += '“'+mutexSelfArr[z]+'”';
+        if(mutexSelfArr.length>=2 && z==0){
+          currentStr += '或';
+        }
+      }
       for(var x=0;x<mutexSelfArr.length;x++){
         let this_v = 0;
         if(mutexSelfArr[x] == '是'){
@@ -309,8 +380,16 @@ export class Asq3QuestionComponent implements OnInit {
           this_v = 3;
         }
         if(this_v == v){
-          console.log('检测是否互斥');
+          //console.log('检测是否互斥');
+          let otherStr = '';
+          for(var m=0;m<(mutexOtherArr.length/2);m++){
+            otherStr+= '第'+mutexOtherArr[m*2]+'题请给予“'+mutexOtherArr[m*2+1]+'”';
+            if(mutexOtherArr.length>=3 && m==0){
+              otherStr+= '，';
+            }
+          }
           for(var y=0;y<(mutexOtherArr.length/2);y++){
+
             let other_v = 0;
             if(mutexOtherArr[y*2+1] == '是'){
               other_v = 1;
@@ -320,9 +399,12 @@ export class Asq3QuestionComponent implements OnInit {
               other_v = 3;
             }
             if(this.currentAnswer.answer[mutexOtherArr[y*2]-1] != other_v){
-              console.log('弹框提示',this.currentAnswer.answer,xu);
+              //console.log('弹框提示',this.currentAnswer.answer,xu);
+              this.showStr = '注*：如果'+this.currentNengqu+'第'+(xu+1)+'题勾选了'+currentStr+'，那么'+this.currentNengqu+otherStr;
+
               this.mutexFloat(1);
               this.currentXu = xu;
+              this.currentArr = mutexSelf;
               this.otherArr = mutexOtherArr;
               break;
             }
@@ -355,14 +437,25 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   nextQuestions(e: Event) {
+    if(this.At == '1'){
+      for(var m=0;m<this.currentAnswer.answer.length;m++){
+        if(this.intQuestions[this.currentPage].question[m+1][2] && this.checkRed(m+1,this.intQuestions[this.currentPage].question[m+1][2],this.currentAnswer.answer[m])){
+          alert("为了避免选择失误，请检查答案，尤其注意标红的题目");
+          return
+        }
+      }
+    }
+    this.helperAudio.pause();
     $("#asq-test").scrollTop(0);
     this.currentPage++;
     this.currentAnswer = this.currentAnswers[this.currentPage];
+    this.currentNengqu =  this.intQuestions[this.currentPage].question[0][0];
   }
 
   prevQuestions(e: Event) {
     this.currentPage--;
     this.currentAnswer = this.currentAnswers[this.currentPage];
+    this.currentNengqu =  this.intQuestions[this.currentPage].question[0][0];
   }
 
   setThisScore(num: any) {
@@ -455,6 +548,35 @@ export class Asq3QuestionComponent implements OnInit {
       }
      
     }else{
+
+      if(this.source == 2){
+        let this_uuid = this._sessionStorage.uuid;
+        if(this_uuid == undefined){
+          alert('链接已失效，请重新生成');
+          return
+        }
+  
+        let params:any = {};
+        params.Uuid = this_uuid;
+        let res:any = await this._business.checkUuid(params);
+        console.log('res',res);
+        if(!res){
+          alert('链接已失效，请重新生成');
+          return
+        }
+      }else if(this.source == 3){
+  
+        let params:any = {};
+        params.seq = this._sessionStorage.seq;
+        let res:any = await this._business.getStatus(params);
+        console.log('res',res);
+        if(!res){
+          alert('问卷已完成，链接失效。');
+          return
+        }
+      }
+
+
       this.setCurrentAnswers();
 
       let model = new Question();
@@ -472,7 +594,11 @@ export class Asq3QuestionComponent implements OnInit {
       model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
       model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
       model.Source = this.source;
+      model.Am = this.Am;
+      model.uuid = this._sessionStorage.uuid;
+      model.seq = this._sessionStorage.seq;
       model.SurveyTime = this.baby.SurveyTime;
+      model.Rectifyage = this.baby.Rectifyage;
       console.log('model',model);
 
       let params:any = {};
@@ -512,19 +638,19 @@ export class Asq3QuestionComponent implements OnInit {
     if (res) {
       //this._toastrService.success('返回成功');
       that.gamesArr = res;
-      console.log('getGames_res:', that.gamesArr);
+      console.log('gamesArr:',that.questMonth,this.mouthArr[this.questMonth], that.gamesArr);
 
     }
   }
 
-  async getDividing(TestId: any) {
+  async getDividing(TestId: any,typeId: any) {
     let that = this;
 
-    let res = await this._business.getDividing(TestId);
+    let res = await this._business.getDividing(TestId,typeId);
     if (res) {
       //this._toastrService.success('返回成功');
       that.dividingArr = res;
-      console.log('getDividing_res:', that.dividingArr);
+      console.log('getDividing_res:',that.questMonth,this.mouthArr[this.questMonth], that.dividingArr);
       this.init();
     }
   }
@@ -546,6 +672,14 @@ export class Asq3QuestionComponent implements OnInit {
     })
   }
   onSubmitFloat(e: any) {
+    if(this.At == '1'){
+      for(var m=0;m<this.currentAnswer.answer.length;m++){
+        if(this.intQuestions[this.currentPage].question[m+1][2] && this.checkRed(m+1,this.intQuestions[this.currentPage].question[m+1][2],this.currentAnswer.answer[m])){
+          alert("为了避免选择失误，请检查答案，尤其注意标红的题目");
+          return
+        }
+      }
+    }
     console.log(e, 'onSubmitFloat');
     if (e == 1) {
       this.float = true;
@@ -561,6 +695,19 @@ export class Asq3QuestionComponent implements OnInit {
       this.thisAnswers = [];
       this.ngOnInit();
       this.float = false;
+    }else if (e == 5) {
+      this.float = false;
+    }
+    
+  }
+
+  onHelperFloat(e: any) {
+    //console.log(e, 'onHelperFloat');
+    if (e == 1) {
+      this.helperfloat = true;
+    } else if (e == 2) {
+      this.helperfloat = false;
+      this.helperAudio.pause();
     }
     
   }

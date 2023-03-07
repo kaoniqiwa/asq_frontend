@@ -34,6 +34,7 @@
     "swiper": "^8.3.2",
     "ts-md5": "^1.2.11",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

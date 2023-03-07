@@ -1,0 +1,19 @@
+<div class="asideBox">
+  <div class="loginBox printBox" style="display: block;">
+    <img src="assets/img/close.png" alt="" class="btnClose" (click)="closeEvent()">
+    
+    <div>
+      <div class="print-border">
+        <p>报告</p>
+        <p><input type="checkbox" name="chk-report" value="1" [checked]="allReport == 1" class="reportType" (click)="chooseReport($event,1)" >家长报告</p>
+        <p><input type="checkbox" name="chk-report" value="2" [checked]="allReport == 2" class="reportType" (click)="chooseReport($event,2)">全部报告</p>
+      </div>
+      <div class="print-border">
+      <p><input type="checkbox" name="chk-report" value="3"  [checked]="studyReport == 1" class="chkGame" (click)="chooseReport($event,3)">《ASQ:SE-2学习活动及其延伸》</p>
+      </div>
+      
+    </div>
+    <button class="btn-default1 completeReport" (click)="submit()" >完成</button>
+  </div>
+  
+</div>

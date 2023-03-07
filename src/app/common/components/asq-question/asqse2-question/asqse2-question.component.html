@@ -1,0 +1,524 @@
+<div class="asq-test" id="asq-test">
+  <div>
+    <div style="width: 100%; margin: 10px 0">
+      <!-- <button *ngIf="pageType>=2" (click)="gotoBack()" class="hw-small-btn gray-btn">
+        <img src="assets/img/back.png" alt="" />返回
+      </button> -->
+    </div>
+  </div>
+
+  <ng-container *ngIf="this.pageType==0||this.pageType==1">
+    <ng-container *ngFor="let intQuetion of intQuestions; let j = index; let k = count">
+      <div *ngIf="j == this.currentPage" class="quesBox">
+        
+        
+        <div class="tip-box tip-box-line" *ngIf="j<=0">
+          <h1>选择题</h1>
+          <span style="display:block;color:#34bb45;">点击<img src="assets/img/icon_audio.png" alt=""
+              class="signal3" (click)="helperPlay($event)">辅助阅读<audio src="assets/imgaudio/ASQ-SE2-audio/ts.mp3"
+              class="prefaceAudio"></audio></span>
+          <strong style="display:block;">以下题目是描述<span class="babyStr">孩子</span>的行为。请你务必逐条仔细阅读并勾选答案。</strong>
+          <div><strong>答题方式：</strong>
+            <div><span class="dot"></span><span class="dotques">勾选最适合<span class="babyStr">孩子</span>行为发生的频率<img
+                  src="assets/img/mychecked.png" alt="">：“经常或总是”，指<span class="babyStr">孩子</span>经常或总是这样；“偶尔”，指<span
+                  class="babyStr">孩子</span>偶尔是这样；“极少或从不”，指<span class="babyStr">孩子</span>极少或从不这样。</span><br
+                style="clear: both;"></div>
+            <div><span class="dot"></span><span class="dotques">如果你对<span class="babyStr">孩子</span>某个行为感到担忧，请同时勾选<img
+                  src="assets/img/rdo_chked.png" alt="">；若不担忧，就不要勾选〇。</span><br style="clear: both;"></div>
+            <div><span class="dot"></span><span
+                class="dotques">对一些要求解释或说明的问题，请你按照要求解释或举例说明。请注意，举的例子是对你选择的选项进行的解释或说明。</span><br style="clear: both;">
+            </div>
+            <div><span class="dot"></span><span class="dotques">问卷最后的综合问题是关于<span
+                  class="babyStr">孩子</span>行为的开放性问题。选择“是”或“否”进行回答，并按要求对你的选择给予解释说明。</span><br style="clear: both;"></div>
+          </div>
+          <div><strong>提示：</strong>
+            <div><span class="dot"></span><span class="dotques">请根据你对<span class="babyStr">孩子</span>行为的了解回答；</span><br
+                style="clear: both;"></div>
+            <div><span class="dot"></span><span class="dotques">请根据<span class="babyStr">孩子</span>通常的表现，而不是<span
+                  class="babyStr">孩子</span>生病、非常累或饥饿时的表现；</span><br style="clear: both;"></div>
+            <div><span class="dot"></span><span class="dotques">由十分了解<span class="babyStr">孩子</span>的人和持续每周与<span
+                  class="babyStr">孩子</span>相处至少15~20小时的照护人回答问卷。</span></div>
+          </div>
+        </div>
+        <table class="tabQues float" *ngIf="source == 1">
+          <tbody>
+            <tr class="line" *ngIf="j != k - 1">
+              <td></td>
+              <td>经常或总是</td>
+              <td>偶尔</td>
+              <td>极少或从不</td>
+              <td class="green lrborder">宝宝的表现令你感到担忧</td>
+              <td>帮助</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tabQuesk element">
+          <table class="tabQues" *ngIf="source != 1">
+            <tbody>
+              <tr class="line" *ngIf="j>0">
+                <td colspan="4">
+                  <h1>综合问题</h1>
+                </td>
+              </tr>
+              
+              <ng-container *ngFor="let item of intQuetion.question; let i = index; let l = count">
+                <tr class="line" *ngIf="j>0 && i==3">
+                  <td colspan="4">
+                    <h1>其他问题</h1>
+                  </td>
+                </tr>
+                <tr class="model queNum1" [ngClass]="{'highlight':(intQuetion.answer && (intQuetion.answer[i]==3 || (intQuetion.answer[i]==2 && intQuetion.worry[i])) && checkStatus &&  j<=0)}">
+                  <td [colSpan]="(j == k - 1)?2:3" ngClass="{{(item[3] && checkRed(i,item[3],intQuetion.answer && intQuetion.answer[i],item[2]))?'red':''}}">
+                    <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
+                  </td>
+                  <td >
+                    帮助
+                  </td>
+                </tr>
+                <tr class="model" [ngClass]="{'highlightmm':(intQuetion.answer && (intQuetion.answer[i]==3 || (intQuetion.answer[i]==2 && intQuetion.worry[i])) && checkStatus &&  j<=0)}">
+                  <td class="isSquare td_gai">
+                    <input *ngIf="item[2]!=2  && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <input *ngIf="item[2]==2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <span *ngIf="!(j == k - 1)" class="span_gai">经常或总是</span>
+                    <span *ngIf="(j == k - 1)" class="span_gai">是</span>
+                  </td>
+                  <ng-container *ngIf="!(j == k - 1)">
+                    <td class="isSquare td_gai">
+                      <input type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                        attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                        attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                        value="2" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                      <span class="span_gai">偶尔</span>
+                    </td>
+                  </ng-container>
+                  <td class="isSquare td_gai">
+                    <input *ngIf="item[2]!=2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <input *ngIf="item[2]==2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <span *ngIf="!(j == k - 1)" class="span_gai">极少或从不</span>
+                    <span *ngIf="(j == k - 1)" class="span_gai">否</span>
+                  </td>
+                  <td class="td_gai">
+                    <img [src]="item[4]==1?'assets/img/icon_audio.png':'assets/img/icon_img.png'" alt="" class="signal"
+                      data-url="2-1" data-type="2" (click)="showHelper($event)" attr.l="{{ l }}" attr.xu="{{ i}}"
+                      attr.k="{{k}}" attr.j="{{j}}" attr.question="{{item[1]}}" attr.model="{{item[4]}}" attr.num="{{item[7]}}" />
+                  </td>
+                </tr>
+                <tr *ngIf="!(j == k - 1)">
+                  <ng-container>
+                    <td class="worry td_gai" colspan="4">
+                      <input type="checkbox" [disabled]="(model=='report')||(intQuetion.answer && !(intQuetion.answer[i]==2||intQuetion.answer[i]==3))" [name]="'worry' + i" (click)="radioClickWorry($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="0" [(ngModel)]="intQuetion.worry && intQuetion.worry[i]" />
+                    <span class="span_gai green">宝宝的表现令你感到担忧</span>
+                    </td>
+                  </ng-container>
+                </tr>
+                <tr
+                  *ngIf="((item[3] && checkInput(item[3],intQuetion.answer && intQuetion.answer[i],item[2])) || j == k - 1)">
+                  <td colspan="4">
+                    <textarea class="last_textarea" [disabled]="model=='report'"
+                      [(ngModel)]="currentAnswer.result && currentAnswer.result[i]" name="" cols="30" rows="10"
+                      maxlength="50" placeholder=""></textarea>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          
+          <table class="tabQues" *ngIf="source == 1">
+            <tbody>
+              <tr class="" *ngIf="j>0">
+                <td colspan="5">
+                  <h1>综合问题</h1>
+                </td>
+              </tr>
+              
+              <!-- <tr class="line hide" *ngIf="j != k - 1">
+                <td></td>
+                <td>经常或总是</td>
+                <td>偶尔</td>
+                <td>极少或从不</td>
+                <td class="green lrborder hide">宝宝的表现令你感到担忧</td>
+                <td>帮助</td>
+              </tr> -->
+              <tr class="line" *ngIf="j == k - 1">
+                <td></td>
+                <td>是</td>
+                <td>否</td>
+                <td>帮助</td>
+              </tr>
+              <!-- <tr class="line float" *ngIf="j != k - 1">
+                <td></td>
+                <td>经常或总是</td>
+                <td>偶尔</td>
+                <td>极少或从不</td>
+                <td class="green lrborder">宝宝的表现令你感到担忧</td>
+                <td>帮助</td>
+              </tr> -->
+              
+              <ng-container *ngFor="let item of intQuetion.question; let i = index; let l = count">
+                <tr class="" *ngIf="j>0 && i==3">
+                  <td colspan="5">
+                    <h1>其他问题</h1>
+                  </td>
+                </tr>
+                <tr class="model" [ngClass]="{'blue':(i%2==0 && j<=0),'choose':(intQuetion.answer && intQuetion.answer[i]!=null),'highlight':(intQuetion.answer && (intQuetion.answer[i]==3 || (intQuetion.answer[i]==2 && intQuetion.worry[i])) && checkStatus &&  j<=0)}">
+                  <td ngClass="{{(item[3] && checkRed(i,item[3],intQuetion.answer && intQuetion.answer[i],item[2]))?'red':''}}">
+                    <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
+                  </td>
+                  <td class="isSquare">
+                    <input *ngIf="item[2]!=2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <input *ngIf="item[2]==2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                  </td>
+                  <ng-container *ngIf="!(j == k - 1)">
+                    <td class="isSquare">
+                      <input type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                        attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                        attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                        value="2" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    </td>
+                  </ng-container>
+                  <td class="isSquare">
+                    <input *ngIf="item[2]!=2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                    <input *ngIf="item[2]==2 && !(i==2 && j==1)" type="radio" [disabled]="model=='report'" [name]="'rdo' + i" (click)="radioClick($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
+                  </td>
+                  <ng-container *ngIf="!(j == k - 1)">
+                    <td class="lrborder worry">
+                      <input type="checkbox" [disabled]="(model=='report')||(intQuetion.answer && !(intQuetion.answer[i]==2||intQuetion.answer[i]==3))" [name]="'worry' + i" (click)="radioClickWorry($event)"
+                      attr.l="{{ l }}" attr.j="{{j}}" attr.k="{{k}}" attr.scoremodel="{{item[2]?item[2]:''}}" attr.mutexSelf="{{item[3]?item[3]:''}}"
+                      attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
+                      value="0" [(ngModel)]="intQuetion.worry && intQuetion.worry[i]" />
+                    </td>
+                  </ng-container>
+                  
+                  <td>
+                    <img [src]="item[4]==1?'assets/img/icon_audio.png':'assets/img/icon_img.png'" alt="" class="signal"
+                      data-url="2-1" data-type="2" (click)="showHelper($event)" attr.l="{{ l }}" attr.xu="{{ i}}"
+                      attr.k="{{k}}" attr.j="{{j}}" attr.question="{{item[1]}}" attr.model="{{item[4]}}" attr.num="{{item[7]}}" />
+                  </td>
+                </tr>
+                <tr
+                  *ngIf="((item[3] && checkInput(item[3],intQuetion.answer && intQuetion.answer[i],item[2])) || j == k - 1)">
+                  <td colspan="5">
+                    <textarea class="last_textarea" [disabled]="model=='report'"
+                      [(ngModel)]="currentAnswer.result && currentAnswer.result[i]" name="" cols="30" rows="10"
+                      maxlength="50" placeholder=""></textarea>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        
+        
+        <div class="divBtn">
+          <!-- <button class="btnPre btn-default1" (click)="onSubmitFloat(1)">
+            测试
+          </button> -->
+          <button class="btnPre" [class.btn-default1]="this.currentAnswer.prevStatus" (click)="prevQuestions($event)">
+            返回
+          </button>
+          <button *ngIf=" (this.currentPage + 1) != this.allPages" class="btnNext"
+            [class.btn-default1]="this.currentAnswer.nextStatus" (click)="nextQuestions($event)">
+            继续
+          </button>
+          <button *ngIf=" ((this.currentPage + 1) == this.allPages) && model!='report'" class="btnNext"
+            [class.btn-default1]="this.currentAnswer.nextStatus" (click)="onSubmitFloat(1)">
+            提交问卷
+          </button>
+          <button *ngIf="((this.currentPage + 1) == this.allPages) && model=='report'" class="btn-default1 complete"
+            (click)="gotoReport($event)">完成</button>
+        </div>
+      </div>
+    </ng-container>
+    <div class="bottom">
+      <span class="pagenum">{{
+        this.currentPage + 1 + "/" + this.allPages
+        }}</span>
+      <span>
+        本问卷译自《年龄与发育进程问卷：社会-情绪（第2版）》（ASQ:SE-2™），作者Squires,Bricker和Twombly<br>
+2015年布鲁克斯出版有限公司版权所有©<br>
+<i>This is a translation of Ages &amp; Stages Questionnaires® : Social-Emotional, Second Edition (ASQ:SE-2™), Squires, Bricker,&amp; Twombly.</i><br>
+© 2015 Paul H. Brookes Publishing Co., Inc. All rights reserved.<br>
+由卞晓燕等翻译
+      </span>
+    </div>
+  </ng-container>
+  
+  <div class="resBox res1" *ngIf="this.pageType==2" id="print2">
+    <img src="assets/img/ASQSE2.png" alt="">
+    <p>尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
+
+    
+    <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0">感谢你为<span class="baby">孩子</span>完成了ASQ:SE-2问卷！<span class="baby">孩子</span>的ASQ:SE-2筛查结果<i>高于界值</i>，表明目前其社会和情绪能力发展不理想，建议到儿保门诊或心理门诊就诊。</p>
+    <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">感谢你为<span class="baby">孩子</span>完成了ASQ:SE-2问卷！<span class="baby">孩子</span>的ASQ:SE-2筛查结果<i>接近界值</i>，表明目前其社会和情绪能力发展需要监测。同时，建议<span class="baby">孩子</span>进入下一个ASQ:SE-2月龄组后再次筛查，并听从专业人员建议。</p>
+    <p class="di" *ngIf="this.diArr.length!=0 && this.jieArr.length==0">感谢你为<span class="baby">孩子</span>完成了ASQ:SE-2问卷！<span class="baby">孩子</span>的ASQ:SE-2筛查结果<i>低于界值</i>，表明目前其社会和情绪能力发展处于正常水平，请根据专业人员的建议进行下一次筛查。</p>
+    <p class="p_indent">出生后的最初5年对<span class="baby">孩子</span>的人生非常关键，因为这段时间能为他/她以后的学习和生活打下重要的基础。在<span class="babytime">童年早期</span>，<span class="baby">孩子</span>应该获得许多经验、学习许多技能，在此期间确保每个<span class="baby">孩子</span>顺利发育/发展非常重要。因此，我们希望帮助你观察<span class="baby">孩子</span>的社会和情绪行为的发育/发展。</p>
+    <p class="p_indent">基于筛查结果，我们为你和<span class="baby">孩子</span>提供了发展指南和游戏活动，并设计了学习活动，旨在帮助你了解<span class="baby">孩子</span>在成长中预期的行为表现，并提供了简单易行的点子和方法，促进健康的亲子互动、解决常见的育儿问题和挑战，以帮助<span class="baby">孩子</span>的社会-情绪发展。</p>
+    <p>祝好！</p> 
+
+    <div>
+      <button *ngIf="model!='report'" class="btn-default1 btnDetail" (click)="checkDetil()">查看详情</button>
+      <button class="btn-default1 complete" (click)="gotoReport($event)">完成</button>
+    </div>
+    <div class="bottom">
+      译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+2015年布鲁克斯出版有限公司版权所有©<br>
+由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+    </div>
+  </div>
+  <div class="screenBox" *ngIf="this.pageType==3" id="print3">
+    <div class="gameBox">
+      <div class="resInfo">
+        
+        <img [src]="this.asqse2Img[this.questMonth].imageBaseUrl2 + this.mouthArr[this.questMonth] + '.' + this.asqse2Img[this.questMonth].imageAppendix" />
+        
+      </div>
+      
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-default1 btnAdvice" (click)="nextQx()" *ngIf="source==1">下一步</button>
+      <!-- <a target="_blank" routerLink="/asqse2print"
+        [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}"><button
+          class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a> -->
+      <!-- <button class="btn-default1 complete" *ngIf="model=='report'" (click)="gotoReport($event)">完成</button> -->
+    </div>
+    <!-- <div class="bottom">
+      译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+2015年布鲁克斯出版有限公司版权所有©<br>
+由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+    </div> -->
+  </div>
+
+  <div class="screenBox" *ngIf="this.pageType==4" id="print3">
+    <div class="gameBox">
+      <div class="resInfo">
+        <img [src]="this.asqse2Img[this.questMonth].imageBaseUrl + this.asqse2Img[this.questMonth].index + '.' + this.asqse2Img[this.questMonth].imageAppendix" />
+        
+      </div>
+      
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-default1 btnAdvice" (click)="nextGa()" *ngIf="source==1 && model!='report' ">下一步</button>
+      <!-- <a target="_blank" routerLink="/asqse2print"
+        [queryParams]="{type:1,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}"><button
+          class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a> -->
+      <button class="btn-default1 complete" *ngIf="model=='report'" (click)="gotoReport($event)">完成</button>
+    </div>
+    <!-- <div class="bottom">
+      译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+2015年布鲁克斯出版有限公司版权所有©<br>
+由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+    </div> -->
+  </div>
+
+  <div class="screenBox" *ngIf="this.pageType==5" id="print4">
+    <div class="resultBox">
+      <div class="resCon">
+        <div>
+          <div class="resInfo">
+            <table>
+              <tbody>
+                <tr>
+                  <td class="asqtd3">
+                    <img src="assets/img/ASQSE2.png" alt="">
+                  </td>
+                  <td>
+                    <div class="testLogo">
+                      <p><span class="month">{{mouthArr[questMonth]}}</span>个月ASQ:SE-2信息汇总</p>
+                      <span
+                        class="desc">适用于{{monthWorkBook[2].data[questMonth][1]}}<br>至{{monthWorkBook[2].data[questMonth][2]}}{{monthWorkBook[2].data[questMonth][3]}}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table class="testInfo">
+            <tbody>
+              <tr>
+                <td><span class="baby">宝宝</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+              </tr>
+              <tr>
+                <td class="identity">问卷编号：<span class="babyid">{{question.Id}}</span></td>
+                <td>完成问卷日期：<span class="overtime">{{question.SurveyTime && setDate(question.SurveyTime.split('
+                    ')[0])}}</span></td>
+              </tr>
+              <tr>
+                <td>问卷提供机构：<span class="hospital">{{user.Name}}</span></td>
+                <td><span class="baby">宝宝</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                    ')[0])}}</span></td>
+              </tr>
+              <tr>
+                <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                      *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+              </tr>
+              <tr>
+                <td class="early"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="resRecord" *ngIf="scoreArr.length>0">
+            <h2>1.信息汇总于下表</h2>
+            <table class="tabRecord">
+              <tbody>
+                <tr>
+                  <td>题号</td>
+                  <td>选项分</td>
+                  <td>担忧</td>
+                  <td></td>
+                  <td>题号</td>
+                  <td>选项分</td>
+                  <td>担忧</td>
+                  <td></td>
+                  <td>题号</td>
+                  <td>选项分</td>
+                  <td>担忧</td>
+                </tr>
+                <ng-container *ngIf="scoreArr[0].answer.length>0">
+                  
+                  <ng-container *ngFor="let in of counter(math.ceil(scoreArr[0].answer.length/3)); let i = index;">
+                    <tr>
+                      <td>{{scoreArr[0].answer[i]!='' && (i+1)}}</td>
+                      <td>{{scoreArr[0].answer[i]!='' && setThisScore(scoreArr[0].answer[i])}}</td>
+                      <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1:0)}}</td>
+                      <td></td>
+                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && (i+2+math.floor(scoreArr[0].answer.length/3))}}</td>
+                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)])}}</td>
+                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+1+math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                      <td></td>
+                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && (i+3+2*math.floor(scoreArr[0].answer.length/3))}}</td>
+                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)])}}</td>
+                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+2+2*math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                <tr>
+                  <td colspan="5">分数合计：{{scoreArr[0].score}}</td>
+                  <td colspan="6">结果：{{scoreArr[0].jiezhi}}</td>
+                </tr>
+              </tbody>
+              
+             
+            </table>
+            <br>
+            <div *ngIf="scoreArr[0].jiezhi=='低于界值'" class="di explain"><span class="baby">孩子</span>的分数低于界值，表明目前他/她的社会-情绪发展处于正常水平。</div>
+            <div *ngIf="scoreArr[0].jiezhi=='接近界值'" class="jie explain"><span class="baby">孩子</span>的分数接近界值，请关注<span class="baby">孩子</span>的高分行为，提供社会-情绪发展促进活动，并进行监测，即进入下一个ASQ:SE-2月龄组后再次筛查，必要时结合转介考虑因素综合分析是否转介。</div>
+            <div *ngIf="scoreArr[0].jiezhi=='高于界值'" class="gao explain"><span class="baby">孩子</span>的分数高于界值，请结合转介考虑因素综合分析，如有必要，请转介心理健康评估。</div>
+            <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
+          </div>
+          <div class="resQues" *ngIf="intQuestions[1].question.length>0">
+            <h2>2.综合问题和其他问题记录如下</h2>
+
+            <table class="tabQues">
+              <tbody>
+                <ng-container
+                  *ngFor="let l = count; let in of counter(math.ceil((intQuestions[1].question.length)/2)); let i = index; ">
+                  <tr class="filing">
+                    <td>{{intQuestions[1].question[2*i][0]}}. {{intQuestions[1].question[2*i][1]}}</td>
+
+                    <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1" disabled="disabled"
+                        [(ngModel)]="intQuestions[1].answer && intQuestions[1].answer[2*i]">是</td>
+                    <td class="fontStyle"><input type="radio" [name]="'rdo' + (2*i+2)" value="3" disabled="disabled"
+                        [(ngModel)]="intQuestions[1].answer && intQuestions[1].answer[2*i]">否</td>
+
+                    <ng-container *ngIf="!((i == l-1) && (intQuestions[1].question.length)%2 == 1)">
+                      <td>{{intQuestions[1].question[2*i+1][0]}}. {{intQuestions[1].question[2*i+1][1]}}</td>
+
+                      <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1" disabled="disabled"
+                          [(ngModel)]="intQuestions[1].answer && intQuestions[1].answer[2*i+1]">是</td>
+                      <td class="fontStyle"><input type="radio" [name]="'rdo' +(2*i+1)" value="3" disabled="disabled"
+                          [(ngModel)]="intQuestions[1].answer && intQuestions[1].answer[2*i+1]">否</td>
+                    </ng-container>
+
+                  </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <textarea class="filing0" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+1]" cols="30"
+                        rows="10" maxlength="30" disabled="disabled"></textarea>
+                    </td>
+                    <ng-container *ngIf="!((i == l - 1) && (intQuestions[1].question.length)%2 == 1)">
+                      <td colspan="3">
+                        <textarea class="filing1" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+1]"
+                          cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+          <div class="resExplain">
+            <h2>3.转介考虑因素<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除筛查情况（包括答题情况及“筛查信息”）以外，还需考虑<span class="baby">孩子</span>的生活背景。</span></h2>
+            
+            <p class="fac-list"><i></i> <span class="fac-title">环境/时间因素</span><span>例如，<span class="baby">孩子</span>在学校和在家里的行为是否一致？<span class="baby">孩子</span>最近的生活中是否存在压力事件？</span></p>
+      
+            <p class="fac-list"><i></i> <span class="fac-title">发育因素</span><span>例如，<span class="baby">孩子</span>的行为是否与发育阶段或发育迟缓有关？</span></p>
+            
+            <p class="fac-list"><i></i> <span class="fac-title">健康因素</span><span>例如，<span class="baby">孩子</span>的行为是否与健康或生物因素有关？</span></p>
+            
+            <p class="fac-list"><i></i> <span class="fac-title">家庭/文化因素</span><span>例如，<span class="baby">孩子</span>的行为是否能够被文化背景或家庭背景所接受？</span></p>
+            
+            <p class="fac-list"><i></i> <span class="fac-title">照护人的担忧</span><span>例如，照护人对<span class="baby">孩子</span>的行为是否有担忧。</span></p>
+            <span>具体请参阅《ASQ:SE-2使用指南》的有关章节。</span>
+          </div>
+
+          <button class="btn-default1 btnAdvice" style="display: none;">下一步</button>
+          <a target="_blank" routerLink="/asqse2print"
+            [queryParams]="{type:2,uid:user.Id,did:doctor.Id,bid:baby.Id,qid:question.Id}"><button
+              class="btn-default1 btnPrint" *ngIf="source==1">打印</button></a>
+          <button class="btn-default1 complete" (click)="gotoReport($event)">完成</button>
+          <!-- <div class="bottom">
+            译自《年龄与发育进程问卷（第3版）》，作者Jane Squires和Diane Bricker，2009年布鲁克斯出版有限公司版权所有<br>由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+          </div> -->
+          <div class="bottom bottom2">
+            译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+  2015年布鲁克斯出版有限公司版权所有©<br>
+  由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<toast-window [hidden]="!float">
+  <submit-box [getfloat]="float" [checkStatus]="checkStatus" (getparent)="onSubmitFloat($event)" #Pointer></submit-box>
+</toast-window>
+
+<helper-box [hidden]="!helperfloat" [helperfloat]="helperfloat" [helperAudio]="helperAudio" [helperImg]="helperImg"
+  [helperQuestion]="helperQuestion" [helperAudioStatus]="helperAudioStatus" (getparent)="onHelperFloat($event)"
+  #Helper></helper-box>
+
+<mutex-box [hidden]="!mutexfloat" [mutexfloat]="mutexfloat" [showStr]="showStr" (getparent)="mutexFloat($event)"
+  #Mutex></mutex-box>

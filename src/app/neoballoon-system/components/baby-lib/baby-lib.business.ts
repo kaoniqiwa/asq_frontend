@@ -18,11 +18,12 @@ import { BabyLibConverter } from "./baby-lib.converter";
 export class BabyManageBusiness {
 
   asq3mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54, 60];
+  asqse2mouthArr: any = [2, 6, 12, 18, 24, 30, 36, 48, 60];
   mouthArr:any = [];
 
   constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService, private _memberRequest: MemberRequestService, private _converter: BabyLibConverter,private _userRequest: CompanyRequestService) {
 
-    this.mouthArr = this.asq3mouthArr;
+    //this.mouthArr = this.asq3mouthArr;
 
   }
 
@@ -43,6 +44,11 @@ export class BabyManageBusiness {
     //console.log('questions1',searchInfo.Uid, searchInfo.Did, searchInfo.QuestType, searchInfo.QuestMonth,searchInfo.PageIndex,searchInfo.PageSize);
     //let { Data: questions, Page } = await this._listQuestion(searchInfo.Uid, searchInfo.Dids, searchInfo.QuestType, searchInfo.QuestMonth,searchInfo.PageIndex,searchInfo.PageSize,searchInfo.Name);
     let { Data: questions, Page } = await this._questionRequest.list(searchInfo);
+    if(searchInfo.QuestType == 'ASQ-3'){
+      this.mouthArr = this.asq3mouthArr;
+    }else if(searchInfo.QuestType == 'ASQ:SE-2'){
+      this.mouthArr = this.asqse2mouthArr;
+    }
     res.Page = Page;
     //console.log('questions2',questions);
     for (let i = 0; i < questions.length; i++) {
@@ -59,7 +65,9 @@ export class BabyManageBusiness {
         model.Mname = question.Mname;
         model.Status = question.Status;
         model.Birthday = formatDate(question.Birthday, 'yyyy-MM-dd', 'en');
-        model.SurveyTime = formatDate(question.SurveyTime, 'yyyy-MM-dd', 'en');
+        //model.SurveyTime = formatDate(question.SurveyTime, 'yyyy-MM-dd', 'en');
+        model.SurveyTime = question.SurveyTime;
+        model.QuestType = question.QuestType;
         model.QuestMonth = this.mouthArr[question.QuestMonth];
         res.Data.push(model)
       }

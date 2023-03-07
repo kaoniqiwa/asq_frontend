@@ -17,9 +17,14 @@ import monthWorkBook from "src/assets/files/asq_month.xlsx";
 
 
 monthWorkBook.forEach((sheet: ASQMonthFilter) => {
+  //console.log('sheet',sheet);
+  if(sheet.name == 'ASQ-SE2'){
+    sheet.name = 'ASQ:SE-2';
+  }else if(sheet.name == 'ASQ-SE'){
+    sheet.name = 'ASQ:SE';
+  }
   // 去掉标题
   sheet.data.shift();
-
   // 去掉列名
   sheet.data.shift();
 
@@ -41,6 +46,42 @@ export class SessionStorageService {
   get source() {
     let source = sessionStorage.getItem('source');
     return source;
+  }
+
+  private _uuid: any | null = null;
+  set uuid(uuid:any) {
+    sessionStorage.setItem('uuid', uuid);
+  }
+  get uuid() {
+    let uuid = sessionStorage.getItem('uuid');
+    return uuid;
+  }
+
+  private _seq: any | null = null;
+  set seq(seq:any) {
+    sessionStorage.setItem('seq', seq);
+  }
+  get seq() {
+    let seq = sessionStorage.getItem('seq');
+    return seq;
+  }
+
+  private _Am: any | null = null;
+  set Am(Am:any) {
+    sessionStorage.setItem('Am', Am);
+  }
+  get Am() {
+    let Am = sessionStorage.getItem('Am');
+    return Am;
+  }
+
+  private _At: any | null = null;
+  set At(At:any) {
+    sessionStorage.setItem('At', At);
+  }
+  get At() {
+    let At = sessionStorage.getItem('At');
+    return At;
   }
 
   private _mid: any | null = null;

@@ -31,7 +31,7 @@
             </tr> -->
             <ng-container *ngFor="let item of intQuetion.question; let i = index; let l = count">
               <tr *ngIf="i != 0" class="model queNum1">
-                <td colspan="4" >
+                <td colspan="4"  ngClass="{{(item[2] && checkRed(i,item[2],intQuetion.answer && intQuetion.answer[i-1]))?'red':''}}">
                   <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
                 </td>
               </tr>
@@ -54,11 +54,10 @@
                   <span class="span_gai">否</span>
                 </td>
                 <td class="td_gai">
-                  <img src="assets/img/icon_audio.png" alt="" class="signal" data-url="2-1" data-type="2" /><audio
-                    src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-1.mp3" preload="none"></audio>
+                  <img [src]="item[5]==1?'assets/img/icon_audio.png':'assets/img/icon_img.png'"  alt="" class="signal" data-url="2-1" data-type="2" (click)="showHelper($event)" attr.l="{{ l }}" attr.xu="{{ i - 1 }}" attr.k="{{k}}" attr.j="{{j}}" attr.question="{{item[1]}}" attr.model="{{item[5]}}" />
                 </td>
               </tr>
-              <tr *ngIf="i != 0 && j == k - 1">
+              <tr *ngIf="i != 0 && ((item[2] && checkInput(item[2],intQuetion.answer && intQuetion.answer[i-1])) || j == k - 1)">
                 <td colspan="4">
                   <textarea class="last_textarea" [disabled]="model=='report'" [(ngModel)]="currentAnswer.result && currentAnswer.result[i-1]" name="" cols="30" rows="10" maxlength="50" placeholder=""></textarea>
                 </td>
@@ -83,7 +82,7 @@
             </tr>
             <ng-container *ngFor="let item of intQuetion.question; let i = index; let l = count">
               <tr *ngIf="i != 0" class="model queNum1">
-                <td>
+                <td ngClass="{{(item[2] && checkRed(i,item[2],intQuetion.answer && intQuetion.answer[i-1]))?'red':''}}">
                   <span class="dot2">{{ item[0] }}.</span><span class="must">{{ item[1] }}</span>
                 </td>
                 <td>
@@ -101,8 +100,7 @@
                     attr.xu="{{ i - 1 }}" value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i-1]" />
                 </td>
                 <td>
-                  <img src="assets/img/icon_audio.png" alt="" class="signal" data-url="2-1" data-type="2" (click)="showHelper($event)" />
-                  <audio src="http://os.jtuntech.com/asq/audio/ASQ3-2/2-1.mp3" preload="none"></audio>
+                  <img [src]="item[5]==1?'assets/img/icon_audio.png':'assets/img/icon_img.png'"  alt="" class="signal" data-url="2-1" data-type="2" (click)="showHelper($event)" attr.l="{{ l }}" attr.xu="{{ i - 1 }}" attr.k="{{k}}" attr.j="{{j}}" attr.question="{{item[1]}}" attr.model="{{item[5]}}" />
                 </td>
               </tr>
               <tr *ngIf="i != 0 && ((item[2] && checkInput(item[2],intQuetion.answer && intQuetion.answer[i-1])) || j == k - 1)">
@@ -244,9 +242,9 @@
       <div class="gameList">
         <ul>
 
-          <ng-container *ngFor="let game of gamesArr;">
-            <li> <img src="assets/img/{{game.function}}.png" alt="">
-              <p>{{game.standard.split('$')[0]}}</p> <span>{{game.standard.split('$')[1]}}</span>
+          <ng-container *ngFor="let game of gamesArr[0]; let i=index;">
+            <li> <img src="assets/img/{{i+1}}.png" alt="">
+              <p>{{game.split('$')[0]}}</p> <span>{{game.split('$')[1]}}</span>
             </li>
           </ng-container>
         </ul>
@@ -254,10 +252,10 @@
       <p class="according" *ngIf="gaoArr.length!=scoreArr.length">
         根据
         <span class="baby">宝宝</span>的筛查结果，推荐如下点子／方法以促进<span class="ergoregion">
-          <ng-container *ngFor="let score of scoreArr; let i=index;">
+          <ng-container *ngFor="let score of fgaoArr; let i=index; let l = count">
             <ng-container *ngIf="score.jiezhi!='高于界值'">
               “<span>{{score.nengqu}}</span>”
-              <ng-container *ngIf="i!=scoreArr.length-1">
+              <ng-container *ngIf="i!=fgaoArr.length-1">
                 、
               </ng-container>
             </ng-container>
@@ -268,58 +266,12 @@
       </p>
       <div class="recBox" *ngIf="gaoArr.length!=scoreArr.length">
         <ng-container *ngFor="let game of gamesArr; let i=index;">
-          <div *ngIf="scoreArr[i].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+game.function}}">
-            <img src="assets/img/{{game.function}}.png" alt="">
+          <div *ngIf="i != 0 && scoreArr[i-1].jiezhi!='高于界值'" class="recList" ngClass="{{'recList0'+i}}">
+            <img src="assets/img/{{i}}.png" alt="">
             <ul>
-
-              <li *ngIf="game.backup1!=''"><i></i>
+              <li *ngFor="let item of game;"><i></i>
                 <div>
-                  <p>{{game.backup1.split('$')[0]}}</p> <span>{{game.backup1.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup2!=''"><i></i>
-                <div>
-                  <p>{{game.backup2.split('$')[0]}}</p> <span>{{game.backup2.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup3!=''"><i></i>
-                <div>
-                  <p>{{game.backup3.split('$')[0]}}</p> <span>{{game.backup3.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup3!=''"><i></i>
-                <div>
-                  <p>{{game.backup4.split('$')[0]}}</p> <span>{{game.backup4.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup5!=''"><i></i>
-                <div>
-                  <p>{{game.backup5.split('$')[0]}}</p> <span>{{game.backup5.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup6!=''"><i></i>
-                <div>
-                  <p>{{game.backup6.split('$')[0]}}</p> <span>{{game.backup6.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup7!=''"><i></i>
-                <div>
-                  <p>{{game.backup7.split('$')[0]}}</p> <span>{{game.backup7.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup8!=''">
-                <div>
-                  <p>{{game.backup8.split('$')[0]}}</p> <span>{{game.backup8.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup9!=''"><i></i>
-                <div>
-                  <p>{{game.backup9.split('$')[0]}}</p> <span>{{game.backup9.split('$')[1]}}</span>
-                </div>
-              </li>
-              <li *ngIf="game.backup10!=''"><i></i>
-                <div>
-                  <p>{{game.backup10.split('$')[0]}}</p> <span>{{game.backup10.split('$')[1]}}</span>
+                  <p>{{item.split('$')[0]}}</p> <span>{{item.split('$')[1]}}</span>
                 </div>
               </li>
 
@@ -368,7 +320,7 @@
                 <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
               </tr>
               <tr>
-                <td class="identity">问卷编号：<span class="babyid">E20221016160729154595</span></td>
+                <td class="identity">问卷编号：<span class="babyid">{{question.Id}}</span></td>
                 <td>完成问卷日期：<span class="overtime">{{question.SurveyTime && setDate(question.SurveyTime.split(' ')[0])}}</span></td>
               </tr>
               <tr>
@@ -377,7 +329,7 @@
               </tr>
               <tr>
                 <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
-                <td>完成问卷年龄：<span class="babyAge">{{baby.Rectifyage}}<span *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
               </tr>
               <tr>
                 <td class="early"></td>
@@ -478,18 +430,22 @@
     #Pointer
   ></submit-box>
 </toast-window>
-<toast-window [hidden]="!helperfloat">
+
   <helper-box
+  [hidden]="!helperfloat"
     [helperfloat]="helperfloat"
-    [audio]="audio"
-    (getparent)="onSubmitFloat($event)"
+    [helperAudio]="helperAudio"
+    [helperImg]="helperImg"
+    [helperQuestion]="helperQuestion"
+    [helperAudioStatus]="helperAudioStatus"
+    (getparent)="onHelperFloat($event)"
     #Helper
   ></helper-box>
-</toast-window>
-<toast-window [hidden]="!mutexfloat">
+
   <mutex-box
+    [hidden]="!mutexfloat"
     [mutexfloat]="mutexfloat"
+    [showStr]="showStr"
     (getparent)="mutexFloat($event)"
     #Mutex
   ></mutex-box>
-</toast-window>

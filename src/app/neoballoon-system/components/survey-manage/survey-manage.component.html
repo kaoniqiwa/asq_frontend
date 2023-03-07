@@ -33,7 +33,7 @@
             <ng-container *ngIf="currentType == surveyBtn.questType">
               <img [src]="'assets/img/' + surveyBtn.activeIcon" alt="" />
             </ng-container>
-            <span class="sub-icon">{{ surveyBtn.subIcon }}</span>
+            <span class="sub-icon" [class.sub-icon2]="currentType == surveyBtn.questType">{{ surveyBtn.subIcon }}</span>
           </div>
           <div class="content">{{ surveyBtn.content }}</div>
         </div>

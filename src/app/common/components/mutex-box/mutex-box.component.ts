@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class MutexBoxComponent implements OnInit {
 
   @Input() mutexfloat:any;
+  @Input() showStr:any;
   @Output() getparent = new EventEmitter<string>();
 
   onMutex(str:any) {

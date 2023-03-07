@@ -207,7 +207,7 @@
                   [date]="
                     +babyGroupArr[currentIndex]
                       .getRawValue()
-                      .surveyTime.split('-')[2]
+                      .surveyTime.split(' ')[0].split('-')[2]
                   "
                   (pickerChange)="pickerChange2($event, babyGroup)"
                 ></app-date-picker>
@@ -233,7 +233,7 @@
                 <div><span>*</span>是否早产:</div>
                 <div>（提前3周以上出生）</div>
               </label>
-              <div class="col-sm-3">
+              <div class="col-sm-9">
                 <label>
                   <input
                     [disabled]="babyGroupArr[currentIndex].getRawValue().isAnswer==1?true:!true"
@@ -250,6 +250,9 @@
                     formControlName="premature"
                     value="否"
                   />否
+                </label>
+                <label>
+                  <span class="label_left20">（孩子是早产儿，年龄≤24个月，我们会按照矫正龄提供问卷。）</span>
                 </label>
               </div>
             </div>

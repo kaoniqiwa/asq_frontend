@@ -30,12 +30,17 @@ export class BabyQrcodeManageComponent implements OnInit {
   qrcodeUrl = '';
   lastNum:any = '刷新';
   qrcodeShow = false;
+  Am:any = '0';
+  At:any = '0';
+  thisinterval:any;
 
   constructor(private _sessionStorage: SessionStorageService,private _business: BabyQrcodeManageBusiness ,private _router: Router,private _activeRoute: ActivatedRoute) {
     this.user = this._sessionStorage.user;
     this.doctor = this._sessionStorage.doctor;
     this._activeRoute.queryParams.subscribe(params => {
       this.selectScan = params['selectScan'];
+      this.Am = params['Am'];
+      this.At = params['At'];
     })
     console.log('app-baby-add-manage',this._sessionStorage.user,this._sessionStorage.doctor);
   }
@@ -54,7 +59,7 @@ export class BabyQrcodeManageComponent implements OnInit {
     console.log('href',window.location.href);
     console.log('this._router.url',this._router.url);
     console.log('qrcode',qrcode);
-    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Seq+'&did='+this.doctor.Seq+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid+'&type='+this.selectScan;
+    this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Seq+'&did='+this.doctor.Seq+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid+'&type='+this.selectScan+'&Am='+this.Am+'&At='+this.At;
     console.log('qrcodeUrl',this.qrcodeUrl);
     this.qrcodeShow = true;
     this.setTime();
@@ -75,16 +80,17 @@ export class BabyQrcodeManageComponent implements OnInit {
     }
   }
   setTime(){
-    let t = 30;
+    let t = 20;
     let that = this;
     that.lastNum = t+'S';
-    let thisinterval = setInterval(function(){
+    clearInterval(that.thisinterval);
+    that.thisinterval = setInterval(function(){
       t--;
       that.lastNum = t+'S';
       if(t<=0){
         that.lastNum = '刷新';
         that.qrcodeShow = false;
-        clearInterval(thisinterval);
+        clearInterval(that.thisinterval);
       }
     },1000)
   }

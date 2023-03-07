@@ -56,6 +56,7 @@ export class QuestionLibModel {
   Mname!: string;
   SurveyTime!: string;
   QuestMonth?:string;
+  QuestType?:string;
   // ParentName!: string;
   // CreateTime!: string;
   // Status!: string;

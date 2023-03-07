@@ -1,0 +1,299 @@
+<style media="print">
+    @page {
+        size: auto;  /* auto is the initial value */
+        margin: 5mm; /* this affects the margin in the printer settings */
+        @bottom-right {
+    		content: counter(page) " of " counter(pages);
+   		}
+    }
+    .container{
+    -webkit-print-color-adjust: exact;
+    background-color:#fff;
+    }
+</style>
+<div class="container" *ngIf="complete">
+    <div class="container2">
+        <!--初步结果 -->
+        <div class="default"></div>
+        <div class="resBox res1" id="printBox" *ngIf="type!=3" >
+            <div class="resInfo">
+                <img src="assets/img/bg-resse2.jpg" alt="" width="100%">
+                <p class="title">ASQ:SE-2筛查报告</p>
+                <table class="testInfo">
+                    <tbody>
+                        <tr>
+                            <td><span class="baby">孩子</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                            <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="identity">档案编号：<span class="fileNumber">{{question.Id}}</span></td>
+                            <td><span class="baby">孩子</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                                    ')[0])}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>单位名称：<span class="hospital">{{user.Name}}</span></td>
+                            <td>完成问卷日期：<span class="overtime">{{setDate(baby.SurveyTime.split(' ')[0])}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                            <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                                        *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
+            <p class="respect">尊敬的<em class="childName">{{baby.Name}}</em>的父母/监护人：</p>
+
+
+            <p class="gao" *ngIf="this.diArr.length==0 && this.jieArr.length==0">感谢你为<span
+                    class="baby">孩子</span>完成了ASQ:SE-2问卷！<span
+                    class="baby">孩子</span>的ASQ:SE-2筛查结果<i>高于界值</i>，表明目前其社会和情绪能力发展不理想，建议到儿保门诊或心理门诊就诊。</p>
+            <p class="jie" *ngIf="this.diArr.length==0 && this.jieArr.length!=0">感谢你为<span
+                    class="baby">孩子</span>完成了ASQ:SE-2问卷！<span
+                    class="baby">孩子</span>的ASQ:SE-2筛查结果<i>接近界值</i>，表明目前其社会和情绪能力发展需要监测。同时，建议<span
+                    class="baby">孩子</span>进入下一个ASQ:SE-2月龄组后再次筛查，并听从专业人员建议。</p>
+            <p class="di" *ngIf="this.diArr.length!=0 && this.jieArr.length==0">感谢你为<span
+                    class="baby">孩子</span>完成了ASQ:SE-2问卷！<span
+                    class="baby">孩子</span>的ASQ:SE-2筛查结果<i>低于界值</i>，表明目前其社会和情绪能力发展处于正常水平，请根据专业人员的建议进行下一次筛查。</p>
+            <p class="p_indent">出生后的最初5年对<span class="baby">孩子</span>的人生非常关键，因为这段时间能为他/她以后的学习和生活打下重要的基础。在<span
+                    class="babytime">童年早期</span>，<span class="baby">孩子</span>应该获得许多经验、学习许多技能，在此期间确保每个<span
+                    class="baby">孩子</span>顺利发育/发展非常重要。因此，我们希望帮助你观察<span class="baby">孩子</span>的社会和情绪行为的发育/发展。</p>
+            <p class="p_indent">基于筛查结果，我们为你和<span class="baby">孩子</span>提供了发展指南和游戏活动，并设计了学习活动，旨在帮助你了解<span
+                    class="baby">孩子</span>在成长中预期的行为表现，并提供了简单易行的点子和方法，促进健康的亲子互动、解决常见的育儿问题和挑战，以帮助<span
+                    class="baby">孩子</span>的社会-情绪发展。</p>
+            <p>祝好！</p>
+            <div class="writeBox">
+                <p>签字：<span></span></p>
+                <p>日期：<span></span></p>
+            </div>
+            <div class="bottom bottom2 bottonExp">
+                译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+                2015年布鲁克斯出版有限公司版权所有©<br>
+                由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+            </div>
+
+
+        </div>
+
+        <!--游戏结果 -->
+        <div class="printBox printD" *ngIf="type!=3">
+            <img
+                [src]="asqse2Img[questMonth].imageBaseUrl2 + (mouthArr[questMonth] + '_p.') + asqse2Img[questMonth].imageAppendix" />
+        </div>
+        <div class="printBox printG" *ngIf="type!=3">
+            <img
+                [src]="asqse2Img[questMonth].imageBaseUrl + asqse2Img[questMonth].index + '_p.' + asqse2Img[questMonth].imageAppendix" />
+        </div>
+
+
+        <!--详细结果 -->
+        <div class="printBox" id="printBox1" *ngIf="type==2 || type==5" >
+            
+
+            <div class="resInfo">
+                <img src="assets/img/bg-resse2.jpg" alt="" width="100%">
+                <p class="title title2">
+                    <span class="month">{{mouthArr[questMonth]}}</span>个月ASQ:SE2信息汇总
+                    <span class="desc">适用于{{monthWorkBook[2].data[questMonth][1]}}至{{monthWorkBook[2].data[questMonth][2]}}{{monthWorkBook[2].data[questMonth][3]}}</span>
+                </p>
+                <table class="testInfo">
+                    <tbody>
+                        <tr>
+                            <td><span class="baby">孩子</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                            <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="identity">档案编号：<span class="fileNumber">{{question.Id}}</span></td>
+                            <td><span class="baby">孩子</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                                    ')[0])}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>单位名称：<span class="hospital">{{user.Name}}</span></td>
+                            <td>完成问卷日期：<span class="overtime">{{setDate(baby.SurveyTime.split(' ')[0])}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                            <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                                        *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="resRecord" *ngIf="scoreArr.length>0">
+                <h2>1.信息汇总于下表</h2>
+                <table class="tabRecord">
+                    <tbody>
+                        <tr>
+                            <td>题号</td>
+                            <td>选项分</td>
+                            <td>担忧</td>
+                            <td></td>
+                            <td>题号</td>
+                            <td>选项分</td>
+                            <td>担忧</td>
+                            <td></td>
+                            <td>题号</td>
+                            <td>选项分</td>
+                            <td>担忧</td>
+                        </tr>
+                        <ng-container *ngIf="scoreArr[0].answer.length>0">
+
+                            <ng-container
+                                *ngFor="let in of counter(math.ceil(scoreArr[0].answer.length/3)); let i = index;">
+                                <tr>
+                                    <td>{{scoreArr[0].answer[i]!='' && (i+1)}}</td>
+                                    <td>{{scoreArr[0].answer[i]!='' && setThisScore(scoreArr[0].answer[i])}}</td>
+                                    <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1:0)}}</td>
+                                    <td></td>
+                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
+                                        (i+2+math.floor(scoreArr[0].answer.length/3))}}</td>
+                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
+                                        setThisScore(scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)])}}
+                                    </td>
+                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
+                                        (scoreArr[0].worry[i+1+math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                                    <td></td>
+                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
+                                        (i+3+2*math.floor(scoreArr[0].answer.length/3))}}</td>
+                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
+                                        setThisScore(scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)])}}
+                                    </td>
+                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
+                                        (scoreArr[0].worry[i+2+2*math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr>
+                            <td colspan="5">分数合计：{{scoreArr[0].score}}</td>
+                            <td colspan="6">结果：{{scoreArr[0].jiezhi}}</td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+                <br>
+                <div *ngIf="scoreArr[0].jiezhi=='低于界值'" class="di explain"><span
+                        class="baby">孩子</span>的分数低于界值，表明目前他/她的社会-情绪发展处于正常水平。</div>
+                <div *ngIf="scoreArr[0].jiezhi=='接近界值'" class="jie explain"><span class="baby">孩子</span>的分数接近界值，请关注<span
+                        class="baby">孩子</span>的高分行为，提供社会-情绪发展促进活动，并进行监测，即进入下一个ASQ:SE-2月龄组后再次筛查，必要时结合转介考虑因素综合分析是否转介。
+                </div>
+                <div *ngIf="scoreArr[0].jiezhi=='高于界值'" class="gao explain"><span
+                        class="baby">孩子</span>的分数高于界值，请结合转介考虑因素综合分析，如有必要，请转介心理健康评估。</div>
+                <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
+            </div>
+
+            <div class="resQues" *ngIf="zongHe.question.length>0">
+                <h2>2.综合问题和其他问题记录如下</h2>
+
+                <table class="tabQues">
+                    <tbody>
+                        <ng-container
+                            *ngFor="let l = count; let in of counter(math.ceil((zongHe.question.length)/2)); let i = index; ">
+                            <tr class="filing">
+                                <td>{{zongHe.question[2*i][0]}}. {{zongHe.question[2*i][1]}}</td>
+
+                                <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1" disabled="disabled"
+                                        [(ngModel)]="zongHe.answer && zongHe.answer[2*i]">是</td>
+                                <td class="fontStyle"><input type="radio" [name]="'rdo' + (2*i+2)" value="3"
+                                        disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i]">否</td>
+
+                                <ng-container *ngIf="!((i == l-1) && (zongHe.question.length)%2 == 1)">
+                                    <td>{{zongHe.question[2*i+1][0]}}. {{zongHe.question[2*i+1][1]}}</td>
+
+                                    <td><input type="radio" [name]="'rdo' +(2*i+1)" value="1" disabled="disabled"
+                                            [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1]">是</td>
+                                    <td class="fontStyle"><input type="radio" [name]="'rdo' +(2*i+1)" value="3"
+                                            disabled="disabled" [(ngModel)]="zongHe.answer && zongHe.answer[2*i+1]">否
+                                    </td>
+                                </ng-container>
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <textarea class="filing0" name="" [(ngModel)]="zongHe.result && zongHe.result[2*i]"
+                                        cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
+                                </td>
+                                <ng-container *ngIf="!((i == l - 1) && (zongHe.question.length)%2 == 1)">
+                                    <td colspan="3">
+                                        <textarea class="filing1" name=""
+                                            [(ngModel)]="zongHe.result && zongHe.result[2*i+1]" cols="30" rows="10"
+                                            maxlength="30" disabled="disabled"></textarea>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="resExplain">
+                <h2>3.转介考虑因素。<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除筛查情况（包括答题情况及“筛查信息”）以外，还需考虑<span
+                            class="baby">孩子</span>的生活背景。</span></h2>
+
+                <p class="fac-list"><i></i> <span class="fac-title">环境/时间因素。</span><span>例如，<span
+                            class="baby">孩子</span>在学校和在家里的行为是否一致？<span class="baby">孩子</span>最近的生活中是否存在压力事件？</span></p>
+
+                <p class="fac-list"><i></i> <span class="fac-title">发育因素。</span><span>例如，<span
+                            class="baby">孩子</span>的行为是否与发育阶段或发育迟缓有关？</span></p>
+
+                <p class="fac-list"><i></i> <span class="fac-title">健康因素。</span><span>例如，<span
+                            class="baby">孩子</span>的行为是否与健康或生物因素有关？</span></p>
+
+                <p class="fac-list"><i></i> <span class="fac-title">家庭/文化因素。</span><span>例如，<span
+                            class="baby">孩子</span>的行为是否能够被文化背景或家庭背景所接受？</span></p>
+
+                <p class="fac-list"><i></i> <span class="fac-title">照护人的担忧。</span><span>例如，照护人对<span
+                            class="baby">孩子</span>的行为是否有担忧。</span></p>
+                <span>具体请参阅《ASQ:SE-2使用指南》的有关章节。</span>
+            </div>
+            <div class="bottom bottom2 bottonExp">
+                译自《年龄与发育进程问卷：社会-情绪（第2版）使用指南》，作者Squires, Bricker和Twombly<br>
+                2015年布鲁克斯出版有限公司版权所有©<br>
+                由卞晓燕及上海杖元信息科技有限公司在授权下研究和引进
+            </div>
+
+
+        </div>
+
+        <div class="printBox printD" *ngIf="type==3 || type==4 || type==5">
+            <ng-container *ngFor="let Img of learnImg; let i = index; let l = count">
+                <div class="first_top_k">
+                    <img *ngIf="i==0" [src]="Img" />
+                    <div class="first_top" *ngIf="i==0">
+                        <table class="testInfo">
+                            <tbody>
+                                <tr>
+                                    <td><span class="baby">孩子</span>姓名：<span class="babyname">{{baby.Name}}</span></td>
+                                    <td>性别：<span class="babysex">{{baby.Gender}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="identity">档案编号：<span class="fileNumber">{{question.Id}}</span></td>
+                                    <td><span class="baby">孩子</span>出生日期：<span class="babybirth">{{setDate(baby.Birthday.split('
+                                            ')[0])}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>单位名称：<span class="hospital">{{user.Name}}</span></td>
+                                    <td>完成问卷日期：<span class="overtime">{{setDate(baby.SurveyTime.split(' ')[0])}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>子账户：<span class="doctorName">{{doctor.Name}}</span></td>
+                                    <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
+                                                *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <img *ngIf="i!=0" [src]="Img" />
+            </ng-container>
+
+        </div>
+    </div>
+</div>
