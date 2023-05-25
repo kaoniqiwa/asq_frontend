@@ -1,7 +1,7 @@
 <div class="baby-info vertical-layout">
   <app-account-info [user]="user"></app-account-info>
-  <toast-window *ngIf="showToast" (closeEvent)="closeEvent()">
-    <baby-info-operate  (searchCondition)="searchCondition($event)" (closeEvent)="closeEvent()"></baby-info-operate>
+  <toast-window *ngIf="showToast" (closeEvent)="closeEvent()" >
+    <baby-info-operate  (searchCondition)="searchCondition($event)" (closeEvent)="closeEvent()" #Operate></baby-info-operate>
   </toast-window>
   <div class="vertical-header">
     <div class="green-title large-title underline-title">宝宝库</div>
@@ -95,7 +95,7 @@
                 </select>
                 <a [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" class="aa" *ngIf="questType == 'ASQ:SE-2'" (click)="filterHandler2($event)">打印</a>
               </td>
-              <td><span class="more" [attr.Uid]="data.Uid" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" [attr.Mid]="data.Mid" (click)="gotoReport($event)">了解更多<img src="assets/img/arrow_w.png" alt="" ></span></td>
+              <td><span class="more" [attr.Uid]="data.Uid" [attr.Type]="data.QuestType" [attr.Did]="data.Did" [attr.Bid]="data.Bid" [attr.Qid]="data.Id" [attr.Mid]="data.Mid" (click)="gotoReport($event)">了解更多<img src="assets/img/arrow_w.png" alt="" ></span></td>
             </tr>
           </ng-container>
           

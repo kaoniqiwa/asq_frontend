@@ -85,7 +85,7 @@ export class BabyManageBusiness {
   }
 
   
-  private _listMember(dids: string[]) {
+  /* private _listMember(dids: string[]) {
     let params = new GetMemberParams();
     params.Dids = dids
 
@@ -109,7 +109,7 @@ export class BabyManageBusiness {
     params.QuestType = questType;
     params.QuestMonth = questMonth;
     return this._questionRequest.list(params);
-  }
+  } */
 
 }
 

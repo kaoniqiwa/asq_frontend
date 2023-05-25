@@ -26,6 +26,7 @@
             name="At"
             value="1"
             [(ngModel)]="At"
+            (change)="atdoctor($event)"
           />必填</label
         >&nbsp;&nbsp;&nbsp;
         <label
@@ -34,6 +35,7 @@
             name="At"
             value="0"
             [(ngModel)]="At"
+            (change)="atdoctor($event)"
           />非必填</label
         >
       </div>

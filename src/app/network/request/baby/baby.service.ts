@@ -24,9 +24,9 @@ export class BabyRequestService {
     model.Flow = "addBaby";
     return this.type.post(BabyUrl.create(), model);
   }
-  list(params: GetBabyParams = new GetBabyParams()) {
-    params.Flow = 'listBaby';
-    return this.type.paged(BabyUrl.list(), params)
+  list(params:any) {
+    params.Flow = 'getBabys';
+    return this.type.post(BabyUrl.list(), params)
   }
 
   delete(params: GetBabyParams = new GetBabyParams()) {

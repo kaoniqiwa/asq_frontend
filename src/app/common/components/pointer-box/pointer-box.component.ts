@@ -13,6 +13,8 @@ export class PointerBoxComponent implements OnInit {
   
   showStatus = 0;
   birthDay = '';
+  rectifyage = '';
+  prematureStr = '';
 
   onSubmit(str:any) {
     this.getparent.emit(str);
@@ -23,9 +25,11 @@ export class PointerBoxComponent implements OnInit {
     this.showStatus = e;
   }
 
-  setBirthDay(b:any){
-    //console.log('setBirthDay',b);
+  setBirthDay(b:any,r:any,p:any){
+    console.log('setBirthDay',r);
     this.birthDay = b.split('-')[0]+'年'+b.split('-')[1]+'月'+b.split('-')[2]+'日';
+    this.rectifyage = r;
+    this.prematureStr = p;
   }
 
   constructor(private _router: Router) {

@@ -39,6 +39,12 @@ export class DoctorRequestService {
     return this.type.post(DoctorUrl.create(), params)
   }
 
+  updateAt(model: Doctor) {
+    model.Flow = 'atDoctor';
+    return this.type.post(DoctorUrl.update(), model)
+
+  }
+
   update(model: Doctor) {
     model.Flow = 'editDoctor';
     return this.type.post(DoctorUrl.update(), model)

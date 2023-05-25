@@ -31,7 +31,7 @@ export class BabyInMemberComponent implements OnInit {
   })
 
 
-  member: Member | null = null;
+  member: Member | any = null;
   doctor: Doctor | null = null;
 
 
@@ -46,9 +46,10 @@ export class BabyInMemberComponent implements OnInit {
     if (this._checkForm()) {
       if (this.doctor) {
         let phone = this.myForm.value.phone!;
-        let res = await this._business.getMember(this.doctor.Id, phone);
-        if (res.Data.length) {
-          this.member = res.Data[0];
+        let res:any = await this._business.getMember(phone);
+        console.log('submit_res',res);
+        if (res.length) {
+          this.member = res[0];
           this._sessionStorage.mid = this.member.Id;
           this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
             queryParams: {

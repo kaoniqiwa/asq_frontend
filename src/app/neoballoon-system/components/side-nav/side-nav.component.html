@@ -1,7 +1,6 @@
 <div class="side-nav">
   <div class="nav-wrapper">
-    <a
-      class="nav-item"
+    <a class="nav-item"
       [class.selected]="model.id == side"
       *ngFor="let model of models"
       [routerLink]="model.path"
@@ -9,11 +8,11 @@
       {{ model.title }}
     </a>
   </div>
-  <div class="nav-code">
+  <div class="nav-code mhide">
     <div class="code-title">扫码关注公众号</div>
     <div class="code-img"><img src="assets/img/qrcode.jpg" alt="" /></div>
   </div>
-  <div class="nav-info">
+  <div class="nav-info mhide">
     <div class="info-item">联系电话:</div>
     <div class="info-item">021-54300379</div>
     <div class="info-item">咨询邮箱:</div>

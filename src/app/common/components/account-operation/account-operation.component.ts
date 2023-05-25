@@ -13,13 +13,25 @@ import { AccountOperationDisplay } from './account-operation.model';
   styleUrls: ['./account-operation.component.less']
 })
 export class AccountOperationComponent implements OnInit {
+  user:any = null;
+  doctor:any = null;
 
   display = new AccountOperationDisplay();
 
-  constructor(private _router: Router, private route: ActivatedRoute, private _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _cookieService: CookieService
+  constructor(private _router: Router, private route: ActivatedRoute, public _sessionStorage: SessionStorageService, private _localStorage: LocalStorageService, private _cookieService: CookieService
   ) { }
 
   ngOnInit(): void {
+    this.user = this._sessionStorage.user;
+    this.doctor = this._sessionStorage.doctor;
+  }
+
+  changeDoctor(){
+    
+    this.user = this._sessionStorage.user;
+    this.doctor = this._sessionStorage.doctor;
+
+    console.log('changeDoctor',this.doctor);
   }
 
   bindMobile(e: Event) {

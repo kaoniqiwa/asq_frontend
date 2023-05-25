@@ -18,6 +18,7 @@ import zh from "@angular/common/locales/zh";
 import { RouteReuseStrategy } from "@angular/router";
 import { ReuseService } from "./route-reuse.service";
 import { MloginComponent } from './mlogin/mlogin.component';
+import { OtherloginComponent } from './otherlogin/otherlogin.component';
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -30,6 +31,7 @@ registerLocaleData(zh, 'zh-CN');
     Asq3printComponent,
     Asqse2printComponent,
     MloginComponent,
+    OtherloginComponent
   ],
   imports: [
     BrowserModule,

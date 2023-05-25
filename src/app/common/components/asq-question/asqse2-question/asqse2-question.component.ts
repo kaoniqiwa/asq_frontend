@@ -94,6 +94,7 @@ export class Asqse2QuestionComponent implements OnInit {
   float = false;
   helperfloat = false;
   mutexfloat = false;
+  submiting = false;
 
   //当前点击选择对象
   currentXu:any = '';
@@ -125,13 +126,13 @@ export class Asqse2QuestionComponent implements OnInit {
     })
     
 
-    console.log('this.model',ASQ_SE2_DATA,this.asqse2Img[this.questMonth]);
+    //console.log('this.model',ASQ_SE2_DATA,this.asqse2Img[this.questMonth]);
 
     this.scoreArr = this._sessionStorage.questscore || [];
     this.thisAnswers = this._sessionStorage.questscore || [];
     this.zonghe = this._sessionStorage.zonghe || {};
 
-    console.log('constructor',this.scoreArr,this.scoreArr.length, this.user, this.doctor, this.member, this.baby, this.questMonth);
+    //console.log('constructor',this.scoreArr,this.scoreArr.length, this.user, this.doctor, this.member, this.baby, this.questMonth);
   }
 
   async ngOnInit() {
@@ -148,7 +149,7 @@ export class Asqse2QuestionComponent implements OnInit {
     this.currentQuestions = this.currentQuestionsObject.data;
     //console.log('currentQuestions:', this.currentQuestions);
     this.intQuestions = this.setQuestions(this.currentQuestions);
-    console.log('intQuestions1:', this.intQuestions);
+    //console.log('intQuestions1:', this.intQuestions);
     this.allPages = this.intQuestions.length;
 
     if(this.qid != undefined){
@@ -157,9 +158,9 @@ export class Asqse2QuestionComponent implements OnInit {
         //console.log('res',res);
         this.question = res;
         //console.log('scoreArr1',this.scoreArr,JSON.parse(res.QuestScore));
-        this.scoreArr = JSON.parse(res.QuestScore);
-        this.thisAnswers = JSON.parse(res.QuestScore);
-        this.zonghe = JSON.parse(res.ZongHe);
+        this.scoreArr = JSON.parse(res.QuestScore.replace(/\n/g,''));
+        this.thisAnswers = JSON.parse(res.QuestScore.replace(/\n/g,''));
+        this.zonghe = JSON.parse(res.ZongHe.replace(/\n/g,''));
         
 
         //console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
@@ -234,7 +235,7 @@ export class Asqse2QuestionComponent implements OnInit {
     
     let audio_url:any = 'ASQ-SE2-audio/'+audioNum+'.mp3';
     this.helperAudio.src = 'assets/imgaudio/'+audio_url;
-    console.log('this.helperAudio.src',this.helperAudio.src);
+    //console.log('this.helperAudio.src',this.helperAudio.src);
     this.helperAudio.load();
     this.helperAudio.play();
     this.helperTopAudio.pause();
@@ -251,7 +252,7 @@ export class Asqse2QuestionComponent implements OnInit {
       this.currentAnswers = this.thisAnswers;
       this.currentAnswer = this.currentAnswers[0];
 
-      console.log('this.currentAnswer:', this.currentAnswer,this.intQuestions);
+      //console.log('this.currentAnswer:', this.currentAnswer,this.intQuestions);
 
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
@@ -340,7 +341,7 @@ export class Asqse2QuestionComponent implements OnInit {
 
       }
     })
-    console.log('questions', questions)
+    //console.log('questions', questions)
     return questions;
 
   }
@@ -355,8 +356,8 @@ export class Asqse2QuestionComponent implements OnInit {
     if(this.At == '0'){
       return false;
     }else{
-      //console.log('this.currentAnswer.result[num-1]',this.currentAnswer.result && this.currentAnswer.result[num-1]);
-      if(this.checkInput(item,value,fz) && (this.currentAnswer.result[num-1] == '' || this.currentAnswer.result[num-1] == undefined)){
+      //console.log('checkInput',num,item,value,fz,this.checkInput(item,value,fz));
+      if(this.checkInput(item,value,fz) && (this.currentAnswer.result[num] == '' || this.currentAnswer.result[num] == undefined)){
         return true;
       }else{
         return false;
@@ -369,7 +370,7 @@ export class Asqse2QuestionComponent implements OnInit {
     let itemArr = item.split('、');
     for(var i=0;i<itemArr.length;i++){
       let this_v = 0;
-      if(itemArr[i] == '经常或总是'){
+      if(itemArr[i] == '经常或总是' || itemArr[i] == '是'){
         this_v = 1;
         if(fz==2){
           this_v = 3;
@@ -401,7 +402,7 @@ export class Asqse2QuestionComponent implements OnInit {
     }
     
 
-    console.log(this.currentAnswer.worry,'---worry');
+    //console.log(this.currentAnswer.worry,'---worry');
   }
 
   radioClick(e: Event) {
@@ -437,7 +438,7 @@ export class Asqse2QuestionComponent implements OnInit {
     }
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
     this.intQuestions[this.currentPage].worry = this.currentAnswer.worry;
-    //console.log('intQuestions:', this.intQuestions,this.currentAnswers);
+    //console.log('intQuestions:', this.intQuestions,this.currentAnswers[0].result); 
     //console.log(xu,v,Object.keys(this.currentAnswer.answer).length,l,this.currentAnswers,'---after');
     //console.log('radioClick',this.currentAnswer.answer);
     //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
@@ -446,7 +447,7 @@ export class Asqse2QuestionComponent implements OnInit {
   nextQuestions(e: Event) {
     if(this.At == '1'){
       for(var m=0;m<this.currentAnswer.answer.length;m++){
-        if(this.intQuestions[this.currentPage].question[m+1][3] && this.checkRed(m+1,this.intQuestions[this.currentPage].question[m+1][3],this.currentAnswer.answer[m],this.intQuestions[this.currentPage].question[m+1][2])){
+        if(this.intQuestions[this.currentPage].question[m][3] && this.checkRed(m,this.intQuestions[this.currentPage].question[m][3],this.currentAnswer.answer[m],this.intQuestions[this.currentPage].question[m][2])){
           alert("为了避免选择失误，请检查答案，尤其注意标红的题目");
           return
         }
@@ -465,13 +466,17 @@ export class Asqse2QuestionComponent implements OnInit {
   }
 
   setThisScore(num: any) {
+
+    //console.log('setThisScore',num);
     
     if (Number(num) == 1) {
       return 0;
     } else if (Number(num) == 2) {
       return 5;
-    } else {
+    } else if(Number(num) == 3) {
       return 10;
+    }else{
+      return 0;
     }
   }
 
@@ -479,18 +484,19 @@ export class Asqse2QuestionComponent implements OnInit {
     let thisScore = 0;
     let thisScoreObj: any = {};
     let that = this;
-    console.log('arr',arr);
+    //console.log('arr',arr);
     arr.map(function (item: any, index: any) {
-      
+      //console.log('arr.map',Number(item));
       if (Number(item) == 1) {
-        console.log('item',item);
+        //console.log('item',item);
         thisScore += that.setThisScore(1);
       } else if (Number(item) == 2) {
-        console.log('item',item);
+        //console.log('item',item);
         thisScore += that.setThisScore(2);
       }else if (Number(item) == 3){
         thisScore += that.setThisScore(3);
       }
+      
       if(warr[index] == 1){
         thisScore += 5;
       }
@@ -502,10 +508,10 @@ export class Asqse2QuestionComponent implements OnInit {
     thisScoreObj.worry = warr;
     thisScoreObj.score = thisScore;
     //thisScoreObj.nengqu = this.nengQu[indexFa];
-    if (thisScore <= this.dividingArr[indexFa].min) {
+    if (thisScore < this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
-    } else if (thisScore > this.dividingArr[indexFa].min && thisScore <= this.dividingArr[indexFa].max) {
+    } else if (thisScore >= this.dividingArr[indexFa].min && thisScore < this.dividingArr[indexFa].max) {
       thisScoreObj.jiezhi = "接近界值";
       this.jieArr.push(thisScoreObj);
     } else {
@@ -521,9 +527,9 @@ export class Asqse2QuestionComponent implements OnInit {
   }
 
   gotoBack() {
-    console.log('this.pageType_before', this.pageType);
+    //console.log('this.pageType_before', this.pageType);
     this.pageType--;
-    console.log('this.pageType_after', this.pageType);
+    //console.log('this.pageType_after', this.pageType);
   }
 
   async request() {
@@ -536,7 +542,7 @@ export class Asqse2QuestionComponent implements OnInit {
     let res = await this._business.getQuestion(model);
     if (res) {
       this._toastrService.success('提交成功');
-      console.log('res:', res, 'this.pageType', this.pageType);
+      //console.log('res:', res, 'this.pageType', this.pageType);
     }
   }
 
@@ -545,7 +551,8 @@ export class Asqse2QuestionComponent implements OnInit {
     that.scoreArr = [];
     that.currentAnswers.map(function (item: any, index: any) {
       if ((index + 1) != that.currentAnswers.length) {
-        that.scoreArr.push(that.getScore(item.answer,item.worry, index,item.result,item.nextStatus,item.prevStatus));
+        let _score = that.getScore(item.answer,item.worry, index,item.result,item.nextStatus,item.prevStatus)
+        that.scoreArr.push(_score);
       }else{
         that.zonghe.question = that.intQuestions[index].question;
         that.zonghe.answer = item.answer;
@@ -553,12 +560,18 @@ export class Asqse2QuestionComponent implements OnInit {
         that.zonghe.result = item.result;
       }
     });
-    console.log('setCurrentAnswers',that.currentAnswers,that.scoreArr);
+    //console.log('setCurrentAnswers',that.currentAnswers,that.scoreArr);
+  }
+
+  deleteEnter(str:any){
+    var reg=new RegExp("\r\n","g");
+    str = str.replace(reg,"");
+    return str;
   }
 
   async submit() {
     //if(!this.checkStatus)return
-    console.log('this._sessionStorage.questscore_submit',this._sessionStorage.questscore);
+    //console.log('this._sessionStorage.questscore_submit',this._sessionStorage.questscore);
     if(this._sessionStorage.questscore != null){
       this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
       if(this.source!=1){
@@ -579,7 +592,7 @@ export class Asqse2QuestionComponent implements OnInit {
         let params:any = {};
         params.Uuid = this_uuid;
         let res:any = await this._business.checkUuid(params);
-        console.log('res',res);
+        //console.log('res',res);
         if(!res){
           alert('链接已失效，请重新生成');
           return
@@ -589,7 +602,7 @@ export class Asqse2QuestionComponent implements OnInit {
         let params:any = {};
         params.seq = this._sessionStorage.seq;
         let res:any = await this._business.getStatus(params);
-        console.log('res',res);
+        //console.log('res',res);
         if(!res){
           alert('问卷已完成，链接失效。');
           return
@@ -597,7 +610,7 @@ export class Asqse2QuestionComponent implements OnInit {
       }
 
       this.setCurrentAnswers();
-      console.log('scoreArr',this.scoreArr);
+      //console.log('scoreArr',this.scoreArr);
       let model = new Question();
       model.Id = "";
       model.Cid = this.user.Id;
@@ -610,7 +623,19 @@ export class Asqse2QuestionComponent implements OnInit {
       model.QuestType = this.questType;// asq3答卷
       model.QuestMonth = String(this.questMonth);//2月份
       //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
+      for(var i=0;i<this.zonghe.result.length;i++){
+        if(!(this.zonghe.result[i] =='' || this.zonghe.result[i] ==undefined || this.zonghe.result[i] ==null)){
+          this.zonghe.result[i] = this.zonghe.result[i].replace(/\n/g,'')
+        }
+      }
       model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
+      for(var n=0;n<this.scoreArr.length;n++){
+        for(var m=0;m<this.scoreArr[n].result.length;m++){
+          if(!(this.scoreArr[n].result[m] =='' || this.scoreArr[n].result[m] ==undefined || this.scoreArr[n].result[m] ==null)){
+            this.scoreArr[n].result[m] = this.scoreArr[n].result[m].replace(/\n/g,'')
+          }
+        }
+      }
       model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
       model.Source = this.source;
       model.Am = this.Am;
@@ -618,20 +643,24 @@ export class Asqse2QuestionComponent implements OnInit {
       model.seq = this._sessionStorage.seq;
       model.SurveyTime = this.baby.SurveyTime;
       model.Rectifyage = this.baby.Rectifyage;
-      console.log('model',model);
+
+      
 
       let params:any = {};
       params.uid = this.user.Id;
       params.type = 'AsqSe2Left';
       let updateLeft = await this._business.updateLeft(params);
-      console.log('updateLeft',updateLeft);
+      //console.log('updateLeft',updateLeft);
       if(!updateLeft){
         this._toastrService.error('剩余次数不足！');
       }else{
-        console.log('提交');
+        //console.log('提交');
+        if(this.submiting)return;
+        this.submiting = true;
         let res = await this._business.create(model);
         if (res) {
           this._toastrService.success('提交成功');
+          this.submiting = false;
           this._sessionStorage.questscore = this.scoreArr;
           this._sessionStorage.zonghe = this.zonghe;
           this.question = res;
@@ -658,20 +687,20 @@ export class Asqse2QuestionComponent implements OnInit {
     if (res) {
       //this._toastrService.success('返回成功');
       that.gamesArr = res;
-      console.log('getGames_res:', that.gamesArr);
+      //console.log('getGames_res:', that.gamesArr);
 
     }
   }
 
   async getDividing(TestId: any,typeid:any) {
     let that = this;
-    console.log('getDividing_res2:',that.questMonth,this.mouthArr[this.questMonth]);
+    //console.log('getDividing_res2:',that.questMonth,this.mouthArr[this.questMonth]);
 
     let res = await this._business.getDividing(TestId,typeid);
     if (res) {
       //this._toastrService.success('返回成功');
       that.dividingArr = res;
-      console.log('getDividing_res:',that.questMonth,this.mouthArr[this.questMonth], that.dividingArr);
+      //console.log('getDividing_res:',that.questMonth,this.mouthArr[this.questMonth], that.dividingArr);
       this.init();
     }
   }
@@ -695,13 +724,13 @@ export class Asqse2QuestionComponent implements OnInit {
   onSubmitFloat(e: any) {
     if(this.At == '1'){
       for(var m=0;m<this.currentAnswer.answer.length;m++){
-        if(this.intQuestions[this.currentPage].question[m+1][3] && this.checkRed(m+1,this.intQuestions[this.currentPage].question[m+1][3],this.currentAnswer.answer[m],this.intQuestions[this.currentPage].question[m+1][2])){
+        if(this.intQuestions[this.currentPage].question[m][3] && this.checkRed(m,this.intQuestions[this.currentPage].question[m][3],this.currentAnswer.answer[m],this.intQuestions[this.currentPage].question[m][2])){
           alert("为了避免选择失误，请检查答案，尤其注意标红的题目");
           return
         }
       }
     }
-    console.log(e, 'onSubmitFloat');
+    //console.log(e, 'onSubmitFloat');
     if (e == 1) {
       this.float = true;
     } else if (e == 2) {
@@ -724,7 +753,7 @@ export class Asqse2QuestionComponent implements OnInit {
   }
 
   onHelperFloat(e: any) {
-    console.log(e, 'onHelperFloat');
+    //console.log(e, 'onHelperFloat');
     if (e == 1) {
       this.helperfloat = true;
     } else if (e == 2) {

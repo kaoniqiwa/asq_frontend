@@ -1,0 +1,236 @@
+<article class="activity" style="" id="wrapper">
+    <div class="logo">
+        <h1>
+            <img src="assets/img/logo.png" alt="Neoballoon-ASQ发育筛查系统">
+        </h1>
+        <div style="display:none">
+            <div>
+                <h2>ASQ儿童发育筛查系统</h2>
+            </div>
+            <div>
+                ASQ（ASQ发育筛查系统、ASQ系统）是来自美国的儿童发育筛查系统，SQ：SE儿童成长发育测评，主要测试1-66个月儿童的身体发育、沟通、肢体运动、解决问题、个人与社会交往等能力。
+                ASQ-3（年龄与发育进程问卷-第三版）是筛查和监测儿童精神心理发育状况的评估量表/问卷。
+                ASQ-3将1-66个月儿童分为20（21）个月龄组，相应有20份问卷。对于1-66个月的儿童，任何时间都可以开始使用ASQ-3进行评估。建议从2个月或4个月时开始，每隔
+                4个月筛查一次，直至24个月；然后每隔6个月筛查一次，直至5岁，或听从医生建议。
+                ASQ-3包括沟通、粗大动作、精细动作、解决问题、个人-社会五个能区。
+                ASQ:SE（年龄与发育进程问卷：社交-情绪）是筛查和监测儿童社交-情绪行为发育的评估量表/问卷。
+                ASQ:SE将3-66个月儿童分为8个月龄组，相应有8份问卷。对于3-66个月儿童，任何时间都可以开始使用ASQ:SE进行评估。建议每年使用一次或听从医生建议。
+                ASQ:SE从自我调控、依从性、沟通、适应功能、自主性、情感和人际互动七个维度关注儿童的行为发育。
+            </div>
+        </div>
+    </div>
+    <div class="navs" href="javascript:;" (click)="helpShow()">使用帮助 <img src="assets/img/arrow.png" alt=""></div>
+    <div class="container" *ngIf="!qrcodeStatus">
+
+        <br style="clear: both">
+        <div class="mainBox mainBox_bg">
+            <ul class="menulist">
+                <li>
+                    <i></i>
+                    <p>健康档案</p>
+                </li>
+                <li>
+                    <i></i>
+                    <p>辅食</p>
+                </li>
+                <li>
+                    <i></i>
+                    <p>支付</p>
+                </li>
+            </ul>
+            <button class="btnStart">立即开始</button>
+        </div>
+
+    </div>
+    <div class="qrCode" [hidden]="!phoneStatus" *ngIf="qrcodeStatus">
+
+        <div class="phoneyz">
+            <h1>用户验证</h1>
+            <table class="phone-box">
+                <tbody>
+                    <tr>
+                        <td>手机号码：</td>
+                        <td><input type="number" class="regPhone" maxlength="11" [(ngModel)]="phone"></td>
+                    </tr>
+                    <tr>
+                        <td>验证码：</td>
+                        <td><input type="number" class="regCode" maxlength="6" [(ngModel)]="setCode"><button
+                                class="getCode" (click)="sendSms()">{{lastNum}}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="regPhone1 tips"></span><br>
+            <div class="btnYz">
+                <button class="btnReg btn-default btnUunclick" (click)="phoneSubmit()">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="container" [hidden]="!screenStatus">
+
+        <br style="clear: both">
+        <div class="mainBox">
+            <ul class="nav-page">
+                <!--<li>首页 <span> ></span>ASQ 简介</li>-->
+                <li>ASQ 简介</li>
+            </ul>
+            <hr>
+            <div class="introBox">
+                <div class="asq3" *ngIf="type=='ASQ-3'">
+                    <div class="asq3Img">
+                        <img src="assets/img/ASQ3.png" alt="">
+                    </div>
+                    <p>ASQ-3（年龄与发育进程问卷-第三版）是筛查和监测儿童精神心理发育状况的评估量表/问卷。</p>
+                    <p>ASQ-3将1-66个月儿童分为20（21）个月龄组，相应有20份问卷。对于1-66个月的儿童，任何时间都可以开始使用ASQ-3进行评估。建议从2个月或4个月时开始，每隔
+                        4个月筛查一次，直至24个月；然后每隔6个月筛查一次，直至5岁，或听从医生建议。</p>
+                    <p>ASQ-3包括沟通、粗大动作、精细动作、解决问题、个人-社会五个能区。</p>
+                    <div class="btnAsq3">
+                        <button class="btn-default startAsq3" (click)="screenSubmit()">开始筛查</button>
+                    </div>
+                </div>
+                
+                <div class="asqse" *ngIf="type=='ASQ-SE'">
+                    <div>
+                        <img src="assets/img/ASQSE.png" alt="">
+                    </div>
+                    <p>ASQ:SE（年龄与发育进程问卷：社交-情绪）是筛查和监测儿童社交-情绪行为发育的评估量表/问卷。</p>
+                    <p>ASQ:SE将3-66个月儿童分为8个月龄组，相应有8份问卷。对于3-66个月儿童，任何时间都可以开始使用ASQ:SE进行评估。建议每年使用一次或听从医生建议。</p>
+                    <p>ASQ:SE从自我调控、依从性、沟通、适应功能、自主性、情感和人际互动七个维度关注儿童的行为发育。</p>
+                    <div>
+                        <button class="btn-default startAsqse" (click)="screenSubmit()">开始筛查</button>
+                    </div>
+                </div>
+                
+                <div class="asqse2" *ngIf="type=='ASQ:SE-2'">
+                    <div>
+                        <img src="assets/img/ASQSE2.png" alt="">
+                    </div>
+                    <p>ASQ:SE-2《年龄与发育进程问卷：社会-情绪（第2版）》是筛查和监测儿童社会-情绪行为发育的评估量表/问卷。</p>
+                    <p>ASQ:SE-2将1-72个月儿童分为9个月龄组，相应有9份问卷。对于1-72个月儿童，任何时间都可以开始使用ASQ:SE-2进行评估。建议每半年至一年使用一次或听从医生建议。</p>
+                    <p>ASQ:SE-2从自我调控、依从性、沟通、适应功能、自主性、情感和人际互动七个行为能区关注儿童的行为发育。</p>
+                    <div>
+                        <button class="btn-default startAsqse2" (click)="screenSubmit()">开始问卷</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="footer">
+        <a href="https://beian.miit.gov.cn" class="html-attribute-value html-external-link" target="_blank"
+            rel="nofollow">沪ICP备16044991号-1</a>
+    </footer>
+</article>
+<div id="menu">
+    <!--登录与注册  弹出层-->
+    <div class="loginRegBox" [hidden]="!helpStatus">
+        <!--使用帮助内容-->
+        <div class="loginExpBox">
+            <div class="closeImg">
+                <img src="assets/img/close.png" alt="" class="btnClose" (click)="helpHide()">
+            </div>
+            <p>使用帮助</p>
+            <hr>
+            <span>
+                Q： 如果注册时宝宝信息填错了怎么办？<br>
+                A： 如果在完成问卷的时候，发现基础信息填写错误，返回修改即可。如果问卷已经提交，请咨询问卷发放者。<br>
+                <br>
+                Q： 账户里可以同时注册几个宝宝呢？<br>
+                A： 每个账户可以添加3个宝宝信息。<br>
+                <br>
+                Q： 答题的时候需要注意什么？<br>
+                A： 1.答题过程请勿退出，之前填写的答案将都会清空。<br>
+                2.完成问卷后需要确认每一道题都完成问答，如果有答题遗漏系统会提醒完成。<br>
+                <br>
+                Q：页面打不开/黑屏怎么解决?<br>
+                Q：提交等其他按钮点击不了怎么办？<br>
+                Q：操作卡顿怎么解决？<br>
+                Q：页面展示不完整怎么办？<br>
+                Q：出现异常提示怎么解决?<br>
+                A： 1.查看网络是否正常，刷新浏览器重新打开页面。<br>
+                2.清除浏览器缓存后重新打开页面。<br>
+                3.粘贴筛查链接至其他浏览器或微信聊天框内打开。<br>
+            </span>
+            <hr>
+
+            <button class="btn-default btnLoginNext" (click)="helpHide()">我知道啦</button>
+            <br>
+        </div>
+    </div>
+    <div class="authorize" [hidden]="!authorizeStatus">
+        <!--授权同意书内容-->
+        <div class="authorizeBox">
+            <div class="closeImg">
+                <img src="assets/img/close.png" alt="" class="btnClose">
+            </div>
+            <h3>ASQ系统筛查授权同意书</h3>
+            <hr>
+            <div class="popped-main authorizeBox_mobile">
+                <p class="bold">
+                    您，作为儿童的法定监护人或家长，已明确知晓本服务所涉及的用户协议以及与之相关的使用条款和隐私政策的内容,并同意该些内容。如您未阅读、理解并同意该些内容，请您不要在文末点击打勾，不要接受本次服务。
+                </p>
+                <p>
+                    您已明确知晓，本服务是采用ASQ儿童发育筛查系统对儿童进行发育水平的评测。<font class="underline">
+                        您可以自主选择使用或不使用该系统，也可以自主选择自行填写或委托他人按照您的指示填写。</font>
+                </p>
+                <p>
+                    一、信息、数据的种类及获得方式<br />
+                    为了对儿童进行发育水平的评测，我们将合法收集、储存包括您和儿童的基本信息，详细请见ASQ儿童发育筛查系统具体问卷。<br />
+                    <font class="underline">
+                        您可以选择是否填写或向我们提供特定的信息。请您理解，如果您不填写或提供某些特定的信息，将可能导致我们的产品或服务无法正常运行，或者无法达到我们拟达到的服务效果。</font>
+                </p>
+                <p>
+                    二、信息、数据的保护及保存期限<br />
+                    我们为您的信息提供相应的安全保障，以防止信息的丢失、不当使用、被篡改、未经授权访问或披露，包括：<br />
+                    (1) 我们严格遵守法律法规保护您和儿童的个人信息；<br />
+                    (2) 我们将在合法合理的安全水平内使用各种安全保护措施以保障信息的安全；<br />
+                    (3) 我们建立专门的管理制度、操作规程和组织以保障信息的安全。<br />
+                    一般而言，我们仅在为实现处理信息的目的（详见本授权同意书第（3）条）所必需的时间及法律、行政法规所规定的保存期限保留你的个人信息。<br />
+                </p>
+
+                <p>
+                    三、处理信息、数据的目的、方式和范围<br />
+                    (1)
+                    <font class="underline">如果您是接受筛查的儿童的监护人或家长</font>
+                    ，医院向您推荐本产品时，请您务必认真阅读ASQ儿童发育筛查系统的协议（包括用户协议、隐私政策等），如果您确认并同意前述协议内容，也意味着您已授权同意<font class="underline">
+                        上海杖元信息科技有限公司有权将您的个人及儿童个人信息进行收集、储存，并依法提供给该医院作后续的诊断医疗和医学研究；</font><br />
+                    (2)
+                    <font class="underline">如果您是接受筛查的儿童的监护人或家长</font>
+                    ，早教机构向您推荐本产品时，请您务必认真阅读ASQ儿童发育筛查系统的协议（包括用户协议、隐私政策等），如果您确认并同意前述协议内容，也意味着您已授权同意<font class="underline">
+                        上海杖元信息科技有限公司有权将您的个人及儿童个人信息进行收集、储存，并依法提供给该早教机构用于早教相关服务；</font><br />
+                    (3)
+                    <font class="underline">如果您是科研机构征选的志愿者</font>
+                    ，科研机构让您使用本产品时，请您务必认真阅读ASQ儿童发育筛查系统的协议（包括用户协议、隐私政策等），如果您确认并同意前述协议内容，也意味着您已授权同意<font class="underline">
+                        上海杖元信息科技有限公司有权将您的个人及儿童个人信息进行收集、储存，并依法提供给该科研机构用于相关科研项目</font>。<br />
+                    我们在与前述医院、早教机构以及科研机构（以下合称“合作机构”）合作的过程中，将遵守法律规定，按照最小必要原则，安全审慎处理相关数据、信息。我们将按照法律法规的规定，对数据、信息处理涉及的合作机构进行严格的限制，要求其严格遵守我们关于数据隐私保护的措施与要求。<br />
+                    如存在需要将您和儿童的个人信息共享或转让至本公司及上述合作机构外的第三方时，我们会直接征得或确认第三方征得您对上述行为的明示同意。如为业务发展需要从第三方获取您和儿童的个人信息、数据，我们会依法核实来源的合法性，或在获取前向您明示您和儿童的个人信息、数据的来源、类型及适用范围。<br />
+                    另外，根据相关法律法规及国家标准，以下情形中，我们可能会处理您和您所监护的儿童的相关个人信息而无需征求您的授权同意：<br />
+                    (a) 为个人信息处理者履行法定义务或法定职责所必须；<br />
+                    (b) 为订立、履行您作为一方当事人的合同所必需；<br />
+                    (c)
+                    为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；<br />
+                    (d) 依法在合理的范围内处理您自行公开或者其他已经合法公开的个人信息；<br />
+                    (e) 法律、行政法规规定的其他情形。<br />
+                </p>
+                <p>
+                    四、联系信息<br />
+                    我们设立了专门的个人信息保护团队/负责人，如果您对本授权书或个人信息保护相关事宜有任何疑问、投诉、建议或者需要撤回针对您和儿童的个人信息处理的授权和同意的，您可以通过以下任意方式与我们联系：<br />
+                    (1) 通过网址<a href="https://asq.neoballoon.com">https://asq.neoballoon.com</a>与我们联系；<br />
+                    (2) 将您的问题发送至邮箱sales@neoballoon.com，联系人：王若水；<br />
+                    (3)
+                    寄到如下地址上海市闵行区闵虹路166弄中庚环球创意中心T2-1609，联系人：王若水。<br />
+                </p>
+            </div>
+            <hr>
+            <div class="input">
+                <input type="checkbox" class="isCheck myCheck" [(ngModel)]="readed" />
+                <label for="checks">我已经阅读并理解前述内容，并且同意接受条款的约束 </label><br>
+            </div>
+            <button class="btn-default btnAddNext" [ngClass]="{'btnShow': readed}"
+                (click)="goToInfo($event)">下一步</button>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="test">
+    {{testInfo}}
+</div> -->

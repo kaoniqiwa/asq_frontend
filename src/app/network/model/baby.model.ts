@@ -9,8 +9,8 @@ export class Baby {
   Birthday!: string;
   SurveyTime!: string;
   Premature!: string;
-  Prematrueweek?: string;
-  Prematrueday?: string;
+  Prematureweek?: string;
+  Prematureday?: string;
   Rectifyage?: any;
   IsShun!: string;
   IdentityInfo?: string;

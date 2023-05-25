@@ -16,16 +16,16 @@ import printJS from 'print-js';
 
 /* let url:any = 'src/assets/imgaudio/ASQ-3-audio/2-1.mp3';
 import(${url}).then((res)=>{
-  console.log('OK');
+  //console.log('OK');
 }).catch((e)=>{
-  console.log('error');
+  //console.log('error');
 }) */
 
 import questions from "./data.json";
 
-// console.log('12', questions)
+// //console.log('12', questions)
 //import asq3 from '../../../../../assets/files/ASQGAME.xlsx';
-//console.log('asq3',JSON.stringify(asq3));
+////console.log('asq3',JSON.stringify(asq3));
 @Component({
   selector: 'asq3-question',
   templateUrl: './asq3-question.component.html',
@@ -57,7 +57,7 @@ export class Asq3QuestionComponent implements OnInit {
   currentAnswers: any = [];
   currentAnswer: any = {};
   scoreArr: any = [];
-  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54 ,60];
+  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54 ,60 ];
   gamesArr: any = [];
   dividingArr: any = [];
 
@@ -83,12 +83,14 @@ export class Asq3QuestionComponent implements OnInit {
   model:any = '';
   Am:any = '0';
   At:any = '0';
+  String:any = '';
   currentT:any = [false,false,false,false,false,false];
 
   //呼出浮层,false为不显示，true位显示
   float = false;
   helperfloat = false;
   mutexfloat = false;
+  submiting = false;
 
   //当前点击选择对象
   currentXu:any = '';
@@ -119,13 +121,13 @@ export class Asq3QuestionComponent implements OnInit {
     })
     
 
-    console.log('this.model',this.model);
+    //console.log('this.model',this.model);
 
     this.scoreArr = this._sessionStorage.questscore || [];
     this.thisAnswers = this._sessionStorage.questscore || [];
     this.zonghe = this._sessionStorage.zonghe || {};
 
-    console.log('constructor', this.user, this.doctor, this.member, this.baby, this.questMonth);
+    //console.log('constructor', this.user, this.doctor, this.member, this.baby, this.questMonth);
   }
 
   async ngOnInit() {
@@ -133,30 +135,30 @@ export class Asq3QuestionComponent implements OnInit {
     /* let params:any = {};
     params.testid = this.mouthArr[this.questMonth];
     let questions:any = await this._business.getQuestionsByMonth(params);
-    console.log('questions',questions); */
+    //console.log('questions',questions); */
 
     
     let that = this;
     this.currentQuestionsObject = this.babyQuestions[this.questMonth];
     this.title = this.currentQuestionsObject.name;
     this.currentQuestions = this.currentQuestionsObject.data;
-    //console.log('currentQuestions:', this.currentQuestions);
+    ////console.log('currentQuestions:', this.currentQuestions);
     this.intQuestions = this.setQuestions(this.currentQuestions);
-    console.log('intQuestions1:', this.intQuestions);
+    //console.log('intQuestions1:', this.intQuestions);
     this.allPages = this.intQuestions.length;
 
     if(this.qid != undefined){
       let res:any = await this._business.get(this.qid);
       if (res) {
-        //console.log('res',res);
+        ////console.log('res',res);
         this.question = res;
-        //console.log('scoreArr1',this.scoreArr,JSON.parse(res.QuestScore));
-        this.scoreArr = JSON.parse(res.QuestScore);
-        this.thisAnswers = JSON.parse(res.QuestScore);
-        this.zonghe = JSON.parse(res.ZongHe);
+        ////console.log('scoreArr1',this.scoreArr,JSON.parse(res.QuestScore));
+        this.scoreArr = JSON.parse(res.QuestScore.replace(/\n/g,''));
+        this.thisAnswers = JSON.parse(res.QuestScore.replace(/\n/g,''));
+        this.zonghe = JSON.parse(res.ZongHe.replace(/\n/g,''));
         
 
-        console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
+        //console.log('scoreArr2',this.scoreArr,JSON.parse(res.QuestScore));
       }
     }
 
@@ -164,18 +166,22 @@ export class Asq3QuestionComponent implements OnInit {
     this.getDividing(this.mouthArr[this.questMonth],1);
     this.currentNengqu =  this.intQuestions[this.currentPage].question[0][0];
 
-    //console.log('this.currentNengqu',this.currentNengqu);
+    ////console.log('this.currentNengqu',this.currentNengqu);
 
 
     this.helperAudio.addEventListener("playing", function(){
-      //console.log('helperAudio_playing');
+      ////console.log('helperAudio_playing');
       that.helperAudioStatus = true;
     });
     this.helperAudio.addEventListener("pause", function(){
-      //console.log('helperAudio_pause');
+      ////console.log('helperAudio_pause');
       that.helperAudioStatus = false;
     });
 
+  }
+
+  setString(str:any):String{
+    return String(str);
   }
 
   showHelper(e:Event){
@@ -223,39 +229,43 @@ export class Asq3QuestionComponent implements OnInit {
       this.currentAnswers = this.thisAnswers;
       this.currentAnswer = this.currentAnswers[0];
 
-      console.log('this.currentAnswer:', this.currentAnswer);
+      //console.log('this.currentAnswer:', this.currentAnswer);
 
       //答案和题目合并
       for (let i = 0; i < this.intQuestions.length; i++) {
         if(this.currentAnswers[i]){
           this.intQuestions[i].answer = this.currentAnswers[i].answer;
           this.intQuestions[i].result = this.currentAnswers[i].result;
+          
         }
         if(i==5){
           this.intQuestions[i].answer = this.zonghe.answer;
           this.intQuestions[i].result = this.zonghe.result;
           
         }
+        for(let n=0;n<this.intQuestions[i].answer.length;n++){
+          this.intQuestions[i].answer[n] = String(this.intQuestions[i].answer[n]);
+        }
         
       }
 
       //this.setCurrentAnswers();
-      console.log('intQuestions:', this.intQuestions);
+      //console.log('intQuestions:', this.intQuestions);
 
     } else {
       for (let i = 0; i < this.intQuestions.length; i++) {
         this.currentAnswers[i] = { 'answer': [], nextStatus: false, prevStatus: true ,'result': []};
-        //console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
+        ////console.log('this.currentAnswer_old:', i, this.currentAnswers[i]);
         if (i == 0) {
           this.currentAnswers[i].prevStatus = false;
           this.intQuestions[i].answer = this.currentAnswers[i].answer;
         }
-        //console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
+        ////console.log('this.currentAnswer_new:', i, this.currentAnswers[i]);
       }
       this.currentAnswer = this.currentAnswers[0];
     }
 
-    //console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
+    ////console.log("getparams", this.bid, this.pageType, this.questType, this.questMonth);
     if (this.pageType != 0) {
       let that = this;
       this.scoreArr.map(function (item: any, index: any) {
@@ -272,7 +282,7 @@ export class Asq3QuestionComponent implements OnInit {
         
       })
       
-      console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr,that.fgaoArr);
+      //console.log('gaojiediarr', this.gaoArr, this.jieArr, this.diArr,that.fgaoArr);
     }
   }
 
@@ -304,7 +314,7 @@ export class Asq3QuestionComponent implements OnInit {
 
       }
     })
-    //console.log('questions', questions)
+    ////console.log('questions', questions)
     return questions;
 
   }
@@ -319,7 +329,7 @@ export class Asq3QuestionComponent implements OnInit {
     if(this.At == '0'){
       return false;
     }else{
-      //console.log('this.currentAnswer.result[num-1]',this.currentAnswer.result && this.currentAnswer.result[num-1]);
+      ////console.log('this.currentAnswer.result[num-1]',this.currentAnswer.result && this.currentAnswer.result[num-1]);
       if(this.checkInput(item,value) && (this.currentAnswer.result[num-1] == '' || this.currentAnswer.result[num-1] == undefined)){
         return true;
       }else{
@@ -360,7 +370,7 @@ export class Asq3QuestionComponent implements OnInit {
     let v:any = (e.target as HTMLInputElement).value;
     
     if(mutexSelf!=''){
-      //console.log('mutexSelf',mutexSelf);
+      ////console.log('mutexSelf',mutexSelf);
       let mutexSelfArr:any = mutexSelf.split('、');
       let mutexOtherArr:any = mutexOther.split('、');
       let currentStr = '';
@@ -380,7 +390,7 @@ export class Asq3QuestionComponent implements OnInit {
           this_v = 3;
         }
         if(this_v == v){
-          //console.log('检测是否互斥');
+          ////console.log('检测是否互斥');
           let otherStr = '';
           for(var m=0;m<(mutexOtherArr.length/2);m++){
             otherStr+= '第'+mutexOtherArr[m*2]+'题请给予“'+mutexOtherArr[m*2+1]+'”';
@@ -399,7 +409,7 @@ export class Asq3QuestionComponent implements OnInit {
               other_v = 3;
             }
             if(this.currentAnswer.answer[mutexOtherArr[y*2]-1] != other_v){
-              //console.log('弹框提示',this.currentAnswer.answer,xu);
+              ////console.log('弹框提示',this.currentAnswer.answer,xu);
               this.showStr = '注*：如果'+this.currentNengqu+'第'+(xu+1)+'题勾选了'+currentStr+'，那么'+this.currentNengqu+otherStr;
 
               this.mutexFloat(1);
@@ -414,7 +424,7 @@ export class Asq3QuestionComponent implements OnInit {
       }
     }
 
-    //console.log(xu,v,this.currentAnswer.answer.length,this.currentAnswer.answer,'---before');
+    ////console.log(xu,v,this.currentAnswer.answer.length,this.currentAnswer.answer,'---before');
 
     this.currentAnswer.answer[xu] = v;
     let isNull = false;
@@ -427,13 +437,13 @@ export class Asq3QuestionComponent implements OnInit {
     if (Object.keys(this.currentAnswer.answer).length == l && !isNull) {
       this.currentAnswer.nextStatus = true;
       this.currentAnswers[this.currentPage] = this.currentAnswer;
-      //console.log('currentAnswers:', this.currentAnswers);
+      ////console.log('currentAnswers:', this.currentAnswers);
     }
     this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;
-    //console.log('intQuestions:', this.intQuestions,this.currentAnswers);
+    ////console.log('intQuestions:', this.intQuestions,this.currentAnswers);
 
-    //console.log('radioClick',this.currentAnswer.answer);
-    //console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
+    ////console.log('radioClick',this.currentAnswer.answer);
+    ////console.log((e.target as HTMLInputElement).value,(e.target as HTMLInputElement).getAttribute('l'));
   }
 
   nextQuestions(e: Event) {
@@ -485,6 +495,7 @@ export class Asq3QuestionComponent implements OnInit {
     thisScoreObj.answer = arr;
     thisScoreObj.score = thisScore;
     thisScoreObj.nengqu = this.nengQu[indexFa];
+    //console.log('thisScoreObj',indexFa,thisScoreObj,this.dividingArr[indexFa]);
     if (thisScore <= this.dividingArr[indexFa].min) {
       thisScoreObj.jiezhi = "低于界值";
       this.diArr.push(thisScoreObj);
@@ -495,6 +506,7 @@ export class Asq3QuestionComponent implements OnInit {
       thisScoreObj.jiezhi = "高于界值";
       this.gaoArr.push(thisScoreObj);
     }
+    //console.log('thisScoreObj.jiezhi',indexFa,thisScoreObj.jiezhi);
 
     return thisScoreObj;
   }
@@ -504,9 +516,9 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   gotoBack() {
-    console.log('this.pageType_before', this.pageType);
+    //console.log('this.pageType_before', this.pageType);
     this.pageType--;
-    console.log('this.pageType_after', this.pageType);
+    //console.log('this.pageType_after', this.pageType);
   }
 
   async request() {
@@ -519,7 +531,7 @@ export class Asq3QuestionComponent implements OnInit {
     let res = await this._business.getQuestion(model);
     if (res) {
       this._toastrService.success('提交成功');
-      console.log('res:', res, 'this.pageType', this.pageType);
+      //console.log('res:', res, 'this.pageType', this.pageType);
     }
   }
 
@@ -538,7 +550,9 @@ export class Asq3QuestionComponent implements OnInit {
 
   async submit() {
 
-    console.log('this._sessionStorage.questscore_submit',this._sessionStorage.questscore);
+    
+
+    //console.log('this._sessionStorage.questscore_submit',this._sessionStorage.questscore);
     if(this._sessionStorage.questscore != null){
       this._toastrService.error('不能重复答题，即将跳转到筛查页面！');
       if(this.source!=1){
@@ -559,7 +573,7 @@ export class Asq3QuestionComponent implements OnInit {
         let params:any = {};
         params.Uuid = this_uuid;
         let res:any = await this._business.checkUuid(params);
-        console.log('res',res);
+        //console.log('res',res);
         if(!res){
           alert('链接已失效，请重新生成');
           return
@@ -569,7 +583,7 @@ export class Asq3QuestionComponent implements OnInit {
         let params:any = {};
         params.seq = this._sessionStorage.seq;
         let res:any = await this._business.getStatus(params);
-        console.log('res',res);
+        //console.log('res',res);
         if(!res){
           alert('问卷已完成，链接失效。');
           return
@@ -591,7 +605,19 @@ export class Asq3QuestionComponent implements OnInit {
       model.QuestType = this.questType;// asq3答卷
       model.QuestMonth = String(this.questMonth);//2月份
       //model.QuestResult = JSON.stringify(this.currentAnswers);// 答题结果
+      for(var i=0;i<this.zonghe.result.length;i++){
+        if(!(this.zonghe.result[i] =='' || this.zonghe.result[i] ==undefined || this.zonghe.result[i] ==null)){
+          this.zonghe.result[i] = this.zonghe.result[i].replace(/\n/g,'')
+        }
+      }
       model.ZongHe = JSON.stringify(this.zonghe);//综合能力结果
+      for(var n=0;n<this.scoreArr.length;n++){
+        for(var m=0;m<this.scoreArr[n].result.length;m++){
+          if(!(this.scoreArr[n].result[m] =='' || this.scoreArr[n].result[m] ==undefined || this.scoreArr[n].result[m] ==null)){
+            this.scoreArr[n].result[m] = this.scoreArr[n].result[m].replace(/\n/g,'')
+          }
+        }
+      }
       model.QuestScore = JSON.stringify(this.scoreArr);// 运算结果
       model.Source = this.source;
       model.Am = this.Am;
@@ -599,24 +625,27 @@ export class Asq3QuestionComponent implements OnInit {
       model.seq = this._sessionStorage.seq;
       model.SurveyTime = this.baby.SurveyTime;
       model.Rectifyage = this.baby.Rectifyage;
-      console.log('model',model);
+      //console.log('model',model);
 
       let params:any = {};
       params.uid = this.user.Id;
       params.type = 'AsqLeft';
       let updateLeft = await this._business.updateLeft(params);
-      console.log('updateLeft',updateLeft);
+      //console.log('updateLeft',updateLeft);
       if(!updateLeft){
         this._toastrService.error('剩余次数不足！');
       }else{
+        if(this.submiting)return;
+        this.submiting = true;
         let res = await this._business.create(model);
         if (res) {
           this._toastrService.success('提交成功');
+          this.submiting = false;
           this._sessionStorage.questscore = this.scoreArr;
           this._sessionStorage.zonghe = this.zonghe;
           this.question = res;
           this.pageType = 2;
-          //console.log('all:',this.user,this.baby,this.doctor,this.question);
+          ////console.log('all:',this.user,this.baby,this.doctor,this.question);
           if(this.source !=1){
             let e:any = 1;
             this.gotoReport(e);
@@ -638,7 +667,7 @@ export class Asq3QuestionComponent implements OnInit {
     if (res) {
       //this._toastrService.success('返回成功');
       that.gamesArr = res;
-      console.log('gamesArr:',that.questMonth,this.mouthArr[this.questMonth], that.gamesArr);
+      //console.log('gamesArr:',that.questMonth,this.mouthArr[this.questMonth], that.gamesArr);
 
     }
   }
@@ -650,7 +679,7 @@ export class Asq3QuestionComponent implements OnInit {
     if (res) {
       //this._toastrService.success('返回成功');
       that.dividingArr = res;
-      console.log('getDividing_res:',that.questMonth,this.mouthArr[this.questMonth], that.dividingArr);
+      //console.log('getDividing_res:',that.questMonth,this.mouthArr[this.questMonth], that.dividingArr);
       this.init();
     }
   }
@@ -680,7 +709,7 @@ export class Asq3QuestionComponent implements OnInit {
         }
       }
     }
-    console.log(e, 'onSubmitFloat');
+    //console.log(e, 'onSubmitFloat');
     if (e == 1) {
       this.float = true;
     } else if (e == 2) {
@@ -702,7 +731,7 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   onHelperFloat(e: any) {
-    //console.log(e, 'onHelperFloat');
+    ////console.log(e, 'onHelperFloat');
     if (e == 1) {
       this.helperfloat = true;
     } else if (e == 2) {
@@ -713,7 +742,7 @@ export class Asq3QuestionComponent implements OnInit {
   }
 
   mutexFloat(e: any) {
-    //console.log(e, 'mutexfloat');
+    ////console.log(e, 'mutexfloat');
     if (e == 1) {
       this.mutexfloat = true;
     } else if (e == 2) {
@@ -727,7 +756,7 @@ export class Asq3QuestionComponent implements OnInit {
         }else{
           other_v = 3;
         }
-        //console.log('index',this.otherArr[y*2]-1,other_v);
+        ////console.log('index',this.otherArr[y*2]-1,other_v);
         this.currentAnswer.answer[this.otherArr[y*2]-1] = String(other_v);
         this.currentAnswers[this.currentPage] = this.currentAnswer;
         this.intQuestions[this.currentPage].answer = this.currentAnswer.answer;

@@ -7,7 +7,7 @@
           <div class="content questAge">
             <select name="age" class="" [(ngModel)]="searchInfo.QuestMonth">
               <option value="" disabled>请选择</option>
-              <option *ngFor="let age of AGE_DATE; let i= index;" [value]="i">
+              <option *ngFor="let age of (_sessionStorage.searchType=='ASQ-3'?mouthAsq3Arr:mouthAsqse2Arr); let i= index;" [value]="i">
                 {{ age }}
               </option>
             </select>
@@ -20,7 +20,7 @@
               type="text"
               readonly
               DateTimePicker
-              [format]="dateFormat"
+              [format]="dateFormatStart"
               [date]="searchInfo.BeginTime"
               (change)="changeBegin($event)"
               class="hw-form-control hw-form-input"
@@ -30,7 +30,7 @@
               type="text"
               readonly
               DateTimePicker
-              [format]="dateFormat"
+              [format]="dateFormatEnd"
               [date]="searchInfo.EndTime"
               (change)="changeEnd($event)"
               class="hw-form-control hw-form-input"

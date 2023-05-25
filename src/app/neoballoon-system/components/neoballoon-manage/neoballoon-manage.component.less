@@ -20,14 +20,30 @@
 }
 
 .side-nav-main {
-  flex-grow: 1;
+  flex-grow:1;
   padding: 20px;
   width: 0;
   overflow: auto;
+}
+.vertical-main{
+  flex-direction: row !important
 }
 
 @media screen and (max-width: 860px) {
   .side-nav-main {
     padding: 0px;
+  }
+  .side-nav {
+    width:100% !important;
+    height: 70px !important;
+    //display: none;
+  }
+  .side-nav-main {
+    padding: 20px;
+    width: 100%;
+    overflow: auto;
+  }
+  .vertical-main{
+    flex-direction: column !important;
   }
 }

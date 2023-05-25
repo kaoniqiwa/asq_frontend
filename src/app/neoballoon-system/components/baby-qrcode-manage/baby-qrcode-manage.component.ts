@@ -56,9 +56,10 @@ export class BabyQrcodeManageComponent implements OnInit {
 
     let qrcode:any = await this._business.getUuid(params);
     let this_href = window.location.href.split('#')[0];
-    console.log('href',window.location.href);
+    /* console.log('href',window.location.href);
     console.log('this._router.url',this._router.url);
-    console.log('qrcode',qrcode);
+    console.log('qrcode',qrcode); */
+    console.log('user',this.user);
     this.qrcodeUrl = this_href+'#/mlogin?uid='+this.user.Seq+'&did='+this.doctor.Seq+'&username='+qrcode.Username+'&password='+qrcode.Password+'&uuid='+qrcode.Uuid+'&type='+this.selectScan+'&Am='+this.Am+'&At='+this.At;
     console.log('qrcodeUrl',this.qrcodeUrl);
     this.qrcodeShow = true;

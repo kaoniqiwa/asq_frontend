@@ -72,7 +72,7 @@ export class MloginComponent implements OnInit {
     this._sessionStorage.Am = this.Am;
     this._sessionStorage.At = this.At;
     this.source = this._sessionStorage.source;
-    console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid,this.phone);
+    //console.log('mlogin',this._sessionStorage.source,this.uid,this.did,this.uuid,this.phone);
   }
 
   async ngOnInit() {
@@ -92,17 +92,17 @@ export class MloginComponent implements OnInit {
         this.qrcodeStatus = false;
         alert('链接已失效，请重新生成');
         return
-        //console.log('隐藏');
+        ////console.log('隐藏');
       }
 
       let params:any = {};
       params.Uuid = this.uuid;
       let res:any = await this._business.checkUuid(params);
-      console.log('res',res);
+      //console.log('res',res);
       if(!res){
         this.qrcodeStatus = false;
         alert('链接已失效，请重新生成');
-        //console.log('隐藏');
+        ////console.log('隐藏');
       }
     }else if(this.source == 3){
 
@@ -113,7 +113,7 @@ export class MloginComponent implements OnInit {
       params.type = this.type;
       params.seq = this.seq;
       let res:any = await this._business.getStatus(params);
-      console.log('res',res);
+      //console.log('res',res);
       if(!res){
         this.qrcodeStatus = false;
         this.phoneStatus = false;
@@ -123,25 +123,25 @@ export class MloginComponent implements OnInit {
     }
     
 
-    console.log('ngOnInit',this.user,this.doctor);
+    //console.log('ngOnInit',this.user,this.doctor);
 
   }
 
   async sendSms(){
     if(this.lastNum != '获取验证码')return;
-    console.log('this.phone',this.phone);
+    //console.log('this.phone',this.phone);
     if(!this.check_phone(String(this.phone))){
       this._toastrService.warning('请输入有效的手机号码！');
     }else{
       let params:any = {};
       params.phone = this.phone;
       let res:any = await this._business.sendSms(params);
-      console.log('ngOnInit2',res);
+      //console.log('ngOnInit2',res);
       if(res.content.Message == 'OK'){
         this.code = res.code;
       }
       this.setTime();
-      console.log('ngOnInit2',res,this.code);
+      //console.log('ngOnInit2',res,this.code);
     }
   }
 
@@ -160,7 +160,6 @@ export class MloginComponent implements OnInit {
   }
 
   phoneSubmit():any{
-    //console.log('phoneSubmit',this.setCode,this.code);
     if(!this.check_phone(String(this.phone))){
       return this._toastrService.warning('请输入有效的手机号码！');
     }
@@ -186,12 +185,12 @@ export class MloginComponent implements OnInit {
   async goToInfo(e:Event){
     e.stopPropagation();
     this._sessionStorage.questscore = null;
-    console.log('this._sessionStorage.questscore_goToInfo',this._sessionStorage.questscore);
+    //console.log('this._sessionStorage.questscore_goToInfo',this._sessionStorage.questscore);
 
     if(this.readed){
-      let res = await this._business.getMember(this.doctor.Id, this.phone);
-      this.member = res.Data[0];
-      if (res.Data.length) {
+      let res:any = await this._business.getMember(this.phone);
+      this.member = res[0];
+      if (res.length) {
         this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"], {
           queryParams: {
             type:this.type,
@@ -243,18 +242,18 @@ export class MloginComponent implements OnInit {
   }
 
   check_phone(mobile:any){
-    console.log('mobile.length',mobile.length);
+    //console.log('mobile.length',mobile.length);
       
     if(mobile.length!=11) 
     { 
-      console.log('222');
+      //console.log('222');
         return false; 
     }
     
     var myreg = /^(((1[3-9][0-9]{1}))+\d{8})$/; 
     if(!myreg.test(mobile)) 
     { 
-        console.log('333');
+        //console.log('333');
         return false; 
     }
     

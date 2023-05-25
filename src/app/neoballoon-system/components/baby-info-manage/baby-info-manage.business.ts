@@ -29,6 +29,12 @@ export class BabyInfoManageBusiness {
   getMember(id: string) {
     return this._memberRequest.get(id)
   }
+
+  getMemberByPhone(phone: any) {
+    let params:any = {};
+    params.Phone = phone;
+    return this._memberRequest.list(params);
+  }
   updateMember(member: Member) {
     return this._memberRequest.update(member);
   }
@@ -41,14 +47,14 @@ export class BabyInfoManageBusiness {
     return this._babyRequest.delete(params);
 
   }
-  listBaby(mids: string[]) {
-    let params = new GetBabyParams();
-    params.Mids = mids;
+  listBaby(mid: any) {
+    let params:any = {};
+    params.Mid = mid;
     return this._babyRequest.list(params);
   }
-  listMember(phones: string[]) {
-    let params = new GetMemberParams();
-    params.Phones = phones;
+  listMember(phone:any) {
+    let params:any = {};
+    params.Phone = phone;
 
     return this._memberRequest.list(params);
   }

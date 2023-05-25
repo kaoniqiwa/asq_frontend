@@ -18,9 +18,9 @@ export class MemberRequestService {
     this.type = this.basic.type(Member);
   }
 
-  list(params: GetMemberParams = new GetMemberParams()) {
-    params.Flow = 'listMember';
-    return this.type.paged(MemberUrl.list(), params)
+  list(params:any) {
+    params.Flow = 'getMember';
+    return this.type.post(MemberUrl.list(), params)
   }
   create(model: Member) {
     model.Flow = 'addMember';

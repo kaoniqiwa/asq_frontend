@@ -51,12 +51,10 @@ export class MloginBusiness {
     params.TestId = testId;
     return this._questionRequest.getGames(params);
   }
-  getMember(did: string, phone: string) {
+  getMember(phone: string) {
 
-    let params = new GetMemberParams();
-    params.Phones = [phone];
-    params.Dids = [did]
-
+    let params:any = {};
+    params.Phone = phone;
     return this._memberRequest.list(params);
 
   }

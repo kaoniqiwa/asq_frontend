@@ -2,8 +2,9 @@
   <div class="confirmBox" [hidden]="!(showStatus==1)">
     <img src="assets/img/close.png" alt="" class="btnClose" (click)="onSubmit(3)">
     <p>
-      <span class="babyData">宝宝出生日期为：{{birthDay}}</span>
-      <span>请确认宝宝出生日期准确，提交问卷之后将不能修改！</span>
+      <span class="babyData">宝宝出生日期为：{{birthDay}}<br>宝宝年龄为：{{rectifyage}}{{prematureStr}}</span>
+      
+      <span class="span">请确认以上信息是否准确，提交问卷之后将不能修改！</span>
     </p>
     <!-- <hr> -->
     <button class="btn-default1 btnsure" (click)="onSubmit(2)">确认</button>

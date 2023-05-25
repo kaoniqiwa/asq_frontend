@@ -7,6 +7,7 @@ import { Doctor } from 'src/app/network/model/doctor.model';
 import { User } from 'src/app/network/model/user.model';
 import { AccountBusiness } from './account.business';
 
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -38,6 +39,7 @@ export class AccountComponent implements OnInit {
   selectAccount(doctor: Doctor) {
     this._sessionStorage.doctor = doctor;
     this._router.navigate(["/neoballoon/neoballoon-manage/baby-lib"])
+    
   }
 
 }

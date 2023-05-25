@@ -52,7 +52,7 @@ export class Asqse2printComponent implements OnInit {
   doctor: any = null;
   baby: any = null;
   question: any = null;
-  zongHe:any = {};
+  zongHe:any = [];
   math = Math;
   pstatus = 1;
   constructor(private _title: Title, private _fb: FormBuilder, private _activeRoute: ActivatedRoute, private _business: Asqse2PrintBusiness, private _sessionStorage: SessionStorageService,) {
@@ -78,6 +78,8 @@ export class Asqse2printComponent implements OnInit {
     this.baby = await this._business.getBaby(this.bid);
     this.question = await this._business.getQuestion(this.qid);
     //this.gamesArr = await this._business.getGames(this.mouthArr[this.question.QuestMonth]);
+
+    //console.log('ngOnInit',this.qid,this.question)
 
     let that = this;
     this.complete = true;
@@ -175,7 +177,7 @@ export class Asqse2printComponent implements OnInit {
     }
 
     for(var nn=3;nn<this.zongHe.answer.length;nn++){
-      if(this.zongHe.answer[nn] == 3){
+      if(this.zongHe.answer[nn] == 1){
         let _url = this.zongHe.question[nn][5].split('、')[0].replace(/-/, "/");
         let newUrl = '';
         for(var ee=0;ee<Number(String(this.zongHe.question[nn][6]).split('、')[0]);ee++){

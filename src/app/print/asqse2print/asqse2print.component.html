@@ -142,30 +142,21 @@
                         </tr>
                         <ng-container *ngIf="scoreArr[0].answer.length>0">
 
-                            <ng-container
-                                *ngFor="let in of counter(math.ceil(scoreArr[0].answer.length/3)); let i = index;">
+                            <ng-container *ngFor="let in of counter(math.ceil(scoreArr[0].answer.length/3)); let i = index;">
                                 <tr>
-                                    <td>{{scoreArr[0].answer[i]!='' && (i+1)}}</td>
-                                    <td>{{scoreArr[0].answer[i]!='' && setThisScore(scoreArr[0].answer[i])}}</td>
-                                    <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1:0)}}</td>
-                                    <td></td>
-                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
-                                        (i+2+math.floor(scoreArr[0].answer.length/3))}}</td>
-                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
-                                        setThisScore(scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)])}}
-                                    </td>
-                                    <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] &&
-                                        (scoreArr[0].worry[i+1+math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
-                                    <td></td>
-                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
-                                        (i+3+2*math.floor(scoreArr[0].answer.length/3))}}</td>
-                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
-                                        setThisScore(scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)])}}
-                                    </td>
-                                    <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] &&
-                                        (scoreArr[0].worry[i+2+2*math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                                  <td>{{scoreArr[0].answer[i]!='' && (i+1)}}</td>
+                                  <td>{{scoreArr[0].answer[i]!='' && setThisScore(scoreArr[0].answer[i])}}</td>
+                                  <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1*5:0)}}</td>
+                                  <td></td>
+                                  <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && (i+1+math.ceil(scoreArr[0].answer.length/3))}}</td>
+                                  <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)])}}</td>
+                                  <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+math.ceil(scoreArr[0].answer.length/3)]>=1*5?1:0)}}</td>
+                                  <td></td>
+                                  <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && (i+1+2*math.ceil(scoreArr[0].answer.length/3))}}</td>
+                                  <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)])}}</td>
+                                  <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+2*math.ceil(scoreArr[0].answer.length/3)]>=1?1*5:0)}}</td>
                                 </tr>
-                            </ng-container>
+                              </ng-container>
                         </ng-container>
                         <tr>
                             <td colspan="5">分数合计：{{scoreArr[0].score}}</td>
@@ -186,7 +177,7 @@
                 <!--<p>快来看看宝宝情况吧 <img src="img/arrow.png" alt=""></p>-->
             </div>
 
-            <div class="resQues" *ngIf="zongHe.question.length>0">
+            <div class="resQues" *ngIf="zongHe.question && zongHe.question.length>0">
                 <h2>2.综合问题和其他问题记录如下</h2>
 
                 <table class="tabQues">
@@ -283,7 +274,7 @@
                                 <tr>
                                     <td>子账户：<span class="doctorName">{{doctor.Name}}</span></td>
                                     <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
-                                                *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                                                *ngIf="baby.Premature == '是' && +question.Rectifyage.split('月')[0]<24">(矫正龄)</span></span></td>
                                     
                                 </tr>
                             </tbody>

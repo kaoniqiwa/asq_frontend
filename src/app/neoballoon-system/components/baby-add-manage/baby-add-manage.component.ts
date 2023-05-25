@@ -36,8 +36,9 @@ export class BabyAddManageComponent implements OnInit {
   constructor(private _sessionStorage: SessionStorageService,private _business: BabyAddManageBusiness ,private _router: Router) {
     this.user = this._sessionStorage.user;
     this.doctor = this._sessionStorage.doctor;
-    console.log('app-baby-add-manage',this._sessionStorage.user,this._sessionStorage.doctor);
-    console.log('this._sessionStorage.questscore_changeScan',this._sessionStorage.questscore);
+    //console.log('app-baby-add-manage',this._sessionStorage.user,this._sessionStorage.doctor);
+    //console.log('this._sessionStorage.questscore_changeScan',this._sessionStorage.questscore);
+    this.At = this.doctor.At;
   }
 
   ngOnInit(): void {
@@ -51,7 +52,7 @@ export class BabyAddManageComponent implements OnInit {
 
   changeUser() {
     this._sessionStorage.questscore = null;
-    console.log('this._sessionStorage.questscore_changeUser',this._sessionStorage.questscore);
+    //console.log('this._sessionStorage.questscore_changeUser',this._sessionStorage.questscore);
     this.showAuthorize = true;
     /* if (this.selectUser == '0') {
       this.showAuthorize = true;
@@ -60,9 +61,9 @@ export class BabyAddManageComponent implements OnInit {
     } */
   }
   changeScan(e:Event) {
-    console.log('changeScan',this.selectScan);
+    //console.log('changeScan',this.selectScan);
     this._sessionStorage.questscore = null;
-    console.log('this._sessionStorage.questscore_changeScan',this._sessionStorage.questscore);
+    //console.log('this._sessionStorage.questscore_changeScan',this._sessionStorage.questscore);
     if(this.selectScan == 'ASQ-3' || this.selectScan == 'ASQ:SE-2'){
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-qrcode-manage"], {
         queryParams: {
@@ -85,7 +86,7 @@ export class BabyAddManageComponent implements OnInit {
 
   changeMessage(e:Event){
     this._sessionStorage.questscore = null;
-    console.log('this._sessionStorage.questscore_changeMessage',this._sessionStorage.questscore);
+    //console.log('this._sessionStorage.questscore_changeMessage',this._sessionStorage.questscore);
     if(this.selectMessage == 'ASQ-3' || this.selectMessage == 'ASQ:SE-2'){
       this._router.navigate(["/neoballoon/neoballoon-manage/baby-message-manage"], {
         queryParams: {
@@ -96,6 +97,19 @@ export class BabyAddManageComponent implements OnInit {
       })
 
     }
+  }
+
+  atdoctor(e:Event){
+    //console.log(this.At);
+
+    this.doctor.At = this.At;
+    this._sessionStorage.doctor = this.doctor;
+
+    let params:any = {};
+    params.At = this.At;
+    params.Id = this.doctor.Id;
+
+    this._business.updateAt(params);
   }
   
   showQuickHandler() {

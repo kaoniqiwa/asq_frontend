@@ -1,11 +1,20 @@
 <div class="header-nav">
-  <div class="nav-item" *ngFor="let model of models">
-    <div class="title">{{ model.title }}</div>
-    <div class="wrapper" *ngIf="model.children && model.children.length">
-      <div class="wrapper-item" *ngFor="let m of model.children">
-        <div class="title">{{ m.title }}</div>
+  <div class="header-nav-menu mheader" id="menu" #menu>
+    <div class="header-nav-con">
+      <div class="nav-item" *ngFor="let model of models">
+        <div class="title">{{ model.title }}</div>
+        <div class="wrapper" *ngIf="model.children && model.children.length">
+          <div class="wrapper-item" *ngFor="let m of model.children">
+            <div class="title">{{ m.title }}</div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+  
+
+  <div class="menu mmenu" (click)="menuShow()">
+    <i class="howell-icon-ul"></i>
   </div>
 
   <div class="">

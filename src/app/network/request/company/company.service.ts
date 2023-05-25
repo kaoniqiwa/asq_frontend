@@ -21,6 +21,11 @@ export class CompanyRequestService {
     
     
   }
+  getCode(){
+    //let params:any = {};
+    //params.Flow = 'getCode';
+    return this.type.post(CompanyUrl.getCode(Math.random()))
+  }
   updateLeft(params:any){
     params.Flow = 'updateLeft';
     return this.type.post(CompanyUrl.create(), params)

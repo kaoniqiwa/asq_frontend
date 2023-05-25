@@ -66,7 +66,7 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
   monthed:any = [];
 
   questions:any = [];
-  babys: Baby[] = [];
+  babys: any = [];
 
   currentBaby: any = null;
   currentIndex:any = 0;
@@ -151,14 +151,15 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     this.user = this._sessionStorage.user;
 
-    let { Data: babys } = await this._business.listBaby(this.mid);
+    let babys = await this._business.listBaby(this.mid);
     this.babys = babys;
     // console.log('babys', this.babys)
 
     if (this.babys.length) {
       // this.currentBaby = this.babys[0];
       this.changeBaby(this.babys[this.currentIndex]);
-
+    }else{
+      this._toastrService.error('网络错误，请返回重试');
     }
 
     

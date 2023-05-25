@@ -6,6 +6,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
   overflow: auto;
+  
   .nav-item {
     height: 45px;
     display: flex;
@@ -56,3 +57,19 @@
     }
   }
 }
+
+.nav-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 860px) {
+  .nav-wrapper{
+    display: flex;
+    flex-direction: row;
+  }
+  .mhide{
+    display: none !important;
+  }
+}
+

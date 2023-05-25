@@ -2,6 +2,7 @@
   <div class="operation-item" [matMenuTriggerFor]="menu">
     <div class="log-out">
       <i class="howell-icon-account"></i>
+      
     </div>
     <mat-menu #menu="matMenu">
       <button
@@ -33,5 +34,10 @@
         退出登录
       </button>
     </mat-menu>
+  </div>
+  <div class="user-name">
+    <!-- <span class="gray">{{user?.Name}}</span>
+    <br> -->
+    <span *ngIf="this._sessionStorage.doctor?.Name" class="green"><span class="gray">您好，</span>{{this._sessionStorage.doctor?.Name}}</span>
   </div>
 </div>

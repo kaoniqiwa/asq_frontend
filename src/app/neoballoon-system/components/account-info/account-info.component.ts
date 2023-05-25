@@ -24,7 +24,7 @@ export class AccountInfoComponent implements OnInit {
 
   ngOnChanges(changes: any){
     if (changes['user']) {
-      console.log('changes_user',changes['user']);
+      //console.log('changes_user',changes['user']);
       
     }
   }
@@ -34,7 +34,7 @@ export class AccountInfoComponent implements OnInit {
     this.doctor = this._sessionStorage.doctor;
     //this.user = this._sessionStorage.user;
    
-    console.log('this.user',this._sessionStorage.user)
+    //console.log('this.user',this._sessionStorage.user)
   }
 
 }

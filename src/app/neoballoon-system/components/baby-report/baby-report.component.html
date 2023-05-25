@@ -1,6 +1,14 @@
-<div class="main">
+<div class="main" id="pdfTable" #pdfTable>
+  <button
+        class="hw-small-btn gray-btn"
+        (click)="goBack()"
+        *ngIf="source == 1"
+      >
+        <img src="assets/img/back.png" alt="" />返回
+      </button>
   <!-- <div class="back" onclick="history.back()"><img src="assets/img/back.png" alt="">返回</div> -->
-  <div class="fileBox">
+  <div class="fileBox" >
+    
     <table class="tabInfo motherInfo">
       
       <tbody *ngIf="source == 1">
@@ -48,12 +56,16 @@
       </ul>
     </div>
     <div class="swiper-container vertical-main" style="min-height: 400px">
-      <swiper [config]="config">
+      <swiper [config]="config" #swiper>
         <ng-template swiperSlide class="red" *ngFor="let month of asq3MouthArr; let i = index">
 
           <div class="item">
             <div class="name">
-              <p>{{ month }}<span class="m">月</span></p>
+              <p class="mmm">
+                {{ month }}<span class="m">月</span>
+                <img *ngIf="checkScreen(i,'ASQ-3').Status" class="mm" src="assets/img/export.png" (click)="dwdHufForm()" alt="">
+              </p>
+              
             </div>
             <ng-container *ngIf="!checkScreen(i,'ASQ-3').Status">
               <ul class="tag">
@@ -90,12 +102,15 @@
       </ul>
     </div>
     <div class="swiper-container vertical-main" style="min-height: 400px">
-      <swiper [config]="config">
+      <swiper [config]="config" #swiper2>
         <ng-template swiperSlide class="red" *ngFor="let month of asqse2MouthArr; let i = index">
 
           <div class="item">
             <div class="name">
-              <p>{{ month }}<span class="m">月</span></p>
+              <p>
+                {{ month }}<span class="m">月</span>
+                <img *ngIf="checkScreen(i,'ASQ:SE-2').Status" class="mm" src="assets/img/export.png" (click)="download()" alt="">
+              </p>
             </div>
             <ng-container *ngIf="!checkScreen(i,'ASQ:SE-2').Status">
               <ul class="tag">

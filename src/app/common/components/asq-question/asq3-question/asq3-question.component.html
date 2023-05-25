@@ -329,7 +329,7 @@
               </tr>
               <tr>
                 <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
-                <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span *ngIf="baby.Premature == '是' && +question.Rectifyage.split('月')[0]<24">(矫正龄)</span></span></td>
               </tr>
               <tr>
                 <td class="early"></td>

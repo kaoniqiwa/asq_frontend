@@ -5,6 +5,7 @@ import { Member } from "src/app/network/model/member.model";
 import { Question } from "src/app/network/model/question.model";
 import { GetBabyParams } from "src/app/network/request/baby/baby.params";
 import { BabyRequestService } from "src/app/network/request/baby/baby.service";
+import { DoctorRequestService } from "src/app/network/request/doctor/doctor.service";
 import { GetMemberParams } from "src/app/network/request/member/member.params";
 import { MemberRequestService } from "src/app/network/request/member/member.service";
 import { GetQuestionParams } from "src/app/network/request/question/question.params";
@@ -14,11 +15,15 @@ import { CompanyRequestService } from "src/app/network/request/company/company.s
 
 @Injectable()
 export class BabyAddManageBusiness {
-  constructor(private _memberRequest: MemberRequestService, private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService,private _userRequest: CompanyRequestService) {
+  constructor(private _memberRequest: MemberRequestService, private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService,private _userRequest: CompanyRequestService, private _doctorRequest: DoctorRequestService) {
 
   }
   getUuid(params:any){
     return this._userRequest.getUuid(params);
+  }
+
+  updateAt(params:any) {
+    return this._doctorRequest.updateAt(params);
   }
   
 

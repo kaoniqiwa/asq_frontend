@@ -48,6 +48,15 @@ export class SessionStorageService {
     return source;
   }
 
+  private _searchType: any | null = null;
+  set searchType(searchType:any) {
+    sessionStorage.setItem('searchType', searchType);
+  }
+  get searchType() {
+    let searchType = sessionStorage.getItem('searchType');
+    return searchType;
+  }
+
   private _uuid: any | null = null;
   set uuid(uuid:any) {
     sessionStorage.setItem('uuid', uuid);

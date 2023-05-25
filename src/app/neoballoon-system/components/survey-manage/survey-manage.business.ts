@@ -11,10 +11,10 @@ import { CompanyRequestService } from "src/app/network/request/company/company.s
 export class SurveyManageBusiness {
   constructor(private _babyRequest: BabyRequestService, private _questionRequest: QuestionRequestService,private _userRequest: CompanyRequestService) { }
 
-  listBaby(mid: string) {
-    let params = new GetBabyParams();
-    params.Mids = [];
-    mid && params.Mids.push(mid);
+  listBaby(mid: any) {
+    let params:any = {};
+    params.Mid = mid;
+    //mid && params.Mids.push(mid);
     return this._babyRequest.list(params);
   }
   getQuestionByBaby(params: GetQuestionParams) {

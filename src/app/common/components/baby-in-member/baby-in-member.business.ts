@@ -9,11 +9,11 @@ export class BabyInMemberBusiness {
   constructor(private _memberRequest: MemberRequestService,) {
 
   }
-  getMember(did: string, phone: string) {
+  getMember( phone: string) {
 
-    let params = new GetMemberParams();
-    params.Phones = [phone];
-    params.Dids = [did]
+    let params:any = {};
+    params.Phone = phone;
+    //params.Dids = [did]
 
     return this._memberRequest.list(params);
 

@@ -5,11 +5,18 @@ export class CompanyUrl {
     return `${BaseASQUrl}/company`;
   }
 
+  static get code() {
+    return `${BaseASQUrl}/captcha`;
+  }
+
   static create() {
     return `${this.basic}.php`;
   }
   static list() {
     return `${this.basic}.php`;
+  }
+  static getCode(rand:any) {
+    return `${this.code}.php?r=${rand}`
   }
   static get(id: string) {
     return `${this.basic}.php?Id=${id}`

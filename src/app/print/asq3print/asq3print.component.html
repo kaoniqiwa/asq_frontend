@@ -3,7 +3,7 @@
 
         <div class="default"></div>
         <!--初步结果 -->
-        <div class="resBox res1" id="printBox" style="page-break-after:always">
+        <div class="resBox res1" id="printBox">
             <div class="resInfo">
                 <img src="assets/img/ASQ3.png" alt="" height="80%">
                 <div class="testLogo">
@@ -28,7 +28,7 @@
                     <tr>
                         <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
                         <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
-                                    *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                                    *ngIf="baby.Premature == '是' && +question.Rectifyage.split('月')[0]<24">(矫正龄)</span></span></td>
                     </tr>
                     <tr>
                         <td class="early"></td>
@@ -221,9 +221,9 @@
                             </td>
                             <td>
                                 <div class="testLogo">
-                                    <p><span class="month">{{mouthArr[questMonth]}}</span>个月ASQ-3信息汇总</p>
+                                    <p><span class="month">{{mouthArr[+questMonth]}}</span>个月ASQ-3信息汇总</p>
                                     <span
-                                        class="desc">适用于{{monthWorkBook[0].data[questMonth][1]}}<br>至{{monthWorkBook[0].data[questMonth][2]}}{{monthWorkBook[0].data[questMonth][3]}}</span>
+                                        class="desc">适用于{{monthWorkBook[0].data[+questMonth][1]}}<br>至{{monthWorkBook[0].data[+questMonth][2]}}{{monthWorkBook[0].data[+questMonth][3]}}</span>
                                 </div>
                             </td>
                         </tr>

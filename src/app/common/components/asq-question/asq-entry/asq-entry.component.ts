@@ -16,7 +16,7 @@ export class Asq3EntryComponent implements OnInit {
   questType: QuestType = QuestType.ASQ3;
   questMonth: number = 0;
   bid:number = 0;
-  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54.60];
+  mouthArr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54,60];
   monthWorkBook :any = null;
   check1 = false;
   check2 = false;

@@ -13,30 +13,34 @@ export class BabyLibFormComponent implements OnInit {
   @Output() searchCondition = new EventEmitter<string>();
   @Output() closeEvent = new EventEmitter<string>();
 
-  dateFormat: string = 'yyyy-MM-dd';
+  dateFormatStart: string = 'yyyy-MM-dd 00:00:00';
+  dateFormatEnd: string = 'yyyy-MM-dd 23:59:59';
   today = new Date();
   doctors:any = null;
 
-  transformDate = (date: Date | string) => {
-    return formatDate(date, this.dateFormat, 'en')
+  transformDateStart = (date: Date | string) => {
+    return formatDate(date, this.dateFormatStart, 'en')
+  }
+  transformDateEnd = (date: Date | string) => {
+    return formatDate(date, this.dateFormatEnd, 'en')
   }
 
   searchInfo: any = {
-    BeginTime: this.transformDate(this.today),
-    EndTime: this.transformDate(this.today),
+    BeginTime: this.transformDateStart(this.today),
+    EndTime: this.transformDateEnd(this.today),
     QuestMonth:'',
     Dids: '',
     Status: 3,
   }
 
 
-  AGE_DATE = [
-    2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54, 60
-  ]
-
   
+  mouthAsq3Arr: any = [2, 4, 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 27, 30, 33, 36, 42, 48, 54, 60]
+  mouthAsqse2Arr: any = [2, 6, 12, 18, 24, 30, 36, 48, 60];
 
-  constructor(private _sessionStorage: SessionStorageService,private _fb: FormBuilder) {
+  AGE_DATE = this.mouthAsq3Arr;
+
+  constructor(public _sessionStorage: SessionStorageService,private _fb: FormBuilder) {
     this.doctors = this._sessionStorage.doctors;
     this.doctors.map(function(item:any,index:any){
       item.Status = false;
@@ -44,6 +48,14 @@ export class BabyLibFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  changeQuestType(qt:any){
+    if(qt=='ASQ-3'){
+      this.AGE_DATE = this.mouthAsq3Arr;
+    }else if(qt=='ASQ:SE-2'){
+      this.AGE_DATE = this.mouthAsqse2Arr;
+    }
   }
 
   chooseDoctor(e:Event){
@@ -72,6 +84,7 @@ export class BabyLibFormComponent implements OnInit {
   chooseStatus(e:Event){
     let thisIndex:any = (e.target as HTMLInputElement).getAttribute('Index');
     this.searchInfo.Status = thisIndex;
+    console.log('chooseStatus',this.searchInfo);
   }
 
   onSubmit(){
@@ -84,17 +97,17 @@ export class BabyLibFormComponent implements OnInit {
     })
     this.searchInfo.Dids = '';
     this.searchInfo.Status = 3;
-    this.searchInfo.BeginTime = this.transformDate(this.today);
-    this.searchInfo.EndTime = this.transformDate(this.today);
+    this.searchInfo.BeginTime = this.transformDateStart(this.today);
+    this.searchInfo.EndTime = this.transformDateEnd(this.today);
     this.searchInfo.QuestMonth = '';
 
 
   }
 
   changeBegin(date: Date) {
-    this.searchInfo.BeginTime = this.transformDate(date);
+    this.searchInfo.BeginTime = this.transformDateStart(date);
   }
   changeEnd(date: Date) {
-    this.searchInfo.EndTime = this.transformDate(date);
+    this.searchInfo.EndTime = this.transformDateEnd(date);
   }
 }

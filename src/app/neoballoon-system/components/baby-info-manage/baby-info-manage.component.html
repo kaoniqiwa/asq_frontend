@@ -1,9 +1,5 @@
 <div class="baby-info-manage vertical-layout">
-  <!-- <div>
-    <select></select>
-    <select></select>
-    <select></select>
-  </div> -->
+  
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog
       (dialogMsgEvent)="dialogMsgEvent($event)"
@@ -35,16 +31,14 @@
       </p>
     </div>
   </div>
-  <div class="vertical-main hidescroll">
+
+  <div class="">
     <div class="addr-btns">
-      <div
-        class="addr-item"
+      <div class="addr-item"
         [class.active]="i == currentIndex"
         (click)="currentIndex = i"
-        *ngFor="let babyGroup of babyGroupArr; let i = index"
-      >
+        *ngFor="let babyGroup of babyGroupArr; let i = index">
         <span>宝宝 {{ i + 1 | numtochina }}</span>
-        <!-- -->
         <div
           class="close-btn"
           *ngIf="i >= babyInMember.length && i != 0"
@@ -133,20 +127,7 @@
               </div>
             </div>
 
-            <!-- <div class="form-group">
-              <label class="control-label col-sm-2">
-                <span>*</span> 出生日期:</label
-              >
-              <div class="col-sm-5">
-                <input
-                  type="date"
-                  DateTimePicker
-                  [format]="dateFormat"
-                  (change)="changeBirthday($event, babyGroup)"
-                  formControlName="birthday"
-                />
-              </div>
-            </div> -->
+            
             <div class="form-group">
               <label class="control-label col-sm-2">
                 <span>*</span> 出生日期:</label
@@ -155,38 +136,25 @@
                 <app-date-picker
                   [disabled]="babyGroupArr[currentIndex].getRawValue().editBabyBirthday==1?true:!true"
                   [year]="
-                    +babyGroupArr[currentIndex]
+                    +(babyGroupArr[currentIndex]
                       .getRawValue()
-                      .birthday.split('-')[0]
+                      .birthday.split('-')[0])
                   "
                   [month]="
-                    +babyGroupArr[currentIndex]
+                    +(babyGroupArr[currentIndex]
                       .getRawValue()
-                      .birthday.split('-')[1]
+                      .birthday.split('-')[1])
                   "
                   [date]="
-                    +babyGroupArr[currentIndex]
+                    +(babyGroupArr[currentIndex]
                       .getRawValue()
-                      .birthday.split('-')[2]
+                      .birthday.split('-')[2])
                   "
                   (pickerChange)="pickerChange($event, babyGroup)"
                 ></app-date-picker>
               </div>
             </div>
-            <!-- <div class="form-group">
-              <label class="control-label col-sm-2">
-                <span>*</span> 筛查时间:</label
-              >
-              <div class="col-sm-3">
-                <input
-                  type="date"
-                  readonly
-                  DateTimePicker
-                  [format]="dateFormat"
-                  formControlName="surveyTime"
-                />
-              </div>
-            </div> -->
+            
             <div class="form-group" [hidden]="source!=1">
               <label class="control-label col-sm-2">
                 <span>*</span> 筛查时间:</label
@@ -207,7 +175,7 @@
                   [date]="
                     +babyGroupArr[currentIndex]
                       .getRawValue()
-                      .surveyTime.split(' ')[0].split('-')[2]
+                      .surveyTime.split('-')[2]
                   "
                   (pickerChange)="pickerChange2($event, babyGroup)"
                 ></app-date-picker>
@@ -217,16 +185,7 @@
             <div
               class="form-group"
               style="align-items: flex-start"
-              [hidden]="
-              (
-                +rectify(
-                  babyGroupArr[currentIndex].getRawValue().birthday,
-                  babyGroupArr[currentIndex].getRawValue().surveyTime,
-                  0,
-                  0
-                ).split('月')[0] > 24
-              )
-            "
+              [hidden]="(+rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[0] >= 24 && +rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[1].split('天')[0] > 0)"
               
             >
               <label class="control-label col-sm-2">
@@ -240,6 +199,7 @@
                     type="radio"
                     formControlName="premature"
                     value="是"
+                    
                   />是
                 </label>
                 &nbsp;&nbsp;&nbsp;
@@ -249,6 +209,7 @@
                     type="radio"
                     formControlName="premature"
                     value="否"
+                    
                   />否
                 </label>
                 <label>
@@ -258,7 +219,7 @@
             </div>
             <div
               class="form-group"
-              [hidden]="!(babyGroupArr[currentIndex].getRawValue().premature == '是')"
+              [hidden]="!(babyGroupArr[currentIndex].getRawValue().premature == '是') || (+rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[0] > 24 || (+rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[0] == 24 && +rectify(babyGroupArr[currentIndex].getRawValue().birthday,babyGroupArr[currentIndex].getRawValue().surveyTime,0,0).split('月')[1].split('天')[0] > 0))"
               
             >
               <label class="control-label col-sm-2">
@@ -267,7 +228,8 @@
               <div class="col-sm-2">
                 <select 
                   [disabled]="babyGroupArr[currentIndex].getRawValue().isAnswer==1?true:!true"
-                  formControlName="prematrueweek">
+                  
+                  formControlName="prematureweek">
                   <option value="0" disabled>周</option>
                   <option value="36">36周</option>
                   <option value="35">35周</option>
@@ -292,7 +254,8 @@
               <div class="col-sm-2">
                 <select
                   [disabled]="babyGroupArr[currentIndex].getRawValue().isAnswer==1?true:!true"
-                  formControlName="prematrueday">
+                  
+                  formControlName="prematureday">
                   <option value="0" disabled>天</option>
                   <option value="6">6天</option>
                   <option value="5">5天</option>
@@ -403,7 +366,7 @@
       </form>
     </ng-container>
 
-    <hr />
+    <!-- <hr /> -->
     <div class="member-box">
       <div
         class="green-title large-title underline-title"
@@ -570,23 +533,6 @@
             </div>
           </div>
 
-          <!-- <div class="form-group">
-            <label class="control-label col-sm-2">
-              <span>*</span> 出生日期:</label>
-            <div class="col-sm-5">
-              <app-date-picker [disabled]="babyGroupArr[currentIndex].getRawValue().id!=''?true:!true"
-                [year]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[0]"
-                [month]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[1]"
-                [date]="+babyGroupArr[currentIndex].getRawValue().birthday.split('-')[2]"
-                (pickerChange)="pickerChange($event, babyGroup)"></app-date-picker>
-            </div>
-          </div>
-          <div class="form-group" *ngIf="moreDetail">
-            <label class="control-label col-sm-2"> 母亲出生日期:</label>
-            <div class="col-sm-3">
-              <input type="text" DateTimePicker [format]="dateFormat" formControlName="motherBirth" />
-            </div>
-          </div> -->
           <div class="form-group" *ngIf="moreDetail">
             <label class="control-label col-sm-2"> 母亲出生日期:</label>
             <div class="col-sm-9">

@@ -86,7 +86,7 @@
                       attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
                       value="3" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
                     <span *ngIf="!(j == k - 1)" class="span_gai">经常或总是</span>
-                    <span *ngIf="(j == k - 1)" class="span_gai">是</span>
+                    <span *ngIf="(j == k - 1)  && !(i==2 && j==1)" class="span_gai">是</span>
                   </td>
                   <ng-container *ngIf="!(j == k - 1)">
                     <td class="isSquare td_gai">
@@ -107,7 +107,7 @@
                       attr.mutexOther="{{item[4]?item[4]:''}}" attr.input="{{item[3]?item[3]:''}}" attr.xu="{{ i }}"
                       value="1" [(ngModel)]="intQuetion.answer && intQuetion.answer[i]" />
                     <span *ngIf="!(j == k - 1)" class="span_gai">极少或从不</span>
-                    <span *ngIf="(j == k - 1)" class="span_gai">否</span>
+                    <span *ngIf="(j == k - 1)  && !(i==2 && j==1)" class="span_gai">否</span>
                   </td>
                   <td class="td_gai">
                     <img [src]="item[4]==1?'assets/img/icon_audio.png':'assets/img/icon_img.png'" alt="" class="signal"
@@ -378,7 +378,7 @@
               <tr>
                 <td>问卷提供机构子账户：<span class="doctorName">{{doctor.Name}}</span></td>
                 <td>完成问卷年龄：<span class="babyAge">{{question.Rectifyage}}<span
-                      *ngIf="baby.Premature == '是'">(矫正龄)</span></span></td>
+                      *ngIf="baby.Premature == '是' && +question.Rectifyage.split('月')[0]<24">(矫正龄)</span></span></td>
               </tr>
               <tr>
                 <td class="early"></td>
@@ -409,15 +409,15 @@
                     <tr>
                       <td>{{scoreArr[0].answer[i]!='' && (i+1)}}</td>
                       <td>{{scoreArr[0].answer[i]!='' && setThisScore(scoreArr[0].answer[i])}}</td>
-                      <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1:0)}}</td>
+                      <td>{{scoreArr[0].answer[i]!='' && (scoreArr[0].worry[i]>=1?1*5:0)}}</td>
                       <td></td>
-                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && (i+2+math.floor(scoreArr[0].answer.length/3))}}</td>
-                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)])}}</td>
-                      <td>{{scoreArr[0].answer[i+1+math.floor(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+1+math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                      <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && (i+1+math.ceil(scoreArr[0].answer.length/3))}}</td>
+                      <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)])}}</td>
+                      <td>{{scoreArr[0].answer[i+math.ceil(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+math.ceil(scoreArr[0].answer.length/3)]>=1*5?1:0)}}</td>
                       <td></td>
-                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && (i+3+2*math.floor(scoreArr[0].answer.length/3))}}</td>
-                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)])}}</td>
-                      <td>{{scoreArr[0].answer[i+2+2*math.floor(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+2+2*math.floor(scoreArr[0].answer.length/3)]>=1?1:0)}}</td>
+                      <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && (i+1+2*math.ceil(scoreArr[0].answer.length/3))}}</td>
+                      <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && setThisScore(scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)])}}</td>
+                      <td>{{scoreArr[0].answer[i+2*math.ceil(scoreArr[0].answer.length/3)] && (scoreArr[0].worry[i+2*math.ceil(scoreArr[0].answer.length/3)]>=1?1*5:0)}}</td>
                     </tr>
                   </ng-container>
                 </ng-container>
@@ -463,12 +463,12 @@
 
                   <tr>
                     <td colspan="3">
-                      <textarea class="filing0" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+1]" cols="30"
+                      <textarea class="filing0" name="" [(ngModel)]="zonghe?.result[2*i]" cols="30"
                         rows="10" maxlength="30" disabled="disabled"></textarea>
                     </td>
                     <ng-container *ngIf="!((i == l - 1) && (intQuestions[1].question.length)%2 == 1)">
                       <td colspan="3">
-                        <textarea class="filing1" name="" [(ngModel)]="zonghe.result && zonghe.result[2*i+1]"
+                        <textarea class="filing1" name="" [(ngModel)]="zonghe?.result[2*i+1]"
                           cols="30" rows="10" maxlength="30" disabled="disabled"></textarea>
                       </td>
                     </ng-container>

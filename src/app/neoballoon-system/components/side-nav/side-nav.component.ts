@@ -20,7 +20,7 @@ export class SideNavComponent implements OnInit {
       if (e instanceof NavigationEnd) {
         let reg = /(\/neoballoon\/neoballoon-manage\/)(?<side>[\w-]*)(\/?)$/;
         let mode = e.urlAfterRedirects.match(reg);
-        console.log(mode)
+        //console.log(mode)
         if (mode && mode.groups) {
           this.side = mode.groups['side']
         }
