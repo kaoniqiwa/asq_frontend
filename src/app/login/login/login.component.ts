@@ -1,7 +1,18 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  Sanitizer,
+} from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  Title,
+} from '@angular/platform-browser';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 
 import {
@@ -10,6 +21,8 @@ import {
 } from 'src/app/view-model/login.model';
 import { LoginBusiness } from './login.business';
 import { AppConfigService } from 'src/app/common/service/app-init.service';
+import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,6 +34,7 @@ export class LoginComponent implements OnInit {
   autoLogin = true;
   loginModel: LoginModel | null = null;
   code: any = '';
+  imgUrl: any = '';
 
   myForm = this._fb.group({
     username: ['', Validators.required],
@@ -35,7 +49,9 @@ export class LoginComponent implements OnInit {
     private _business: LoginBusiness,
     private _title: Title,
     private _fb: FormBuilder,
-    private _sessionStorage: SessionStorageService
+    private _sessionStorage: SessionStorageService,
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) {
     this._title.setTitle('用户登录');
     this._sessionStorage.source = 1;
@@ -47,8 +63,32 @@ export class LoginComponent implements OnInit {
   }
 
   async getCode() {
-    this.code = await this._business.getCode();
+    // this.code = await this._business.getCode();
     // console.log('getCode', this.code);
+    // axios({
+    //   url: '/app/asq_server/captcha.php?r=0.5072714284767665',
+    //   method: 'GET',
+    //   responseType: 'blob',
+    // }).then((res) => {
+    //   console.log(res);
+    //   let resUrl = window.URL.createObjectURL(
+    //     new Blob([res.data], { type: 'image/png' })
+    //   );
+    //   this.imgUrl = this.sanitizer.bypassSecurityTrustResourceUrl(resUrl);
+    //   console.log(this.imgUrl);
+    // });
+
+    this.http
+      .get('/app/asq_server/captcha.php?r=0.5072714284767665', {
+        responseType: 'blob',
+      })
+      .subscribe((res) => {
+        let resUrl = window.URL.createObjectURL(
+          new Blob([res], { type: 'image/png' })
+        );
+        this.imgUrl = this.sanitizer.bypassSecurityTrustResourceUrl(resUrl);
+        console.log(this.imgUrl);
+      });
   }
 
   login() {
