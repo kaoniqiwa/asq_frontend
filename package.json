@@ -28,6 +28,7 @@
     "crypto-js": "^4.1.1",
     "csv-loader": "^3.0.5",
     "excel-loader": "^1.0.1",
+    "js-base64": "^3.7.5",
     "jspdf": "^2.5.1",
     "ngx-cookie-service": "^14.0.1",
     "ngx-toastr": "^15.0.0",

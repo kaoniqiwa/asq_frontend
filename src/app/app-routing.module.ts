@@ -11,17 +11,18 @@ import { AuthorizationService } from './network/auth/auth-request.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { NeoballoonService } from './neoballoon-system/neoballoon.service';
 
-let _sessionStorage = new SessionStorageService;
+let _sessionStorage = new SessionStorageService();
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: _sessionStorage.source!=1?RoutePath.mlogin:RoutePath.login,
-    pathMatch: 'full'
+    path: '',
+    redirectTo:
+      _sessionStorage.source != 1 ? RoutePath.mlogin : RoutePath.login,
+    pathMatch: 'full',
   },
   {
     path: RoutePath.login,
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: RoutePath.mlogin,
@@ -35,26 +36,24 @@ const routes: Routes = [
   },
   {
     path: RoutePath.asq3print,
-    component: Asq3printComponent
+    component: Asq3printComponent,
   },
   {
     path: RoutePath.asqse2print,
-    component: Asqse2printComponent
+    component: Asqse2printComponent,
   },
   {
     path: RoutePath.neoballoon,
     loadChildren: () =>
-      import('./neoballoon-system/neoballoon.module').then((mod) => mod.NeoballoonModule),
-    canActivate: [AuthorizationService],
-  }
-]
-
+      import('./neoballoon-system/neoballoon.module').then(
+        (mod) => mod.NeoballoonModule
+      ),
+  },
+];
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

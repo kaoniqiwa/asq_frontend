@@ -20,19 +20,14 @@ export class HowellAuthHttpService {
   constructor(
     private _http: HttpClient,
     private _authorizationService: AuthorizationService
-  ) { }
+  ) {}
 
   public postBase64String(
     url: string,
     base64: string,
     params?: HttpParams
   ): Observable<Blob> {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
     const head = new HttpHeaders({
-      Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
@@ -48,9 +43,7 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<T> {
-    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
     const head = new HttpHeaders({
-      Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'text/plain',
       Accept: 'text/plain',
     });
@@ -62,9 +55,7 @@ export class HowellAuthHttpService {
   }
 
   public getStream(url: string, params?: HttpParams): Observable<Blob> {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const head = new HttpHeaders({
-      Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
@@ -79,28 +70,22 @@ export class HowellAuthHttpService {
     url: string,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const httpOptions = {
-      headers: myHeaders,
       params: params,
     };
     return this._http.get<R>(url, httpOptions);
   }
 
   public getBase64String(url: string, params?: HttpParams): Observable<string> {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const httpOptions = {
-      headers: myHeaders,
       params: params,
     };
     return this._http.get<string>(url, httpOptions);
   }
 
   public getCache<T = any, R = T>(url: string, params?: HttpParams) {
-    const myHeaders = this.getHttpHeaders('GET', url);
     const httpOptions = {
       'Cache-Control': 'max-age=' + 60 * 30,
-      headers: myHeaders,
       params: params,
     };
     return this._http.get<R>(url, httpOptions);
@@ -111,13 +96,7 @@ export class HowellAuthHttpService {
     model?: T,
     params?: HttpParams
   ): Observable<R> {
-    // const myHeaders = this.getHttpHeaders('POST', url);
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
     const httpOptions = {
-      headers: myHeaders,
       params: params,
     };
     return this._http.post<R>(url, model, httpOptions);
@@ -128,13 +107,7 @@ export class HowellAuthHttpService {
     model?: T,
     params?: HttpParams
   ): Observable<string> {
-    // const myHeaders = this.getHttpHeaders('POST', url);
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
     const httpOptions = {
-      headers: myHeaders,
       params: params,
     };
     return this._http.post<string>(url, model, httpOptions);
@@ -145,10 +118,7 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this.getHttpHeaders('POST', url);
-
     const httpOptions = {
-      headers: myHeaders,
       params: params,
       'Content-Type': 'text/plain',
     };
@@ -160,22 +130,14 @@ export class HowellAuthHttpService {
     model: T,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
     const httpOptions = {
-      headers: myHeaders,
       params: params,
     };
     return this._http.put<R>(url, model, httpOptions);
   }
 
   public delete<T = any, R = HowellResponse<T>>(url: string): Observable<R> {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'DELETE',
-      url
-    );
-    const httpOptions = {
-      headers: myHeaders,
-    };
+    const httpOptions = {};
     return this._http.delete<R>(url, httpOptions);
   }
 
