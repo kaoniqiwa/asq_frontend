@@ -10,6 +10,7 @@ import { OtherloginComponent } from './otherlogin/otherlogin.component';
 import { AuthorizationService } from './network/auth/auth-request.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { NeoballoonService } from './neoballoon-system/neoballoon.service';
+import { AuthGuard } from './auth.guard';
 
 let _sessionStorage = new SessionStorageService();
 
@@ -27,12 +28,11 @@ const routes: Routes = [
   {
     path: RoutePath.mlogin,
     component: MloginComponent,
-    canActivate: [AuthorizationService],
+    canActivate: [AuthGuard],
   },
   {
     path: RoutePath.otherlogin,
     component: OtherloginComponent,
-    canActivate: [AuthorizationService],
   },
   {
     path: RoutePath.asq3print,
