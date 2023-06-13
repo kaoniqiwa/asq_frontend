@@ -962,8 +962,10 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
   private _checkForm() {
     //console.log(this.memberGroup.get('phone')!.errors)
+    //this.babyGroupArr[this.currentIndex]
     for (let i = 0; i < this.babyGroupArr.length; i++) {
       let control = this.babyGroupArr[i];
+      //let control = this.babyGroupArr[this.currentIndex];
 
       if (control.invalid) {
         if (control.get('name')!.invalid) {
@@ -983,7 +985,7 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
 
       
 
-      let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematureweek, control.getRawValue().prematureday).split('月')[0];
+      /* let rectifyage = +this.rectify(control.getRawValue().birthday, control.getRawValue().surveyTime, control.getRawValue().prematureweek, control.getRawValue().prematureday).split('月')[0];
       if (rectifyage < 1) {
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过小，没有适龄的问卷');
         return false;
@@ -991,13 +993,27 @@ export class BabyInfoManageComponent implements OnInit, AfterViewInit {
       if (rectifyage > 66) {
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 该宝宝年龄过大，没有适龄的问卷');
         return false;
-      }
+      } */
       //console.log('control',control.getRawValue(),control.getRawValue().premature,control.getRawValue().prematureweek);
       if(control.getRawValue().premature == '是' && control.getRawValue().prematureweek == 0){
         this._toastrService.warning('宝宝' + convertToChinaNum(i + 1) + ': 您选择了早产，请填写孕周');
         return false;
       }
     }
+
+    let control2 = this.babyGroupArr[this.currentIndex];
+
+    let rectifyage = +this.rectify(control2.getRawValue().birthday, control2.getRawValue().surveyTime, control2.getRawValue().prematureweek, control2.getRawValue().prematureday).split('月')[0];
+    if (rectifyage < 1) {
+      this._toastrService.warning('该宝宝年龄过小，没有适龄的问卷');
+      return false;
+    }
+    if (rectifyage > 66) {
+      this._toastrService.warning('该宝宝年龄过大，没有适龄的问卷');
+      return false;
+    }
+
+
     if (this.memberGroup.invalid) {
       if (this.memberGroup.get('name')?.invalid) {
         this._toastrService.warning('请输入问卷人姓名');

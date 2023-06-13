@@ -8,6 +8,7 @@ import { Asqse2printComponent } from './print/asqse2print/asqse2print.component'
 import { MloginComponent } from './mlogin/mlogin.component';
 import { OtherloginComponent } from './otherlogin/otherlogin.component';
 import { AuthorizationService } from './network/auth/auth-request.service';
+import { AuthGuard } from '../app/auth.guard';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { NeoballoonService } from './neoballoon-system/neoballoon.service';
 
@@ -27,12 +28,12 @@ const routes: Routes = [
   {
     path: RoutePath.mlogin,
     component: MloginComponent,
-    canActivate: [AuthorizationService],
+    canActivate: [AuthGuard],
   },
   {
     path: RoutePath.otherlogin,
     component: OtherloginComponent,
-    canActivate: [AuthorizationService],
+    canActivate: [AuthGuard],
   },
   {
     path: RoutePath.asq3print,

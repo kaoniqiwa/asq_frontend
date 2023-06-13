@@ -18,6 +18,9 @@ export class CompanyUrl {
   static getCode(rand:any) {
     return `${this.code}.php?r=${rand}`
   }
+  static checkCode() {
+    return `${this.basic}.php`
+  }
   static get(id: string) {
     return `${this.basic}.php?Id=${id}`
   }

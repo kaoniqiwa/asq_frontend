@@ -26,6 +26,13 @@ export class CompanyRequestService {
     //params.Flow = 'getCode';
     return this.type.post(CompanyUrl.getCode(Math.random()))
   }
+  checkCode(params:any){
+    params.Flow = 'checkCode';
+    //console.log('checkCode',params);
+    let xx:any = this.type.post(CompanyUrl.checkCode(),params);
+    console.log('checkCode',params,xx);
+    return xx
+  }
   updateLeft(params:any){
     params.Flow = 'updateLeft';
     return this.type.post(CompanyUrl.create(), params)

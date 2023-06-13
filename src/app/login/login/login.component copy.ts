@@ -23,8 +23,6 @@ import { LoginBusiness } from './login.business';
 import { AppConfigService } from 'src/app/common/service/app-init.service';
 import axios from 'axios';
 import { HttpClient } from '@angular/common/http';
-import { param } from 'jquery';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -53,8 +51,7 @@ export class LoginComponent implements OnInit {
     private _fb: FormBuilder,
     private _sessionStorage: SessionStorageService,
     private sanitizer: DomSanitizer,
-    private http: HttpClient,
-    private _toastrService: ToastrService,
+    private http: HttpClient
   ) {
     this._title.setTitle('用户登录');
     this._sessionStorage.source = 1;
@@ -66,40 +63,51 @@ export class LoginComponent implements OnInit {
   }
 
   async getCode() {
-    this.code = '/app/asq_server/captcha.php?r='+Math.random();
-  }
+    // this.code = await this._business.getCode();
+    // console.log('getCode', this.code);
+    // axios({
+    //   url: '/app/asq_server/captcha.php?r=0.5072714284767665',
+    //   method: 'GET',
+    //   responseType: 'blob',
+    // }).then((res) => {
+    //   console.log(res);
+    //   let resUrl = window.URL.createObjectURL(
+    //     new Blob([res.data], { type: 'image/png' })
+    //   );
+    //   this.imgUrl = this.sanitizer.bypassSecurityTrustResourceUrl(resUrl);
+    //   console.log(this.imgUrl);
+    // });
 
-  checkCode(){
-    let params:any = {};
-    params.auto_code = this.myForm.value.code;
-    this._business.ckeckCode(params);
+    this.http
+      .get('/app/asq_server/captcha.php?r=0.5072714284767665', {
+        responseType: 'blob',
+      })
+      .subscribe((res) => {
+        let resUrl = window.URL.createObjectURL(
+          new Blob([res], { type: 'image/png' })
+        );
+        this.imgUrl = this.sanitizer.bypassSecurityTrustResourceUrl(resUrl);
+        console.log(this.imgUrl);
+      });
   }
 
   login() {
-    /* let params:any = {};
-    params.auto_code = this.myForm.value.code;
-    let res = this._business.ckeckCode(params);
-    console.log('login',res); */
+    // this.showLicense = true;
+    // this.loginModel = new EnterPriseLoginModel(
+    //   this.myForm.value.username ?? '',
+    //   this.myForm.value.password ?? '',
+    //   this.myForm.value.code ?? ''
+    // );
 
-    this.http.post('/app/asq_server/company.php', {
-        responseType: 'json',
-        Flow:'checkCode',
-        auto_code:this.myForm.value.code
-      }).subscribe((res:any) => {
-        
-        console.log('res',res);
-        if(res.Data == 1){
-          this.showLicense = true;
-          this.loginModel = new EnterPriseLoginModel(
-            this.myForm.value.username ?? '',
-            this.myForm.value.password ?? '',
-            this.myForm.value.code ?? ''
-          );
-        }else{
-          this._toastrService.error('验证码错误！');
-        }
-      });
+    let code = this.myForm.value.code;
+    console.log(code);
 
+    this.http
+      .post<any>('/app/asq_server/company.php', {
+        Flow: 'checkCode',
+        auto_code: 123,
+      })
+      .subscribe(console.log);
   }
   closeEvent() {
     this.showLicense = false;

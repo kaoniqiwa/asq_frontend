@@ -10,5 +10,8 @@ export class LoginBusiness {
     return this._userRequest.getCode()
   }
 
+  ckeckCode(params:any){
+    return this._userRequest.checkCode(params)
+  }
   
 }

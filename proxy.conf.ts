@@ -1,14 +1,12 @@
 const PROXY_CONFIG = [
   {
-    context: [
-      '/app/asq_server',
-    ],
+    context: ['/app/asq_server'],
     target: 'http://localhost:8888/gitstore/ASQ/asq_server',
     changeOrigin: true,
     secure: false,
     pathRewrite: {
-      "^/app/asq_server": ""
-    }
+      '^/app/asq_server': '',
+    },
   },
 ];
 
