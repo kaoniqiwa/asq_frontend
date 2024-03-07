@@ -192,21 +192,35 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
 
     this.checkRange();
 
-    console.log('this.currentType',this.currentType,model.questType,this.sheetMap);
+    //console.log('this.currentType',this.currentType,model.questType,this.sheetMap);
 
     /* if (this.currentMonthIndex != -1) {
        this.swiper.swiperRef.slideTo(this.currentMonthIndex)
     } */
   }
   changeBaby(baby: Baby) {
-    console.log('changeBaby',baby);
+    
+    //console.log('changeBaby',baby);
+    let currentmonth = Number(baby.Rectifyage.split('月')[0]);
+    if(baby){
+      if (currentmonth < 1) {
+        this._toastrService.warning('该宝宝年龄过小，没有适龄的问卷');
+        return;
+      }
+      if (currentmonth > 66) {
+        this._toastrService.warning('该宝宝年龄过大，没有适龄的问卷');
+        return;
+      }
+    }
+    
     this.currentBaby = baby;
     this._sessionStorage.baby = baby;
-    console.log('this._sessionStorage.baby',this._sessionStorage.baby);
+    //console.log('this._sessionStorage.baby',this._sessionStorage.baby);
     this.checkRange();
     //this.getQuestions();
   }
   checkRange() {
+    
     if (this.currentBaby) {
       let months = this.monthMap.get(this.currentType);
       //console.log('months',months);
@@ -292,8 +306,8 @@ export class SurveyManageComponent implements OnInit, OnDestroy {
     console.log('destroy');
   }
   goBack() {
-    this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
-    //window.history.back();
+    //this._router.navigate(["/neoballoon/neoballoon-manage/baby-info-manage"])
+    window.history.back();
   }
 
 }

@@ -33,6 +33,7 @@ const routes: Routes = [
   {
     path: RoutePath.otherlogin,
     component: OtherloginComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: RoutePath.asq3print,
